@@ -1,6 +1,6 @@
 <template>
 	<view>
-		
+		minnnnnnnnnnnnnn
 	</view>
 </template>
 

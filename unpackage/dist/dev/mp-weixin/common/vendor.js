@@ -1242,13 +1242,13 @@ function populateParameters(fromRes, toRes) {
   let _SDKVersion = SDKVersion;
   const hostLanguage = language.replace(/_/g, "-");
   const parameters = {
-    appId: "__UNI__8B7B05D",
-    appName: "HM",
+    appId: "__UNI__A134180",
+    appName: "tt",
     appVersion: "1.0.0",
     appVersionCode: "100",
     appLanguage: getAppLanguage(hostLanguage),
-    uniCompileVersion: "4.23",
-    uniRuntimeVersion: "4.23",
+    uniCompileVersion: "4.24",
+    uniRuntimeVersion: "4.24",
     uniPlatform: "mp-weixin",
     deviceBrand,
     deviceModel: model,
@@ -1386,8 +1386,8 @@ const getAppBaseInfo = {
       hostName: _hostName,
       hostSDKVersion: SDKVersion,
       hostTheme: theme,
-      appId: "__UNI__8B7B05D",
-      appName: "HM",
+      appId: "__UNI__A134180",
+      appName: "tt",
       appVersion: "1.0.0",
       appVersionCode: "100",
       appLanguage: getAppLanguage(hostLanguage)
@@ -7553,8 +7553,40 @@ const pages = [
     style: {
       navigationBarTitleText: "uni-app"
     }
+  },
+  {
+    path: "pages/table/table",
+    style: {
+      navigationBarTitleText: ""
+    }
+  },
+  {
+    path: "pages/mine/mine",
+    style: {
+      navigationBarTitleText: "mine"
+    }
   }
 ];
+const tabBar = {
+  color: "#7A7E83",
+  selectedColor: "#3cc51f",
+  borderStyle: "black",
+  backgroundColor: "#ffffff",
+  list: [
+    {
+      pagePath: "pages/index/index",
+      iconPath: "static/c1.png",
+      selectedIconPath: "static/c2.png",
+      text: "组件"
+    },
+    {
+      pagePath: "pages/mine/mine",
+      iconPath: "static/c3.png",
+      selectedIconPath: "static/c4.png",
+      text: "接口"
+    }
+  ]
+};
 const globalStyle = {
   navigationBarTextStyle: "black",
   navigationBarTitleText: "uni-app",
@@ -7566,6 +7598,7 @@ const globalStyle = {
 };
 const e = {
   pages,
+  tabBar,
   globalStyle
 };
 var define_process_env_UNI_SECURE_NETWORK_CONFIG_default = [];
@@ -7857,10 +7890,10 @@ class v {
 function I(e2) {
   return e2 && "string" == typeof e2 ? JSON.parse(e2) : e2;
 }
-const S = true, b = "mp-weixin", A = I(define_process_env_UNI_SECURE_NETWORK_CONFIG_default), C = b, P = I('{\n    "address": [\n        "127.0.0.1",\n        "192.168.31.217"\n    ],\n    "debugPort": 9000,\n    "initialLaunchType": "local",\n    "servePort": 7000,\n    "skipFiles": [\n        "<node_internals>/**",\n        "D:/software/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n'), T = I('[{"provider":"alipay","spaceName":"xt-hm","spaceId":"env-00jxh1m2dpmq","spaceAppId":"2021004160639297","accessKey":"1z2RCcqsZlXFn6HS","secretKey":"DfBjOvcQ0ljHqfOc"}]') || [];
+const S = true, b = "mp-weixin", A = I(define_process_env_UNI_SECURE_NETWORK_CONFIG_default), C = b, P = I('{\n    "address": [\n        "127.0.0.1",\n        "192.168.31.243"\n    ],\n    "debugPort": 9000,\n    "initialLaunchType": "local",\n    "servePort": 7000,\n    "skipFiles": [\n        "<node_internals>/**",\n        "D:/Program Files (x86)/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n'), T = I('[{"provider":"alipay","spaceName":"xt-hm","spaceId":"env-00jxh1m2dpmq","spaceAppId":"2021004160639297","accessKey":"1z2RCcqsZlXFn6HS","secretKey":"DfBjOvcQ0ljHqfOc"}]') || [];
 let O = "";
 try {
-  O = "__UNI__8B7B05D";
+  O = "__UNI__A134180";
 } catch (e2) {
 }
 let E = {};
@@ -10295,8 +10328,6 @@ let Js = new class {
     return Us(Js);
   } }), Cs(Js), Js.addInterceptor = N, Js.removeInterceptor = D, Js.interceptObject = F;
 })();
-var Vs = Js;
-exports.Vs = Vs;
 exports._export_sfc = _export_sfc;
 exports.createSSRApp = createSSRApp;
 exports.e = e$1;

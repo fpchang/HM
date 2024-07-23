@@ -1,6 +1,6 @@
 {
-    "name" : "HM",
-    "appid" : "__UNI__8B7B05D",
+    "name" : "tt",
+    "appid" : "__UNI__A134180",
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -49,7 +49,8 @@
     "quickapp" : {},
     /* 快应用特有相关 */
     "mp-weixin" : {
-        "appid" : "wx703d94f53ceeea90",
+        /* 小程序特有相关 */
+        "appid" : "",
         "setting" : {
             "urlCheck" : false
         },
