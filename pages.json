@@ -18,6 +18,13 @@
 		{
 			"navigationBarTitleText" : "mine"
 		}
+	},
+	{
+		"path" : "pages/login/login",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
 	}],
 	"tabBar": {
 		"color": "#1d1d1f",
