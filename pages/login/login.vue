@@ -9,7 +9,7 @@
 			<uni-forms-item label="验证码" >
 			<view style="height:100%;padding:0 10rpx;background-color: #eee;display: flex;justify-content: space-between;align-items: center;">
 				<input class="uni-input" style="font-size: 24rpx;" type="number"  v-model="baseFormData.smsCode" placeholder="请输入验证码" />
-				<text @click="sendSms()" style="font-size: 24rpx;color: blue;cursor: pointer;">发送验证码</text>
+				<button @click="sendSms()" class="smsBtn" disabled="!phoneValid">发送验证码</button>
 			</view>
 			
 			</uni-forms-item>
@@ -63,6 +63,11 @@
 				},
 			}
 		},
+		computed:{
+			phoneValid(){
+				return false;
+			}
+		},
 		methods: {
 			sendSms(){
 				console.log(this.baseFormData.phone);
@@ -83,6 +88,19 @@
 </script>
 
 <style>
+	.smsBtn{
+		
+		margin: 0;
+		padding: 0;
+		font-size: 24rpx;
+		color: blue;
+		border-width: 0;
+		
+		background-color: transparent;
+	}
+	.smsBtn::after{
+		border-width: 0;
+	}
 .circleCheckbox ::v-deep .uni-checkbox-input{
 		border-radius: 100%;
 	}
