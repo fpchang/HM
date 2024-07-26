@@ -1,10 +1,10 @@
 <template>
 	<view style="padding:20rpx 60rpx;">
 		<uni-section>
-		<uni-forms>
+		<uni-forms ref="valiForm" :rules="rules" :modelValue="baseFormData">
 			
-			<uni-forms-item label="手机号" >
-				<uni-easyinput v-model="baseFormData.phone" placeholder="请输入手机号" />
+			<uni-forms-item label="手机号" name="phone">
+				<uni-easyinput v-model="baseFormData.phone" required placeholder="请输入手机号" />
 			</uni-forms-item>
 			<uni-forms-item label="验证码" >
 			<view style="height:100%;padding:0 10rpx;background-color: #eee;display: flex;justify-content: space-between;align-items: center;">
@@ -21,7 +21,7 @@
 			<uni-forms-item>
 			<button size="default" type="default"
 				style="color:#ffffff;backgroundColor:#1AAD19;borderColor:#1AAD19"
-				hover-class="is-hover" @click="submit()">按钮</button>
+				hover-class="is-hover" @click="submit('valiForm')">按钮</button>
 				</uni-forms-item>
 		</uni-forms>
 		</uni-section>
@@ -38,15 +38,45 @@
 					ifAgree:0
 					
 				},
-				isAgree:false
+				isAgree:false,
+				valiFormData: {
+					phone: ''
+				},
+				// 校验规则
+				rules: {
+					name: {
+						rules: [{
+							required: true,
+							errorMessage: '姓名不能为空'
+						}]
+					},
+					phone: {
+						rules: [
+							{
+								required: true,
+								errorMessage: '手机号不能为空'
+							},{
+							format:'number',
+							errorMessage: '手机号能输入数字'
+						}]
+					}
+				},
 			}
 		},
 		methods: {
 			sendSms(){
 				console.log(this.baseFormData.phone);
 			},
-			submit(){
+			submit(ref){
 				console.log(this.baseFormData);
+				this.$refs[ref].validate().then(res => {
+									console.log('success', res);
+									uni.showToast({
+										title: `校验通过`
+									})
+								}).catch(err => {
+									console.log('err', err);
+								})
 			}
 		}
 	}
