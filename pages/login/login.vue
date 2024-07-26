@@ -9,7 +9,7 @@
 			<uni-forms-item label="验证码" >
 			<view style="height:100%;padding:0 10rpx;background-color: #eee;display: flex;justify-content: space-between;align-items: center;">
 				<input class="uni-input" style="font-size: 24rpx;" type="number"  v-model="baseFormData.smsCode" placeholder="请输入验证码" />
-				<text style="font-size: 24rpx;color: blue;cursor: pointer;">发送验证码</text>
+				<text @click="sendSms()" style="font-size: 24rpx;color: blue;cursor: pointer;">发送验证码</text>
 			</view>
 			
 			</uni-forms-item>
@@ -21,7 +21,7 @@
 			<uni-forms-item>
 			<button size="default" type="default"
 				style="color:#ffffff;backgroundColor:#1AAD19;borderColor:#1AAD19"
-				hover-class="is-hover">按钮</button>
+				hover-class="is-hover" @click="submit()">按钮</button>
 				</uni-forms-item>
 		</uni-forms>
 		</uni-section>
@@ -42,7 +42,12 @@
 			}
 		},
 		methods: {
-			
+			sendSms(){
+				console.log(this.baseFormData.phone);
+			},
+			submit(){
+				console.log(this.baseFormData);
+			}
 		}
 	}
 </script>
