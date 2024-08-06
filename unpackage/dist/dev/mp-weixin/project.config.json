@@ -18,9 +18,9 @@
     }
   },
   "compileType": "miniprogram",
-  "libVersion": "3.5.1",
-  "appid": "touristappid",
-  "projectname": "tt",
+  "libVersion": "3.5.0",
+  "appid": "wx703d94f53ceeea90",
+  "projectname": "HM",
   "condition": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",

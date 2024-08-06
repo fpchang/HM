@@ -1,11 +1,4 @@
 "use strict";
-const _export_sfc = (sfc, props) => {
-  const target = sfc.__vccOpts || sfc;
-  for (const [key, val] of props) {
-    target[key] = val;
-  }
-  return target;
-};
 /**
 * @vue/shared v3.4.21
 * (c) 2018-present Yuxi (Evan) You and Vue contributors
@@ -99,6 +92,56 @@ let _globalThis;
 const getGlobalThis = () => {
   return _globalThis || (_globalThis = typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {});
 };
+function normalizeStyle(value) {
+  if (isArray(value)) {
+    const res = {};
+    for (let i2 = 0; i2 < value.length; i2++) {
+      const item = value[i2];
+      const normalized = isString(item) ? parseStringStyle(item) : normalizeStyle(item);
+      if (normalized) {
+        for (const key in normalized) {
+          res[key] = normalized[key];
+        }
+      }
+    }
+    return res;
+  } else if (isString(value) || isObject(value)) {
+    return value;
+  }
+}
+const listDelimiterRE = /;(?![^(]*\))/g;
+const propertyDelimiterRE = /:([^]+)/;
+const styleCommentRE = /\/\*[^]*?\*\//g;
+function parseStringStyle(cssText) {
+  const ret = {};
+  cssText.replace(styleCommentRE, "").split(listDelimiterRE).forEach((item) => {
+    if (item) {
+      const tmp = item.split(propertyDelimiterRE);
+      tmp.length > 1 && (ret[tmp[0].trim()] = tmp[1].trim());
+    }
+  });
+  return ret;
+}
+function normalizeClass(value) {
+  let res = "";
+  if (isString(value)) {
+    res = value;
+  } else if (isArray(value)) {
+    for (let i2 = 0; i2 < value.length; i2++) {
+      const normalized = normalizeClass(value[i2]);
+      if (normalized) {
+        res += normalized + " ";
+      }
+    }
+  } else if (isObject(value)) {
+    for (const name in value) {
+      if (value[name]) {
+        res += name + " ";
+      }
+    }
+  }
+  return res.trim();
+}
 const toDisplayString = (val) => {
   return isString(val) ? val : val == null ? "" : isArray(val) || isObject(val) && (val.toString === objectToString || !isFunction(val.toString)) ? JSON.stringify(val, replacer, 2) : String(val);
 };
@@ -130,6 +173,50 @@ const stringifySymbol = (v2, i2 = "") => {
   var _a;
   return isSymbol(v2) ? `Symbol(${(_a = v2.description) != null ? _a : i2})` : v2;
 };
+const LOCALE_ZH_HANS = "zh-Hans";
+const LOCALE_ZH_HANT = "zh-Hant";
+const LOCALE_EN = "en";
+const LOCALE_FR = "fr";
+const LOCALE_ES = "es";
+function include(str, parts) {
+  return !!parts.find((part) => str.indexOf(part) !== -1);
+}
+function startsWith(str, parts) {
+  return parts.find((part) => str.indexOf(part) === 0);
+}
+function normalizeLocale(locale, messages) {
+  if (!locale) {
+    return;
+  }
+  locale = locale.trim().replace(/_/g, "-");
+  if (messages && messages[locale]) {
+    return locale;
+  }
+  locale = locale.toLowerCase();
+  if (locale === "chinese") {
+    return LOCALE_ZH_HANS;
+  }
+  if (locale.indexOf("zh") === 0) {
+    if (locale.indexOf("-hans") > -1) {
+      return LOCALE_ZH_HANS;
+    }
+    if (locale.indexOf("-hant") > -1) {
+      return LOCALE_ZH_HANT;
+    }
+    if (include(locale, ["-tw", "-hk", "-mo", "-cht"])) {
+      return LOCALE_ZH_HANT;
+    }
+    return LOCALE_ZH_HANS;
+  }
+  let locales = [LOCALE_EN, LOCALE_FR, LOCALE_ES];
+  if (messages && Object.keys(messages).length > 0) {
+    locales = Object.keys(messages);
+  }
+  const lang = startsWith(locale, locales);
+  if (lang) {
+    return lang;
+  }
+}
 const SLOT_DEFAULT_NAME = "d";
 const ON_SHOW = "onShow";
 const ON_HIDE = "onHide";
@@ -359,50 +446,6 @@ E$1.prototype = {
   }
 };
 var E$1$1 = E$1;
-const LOCALE_ZH_HANS = "zh-Hans";
-const LOCALE_ZH_HANT = "zh-Hant";
-const LOCALE_EN = "en";
-const LOCALE_FR = "fr";
-const LOCALE_ES = "es";
-function include(str, parts) {
-  return !!parts.find((part) => str.indexOf(part) !== -1);
-}
-function startsWith(str, parts) {
-  return parts.find((part) => str.indexOf(part) === 0);
-}
-function normalizeLocale(locale, messages) {
-  if (!locale) {
-    return;
-  }
-  locale = locale.trim().replace(/_/g, "-");
-  if (messages && messages[locale]) {
-    return locale;
-  }
-  locale = locale.toLowerCase();
-  if (locale === "chinese") {
-    return LOCALE_ZH_HANS;
-  }
-  if (locale.indexOf("zh") === 0) {
-    if (locale.indexOf("-hans") > -1) {
-      return LOCALE_ZH_HANS;
-    }
-    if (locale.indexOf("-hant") > -1) {
-      return LOCALE_ZH_HANT;
-    }
-    if (include(locale, ["-tw", "-hk", "-mo", "-cht"])) {
-      return LOCALE_ZH_HANT;
-    }
-    return LOCALE_ZH_HANS;
-  }
-  let locales = [LOCALE_EN, LOCALE_FR, LOCALE_ES];
-  if (messages && Object.keys(messages).length > 0) {
-    locales = Object.keys(messages);
-  }
-  const lang = startsWith(locale, locales);
-  if (lang) {
-    return lang;
-  }
-}
 function getBaseSystemInfo() {
   return wx.getSystemInfoSync();
 }
@@ -1243,7 +1286,7 @@ function populateParameters(fromRes, toRes) {
   const hostLanguage = language.replace(/_/g, "-");
   const parameters = {
     appId: "__UNI__A134180",
-    appName: "tt",
+    appName: "HM",
     appVersion: "1.0.0",
     appVersionCode: "100",
     appLanguage: getAppLanguage(hostLanguage),
@@ -1387,7 +1430,7 @@ const getAppBaseInfo = {
       hostSDKVersion: SDKVersion,
       hostTheme: theme,
       appId: "__UNI__A134180",
-      appName: "tt",
+      appName: "HM",
       appVersion: "1.0.0",
       appVersionCode: "100",
       appLanguage: getAppLanguage(hostLanguage)
@@ -1562,6 +1605,165 @@ var protocols = /* @__PURE__ */ Object.freeze({
 });
 const wx$1 = initWx();
 var index = initUni(shims, protocols, wx$1);
+function getTarget$1() {
+  if (typeof window !== "undefined") {
+    return window;
+  }
+  if (typeof globalThis !== "undefined") {
+    return globalThis;
+  }
+  if (typeof global !== "undefined") {
+    return global;
+  }
+  if (typeof my !== "undefined") {
+    return my;
+  }
+}
+class Socket {
+  constructor(host2) {
+    this.sid = "";
+    this.ackTimeout = 5e3;
+    this.closed = false;
+    this._ackTimer = 0;
+    this._onCallbacks = {};
+    this.host = host2;
+    setTimeout(() => {
+      this.connect();
+    }, 50);
+  }
+  connect() {
+    this._socket = index.connectSocket({
+      url: `ws://${this.host}/socket.io/?EIO=4&transport=websocket`,
+      multiple: true,
+      complete(res) {
+      }
+    });
+    this._socket.onOpen((res) => {
+    });
+    this._socket.onMessage(({ data }) => {
+      if (typeof my !== "undefined") {
+        data = data.data;
+      }
+      if (typeof data !== "string") {
+        return;
+      }
+      if (data[0] === "0") {
+        this._send("40");
+        const res = JSON.parse(data.slice(1));
+        this.sid = res.sid;
+      } else if (data[0] + data[1] === "40") {
+        this.sid = JSON.parse(data.slice(2)).sid;
+        this._trigger("connect");
+      } else if (data === "3") {
+        this._send("2");
+      } else if (data === "2") {
+        this._send("3");
+      } else {
+        const match = /\[.*\]/.exec(data);
+        if (!match)
+          return;
+        try {
+          const [event, args] = JSON.parse(match[0]);
+          this._trigger(event, args);
+        } catch (err) {
+          console.error("Vue DevTools onMessage: ", err);
+        }
+      }
+    });
+    this._socket.onClose((res) => {
+      this.closed = true;
+      this._trigger("disconnect", res);
+    });
+    this._socket.onError((res) => {
+      console.error(res.errMsg);
+    });
+  }
+  on(event, callback) {
+    (this._onCallbacks[event] || (this._onCallbacks[event] = [])).push(callback);
+  }
+  emit(event, data) {
+    if (this.closed) {
+      return;
+    }
+    this._heartbeat();
+    this._send(`42${JSON.stringify(typeof data !== "undefined" ? [event, data] : [event])}`);
+  }
+  disconnect() {
+    clearTimeout(this._ackTimer);
+    if (this._socket && !this.closed) {
+      this._send("41");
+      this._socket.close({});
+    }
+  }
+  _heartbeat() {
+    clearTimeout(this._ackTimer);
+    this._ackTimer = setTimeout(() => {
+      this._socket && this._socket.send({ data: "3" });
+    }, this.ackTimeout);
+  }
+  _send(data) {
+    this._socket && this._socket.send({ data });
+  }
+  _trigger(event, args) {
+    const callbacks = this._onCallbacks[event];
+    if (callbacks) {
+      callbacks.forEach((callback) => {
+        callback(args);
+      });
+    }
+  }
+}
+let socketReadyCallback;
+getTarget$1().__VUE_DEVTOOLS_ON_SOCKET_READY__ = (callback) => {
+  socketReadyCallback = callback;
+};
+let targetHost = "";
+const hosts = "192.168.31.217".split(",");
+setTimeout(() => {
+  index.request({
+    url: `http://${"localhost"}:${9500}`,
+    timeout: 1e3,
+    success() {
+      targetHost = "localhost";
+      initSocket();
+    },
+    fail() {
+      if (!targetHost && hosts.length) {
+        hosts.forEach((host2) => {
+          index.request({
+            url: `http://${host2}:${9500}`,
+            timeout: 1e3,
+            success() {
+              if (!targetHost) {
+                targetHost = host2;
+                initSocket();
+              }
+            }
+          });
+        });
+      }
+    }
+  });
+}, 0);
+throwConnectionError();
+function throwConnectionError() {
+  setTimeout(() => {
+    if (!targetHost) {
+      throw new Error("未能获取局域网地址，本地调试服务不可用");
+    }
+  }, (hosts.length + 1) * 1100);
+}
+function initSocket() {
+  getTarget$1().__VUE_DEVTOOLS_SOCKET__ = new Socket(targetHost + ":8098");
+  socketReadyCallback();
+}
+const _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
 new Set(
   /* @__PURE__ */ Object.getOwnPropertyNames(Symbol).filter((key) => key !== "arguments" && key !== "caller").map((key) => Symbol[key]).filter(isSymbol)
 );
@@ -6712,10 +6914,66 @@ function patchStopImmediatePropagation(e2, value) {
     return value;
   }
 }
+function vFor(source, renderItem) {
+  let ret;
+  if (isArray(source) || isString(source)) {
+    ret = new Array(source.length);
+    for (let i2 = 0, l2 = source.length; i2 < l2; i2++) {
+      ret[i2] = renderItem(source[i2], i2, i2);
+    }
+  } else if (typeof source === "number") {
+    if (!Number.isInteger(source)) {
+      warn(`The v-for range expect an integer value but got ${source}.`);
+      return [];
+    }
+    ret = new Array(source);
+    for (let i2 = 0; i2 < source; i2++) {
+      ret[i2] = renderItem(i2 + 1, i2, i2);
+    }
+  } else if (isObject(source)) {
+    if (source[Symbol.iterator]) {
+      ret = Array.from(source, (item, i2) => renderItem(item, i2, i2));
+    } else {
+      const keys = Object.keys(source);
+      ret = new Array(keys.length);
+      for (let i2 = 0, l2 = keys.length; i2 < l2; i2++) {
+        const key = keys[i2];
+        ret[i2] = renderItem(source[key], key, i2);
+      }
+    }
+  } else {
+    ret = [];
+  }
+  return ret;
+}
+function stringifyStyle(value) {
+  if (isString(value)) {
+    return value;
+  }
+  return stringify(normalizeStyle(value));
+}
+function stringify(styles) {
+  let ret = "";
+  if (!styles || isString(styles)) {
+    return ret;
+  }
+  for (const key in styles) {
+    ret += `${key.startsWith(`--`) ? key : hyphenate(key)}:${styles[key]};`;
+  }
+  return ret;
+}
+function setRef(ref2, id, opts = {}) {
+  const { $templateRefs } = getCurrentInstance();
+  $templateRefs.push({ i: id, r: ref2, k: opts.k, f: opts.f });
+}
 const o$1 = (value, key) => vOn(value, key);
+const f$1 = (source, renderItem) => vFor(source, renderItem);
+const s$1 = (value) => stringifyStyle(value);
 const e$1 = (target, ...sources) => extend(target, ...sources);
+const n$1 = (value) => normalizeClass(value);
 const t$1 = (val) => toDisplayString(val);
 const p$1 = (props) => renderProps(props);
+const sr = (ref2, id, opts) => setRef(ref2, id, opts);
 function createApp$1(rootComponent, rootProps = null) {
   rootComponent && (rootComponent.mpType = "app");
   return createVueApp(rootComponent, rootProps).use(plugin);
@@ -6893,6 +7151,13 @@ const HOOKS = [
 ];
 function parseApp(instance, parseAppOptions) {
   const internalInstance = instance.$;
+  {
+    Object.defineProperty(internalInstance.ctx, "$children", {
+      get() {
+        return getCurrentPages().map((page) => page.$vm);
+      }
+    });
+  }
   const appOptions = {
     globalData: instance.$options && instance.$options.globalData || {},
     $vm: instance,
@@ -7334,6 +7599,9 @@ function parseComponent(vueOptions, { parse, mocks: mocks2, isPage: isPage2, ini
     lifetimes: initLifetimes2({ mocks: mocks2, isPage: isPage2, initRelation: initRelation2, vueOptions }),
     pageLifetimes: {
       show() {
+        {
+          devtoolsComponentAdded(this.$vm.$);
+        }
         this.$vm && this.$vm.$callHook("onPageShow");
       },
       hide() {
@@ -7551,7 +7819,24 @@ const pages = [
   {
     path: "pages/index/index",
     style: {
-      navigationBarTitleText: "uni-app"
+      titleNView: {
+        titleText: "民宿管家",
+        type: "float",
+        backgroundColor: "#ffffff",
+        buttons: [
+          {
+            fontSize: "30rpx",
+            background: "#ff0000",
+            color: "#000000",
+            text: "大和酒111",
+            fontSrc: "/static/img/iconfont-arrow-down.ttf"
+          }
+        ],
+        backButton: {
+          type: "none",
+          background: "#ff0000"
+        }
+      }
     }
   },
   {
@@ -7565,36 +7850,39 @@ const pages = [
     style: {
       navigationBarTitleText: "mine"
     }
+  },
+  {
+    path: "pages/login/login",
+    style: {
+      navigationBarTitleText: "登录"
+    }
   }
 ];
 const tabBar = {
-  color: "#7A7E83",
-  selectedColor: "#3cc51f",
+  color: "#1d1d1f",
+  selectedColor: "#0071e3",
   borderStyle: "black",
   backgroundColor: "#ffffff",
   list: [
     {
       pagePath: "pages/index/index",
-      iconPath: "static/c1.png",
-      selectedIconPath: "static/c2.png",
-      text: "组件"
+      iconPath: "static/img/home-black.png",
+      selectedIconPath: "static/img/home-blue.png",
+      text: "首页"
     },
     {
       pagePath: "pages/mine/mine",
-      iconPath: "static/c3.png",
-      selectedIconPath: "static/c4.png",
-      text: "接口"
+      iconPath: "static/img/mine-black.png",
+      selectedIconPath: "static/img/mine-blue.png",
+      text: "我的"
     }
   ]
 };
 const globalStyle = {
   navigationBarTextStyle: "black",
-  navigationBarTitleText: "uni-app",
+  navigationBarTitleText: "酒店管理",
   navigationBarBackgroundColor: "#F8F8F8",
-  backgroundColor: "#F8F8F8",
-  "app-plus": {
-    background: "#efeff4"
-  }
+  backgroundColor: "#F8F8F8"
 };
 const e = {
   pages,
@@ -7890,7 +8178,7 @@ class v {
 function I(e2) {
   return e2 && "string" == typeof e2 ? JSON.parse(e2) : e2;
 }
-const S = true, b = "mp-weixin", A = I(define_process_env_UNI_SECURE_NETWORK_CONFIG_default), C = b, P = I('{\n    "address": [\n        "127.0.0.1",\n        "192.168.31.243"\n    ],\n    "debugPort": 9000,\n    "initialLaunchType": "local",\n    "servePort": 7000,\n    "skipFiles": [\n        "<node_internals>/**",\n        "D:/Program Files (x86)/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n'), T = I('[{"provider":"alipay","spaceName":"xt-hm","spaceId":"env-00jxh1m2dpmq","spaceAppId":"2021004160639297","accessKey":"1z2RCcqsZlXFn6HS","secretKey":"DfBjOvcQ0ljHqfOc"}]') || [];
+const S = true, b = "mp-weixin", A = I(define_process_env_UNI_SECURE_NETWORK_CONFIG_default), C = b, P = I('{\n    "address": [\n        "127.0.0.1",\n        "192.168.31.217"\n    ],\n    "debugPort": 9001,\n    "initialLaunchType": "local",\n    "servePort": 7001,\n    "skipFiles": [\n        "<node_internals>/**",\n        "D:/software/HBuilderX/plugins/unicloud/**/*.js"\n    ]\n}\n'), T = I('[{"provider":"alipay","spaceName":"xt-hm","spaceId":"env-00jxh1m2dpmq","spaceAppId":"2021004160639297","accessKey":"1z2RCcqsZlXFn6HS","secretKey":"DfBjOvcQ0ljHqfOc"}]') || [];
 let O = "";
 try {
   O = "__UNI__A134180";
@@ -10328,11 +10616,17 @@ let Js = new class {
     return Us(Js);
   } }), Cs(Js), Js.addInterceptor = N, Js.removeInterceptor = D, Js.interceptObject = F;
 })();
+var Vs = Js;
+exports.Vs = Vs;
 exports._export_sfc = _export_sfc;
 exports.createSSRApp = createSSRApp;
 exports.e = e$1;
+exports.f = f$1;
 exports.index = index;
+exports.n = n$1;
 exports.o = o$1;
 exports.p = p$1;
 exports.resolveComponent = resolveComponent;
+exports.s = s$1;
+exports.sr = sr;
 exports.t = t$1;

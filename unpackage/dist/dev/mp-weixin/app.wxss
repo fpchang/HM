@@ -39,6 +39,12 @@
   display: flex;
   flex-direction: column;
 }
+.active-font-black {
+  color: #1d1d1f;
+}
+.active-font-blue {
+  color: #0071e3;
+}
 /*每个页面公共css */
 /* 水平间距 */
 .uni-border {
@@ -2376,7 +2382,7 @@
   border-color: #e9e9eb;
 }
 page {
-  background-color: #f5f5f5;
+  background-color: #fff;
 }
 .example-info {
   font-size: 14px;

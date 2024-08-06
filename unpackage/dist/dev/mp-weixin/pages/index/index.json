@@ -1,6 +1,25 @@
 {
-  "navigationBarTitleText": "uni-app",
+  "titleNView": {
+    "titleText": "民宿管家",
+    "type": "float",
+    "backgroundColor": "#ffffff",
+    "buttons": [
+      {
+        "fontSize": "30rpx",
+        "background": "#ff0000",
+        "color": "#000000",
+        "text": "大和酒111",
+        "fontSrc": "/static/img/iconfont-arrow-down.ttf"
+      }
+    ],
+    "backButton": {
+      "type": "none",
+      "background": "#ff0000"
+    }
+  },
   "usingComponents": {
-    "uni-link": "../../uni_modules/uni-link/components/uni-link/uni-link"
+    "uni-list-chat": "../../uni_modules/uni-list/components/uni-list-chat/uni-list-chat",
+    "uni-icons": "../../uni_modules/uni-icons/components/uni-icons/uni-icons",
+    "uni-list": "../../uni_modules/uni-list/components/uni-list/uni-list"
   }
 }

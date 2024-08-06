@@ -1,31 +1,51 @@
 {
 	"pages": [{
-		"path": "pages/index/index",
-		"style": {
-			"navigationBarTitleText": "uni-app"
-		}
-	},
-	{
-		"path" : "pages/table/table",
-		"style" : 
+			"path": "pages/index/index",
+			"style": {
+
+				//关闭窗口回弹效果
+				"titleNView": {
+					"titleText": "民宿管家", 
+					"type": "float",
+					"backgroundColor": "#ffffff",
+					"buttons": [ 
+						{
+
+
+							"fontSize": "30rpx",
+							"background": "#ff0000",
+							"color": "#000000",
+							"text": "\ue503大和酒111",
+							"fontSrc":"/static/img/iconfont-arrow-down.ttf"
+						}
+					],
+					"backButton": { 
+						"type": "none",
+						"background": "#ff0000"
+					}
+				}
+			}
+		},
 		{
-			"navigationBarTitleText" : ""
-		}
-	},
-	{
-		"path" : "pages/mine/mine",
-		"style" : 
+			"path": "pages/table/table",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
 		{
-			"navigationBarTitleText" : "mine"
-		}
-	},
-	{
-		"path" : "pages/login/login",
-		"style" : 
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationBarTitleText": "mine"
+			}
+		},
 		{
-			"navigationBarTitleText" : ""
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录"
+
+			}
 		}
-	}],
+	],
 	"tabBar": {
 		"color": "#1d1d1f",
 		"selectedColor": "#0071e3",
@@ -33,23 +53,23 @@
 		"backgroundColor": "#ffffff",
 		"list": [{
 			"pagePath": "pages/index/index",
-			"iconPath": "static/img/home-black.svg",
-			"selectedIconPath": "static/img/home-blue.svg",
+			"iconPath": "static/img/home-black.png",
+			"selectedIconPath": "static/img/home-blue.png",
 			"text": "首页"
 		}, {
 			"pagePath": "pages/mine/mine",
-			"iconPath": "static/img/mine-black.svg",
-			"selectedIconPath": "static/img/mine-blue.svg",
+			"iconPath": "static/img/mine-black.png",
+			"selectedIconPath": "static/img/mine-blue.png",
 			"text": "我的"
 		}]
 	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "酒店管理",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8",
-		"app-plus": {
-			"background": "#efeff4"
-		}
+		"backgroundColor": "#F8F8F8"
+
+
+
 	}
 }

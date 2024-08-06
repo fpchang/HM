@@ -63,6 +63,9 @@
 				},
 			}
 		},
+		onReady() {
+			uni.setStorageSync("name","cfp")
+		},
 		computed:{
 			phoneValid(){
 				return false;
@@ -73,6 +76,7 @@
 				console.log(this.baseFormData.phone);
 			},
 			submit(ref){
+				uni.setStorageSync("name","cfp");
 				console.log(this.baseFormData);
 				this.$refs[ref].validate().then(res => {
 									console.log('success', res);

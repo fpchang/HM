@@ -2,31 +2,32 @@
   "pages": [
     "pages/index/index",
     "pages/table/table",
-    "pages/mine/mine"
+    "pages/mine/mine",
+    "pages/login/login"
   ],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
+    "navigationBarTitleText": "酒店管理",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
   },
   "tabBar": {
-    "color": "#7A7E83",
-    "selectedColor": "#3cc51f",
+    "color": "#1d1d1f",
+    "selectedColor": "#0071e3",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "iconPath": "static/c1.png",
-        "selectedIconPath": "static/c2.png",
-        "text": "组件"
+        "iconPath": "static/img/home-black.png",
+        "selectedIconPath": "static/img/home-blue.png",
+        "text": "首页"
       },
       {
         "pagePath": "pages/mine/mine",
-        "iconPath": "static/c3.png",
-        "selectedIconPath": "static/c4.png",
-        "text": "接口"
+        "iconPath": "static/img/mine-black.png",
+        "selectedIconPath": "static/img/mine-blue.png",
+        "text": "我的"
       }
     ]
   },
