@@ -11,7 +11,7 @@
 					"buttons": [ 
 						{
 
-
+							"float":"left",
 							"fontSize": "30rpx",
 							"background": "#ff0000",
 							"color": "#000000",
