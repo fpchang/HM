@@ -102,7 +102,7 @@
 				let {
 					scrollTop
 				} = e.detail;
-				this.isSticky = (scrollTop > 80 ? true : false);
+				this.isSticky = (scrollTop >= 70 ? true : false);
 			}
 		}
 	}
@@ -139,11 +139,14 @@
 		
 		.navbar {
 			width: 100%;
-			height: 40px;		
+			height: 60px;		
 			z-index: 999;
-			padding:10px 20px;
+			padding:0 20px;
 			box-sizing: border-box;
 			background-color: #fff;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 	}
 
@@ -155,8 +158,8 @@
 		left: 0;
 	}
 	.content-area{
-		min-height: calc(100vh - 140px);
-		height: 1200px;
+		min-height: calc(100vh - 180px);
+		height: 1600px;
 		background-color: red;
 	}
 </style>
