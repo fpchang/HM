@@ -1,18 +1,47 @@
 <template>
+	<scroll-view :scroll-y="true" :scroll-top="0" @scroll="scrollEvent" style="height:calc(100vh - 50px);">
+		<view style="" class="container">
 
-	<uni-drawer ref="showLeft" mode="left">
-		<scroll-view style="height: 100%;" scroll-y="true">
-			 <uni-list>
-			 	
-			 	<uni-list-item  v-for="item in hotelList" :key="item.id" :title="item.name" :note="item.subName"  :thumb="item.logoSrc"
-			 	 thumb-size="lg" :class="[item._id==activeHotle._id?'activeHotelItemSelect':'']" clickable="true" showArrow  @click="checkHotel(item)"></uni-list-item>
-			</uni-list>
-		</scroll-view>
-	</uni-drawer>
-	<view>
- 
+<view class="top-area">
+	<view class="title-area">
+		<view class="check-area">
+			<text class="$uni-font-size-lg">见山舍民宿</text>
+			<u-icon name="arrow-down-fill" color="#000" size="20px" top="2"></u-icon>
+		</view>
+		<view class="add-area">
+			<u-icon name="plus-circle" color="#000" size="20px" label="" top="2"></u-icon>
+		</view>
 	</view>
+	<view :class="['navbar',isSticky?'sticky-style':'']">
+		<u-tabs @click="clickTab" @change="checkTab" :list="list4" lineWidth="0" lineColor="#f56c6c"
+			:current="currentTab_index"
+			:activeStyle="{
+			            color: '#303133',
+			            fontWeight: 'bold',
+						fontSize:'20px',
+			            transform: 'scale(1.15)'
+			        }" :inactiveStyle="{
+			            color: '#606266',
+						fontSize:'20px',
+			            transform: 'scale(1)'
+			        }" itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;">
+		</u-tabs>
+	</view>
+	
+</view>
+			
 
+
+
+			<view class="content-area">
+
+				<u-icon name="photo" color="#2979ff" size="28"></u-icon>
+
+			</view>
+		</view>
+
+
+	</scroll-view>
 
 
 
@@ -22,78 +51,58 @@
 	export default {
 		data() {
 			return {
-				activeHotle:{
-					_id:"002",
-					name:"见山舍",
-					name_Zn:"",
-					subName:"1店",
-					logoSrc:"https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png"
-				},
-				hotelList:[{
-					_id:"001",
-					name:"见山舍",
-					name_Zn:"",
-					subName:"1店",
-					logoSrc:"https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png"
-				},
-				{
-					_id:"002",
-					name:"见山舍2",
-					name_Zn:"",
-					subName:"2店",
-					logoSrc:"https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png"
-				}],
-
-				name: "",
-				href: 'https://uniapp.dcloud.io/component/README?id=uniui'
+				title: 'Hello',
+				isSticky: false,
+				currentTab_index:0,
+				list4: [{
+					id:"11",
+					name: '关注'
+				}, {
+					id:"22",
+					name: '推荐',
+					badge: {
+						isDot: true
+					}
+				}, {
+					id:"33",
+					name: '电影',
+				}, {
+					id:"22",
+					name: '推荐',
+					badge: {
+						isDot: true
+					}
+				}, {
+					id:"33",
+					name: '电影',
+				}, {
+					id:"22",
+					name: '推荐',
+					badge: {
+						isDot: true
+					}
+				}, {
+					id:"33",
+					name: '电影',
+				}]
 			}
 		},
 		onLoad() {
 
 		},
-
-		onReady() {
-
-			//this.getData();
-			this.getOpenId();
-
-
-		},
-		onNavigationBarButtonTap(e) {
-			console.log("www", e);
-			this.showDrawer();
-		},
 		methods: {
-			getOpenId() {
-				uniCloud.callFunction({
-					name: "getOpenId",
-					data: {
-						code: "0b1ZSx000bQFtS1KFv100pGTCU2ZSx01",
-						secret: "845eff40726dc3624688c347dab12bce",
-						appId: "wxb0704bf984581410"
-					}
-				}).then(res => {
-					console.log("获取的openid.....", res)
-				})
+			clickTab(e) {
+				console.log("clickTab", e)
+				this.currentTab_index =e.index;
 			},
-			getData() {
-				const db = uniCloud.database();
-
-				db.collection('order').where("checkInEndDateTimeStamp<22222222222222222&&checkInStartDateTimeStamp>111111")
-					.get().then(res => {
-						console.log("11111", res)
-
-					})
+			checkTab(e) {
+				//console.log("checkTab", e)
 			},
-			showDrawer() {
-				this.$refs.showLeft.open();
-			},
-			closeDrawer() {
-				this.$refs.showLeft.close();
-			},
-			checkHotel(item){
-				let {_id,name}=item;
-				console.log("222",item)
+			scrollEvent(e) {
+				let {
+					scrollTop
+				} = e.detail;
+				this.isSticky = (scrollTop > 80 ? true : false);
 			}
 		}
 	}
@@ -101,18 +110,53 @@
 
 <style lang="scss">
 	.container {
-		padding: 20px;
-		font-size: 14px;
-		line-height: 24px;
+		
+		display: flex;
+		flex-direction: column;
+		font-size: $uni-font-size-lgs;
 	}
 
-	.con {
-		background-color: red;
-		width: 600rpx;
-		height: 400rpx;
+	.top-area {
+		
+		height: 130px;
+		box-sizing: border-box;
+		.title-area{
+			height: 70px;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+			padding: 0 20px;
+			.check-area {
+				height: 24px;
+				display: flex;
+				flex-direction: row;
+				text-align: center;
+				overflow: hidden;
+			
+			}
+		};
+		
+		.navbar {
+			width: 100%;
+			height: 40px;		
+			z-index: 999;
+			padding:10px 20px;
+			box-sizing: border-box;
+			background-color: #fff;
+		}
 	}
-	.activeHotelItemSelect{
-		background-color: #ddd!important;
-		/*border:2rpx solid blue;*/
+
+
+
+	.sticky-style {
+		position: fixed;
+		top: 0;
+		left: 0;
+	}
+	.content-area{
+		min-height: calc(100vh - 140px);
+		height: 1200px;
+		background-color: red;
 	}
 </style>
