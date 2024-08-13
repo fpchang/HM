@@ -1,53 +1,68 @@
 <template>
-	<scroll-view :scroll-y="true" show-scrollbar="false" :scroll-top="0" @scroll="scrollEvent" style="height: 100vh;">
-		<view style="" class="container">
-			<view class="scroll-content">
-				
-				<view style="height:60px"></view>
-				<view :class="['top-area',isSticky?'sticky-style':'']">
-					<view class="title-area" :style="{opacity:opacityVal}">
-						<view class="check-area">
-							<text class="$uni-font-size-lg">见山舍民宿</text>
-							<u-icon name="arrow-down-fill" color="#000" size="20px" top="2"></u-icon>
+	<view>
+		<scroll-view :scroll-y="true" show-scrollbar="false" :scroll-top="0" @scroll="scrollEvent"
+			style="height: 100vh;">
+			<view style="" class="container">
+				<view class="scroll-content">
+
+					<view style="height:60px"></view>
+					<view :class="['top-area',isSticky?'sticky-style':'']">
+						<view class="title-area" :style="{opacity:opacityVal}"> 
+							<view class="check-area" @click="showCheckHotel">
+								<text class="$uni-font-size-lg" >见山舍民宿</text>
+								<u-icon name="arrow-down-fill" color="#000" size="20px" top="2"></u-icon>
+							</view>
+							<view class="add-area">
+								<u-icon name="plus-circle" color="#000" size="20px" label="" top="2"></u-icon>
+							</view>
 						</view>
-						<view class="add-area">
-							<u-icon name="plus-circle" color="#000" size="20px" label="" top="2"></u-icon>
+						<view class="navbar">
+							<view class="nav-content">
+								<u-tabs @click="clickTab" @change="checkTab" :list="list4" lineWidth="0"
+									lineColor="#f56c6c" :current="currentTab_index" :activeStyle="{
+									    color: '#303133',
+									    fontWeight: 'bold',
+										fontSize:'20px',
+									    transform: 'scale(1.15)'
+									}" :inactiveStyle="{
+									    color: '#606266',
+										fontSize:'20px',
+									    transform: 'scale(1)'
+									}" itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;">
+								</u-tabs>
+							</view>
+
 						</view>
+
 					</view>
-					<view class="navbar">
-						<view class="nav-content">
-							<u-tabs @click="clickTab" @change="checkTab" :list="list4" lineWidth="0" lineColor="#f56c6c"
-								:current="currentTab_index" :activeStyle="{
-							    color: '#303133',
-							    fontWeight: 'bold',
-								fontSize:'20px',
-							    transform: 'scale(1.15)'
-							}" :inactiveStyle="{
-							    color: '#606266',
-								fontSize:'20px',
-							    transform: 'scale(1)'
-							}" itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;">
-							</u-tabs>
-						</view>
-						
-					</view>
-				
+
+
 				</view>
-				
-				
+
+
+
+				<view class="content-area">
+
+				</view>
 			</view>
-			
 
 
-			<view class="content-area">
+		</scroll-view>
+
+
 		
-			</view>
-		</view>
 
-
-	</scroll-view>
-
-
+<u-popup :show="showDrawer" mode="left"  @close="closeDrawerEvent" @open="showDrawerEvent" :closeOnClickOverlay="true">
+       <u-list style="margin-top: 60px;width: 40vw;">
+       	<u-list-item v-for="(item, index) in hotelList" :key="index">
+       		<u-cell :title="`${item.subName}`">
+       			<u-avatar slot="icon" shape="square" size="35" :src="item.logoSrc"
+       				customStyle="margin: -3px 5px -3px 0"></u-avatar>
+       		</u-cell>
+       	</u-list-item>
+       </u-list> 
+	</u-popup>
+	</view>
 
 </template>
 
@@ -57,34 +72,75 @@
 			return {
 				title: 'Hello',
 				isSticky: false,
-				opacityVal:1,
+				opacityVal: 1,
 				currentTab_index: 0,
+				showDrawer:false,
 				list4: [{
-                    name: '关注',
-                }, {
-                    name: '推荐',
-                }, {
-                    name: '电影'
-                }, {
-                    name: '科技'
-                }, {
-                    name: '音乐'
-                }, {
-                    name: '美食'
-                }, {
-                    name: '文化'
-                }, {
-                    name: '财经'
-                }, {
-                    name: '手工'
-                }]
-			
+					name: '关注',
+				}, {
+					name: '推荐',
+				}, {
+					name: '电影'
+				}, {
+					name: '科技'
+				}, {
+					name: '音乐'
+				}, {
+					name: '美食'
+				}, {
+					name: '文化'
+				}, {
+					name: '财经'
+				}, {
+					name: '手工'
+				}],
+				slelectHotelvalue: "",
+				activeHotle: {
+					_id: "002",
+					name: "见山舍",
+					name_Zn: "",
+					subName: "1店",
+					logoSrc: "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png"
+				},
+				hotelList: [{
+						_id: "001",
+						name: "见山舍",
+						name_Zn: "",
+						subName: "1店",
+						logoSrc: "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png"
+					},
+					{
+						_id: "002",
+						name: "见山舍2",
+						name_Zn: "",
+						subName: "2店",
+						logoSrc: "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png"
+					}
+				]
+
 			}
 		},
 		onLoad() {
 
 		},
 		methods: {
+			showCheckHotel() {
+				this.showDrawerEvent();
+			},
+			checkHotel(item) {
+				let {
+					_id,
+					name
+				} = item;
+				console.log("222", item)
+
+			},
+			showDrawerEvent() {
+				this.showDrawer=true
+			},
+			closeDrawerEvent() {
+				this.showDrawer=false
+			},
 			clickTab(e) {
 				console.log("clickTab", e)
 				this.currentTab_index = e.index;
@@ -96,7 +152,7 @@
 				let {
 					scrollTop
 				} = e.detail;
-				this.opacityVal=1-(Math.min(scrollTop/60,1));
+				this.opacityVal = 1 - (Math.min(scrollTop / 60, 1));
 				this.isSticky = (scrollTop >= 60 ? true : false);
 			}
 		}
@@ -110,15 +166,18 @@
 		flex-direction: column;
 		font-size: $uni-font-size-lgs;
 	}
-.scroll-content{
-	height:190px;
-}
+
+	.scroll-content {
+		height: 190px;
+	}
+
 	.scroll-content .top-area {
-		
+
 		height: 130px;
 		box-sizing: border-box;
 		z-index: 999;
 		background-color: #fff;
+
 		.title-area {
 			height: 70px;
 			display: flex;
@@ -126,14 +185,14 @@
 			align-items: center;
 			justify-content: space-between;
 			padding: 0 20px;
-			
+
 			.check-area {
 				height: 24px;
 				display: flex;
 				flex-direction: row;
 				text-align: center;
 				overflow: hidden;
-				
+
 
 			}
 		}
@@ -146,17 +205,18 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			
-			
+
+
 			background-color: #fff;
-			.nav-content{	
+
+			.nav-content {
 				padding: 0 15px;
 				width: 100%;
 				box-sizing: border-box;
-				
-				
+
+
 			}
-			
+
 		}
 	}
 
@@ -173,5 +233,10 @@
 		min-height: calc(100vh - 130px);
 		height: 120vh;
 		background-color: #eee;
+	}
+
+	.activeHotelItemSelect {
+		background-color: #ddd !important;
+		/*border:2rpx solid blue;*/
 	}
 </style>
