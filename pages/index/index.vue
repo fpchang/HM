@@ -1,42 +1,46 @@
 <template>
-	<scroll-view :scroll-y="true" :scroll-top="0" @scroll="scrollEvent" style="height:calc(100vh - 50px);">
+	<scroll-view :scroll-y="true" show-scrollbar="false" :scroll-top="0" @scroll="scrollEvent" style="height: 100vh;">
 		<view style="" class="container">
-
-<view class="top-area">
-	<view class="title-area">
-		<view class="check-area">
-			<text class="$uni-font-size-lg">见山舍民宿</text>
-			<u-icon name="arrow-down-fill" color="#000" size="20px" top="2"></u-icon>
-		</view>
-		<view class="add-area">
-			<u-icon name="plus-circle" color="#000" size="20px" label="" top="2"></u-icon>
-		</view>
-	</view>
-	<view :class="['navbar',isSticky?'sticky-style':'']">
-		<u-tabs @click="clickTab" @change="checkTab" :list="list4" lineWidth="0" lineColor="#f56c6c"
-			:current="currentTab_index"
-			:activeStyle="{
-			            color: '#303133',
-			            fontWeight: 'bold',
-						fontSize:'20px',
-			            transform: 'scale(1.15)'
-			        }" :inactiveStyle="{
-			            color: '#606266',
-						fontSize:'20px',
-			            transform: 'scale(1)'
-			        }" itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;">
-		</u-tabs>
-	</view>
-	
-</view>
+			<view class="scroll-content">
+				
+				<view style="height:60px"></view>
+				<view :class="['top-area',isSticky?'sticky-style':'']">
+					<view class="title-area" :style="{opacity:opacityVal}">
+						<view class="check-area">
+							<text class="$uni-font-size-lg">见山舍民宿</text>
+							<u-icon name="arrow-down-fill" color="#000" size="20px" top="2"></u-icon>
+						</view>
+						<view class="add-area">
+							<u-icon name="plus-circle" color="#000" size="20px" label="" top="2"></u-icon>
+						</view>
+					</view>
+					<view class="navbar">
+						<view class="nav-content">
+							<u-tabs @click="clickTab" @change="checkTab" :list="list4" lineWidth="0" lineColor="#f56c6c"
+								:current="currentTab_index" :activeStyle="{
+							    color: '#303133',
+							    fontWeight: 'bold',
+								fontSize:'20px',
+							    transform: 'scale(1.15)'
+							}" :inactiveStyle="{
+							    color: '#606266',
+								fontSize:'20px',
+							    transform: 'scale(1)'
+							}" itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;">
+							</u-tabs>
+						</view>
+						
+					</view>
+				
+				</view>
+				
+				
+			</view>
 			
 
 
-
 			<view class="content-area">
-
-				<u-icon name="photo" color="#2979ff" size="28"></u-icon>
-
+		
 			</view>
 		</view>
 
@@ -53,38 +57,28 @@
 			return {
 				title: 'Hello',
 				isSticky: false,
-				currentTab_index:0,
+				opacityVal:1,
+				currentTab_index: 0,
 				list4: [{
-					id:"11",
-					name: '关注'
-				}, {
-					id:"22",
-					name: '推荐',
-					badge: {
-						isDot: true
-					}
-				}, {
-					id:"33",
-					name: '电影',
-				}, {
-					id:"22",
-					name: '推荐',
-					badge: {
-						isDot: true
-					}
-				}, {
-					id:"33",
-					name: '电影',
-				}, {
-					id:"22",
-					name: '推荐',
-					badge: {
-						isDot: true
-					}
-				}, {
-					id:"33",
-					name: '电影',
-				}]
+                    name: '关注',
+                }, {
+                    name: '推荐',
+                }, {
+                    name: '电影'
+                }, {
+                    name: '科技'
+                }, {
+                    name: '音乐'
+                }, {
+                    name: '美食'
+                }, {
+                    name: '文化'
+                }, {
+                    name: '财经'
+                }, {
+                    name: '手工'
+                }]
+			
 			}
 		},
 		onLoad() {
@@ -93,7 +87,7 @@
 		methods: {
 			clickTab(e) {
 				console.log("clickTab", e)
-				this.currentTab_index =e.index;
+				this.currentTab_index = e.index;
 			},
 			checkTab(e) {
 				//console.log("checkTab", e)
@@ -102,7 +96,8 @@
 				let {
 					scrollTop
 				} = e.detail;
-				this.isSticky = (scrollTop >= 70 ? true : false);
+				this.opacityVal=1-(Math.min(scrollTop/60,1));
+				this.isSticky = (scrollTop >= 60 ? true : false);
 			}
 		}
 	}
@@ -110,56 +105,73 @@
 
 <style lang="scss">
 	.container {
-		
+
 		display: flex;
 		flex-direction: column;
 		font-size: $uni-font-size-lgs;
 	}
-
-	.top-area {
+.scroll-content{
+	height:190px;
+}
+	.scroll-content .top-area {
 		
 		height: 130px;
 		box-sizing: border-box;
-		.title-area{
+		z-index: 999;
+		background-color: #fff;
+		.title-area {
 			height: 70px;
 			display: flex;
 			flex-direction: row;
 			align-items: center;
 			justify-content: space-between;
 			padding: 0 20px;
+			
 			.check-area {
 				height: 24px;
 				display: flex;
 				flex-direction: row;
 				text-align: center;
 				overflow: hidden;
-			
+				
+
 			}
-		};
-		
+		}
+
+		;
+
 		.navbar {
 			width: 100%;
-			height: 60px;		
-			z-index: 999;
-			padding:0 20px;
-			box-sizing: border-box;
-			background-color: #fff;
+			height: 60px;
 			display: flex;
 			justify-content: center;
 			align-items: center;
+			
+			
+			background-color: #fff;
+			.nav-content{	
+				padding: 0 15px;
+				width: 100%;
+				box-sizing: border-box;
+				
+				
+			}
+			
 		}
 	}
 
 
 
 	.sticky-style {
+		width: 100vw;
 		position: fixed;
 		top: 0;
 		left: 0;
 	}
-	.content-area{
-		min-height: calc(100vh - 180px);
-		height: 1600px;
-		background-color: red;
+
+	.content-area {
+		min-height: calc(100vh - 130px);
+		height: 120vh;
+		background-color: #eee;
 	}
 </style>
