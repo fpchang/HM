@@ -9,7 +9,13 @@
 		  },
 		  data(){
 			  return {}
-		  }
+		  },
+		  created() {
+		  	console.log('gatherComponent create')
+		  },
+		  onLoad: function() {
+		  	console.log('gatherComponent Show')
+		  },
 	}
 	 
 </script>

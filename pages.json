@@ -26,7 +26,8 @@
 				"iconPath": "static/img/home-black.png",
 				"selectedIconPath": "static/img/home-blue.png",
 				"text": "首页"
-			}, {
+			}, 
+			{
 				"pagePath": "pages/mine/mine",
 				"iconPath": "static/img/mine-black.png",
 				"selectedIconPath": "static/img/mine-blue.png",

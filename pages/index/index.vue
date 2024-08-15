@@ -40,7 +40,10 @@
 				<scroll-view :scroll-y="true" show-scrollbar="false" :scroll-top="0" 
 					:style="{height:scrollHeight}">
 					<view style="height: 1200px;">{{item.name}}
-					<gatherComponentVue></gatherComponentVue>
+					<keep-alive>
+						<gatherComponent v-if="item.ComponentName=='gatherComponent'"></gatherComponent>
+					</keep-alive>
+					
 					</view>
 				</scroll-view>
 			</swiper-item>
@@ -63,10 +66,10 @@
 </template>
 
 <script>
-	import gatherComponentVue from './components/gatherComponent.vue';
+	import gatherComponent from './components/gatherComponent.vue';
 	export default {
 		components:{
-			gatherComponentVue
+			gatherComponent
 		},
 		data() {
 			return {
@@ -79,18 +82,25 @@
 				
 				tabList: [{
 					name: '关注',
+					ComponentName:"gatherComponent"
 				}, {
 					name: '订房管理',
+					ComponentName:"orderComponent"
 				}, {
-					name: '合作景点'
+					name: '合作景点',
+					ComponentName:"orderComponent"
 				}, {
-					name: '定餐'
+					name: '定餐',
+					ComponentName:"orderComponent"
 				}, {
-					name: '人员管理'
+					name: '人员管理',
+					ComponentName:"orderComponent"
 				}, {
-					name: '水单'
+					name: '水单',
+					ComponentName:"orderComponent"
 				}, {
-					name: '发票'
+					name: '发票',
+					ComponentName:"orderComponent"
 				}],
 				slelectHotelvalue: "",
 				activeHotle: {

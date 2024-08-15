@@ -3,11 +3,11 @@
 		onLaunch: function() {
 			console.log('App Launch')
 			if(this.globalData.systemInfo.deviceType=='pc'){
-				uni.hideTabBar({
-					success:()=>{
-						console.log("隐藏成功")
-					}
-				});
+				// uni.hideTabBar({
+				// 	success:()=>{
+				// 		console.log("隐藏成功")
+				// 	}
+				// });
 			}
 		},
 		onShow: function() {
