@@ -114,6 +114,13 @@
         "enablePullDownRefresh": false,
         "navigationBarTitleText": "实名认证"
     }
+},
+{
+	"path" : "pages/login/login",
+	"style" : 
+	{
+		 "navigationStyle": "custom"
+	}
 }
 ],
 	"tabBar": {

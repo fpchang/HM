@@ -1,8 +1,8 @@
 <template>
 	<view>
-		<view class="top-container" style="height: 190px;">
+		<view class="top-container" >
 			<view class="scroll-content">
-				<view style="height:60px"></view>
+				<view :style="{height:styleObj.navTopHeight}"></view>
 				<view :class="['top-area',isSticky?'sticky-style':'']">
 					<view class="title-area" :style="{opacity:opacityVal}">
 						<view class="check-area" @click="showCheckHotel">
@@ -74,10 +74,12 @@
 		data() {
 			return {
 				title: 'Hello',
+				styleObj:{
+					navTopHeight:getApp().globalData.systemInfo.deviceType=='pc'?0:'60px'
+				},
 				isSticky: false,
 				opacityVal: 1,
-				currentTab_index: 0,
-				
+				currentTab_index: 0,				
 				showDrawer: false,
 				
 				tabList: [{
@@ -129,12 +131,15 @@
 			}
 		},
 		onLoad() {
-			console.log(111,getApp().globalData.systemInfo)
+			console.log(111,getApp().globalData.systemInfo);
+			uni.switchTab({
+				url:"/pages/login/login"
+			})
 		},
 		computed:{
 			scrollHeight(){
 				let deviceType=getApp().globalData.systemInfo.deviceType;
-				return (deviceType=='pc'?'calc(100vh - 240rpx)':'calc(100vh - 190rpx)')
+				return (deviceType=='pc'?'calc(100vh - 130rpx)':'calc(100vh - 190rpx)')
 				
 			}
 		},
@@ -187,7 +192,7 @@
 	}
 
 	.scroll-content {
-		height: 190px;
+		
 	}
 
 	.scroll-content .top-area {
