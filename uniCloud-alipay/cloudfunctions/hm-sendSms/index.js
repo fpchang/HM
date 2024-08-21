@@ -2,7 +2,7 @@
 exports.main = async (event, context) => {
 	//event为客户端上传的参数
 	console.log('event : ', event);
-	let {appid,mobile,templateId='34'} =event;
+	let {appid,mobile,templateId='33864'} =event;
 	console.log("9999",templateId);
 	return 111;
 	  try {

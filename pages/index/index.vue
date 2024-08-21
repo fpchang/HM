@@ -132,9 +132,9 @@
 		},
 		onLoad() {
 			console.log(111,getApp().globalData.systemInfo);
-			uni.switchTab({
-				url:"/pages/login/login"
-			})
+			// uni.redirectTo({
+			// 	url:"/pages/login/login"
+			// })
 		},
 		computed:{
 			scrollHeight(){

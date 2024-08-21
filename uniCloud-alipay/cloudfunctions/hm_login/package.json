@@ -1,7 +1,10 @@
 {
   "name": "hm_login",
-  "dependencies": {},
+  "dependencies": {
+    "dateFormat": "file:../common/dateFormat"
+  },
   "extensions": {
-    "uni-cloud-jql": {}
+    "uni-cloud-jql": {},
+    "uni-cloud-sms": {}
   }
 }

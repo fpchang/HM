@@ -132,11 +132,30 @@
 						name:'hm_login',
 						data:this.userForm
 					}).then(res=>{
-						console.log("login result",res.data)
+						console.log("login result----",res)
+						
+						if(res.result.errCode==0){
+							console.log("登录成功");
+							 this.getUserInfo();
+						}
+						
+					}).catch(error=>{
+						console.error("登录注册失败",error);
+						this.submitLoading=false;
 					})
 					
 				}).catch(errors => {
 					uni.$u.toast('校验失败',errors)
+				})
+			},
+			async getUserInfo(){
+				console.log(this.userForm.mobile);
+				const db = uniCloud.database();
+				const userRes = await db.collection("hm-user").where(`mobile=='${this.userForm.mobile}'`).get();
+				console.log("更新userInfo",userRes.result.data[0]);
+				uni.setStorageSync('user',userRes.result.data[0]);
+				uni.reLaunch({
+					url:'/pages/index/index'
 				})
 			}
 		}
