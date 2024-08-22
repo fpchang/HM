@@ -5,12 +5,20 @@
 		onLaunch: function() {
 			console.log('App Launch')
 			if(this.globalData.systemInfo.deviceType=='pc'){
-				// uni.hideTabBar({
-				// 	success:()=>{
-				// 		console.log("隐藏成功")
-				// 	}
-				// });
+				uni.hideTabBar({
+					success:()=>{
+						console.log("隐藏成功")
+					}
+				});
 			}
+			let user = uni.getStorageSync("user");
+			if(user){
+				this.globalData.user=user;
+				return;
+			}
+			uni.reLaunch({
+				url:'/pages/login/login'
+			});
 		},
 		onShow: function() {
 			console.log('App Show')
@@ -19,7 +27,8 @@
 			console.log('App Hide')
 		},
 		globalData:{
-			systemInfo:uni.getSystemInfoSync()
+			systemInfo:uni.getSystemInfoSync(),
+			user:null
 		}
 	}
 </script>
