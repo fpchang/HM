@@ -36,12 +36,13 @@
 		</view>
 		
 		<swiper :style="{height:scrollHeight}" :current="currentTab_index" @change="swiperContentEvent">
-			<swiper-item style="background-color: green;"  v-for="item in tabList">
+			<swiper-item  v-for="item in tabList">
 				<scroll-view :scroll-y="true" show-scrollbar="false" :scroll-top="0" 
 					:style="{height:scrollHeight}">
-					<view style="height: 1200px;">{{item.name}}
+					<view>
 					<keep-alive>
 						<gatherComponent v-if="item.ComponentName=='gatherComponent'"></gatherComponent>
+						<orderComponent v-if="item.ComponentName=='orderComponent'"></orderComponent>
 					</keep-alive>
 					
 					</view>
@@ -67,9 +68,11 @@
 
 <script>
 	import gatherComponent from './components/gatherComponent.vue';
+	import orderComponent from './components/orderComponent.vue';
 	export default {
 		components:{
-			gatherComponent
+			gatherComponent,
+			orderComponent
 		},
 		data() {
 			return {
@@ -79,7 +82,7 @@
 				},
 				isSticky: false,
 				opacityVal: 1,
-				currentTab_index: 0,				
+				currentTab_index: 1,				
 				showDrawer: false,
 				
 				tabList: [{
@@ -90,19 +93,19 @@
 					ComponentName:"orderComponent"
 				}, {
 					name: '合作景点',
-					ComponentName:"orderComponent"
+					ComponentName:"orderComponent1"
 				}, {
 					name: '定餐',
-					ComponentName:"orderComponent"
+					ComponentName:"orderComponent2"
 				}, {
 					name: '人员管理',
-					ComponentName:"orderComponent"
+					ComponentName:"orderComponent3"
 				}, {
 					name: '水单',
-					ComponentName:"orderComponent"
+					ComponentName:"orderComponent4"
 				}, {
 					name: '发票',
-					ComponentName:"orderComponent"
+					ComponentName:"orderComponent5"
 				}],
 				slelectHotelvalue: "",
 				activeHotle: {
@@ -139,7 +142,7 @@
 		computed:{
 			scrollHeight(){
 				let deviceType=getApp().globalData.systemInfo.deviceType;
-				return (deviceType=='pc'?'calc(100vh - 130rpx)':'calc(100vh - 190rpx)')
+				return (deviceType=='pc'?'calc(100vh - 130px)':'calc(100vh - 190px)')
 				
 			}
 		},
