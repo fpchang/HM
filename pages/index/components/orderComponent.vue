@@ -6,6 +6,9 @@
 		</view>
 		<view class="content">
 			<view v-if="current === 0">
+			<orderChildCalendarList></orderChildCalendarList>	
+			</view>
+			<view v-if="current === 1">
 				<view class="mobile-show-style" style="max-width: 450px;">
 					<uni-collapse accordion v-model="accordionVal" @change="change">
 						<uni-collapse-item title="手风琴效果">
@@ -27,7 +30,7 @@
 				</view>
 				
 			</view>
-			<view v-if="current === 1">
+			<view v-if="current === 2">
 				<view class="h5-show-style">
 					<uni-table border stripe emptyText="暂无更多数据">
 						<!-- 表头行 -->
@@ -62,7 +65,7 @@
 				</view>
 				
 			</view>
-			<view v-if="current === 2"><text class="content-text">选项卡3的内容</text></view>
+			
 		</view>
 		
 	</view>
@@ -70,14 +73,19 @@
 </template>
 
 <script>
+	import orderChildCalendarList from './orderChildCalendarList'
 	export default {
+		components:{
+			orderChildCalendarList
+		},
 		props: {
 
 		},
 		data() {
 			return {
+				ss:15868865907,
 				current:0,
-				items: ['列表', '表格', '选项卡3']
+				items: ['日历', '列表', '表格']
 			}
 		},
 		created() {
