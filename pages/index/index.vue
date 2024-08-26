@@ -41,8 +41,8 @@
 					:style="{height:scrollHeight}">
 					<view>
 					<keep-alive>
-						<gatherComponent v-if="item.ComponentName=='gatherComponent'"></gatherComponent>
-						<orderComponent v-if="item.ComponentName=='orderComponent'"></orderComponent>
+						<gatherComponent :disHeightVal="disHeightVal" v-if="item.ComponentName=='gatherComponent'"></gatherComponent>
+						<orderComponent :disHeightVal="disHeightVal" v-if="item.ComponentName=='orderComponent'"></orderComponent>
 					</keep-alive>
 					
 					</view>
@@ -140,10 +140,13 @@
 			// })
 		},
 		computed:{
-			scrollHeight(){
+			disHeightVal(){
 				let deviceType=getApp().globalData.systemInfo.deviceType;
-				return (deviceType=='pc'?'calc(100vh - 130px)':'calc(100vh - 190px)')
+				return (deviceType=='pc'?'130px':'190px')
 				
+			},
+			scrollHeight(){
+				return `calc(100vh - ${this.disHeightVal})`;
 			}
 		},
 		methods: {

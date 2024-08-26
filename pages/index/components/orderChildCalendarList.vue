@@ -1,13 +1,16 @@
 <template>
 	<view>
-			<u-calendar startYear="2022" end-year="2026"></u-calendar>
+		
+			<u-calendar :height="calendarHeight" tipArr=[] :startYear="calendarStartYear" :end-year="calendarEndYear"></u-calendar>
 	</view>
 </template>
 
 <script>
 	export
 	default {
-		props: {},
+		props:[
+			'disHeightVal'
+		],
 		data() {
 			return {
 				roomIdList: ["201", "202", "203", "204", "301", "302", "303"],
@@ -44,7 +47,21 @@
 			}
 
 		},
+		
+		created() {
+			console.log("val---",this.disHeightVal)
+		},
 		computed: {
+			calendarHeight(){
+				let tabCheckHeight = '36px';
+				return `calc(100vh - ${tabCheckHeight} - ${this.disHeightVal})`;
+			},
+			calendarStartYear(){
+				return new Date().getFullYear();
+			},
+			calendarEndYear(){
+				return new Date().getFullYear() + 1;
+			},
 			dateTabList() {
 				let curDateTimeStamp = new Date().getTime();
 				let dateList = [];

@@ -6,7 +6,7 @@
 		</view>
 		<view class="content">
 			<view v-if="current === 0">
-			<orderChildCalendarList></orderChildCalendarList>	
+			<orderChildCalendarList :disHeightVal="disHeightVal"></orderChildCalendarList>	
 			</view>
 			<view v-if="current === 1">
 				<view class="mobile-show-style" style="max-width: 450px;">
@@ -78,9 +78,7 @@
 		components:{
 			orderChildCalendarList
 		},
-		props: {
-
-		},
+		props:['disHeightVal'],
 		data() {
 			return {
 				ss:15868865907,
