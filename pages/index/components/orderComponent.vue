@@ -1,6 +1,6 @@
 <template>
 	<view class="order-component">
-		<view class="uni-padding-wrap uni-common-mt" style="max-width: 450px;">
+		<view class="uni-padding-wrap uni-common-mt" style="max-width: 450px;padding:0 15px">
 			<uni-segmented-control :current="current" :values="items" :style-type="styleType"
 				:active-color="activeColor" @clickItem="onClickItem" />
 		</view>
@@ -73,7 +73,7 @@
 </template>
 
 <script>
-	import orderChildCalendarList from './orderChildCalendarList'
+	import orderChildCalendarList from './orderChildCalendarList2'
 	export default {
 		components:{
 			orderChildCalendarList
@@ -104,7 +104,6 @@
 
 <style lang="scss">
 	.order-component {
-		padding: 0 15px;
 		box-sizing: border-box;
 	}
 </style>
