@@ -3,9 +3,9 @@
 		<view class="left-table-style">
 			<view class="th-style"><text>房间号</text></view>
 			<view class="td-style" v-for="item in roomTypeList">
-			<text>
-				{{item.name_Zn}}
-			</text>
+				<text>
+					{{item.name_Zn}}
+				</text>
 			</view>
 		</view>
 		<view class="checkInTable-style" style="flex: 1;">
@@ -18,14 +18,14 @@
 								<text>{{item.de}}</text>
 								<text>{{item.dy}}</text>
 							</view>
-							
+
 						</view>
 					</view>
-					<!-- <view class="checkIntable-h-list" v-for="it in roomIdList">
-						<view :class="[checkIntable-h-list-h,td-style,it.isBalancePayment?'isContinueCheckIn':'']"
-							v-for="i in getFormatTableList[item]" @click="showDetail">{{i.userName?i.userName:''}}
+					<view class="checkIntable-h-list" v-for="it in checkInOrderListFormat">
+						<view :class="['checkIntable-h-list-h','td-style',1?'isContinueCheckIn':'']"
+							v-for="i in it" @click="showDetail">{{i.userName?i.userName:''}}
 						</view>
-					</view> -->
+					</view>
 
 				</view>
 			</view>
@@ -70,6 +70,19 @@
 						orderStatus: 0
 					},
 					{
+							createTime: 111,
+							roomTypeArray: ["t1", "t2","t3", "t4"],
+							userName: "张234",
+							checkInStartDateTimeStamp: 1725256800000,
+							checkInEndDateTimeStamp: 1725508800000,
+							checkInStartDate: "2024-09-02 14:00:00",
+							checkInEndDate: "2024-09-05 12:00:00",
+							phone: "13900991112",
+							orderSource: 0,
+							orderSouce_Zn: "携程",
+							orderStatus: 0
+						},
+					{
 						createTime: 111,
 						roomTypeArray: ["t3", "t4"],
 						userName: "李4",
@@ -89,7 +102,7 @@
 
 		},
 		mounted() {
-			console.log(122222,this.testdate())
+			console.log(122222, this.testdate())
 		},
 		computed: {
 			dateTabList() {
@@ -102,15 +115,14 @@
 			},
 
 			orderDateRange() {
-			let rangeDate = [];
-			let minTime = Math.min(...this.checkInOrderList.map(item => item.checkInStartDateTimeStamp));
-			let maxTime = Math.max(...this.checkInOrderList.map(item => item.checkInEndDateTimeStamp));
-			console.log("222",minTime,maxTime)
-			for (let i = minTime; i <= maxTime;
-				i=(i + 1000 * 60 * 60 * 24)) {
-				rangeDate.push(i);
-			}
-			return rangeDate;
+				let rangeDate = [];
+				let minTime = Math.min(...this.checkInOrderList.map(item => item.checkInStartDateTimeStamp));
+				let maxTime = Math.max(...this.checkInOrderList.map(item => item.checkInEndDateTimeStamp));
+				console.log("222", minTime, maxTime)
+				for (let i = minTime; i <= maxTime; i = (i + 1000 * 60 * 60 * 24)) {
+					rangeDate.push(i);
+				}
+				return rangeDate;
 			},
 			orderDateRangeFormat() {
 
@@ -121,12 +133,58 @@
 						dy: dyStr[new Date(item).getDay()]
 					}
 				})
+			},
+			checkInOrderListFormat() {
+				let result = [];
+				let or = this.orderDateRange;
+				let checkInOrderList = this.checkInOrderList;
+				for (let i = 0; i < this.roomTypeList.length; i++) {
+
+
+					let roomType = this.roomTypeList[i].name;
+					result.push(fillRoomType(roomType));
+				}
+
+				function fillRoomType(t) {
+					let fillArray = [];
+					for (let j = 0; j < or.length; j++) {
+						let obj = checkInOrderList.find(item => {
+							return item.roomTypeArray.includes(t) && (or[j] >= item.checkInStartDateTimeStamp &&
+								or[j] < item.checkInEndDateTimeStamp)
+						})
+						fillArray.push(obj || []);
+					}
+					return fillArray;
+				}
+				return result;
 			}
 
+
 		},
-		methods:{
-			testdate(){
-			
+		methods: {
+			testdate() {
+				let result = [];
+				let or = this.orderDateRange;
+				let checkInOrderList = this.checkInOrderList;
+				for (let i = 0; i < this.roomTypeList.length; i++) {
+
+
+					let roomType = this.roomTypeList[i].name;
+					result.push(fillRoomType(roomType));
+				}
+
+				function fillRoomType(t) {
+					let fillArray = [];
+					for (let j = 0; j < or.length; j++) {
+						let obj = checkInOrderList.find(item => {
+							return item.roomTypeArray.includes(t) && (or[j] >= item.checkInStartDateTimeStamp &&
+								or[j] < item.checkInEndDateTimeStamp)
+						})
+						fillArray.push(obj || []);
+					}
+					return fillArray;
+				}
+				return result;
 			}
 		}
 	}
@@ -139,7 +197,7 @@
 		width: calc(100vw - 120px);
 		overflow-x: scroll;
 		flex-direction: row;
-		font-size: 16px;
+		font-size: $uni-font-size-lg;
 	}
 
 	.left-table-style {
@@ -156,7 +214,9 @@
 		font-weight: bold;
 		display: flex;
 		align-items: center;
+		font-size: $uni-font-size-base;
 		justify-content: center;
+		letter-spacing: 2px;
 	}
 
 	.td-style {
@@ -165,7 +225,7 @@
 		justify-content: center;
 		height: 80px;
 		text-align: center;
-		font-size: 18px;
+		font-size: $uni-font-size-base;
 		margin-bottom: 10px;
 	}
 

@@ -19,11 +19,11 @@
 								:current="currentTab_index" :activeStyle="{
 								    color: '#303133',
 								    fontWeight: 'bold',
-									fontSize:'20px',
+									fontSize:'18px',
 								    transform: 'scale(1.15)'
 								}" :inactiveStyle="{
 								    color: '#606266',
-									fontSize:'20px',
+									fontSize:'18px',
 								    transform: 'scale(1)'
 								}" itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;">
 							</u-tabs>
