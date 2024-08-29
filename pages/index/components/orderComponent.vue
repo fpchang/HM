@@ -61,7 +61,7 @@
 							<uni-td>
 								<text
 									style="color: red;font-weight: bold;letter-spacing: 3px;">{{"" | dayNum([item.checkInStartDateTimeStamp,item.checkInEndDateTimeStamp])}}</text><text>晚</text></uni-td>
-							<uni-td align="center">查看</uni-td>
+							<uni-td align="center"><u-icon name="more-dot-fill" label="566元" labelPos="top" labelColor="red" color="blue"></u-icon></uni-td>
 							<uni-td>
 								
 								<view class="uni-group">
