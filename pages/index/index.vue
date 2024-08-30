@@ -95,17 +95,20 @@
 					name: '合作景点',
 					ComponentName:"orderComponent1"
 				}, {
-					name: '定餐',
-					ComponentName:"orderComponent2"
-				}, {
-					name: '人员管理',
-					ComponentName:"orderComponent3"
-				}, {
 					name: '水单',
 					ComponentName:"orderComponent4"
 				}, {
 					name: '发票',
 					ComponentName:"orderComponent5"
+				},{
+					name: '菜单管理',
+					ComponentName:"orderComponent2"
+				},  {
+					name: '房型管理',
+					ComponentName:"orderComponent2"
+				}, {
+					name: '人员管理',
+					ComponentName:"orderComponent3"
 				}],
 				slelectHotelvalue: "",
 				activeHotle: {
