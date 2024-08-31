@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="top-container" >
+		<view class="top-container">
 			<view class="scroll-content">
 				<view :style="{height:styleObj.navTopHeight}"></view>
 				<view :class="['top-area',isSticky?'sticky-style':'']">
@@ -15,8 +15,8 @@
 					</view>
 					<view class="navbar">
 						<view class="nav-content">
-							<u-tabs @click="clickTab" @change="checkTab" :list="tabList" lineWidth="0" lineColor="#f56c6c"
-								:current="currentTab_index" :activeStyle="{
+							<u-tabs @click="clickTab" @change="checkTab" :list="tabList" lineWidth="0"
+								lineColor="#f56c6c" :current="currentTab_index" :activeStyle="{
 								    color: '#303133',
 								    fontWeight: 'bold',
 									fontSize:'18px',
@@ -34,23 +34,27 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<swiper :style="{height:scrollHeight}" :current="currentTab_index" @change="swiperContentEvent">
-			<swiper-item  v-for="item in tabList">
-				<scroll-view :scroll-y="true" show-scrollbar="false" :scroll-top="0" 
-					:style="{height:scrollHeight}">
+			<swiper-item v-for="item in tabList">
+				<scroll-view :scroll-y="true" show-scrollbar="false" :scroll-top="0" :style="{height:scrollHeight}">
 					<view>
-					<keep-alive>
-						<gatherComponent :disHeightVal="disHeightVal" v-if="item.ComponentName=='gatherComponent'"></gatherComponent>
-						<orderComponent :disHeightVal="disHeightVal" v-if="item.ComponentName=='orderComponent'"></orderComponent>
-					</keep-alive>
-					
+						<keep-alive>
+							<gatherComponent :disHeightVal="disHeightVal" v-if="item.ComponentName=='gatherComponent'">
+							</gatherComponent>
+							<orderComponent :disHeightVal="disHeightVal" v-if="item.ComponentName=='orderComponent'">
+							</orderComponent>
+
+							<createComponent :disHeightVal="disHeightVal" v-if="item.ComponentName=='createComponent'">
+							</createComponent>
+						</keep-alive>
+
 					</view>
 				</scroll-view>
 			</swiper-item>
-		
+
 		</swiper>
-		
+
 		<u-popup :show="showDrawer" mode="left" @close="closeDrawerEvent" @open="showDrawerEvent"
 			:closeOnClickOverlay="true">
 			<u-list style="margin-top: 60px;width: 40vw;">
@@ -69,46 +73,48 @@
 <script>
 	import gatherComponent from './components/gatherComponent.vue';
 	import orderComponent from './components/orderComponent.vue';
+	import createComponent from './components/createComponent.vue';
 	export default {
-		components:{
+		components: {
 			gatherComponent,
-			orderComponent
+			orderComponent,
+			createComponent
 		},
 		data() {
 			return {
 				title: 'Hello',
-				styleObj:{
-					navTopHeight:getApp().globalData.systemInfo.deviceType=='pc'?0:'60px'
+				styleObj: {
+					navTopHeight: getApp().globalData.systemInfo.deviceType == 'pc' ? 0 : '60px'
 				},
 				isSticky: false,
 				opacityVal: 1,
-				currentTab_index: 1,				
+				currentTab_index: 2,
 				showDrawer: false,
-				
+
 				tabList: [{
 					name: '关注',
-					ComponentName:"gatherComponent"
+					ComponentName: "gatherComponent"
 				}, {
 					name: '订房管理',
-					ComponentName:"orderComponent"
+					ComponentName: "orderComponent"
 				}, {
 					name: '合作景点',
-					ComponentName:"orderComponent1"
+					ComponentName: "createComponent"
 				}, {
 					name: '水单',
-					ComponentName:"orderComponent4"
+					ComponentName: "orderComponent4"
 				}, {
 					name: '发票',
-					ComponentName:"orderComponent5"
-				},{
+					ComponentName: "orderComponent5"
+				}, {
 					name: '菜单管理',
-					ComponentName:"orderComponent2"
-				},  {
+					ComponentName: "orderComponent2"
+				}, {
 					name: '房型管理',
-					ComponentName:"orderComponent2"
+					ComponentName: "orderComponent2"
 				}, {
 					name: '人员管理',
-					ComponentName:"orderComponent3"
+					ComponentName: "orderComponent3"
 				}],
 				slelectHotelvalue: "",
 				activeHotle: {
@@ -137,18 +143,18 @@
 			}
 		},
 		onLoad() {
-			console.log(111,getApp().globalData.systemInfo);
+			console.log(111, getApp().globalData.systemInfo);
 			// uni.redirectTo({
 			// 	url:"/pages/login/login"
 			// })
 		},
-		computed:{
-			disHeightVal(){
-				let deviceType=getApp().globalData.systemInfo.deviceType;
-				return (deviceType=='pc'?'130px':'190px')
-				
+		computed: {
+			disHeightVal() {
+				let deviceType = getApp().globalData.systemInfo.deviceType;
+				return (deviceType == 'pc' ? '130px' : '190px')
+
 			},
-			scrollHeight(){
+			scrollHeight() {
 				return `calc(100vh - ${this.disHeightVal})`;
 			}
 		},
@@ -172,7 +178,7 @@
 			},
 			clickTab(e) {
 				console.log("clickTab", e)
-				this.currentTab_index =e.index ;
+				this.currentTab_index = e.index;
 			},
 			checkTab(e) {
 				//console.log("checkTab", e)
@@ -184,9 +190,9 @@
 				//	this.opacityVal = 1 - (Math.min(scrollTop / 60, 1));
 				//	this.isSticky = (scrollTop >= 60 ? true : false);
 			},
-			swiperContentEvent(e){
+			swiperContentEvent(e) {
 				console.log(e)
-				this.currentTab_index=e.detail.current;
+				this.currentTab_index = e.detail.current;
 			}
 		}
 	}
@@ -200,9 +206,7 @@
 		font-size: $uni-font-size-lgs;
 	}
 
-	.scroll-content {
-		
-	}
+	.scroll-content {}
 
 	.scroll-content .top-area {
 
@@ -272,6 +276,4 @@
 		background-color: #ddd !important;
 		/*border:2rpx solid blue;*/
 	}
-
-
 </style>
