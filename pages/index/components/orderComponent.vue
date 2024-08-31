@@ -1,8 +1,8 @@
 <template>
 	<view class="order-component">
+		<uni-fab ref="fab" :popMenu="false" :pattern="pattern" horizontal="right" vertical="top" @fabClick="fabClick" />
 		<view class="uni-padding-wrap uni-common-mt" style="max-width: 450px;padding:0 15px">
-			<uni-segmented-control :current="current" :values="items" 
-				 @clickItem="onClickItem" />
+			<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" />
 		</view>
 		<view class="content">
 			<view v-if="current === 0">
@@ -35,7 +35,11 @@
 			</view>
 
 		</view>
-
+		<uni-popup ref="popup" background-color="#fff" >
+			<view class="popup-content" >
+				<text class="text">popup 内容</text>
+			</view>
+		</uni-popup>
 	</view>
 
 </template>
@@ -59,13 +63,19 @@
 					dateRangeArray: [new Date().getTime(), new Date().getTime() + (1000 * 60 * 60 * 24 * 30)], //默认30天
 					userName: ''
 				},
+				pattern: {
+					color: '#7A7E83',
+					backgroundColor: 'rgba(255,255,255,0)',
+					selectedColor: '#007AFF',
+					buttonColor: 'rgba(41, 121, 255,1)',
+					iconColor: '#fff'
+				},
+				roomTypeList: dataBase.roomTypeList,
 
-				roomTypeList:dataBase.roomTypeList,
-				
 			}
 		},
 		computed: {},
-		
+
 		created() {
 			console.log('orderComponent create');
 
@@ -79,15 +89,18 @@
 		methods: {
 			getOrderList() {
 				console.log(this.selectCondition.dateRangeArray)
-				
+
 			},
 			onClickItem(e) {
 				if (this.current !== e.currentIndex) {
 					this.current = e.currentIndex
 				}
 			},
+			fabClick() {
+				this.$refs.popup.open()
+			},
 			testData(valArray) {
-		
+
 			}
 		}
 	}
@@ -105,5 +118,10 @@
 
 	.uni-button {
 		white-space: nowrap;
+	}
+	.popup-content{
+		width: 450px;
+		max-width: 450px;
+		height: 600px;
 	}
 </style>

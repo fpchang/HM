@@ -11,8 +11,11 @@
 
 			<view style="width: 130px;padding:0 10px">
 				<uni-section class="mb-10" title="用户名:">
-					<uni-easyinput class="uni-mt-5" suffixIcon="search" v-model="value" placeholder="右侧图标" @iconClick="iconClick"></uni-easyinput>
+					<uni-easyinput class="uni-mt-5" suffixIcon="search" v-model="selectCondition.userName" placeholder="" @iconClick="iconClick"></uni-easyinput>
 				</uni-section>
+			</view>
+			<view style="padding:0 10px">
+				
 			</view>
 		</view>
 		<uni-table border stripe emptyText="暂无更多数据">
@@ -28,7 +31,7 @@
 			</uni-tr>
 			<!-- 表格数据行 -->
 			<uni-tr v-for="item of checkInOrderList">
-				<uni-td>{{item.checkInStartDate}}</uni-td>
+				<uni-td>{{item.checkInStartDate}} <uni-tag size="mini" :circle="true" v-if="showNewTag(item.createTime)" style="margin-left: 5px;" text="New" type="success" /></uni-td>
 				<uni-td>{{item.checkInEndDate}}</uni-td>
 				<uni-td>{{item.userName}}</uni-td>
 				<uni-td>{{item.roomTypeArray | roomType_Zn(roomTypeList)}}</uni-td>
@@ -65,7 +68,7 @@
 				
 				roomTypeList:dataBase.roomTypeList,
 				checkInOrderList: [{
-						createTime: 111,
+						createTime: 1725090732098,
 						roomTypeArray: ["t1", "t2"],
 						userName: "张三",
 						checkInStartDateTimeStamp: 1724824800000,
@@ -127,13 +130,16 @@
 			this.testData(['t1', 't2'])
 		},
 		methods: {
+			showNewTag(timeStamp){
+				return (new Date().getTime() - timeStamp)< 1000*60*60*2
+			},
 			getOrderListByCondition() {
 				this.$parent.getOrderList();
 			},
 			testData(valArray) {
 				let item = this.checkInOrderList[0]
 				for (let i = 3; i < 100; i++) {
-					this.checkInOrderList.push(item)
+				//	this.checkInOrderList.push(item)
 				}
 		
 			}
