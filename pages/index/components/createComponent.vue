@@ -20,6 +20,9 @@
 			<uni-forms-item label="微信号" >
 				<uni-easyinput v-model="orderForm.wxName" placeholder="请输入微信号" />
 			</uni-forms-item>
+			<uni-forms-item>
+				<u-button type="success" text="保存" @click="submit"></u-button>
+			</uni-forms-item>
 		</uni-forms>
 	</view>
 </template>
