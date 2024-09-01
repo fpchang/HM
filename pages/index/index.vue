@@ -72,13 +72,13 @@
 
 <script>
 	import gatherComponent from './components/gatherComponent.vue';
-	import orderComponent from './components/orderComponent.vue';
-	import createComponent from './components/createComponent.vue';
+	import orderComponent from '../order/components/orderComponent';
+	import createOrderComponent from '../order/components/createOrderComponent';
 	export default {
 		components: {
 			gatherComponent,
 			orderComponent,
-			createComponent
+			createOrderComponent
 		},
 		data() {
 			return {
@@ -88,7 +88,7 @@
 				},
 				isSticky: false,
 				opacityVal: 1,
-				currentTab_index: 2,
+				currentTab_index: 1,
 				showDrawer: false,
 
 				tabList: [{

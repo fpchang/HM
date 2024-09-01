@@ -35,9 +35,11 @@
 			</view>
 
 		</view>
-		<uni-popup ref="popup" background-color="#fff" >
+		<uni-popup ref="popup" background-color="transprant" >
 			<view class="popup-content" >
-				<text class="text">popup 内容</text>
+				<view class="create-order-title-style">创建订单</view>
+				<view class="comContent"><createOrder></createOrder></view>
+				
 			</view>
 		</uni-popup>
 	</view>
@@ -47,9 +49,11 @@
 <script>
 	import orderChildCalendarList from './orderChildCalendarList2';
 	import orderChildTableList from './orderChildTableList';
+	import createOrder from './createOrderComponent';
 	import dataBase from '../../../api/dataBase.js';
 	export default {
 		components: {
+			createOrder,
 			orderChildCalendarList,
 			orderChildTableList
 		},
@@ -97,7 +101,14 @@
 				}
 			},
 			fabClick() {
-				this.$refs.popup.open()
+				if(getApp().globalData.systemInfo.deviceType=="phone"){
+					uni.navigateTo({
+						url:'/pages/order/createOrder/createOrder'
+					})
+					return;
+				}
+				this.$refs.popup.open();
+				
 			},
 			testData(valArray) {
 
@@ -120,8 +131,22 @@
 		white-space: nowrap;
 	}
 	.popup-content{
-		width: 450px;
-		max-width: 450px;
-		height: 600px;
+		width: 500px;
+		background-color: #fff;
+		border-radius: 8px;
+		max-height:calc(100vh - 190px) ;
+		
+		box-sizing: border-box;
+		overflow: hidden;
+		.comContent{
+			padding:15px;
+		}
+		.create-order-title-style{
+			height: 38px;
+			line-height: 38px;
+			font-weight: bold;
+			text-align: center;
+		}
+		
 	}
 </style>

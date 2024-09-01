@@ -1,9 +1,8 @@
 <template>
-	<view style="width: 400px;">
-		
+	<view>		
 		<uni-forms ref="baseForm" :modelValue="orderForm">
 			<uni-forms-item label="来源" >
-				<uni-data-checkbox v-model="orderForm.orderSource" mode="list" :multiple="false" :localdata="sourceFormat" />
+				<uni-data-checkbox v-model="orderForm.orderSource" :mode="modeSource" :multiple="false" :localdata="sourceFormat" />
 			</uni-forms-item>
 			<uni-forms-item label="日期时间">
 				<uni-datetime-picker v-model="orderForm.dateRangeArray" type="daterange" />
@@ -31,6 +30,7 @@
 	export default {
 		data() {
 			return {
+				modeSource:getApp().globalData.systemInfo.deviceType=="phone"?'list':'default',
 				source: [{
 					name: 'xiechen',
 					name_Zn: '携程',
