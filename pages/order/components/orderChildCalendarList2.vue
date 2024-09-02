@@ -44,17 +44,21 @@
 			return {
 				roomIdList: ["t1", "t2", "t3", "t4", "t5"],
 				roomTypeList: [{
-					name: 't1',
-					name_Zn: "大床房"
+					value: 't1',
+					name: "大床房",
+					count:5
 				}, {
-					name: 't2',
-					name_Zn: "商务大床房"
+					value: 't2',
+					name: "商务大床房",
+					count:2
 				}, {
-					name: 't3',
-					name_Zn: "标间"
+					value: 't3',
+					name: "标间",
+					count:4
 				}, {
-					name: 't4',
-					name_Zn: "商务标间"
+					value: 't4',
+					name: "商务标间",
+					count:3
 				}],
 				checkInOrderList: [{
 						createTime: 111,
@@ -141,7 +145,7 @@
 				for (let i = 0; i < this.roomTypeList.length; i++) {
 
 
-					let roomType = this.roomTypeList[i].name;
+					let roomType = this.roomTypeList[i].value;
 					result.push(fillRoomType(roomType));
 				}
 
@@ -169,7 +173,7 @@
 				for (let i = 0; i < this.roomTypeList.length; i++) {
 
 
-					let roomType = this.roomTypeList[i].name;
+					let roomType = this.roomTypeList[i].value;
 					result.push(fillRoomType(roomType));
 				}
 

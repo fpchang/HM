@@ -114,13 +114,14 @@
 		},
 		filters: {
 			roomType_Zn(valArray, roomTypeList) {
+				console.log(12222,valArray, roomTypeList)
 				let newArray = valArray.map(item => {
 					let obj = roomTypeList.find(it => {
-						return it.name == item
+						return it.value == item
 					});
-					return `【${obj.name_Zn}】`;
+					return `【${obj.name}】`;
 				})
-				return newArray.join(',');
+				return newArray.join('');
 			},
 			dayNum(val, params) {
 				return Math.ceil((params[1] - params[0]) / (1000 * 60 * 60 * 24))

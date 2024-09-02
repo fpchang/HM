@@ -2,25 +2,37 @@
 	<view>		
 		<uni-forms ref="baseForm" :modelValue="orderForm">
 			<uni-forms-item label="来源" >
-				<uni-data-checkbox v-model="orderForm.orderSource" :mode="modeSource" :multiple="false" :localdata="sourceFormat" />
+				<uni-data-checkbox v-model="orderForm.orderSource" mode="default" :multiple="false" :localdata="sourceFormat" />
 			</uni-forms-item>
 			<uni-forms-item label="日期时间">
 				<uni-datetime-picker v-model="orderForm.dateRangeArray" type="daterange" />
 			</uni-forms-item>
 			<uni-forms-item label="房型" required>
-				<uni-data-checkbox v-model="orderForm.roomTypeArray" mode="list"  multiple :localdata="roomTypeListFormat" />
+				<!-- <uni-data-checkbox v-model="orderForm.roomTypeArray" mode="list"  multiple :localdata="roomTypeListFormat">1111</uni-data-checkbox> -->
+			<view class="uni-list">
+						<checkbox-group @change="checkboxChange">
+							<view class="" style="display: flex;" v-for="item in roomTypeList" :key="item.value">
+								<view>
+									<checkbox :value="item.value" :checked="item.checked" />
+								</view>
+								<view style="display: flex;flex:1">{{item.name}}</view>
+								<view><uni-number-box /></view>
+							</view>
+						</checkbox-group>
+					</view>
+			
 			</uni-forms-item>
-			<uni-forms-item label="用户名" >
-				<uni-easyinput v-model="orderForm.name" placeholder="请输入用户名" />
+			<uni-forms-item label="客户名"   required>
+				<uni-easyinput v-model="orderForm.userName" placeholder="请输入用户名" />
 			</uni-forms-item>
 			<uni-forms-item label="手机号" >
-				<uni-easyinput v-model="orderForm.phone" placeholder="请输入手机号" />
+				<uni-easyinput v-model="orderForm.phone"   placeholder="请输入手机号" />
 			</uni-forms-item>
 			<uni-forms-item label="微信号" >
-				<uni-easyinput v-model="orderForm.wxName" placeholder="请输入微信号" />
+				<uni-easyinput v-model="orderForm.wxNickName" placeholder="请输入微信号" />
 			</uni-forms-item>
 			<uni-forms-item>
-				<u-button type="success" text="保存" @click="submit"></u-button>
+				<u-button type="success" text="保存" @click="submitForm()" :disabled="submitDisabled" :loading="submitLoading"></u-button>
 			</uni-forms-item>
 		</uni-forms>
 	</view>
@@ -30,6 +42,7 @@
 	export default {
 		data() {
 			return {
+				submitLoading:false,
 				modeSource:getApp().globalData.systemInfo.deviceType=="phone"?'list':'default',
 				source: [{
 					name: 'xiechen',
@@ -43,46 +56,61 @@
 					name: 'meituanminsu',
 					name_Zn: '美团民宿',
 					value: 2
+				},  {
+					name: 'meituanminsu',
+					name_Zn: '途牛',
+					value: 3
 				}, {
+					name: 'meituanminsu',
+					name_Zn: '途家',
+					value: 4
+				}, {
+					name: 'meituanminsu',
+					name_Zn: '客栈',
+					value: 5
+				},{
 					name: 'downline',
 					name_Zn: '线下',
 					value: 10
 				}],
 				roomTypeList: [{
-					name: 't1',
-					name_Zn: "大床房",
+					value: 't1',
+					name: "大床房",
 					count:5
 				}, {
-					name: 't2',
-					name_Zn: "商务大床房",
+					value: 't2',
+					name: "商务大床房",
 					count:2
 				}, {
-					name: 't3',
-					name_Zn: "标间",
+					value: 't3',
+					name: "标间",
 					count:4
 				}, {
-					name: 't4',
-					name_Zn: "商务标间",
+					value: 't4',
+					name: "商务标间",
 					count:3
 				}],
 				orderForm: {
-					//createTime: 1725090732098,
-					roomTypeArray: ["t1", "t2"],
-					dateRangeArray: [],
-					userName: "张三",
+					orderSource:0,
+					roomTypeArray: ["t1"],
+					dateRangeArray: [new Date().Format('yyyy-MM-dd'),new Date().Format('yyyy/MM/dd')],
+					userName: "",
 					// checkInStartDateTimeStamp: 1724824800000,
 					// checkInEndDateTimeStamp: 1724904000000,
 					// checkInStartDate: "2024-08-28 14:00:00",
 					// checkInEndDate: "2024-08-29 12:00:00",
-					phone: "13900991112",
-					orderSource: 0,
-					wxName:'',
+					phone: "",
+					wxNickName:'',
 					//orderSouce_Zn: "携程",
 					//orderStatus: 0,
 				},
 			};
 		},
+		created() {
+			this.orderForm.dateRangeArray= this.formatStartAndEndDateTimeToArray(new Date(),new Date().getTime()+(1000*60*60*24));
+		},
 		computed: {
+			
 			sourceFormat(){
 				return this.source.map(item=>{
 					return {text:item.name_Zn,value:item.value};
@@ -91,17 +119,53 @@
 			},
 			roomTypeListFormat(){
 				return this.roomTypeList.map(item=>{
-					return {text:item.name_Zn,value:item.name};
+					return {name:item.name_Zn,value:item.name,count:item.count};
 				})
+			},
+			submitDisabled(){
+				let condition = (this.orderForm.dateRangeArray.length<1 ||
+				 this.orderForm.roomTypeArray.length<1 ||
+				 (this.orderForm.userName==""&&this.orderForm.phone=="")
+				 );
+				return condition;
 			}
 		},
-		method: {
+		methods: {
+			formatStartAndEndDateTimeToArray(startDate,endDate){
+				let startDateTime = new Date(new Date(startDate).Format('yyyy/MM/dd') +' 14:00:00').getTime();
+				let endDateTime = new Date(new Date(endDate).Format('yyyy/MM/dd') +' 12:00:00').getTime();
+				return [startDateTime,endDateTime]
+				
+			},
 			getValidOrder() {
 
 			},
-			submit() {},
+			submitForm() {
+				let dateRange = this.formatStartAndEndDateTimeToArray(this.orderForm.dateRangeArray[0],this.orderForm.dateRangeArray[1])
+				let obj ={
+				createTime: new Date().getTime(),
+				roomTypeArray: this.orderForm.roomTypeArray,
+				userName: this.orderForm.userName,
+				checkInStartDateTimeStamp: dateRange[0],
+				checkInEndDateTimeStamp: dateRange[1],
+				checkInStartDate:new Date(dateRange[0]).Format("yyyy/MM/dd HH:mm:ss") ,
+				checkInEndDate: new Date(dateRange[1]).Format("yyyy/MM/dd HH:mm:ss") ,
+				phone: this.orderForm.phone,
+				orderSource: 0,
+				wxNickName:this.orderForm.wxNickName,
+				orderSouce_Zn: this.orderForm.orderSource,
+				orderStatus: 0,
+				}
+				console.log(obj);
+				//this.submitLoading=true;
+			}
 		},
 	};
 </script>
 
-<style></style>
+<style lang="scss">
+	.uni-list-cell {
+		justify-content: flex-start
+	}
+
+</style>

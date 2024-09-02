@@ -38,7 +38,12 @@
 		<uni-popup ref="popup" background-color="transprant" >
 			<view class="popup-content" >
 				<view class="create-order-title-style">创建订单</view>
-				<view class="comContent"><createOrder></createOrder></view>
+				<view class="comContent">
+					<keep-alive>
+						<createOrder></createOrder>
+					</keep-alive>
+					
+					</view>
 				
 			</view>
 		</uni-popup>
@@ -133,17 +138,19 @@
 	.popup-content{
 		width: 500px;
 		background-color: #fff;
-		border-radius: 8px;
-		max-height:calc(100vh - 190px) ;
+		border-radius: 12px;
+		max-height:calc(100vh - 130px) ;
 		
 		box-sizing: border-box;
-		overflow: hidden;
+		overflow-x: hidden;
+		overflow-y: auto;
 		.comContent{
-			padding:15px;
+			padding:20px 30px;
 		}
 		.create-order-title-style{
-			height: 38px;
-			line-height: 38px;
+			height: 35px;
+			line-height: 36px;
+			padding-top: 20px;
 			font-weight: bold;
 			text-align: center;
 		}
