@@ -11,12 +11,12 @@
 				<!-- <uni-data-checkbox v-model="orderForm.roomTypeArray" mode="list"  multiple :localdata="roomTypeListFormat">1111</uni-data-checkbox> -->
 			<view class="uni-list">
 						<checkbox-group @change="checkboxChange">
-							<view class="" style="display: flex;" v-for="item in roomTypeList" :key="item.value">
+							<view class="disabled-style" style="display: flex;" v-for="item in roomTypeList" :key="item.value">
 								<view>
 									<checkbox :value="item.value" :checked="item.checked" />
 								</view>
 								<view style="display: flex;flex:1">{{item.name}}</view>
-								<view><uni-number-box /></view>
+								<view><uni-number-box value=0 :max="item.count" disabled="true"/></view>
 							</view>
 						</checkbox-group>
 					</view>
@@ -166,6 +166,9 @@
 <style lang="scss">
 	.uni-list-cell {
 		justify-content: flex-start
+	}
+	.disabled-style{
+		color: #bbb;
 	}
 
 </style>
