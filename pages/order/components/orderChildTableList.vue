@@ -1,7 +1,7 @@
 <template>
 	<view class="h5-show-style">
-		<view  style="box-sizing: border-box;display: flex;flex-wrap: wrap;">
-	
+		<view style="box-sizing: border-box;display: flex;flex-wrap: wrap;">
+
 			<view style="width: 240px;padding:0 10px">
 				<uni-section class="mb-10" title="日期选择:">
 					<uni-datetime-picker v-model="selectCondition.dateRangeArray" type="daterange"
@@ -11,11 +11,12 @@
 
 			<view style="width: 130px;padding:0 10px">
 				<uni-section class="mb-10" title="用户名:">
-					<uni-easyinput class="uni-mt-5" suffixIcon="search" v-model="selectCondition.userName" placeholder="" @iconClick="iconClick"></uni-easyinput>
+					<uni-easyinput class="uni-mt-5" suffixIcon="search" v-model="selectCondition.userName"
+						placeholder="" @iconClick="iconClick"></uni-easyinput>
 				</uni-section>
 			</view>
 			<view style="padding:0 10px">
-				
+
 			</view>
 		</view>
 		<uni-table border stripe emptyText="暂无更多数据">
@@ -31,45 +32,56 @@
 			</uni-tr>
 			<!-- 表格数据行 -->
 			<uni-tr v-for="item of checkInOrderList">
-				<uni-td>{{item.checkInStartDate}} <uni-tag size="mini" :circle="true" v-if="showNewTag(item.createTime)" style="margin-left: 5px;" text="New" type="success" /></uni-td>
+				<uni-td>{{item.checkInStartDate}} <uni-tag size="mini" :circle="true" v-if="showNewTag(item.createTime)"
+						style="margin-left: 5px;" text="New" type="success" /></uni-td>
 				<uni-td>{{item.checkInEndDate}}</uni-td>
 				<uni-td>{{item.userName}}</uni-td>
-				<uni-td>{{item.roomTypeArray | roomType_Zn(roomTypeList)}}</uni-td>
-	
+				<uni-td>
+					<text v-for ="it of item.roomTypeArray">【{{it.name}}】* <text :class="[it.count>1?'strongText':'']">{{it.count}}</text></text>
+				</uni-td>
+
 				<uni-td>
 					<text
 						style="color: red;font-weight: bold;letter-spacing: 3px;">{{"" | dayNum([item.checkInStartDateTimeStamp,item.checkInEndDateTimeStamp])}}</text><text>晚</text></uni-td>
-				<uni-td align="center"><u-icon name="more-dot-fill" label="566元" labelPos="top"
-						labelColor="red" color="blue"></u-icon></uni-td>
+				<uni-td align="center"><u-icon name="more-dot-fill" label="566元" labelPos="top" labelColor="red"
+						color="blue"></u-icon></uni-td>
 				<uni-td>
-	
+
 					<view class="uni-group">
 						<button class="uni-button" size="mini" type="primary">修改</button>
 						<button class="uni-button" size="mini" type="warn">删除</button>
 					</view>
 				</uni-td>
 			</uni-tr>
-	
-	
+
+
 		</uni-table>
 	</view>
-	
+
 </template>
 
 <script>
 	import dataBase from '../../../api/dataBase.js';
 	export default {
-		data(){
+		data() {
 			return {
 				selectCondition: {
 					dateRangeArray: [new Date().getTime(), new Date().getTime() + (1000 * 60 * 60 * 24 * 30)], //默认30天
 					userName: ''
 				},
-				
-				roomTypeList:dataBase.roomTypeList,
+
+				roomTypeList: dataBase.roomTypeList,
 				checkInOrderList: [{
 						createTime: 1725090732098,
-						roomTypeArray: ["t1", "t2"],
+						roomTypeArray: [{
+							value: 't1',
+							name: "大床房",
+							count: 1
+						}, {
+							value: 't2',
+							name: "商务大床房",
+							count: 2
+						}],
 						userName: "张三",
 						checkInStartDateTimeStamp: 1724824800000,
 						checkInEndDateTimeStamp: 1724904000000,
@@ -82,7 +94,15 @@
 					},
 					{
 						createTime: 111,
-						roomTypeArray: ["t1", "t2", "t3", "t4"],
+						roomTypeArray: [{
+							value: 't1',
+							name: "大床房",
+							count: 1
+						}, {
+							value: 't4',
+							name: "商务标间",
+							count: 1
+						}],
 						userName: "张234",
 						checkInStartDateTimeStamp: 1725256800000,
 						checkInEndDateTimeStamp: 1725508800000,
@@ -95,7 +115,15 @@
 					},
 					{
 						createTime: 111,
-						roomTypeArray: ["t3", "t4"],
+						roomTypeArray: [{
+							value: 't1',
+							name: "大床房",
+							count: 1
+						}, {
+							value: 't4',
+							name: "商务标间",
+							count: 1
+						}],
 						userName: "李4",
 						checkInStartDateTimeStamp: 1726034400000,
 						checkInEndDateTimeStamp: 1726113600000,
@@ -106,22 +134,22 @@
 						orderSouce_Zn: "携程",
 						orderStatus: 0
 					},
-				
-				
+
+
 				]
-				
+
 			}
 		},
 		filters: {
-			roomType_Zn(valArray, roomTypeList) {
-				console.log(12222,valArray, roomTypeList)
-				let newArray = valArray.map(item => {
-					let obj = roomTypeList.find(it => {
-						return it.value == item
-					});
-					return `【${obj.name}】`;
-				})
-				return newArray.join('');
+			roomType_Zn(valArray) {
+				console.log(12222, valArray)
+				// let newArray = valArray.map(item => {
+				// 	let obj = roomTypeList.find(it => {
+				// 		return it.value == item.value
+				// 	});
+				//	return `【${obj.name} X ${obj.count}】`;
+				//})
+				////return newArray.join('');
 			},
 			dayNum(val, params) {
 				return Math.ceil((params[1] - params[0]) / (1000 * 60 * 60 * 24))
@@ -131,8 +159,8 @@
 			this.testData(['t1', 't2'])
 		},
 		methods: {
-			showNewTag(timeStamp){
-				return (new Date().getTime() - timeStamp)< 1000*60*60*2
+			showNewTag(timeStamp) {
+				return (new Date().getTime() - timeStamp) < 1000 * 60 * 60 * 2
 			},
 			getOrderListByCondition() {
 				this.$parent.getOrderList();
@@ -140,9 +168,9 @@
 			testData(valArray) {
 				let item = this.checkInOrderList[0]
 				for (let i = 3; i < 100; i++) {
-				//	this.checkInOrderList.push(item)
+					//	this.checkInOrderList.push(item)
 				}
-		
+
 			}
 		}
 	}
@@ -153,8 +181,12 @@
 		display: flex;
 		align-items: center;
 	}
-	
+
 	.uni-button {
 		white-space: nowrap;
+	}
+	.strongText{
+		color:red;
+		font-weight: bold;
 	}
 </style>
