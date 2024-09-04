@@ -151,7 +151,7 @@
 		computed: {
 			disHeightVal() {
 				let deviceType = getApp().globalData.systemInfo.deviceType;
-				return (deviceType == 'pc' ? '130px' : '190px')
+				return (deviceType == 'pc' ? '110px' : '170px')
 
 			},
 			scrollHeight() {
@@ -210,13 +210,13 @@
 
 	.scroll-content .top-area {
 
-		height: 130px;
+		height: 110px;
 		box-sizing: border-box;
 		z-index: 999;
 		background-color: #fff;
 
 		.title-area {
-			height: 70px;
+			height: 50px;
 			display: flex;
 			flex-direction: row;
 			align-items: center;
@@ -267,7 +267,7 @@
 	}
 
 	.content-area {
-		min-height: calc(100vh - 130px);
+		min-height: calc(100vh - 110px);
 		height: 120vh;
 		background-color: #eee;
 	}

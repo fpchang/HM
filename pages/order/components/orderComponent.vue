@@ -134,12 +134,12 @@
 		width: 500px;
 		background-color: #fff;
 		border-radius: 8px;
-		max-height:calc(100vh - 190px) ;
+		max-height:calc(100vh - 130px) ;
 		
 		box-sizing: border-box;
-		overflow: hidden;
+		overflow: auto;
 		.comContent{
-			padding:15px;
+			padding:15px;			
 		}
 		.create-order-title-style{
 			height: 38px;
