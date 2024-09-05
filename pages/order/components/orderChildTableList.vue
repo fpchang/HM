@@ -155,6 +155,12 @@
 				return Math.ceil((params[1] - params[0]) / (1000 * 60 * 60 * 24))
 			}
 		},
+		created() {
+				console.log("tableList start");
+		},
+		activated() {
+				console.log("tableList active....");
+		},
 		mounted() {
 			this.testData(['t1', 't2'])
 		},

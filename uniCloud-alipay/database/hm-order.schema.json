@@ -1,1 +1,67 @@
-{"bsonType":"object","required":[],"permission":{"read":false,"create":false,"update":false,"delete":false},"properties":{"_id":{"description":"ID，系统自动生成"}}}
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"hotel_id":{
+			"description": "酒店id",
+			"bsonType": "string"
+		},
+		"createTime": {
+			"description": "创建时间",
+			"bsonType": "timestamp"
+		},
+		"roomTypeArray":{
+			"description": "房型数据",
+			"bsonType": "array"
+		},
+		"userName": {
+			"description": "用户名",
+			"bsonType": "string"
+		},
+		"checkInStartDateTimeStamp":{
+			"description": "入住时间戳",
+			"bsonType": "timestamp"
+		},
+		"checkInEndDateTimeStamp": {
+			"description": "离店时间戳",
+			"bsonType": "timestamp"
+		},
+		"checkInStartDate": {
+			"description": "入住时间",
+			"bsonType": "string"
+		},
+		"checkInEndDate":{
+			"description": "离店时间",
+			"bsonType": "string"
+		},
+		"phone":{
+			"description": "联系人手机",
+			"bsonType": "string"
+		},
+		"orderSource":{
+			"description": "订单来源",
+			"bsonType": "int"
+		},
+		"wxNickName": {
+			"description": "微信昵称",
+			"bsonType": "string"
+		},
+		"orderSouce_Zn":{
+			"description": "订单来源中文",
+			"bsonType": "string"
+		}, 
+		"orderStatus": {
+			"description": "订单状态",
+			"bsonType": "int"
+		},
+	}
+}

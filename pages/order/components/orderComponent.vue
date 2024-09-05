@@ -1,13 +1,18 @@
 <template>
+	
 	<view class="order-component">
 		<uni-fab ref="fab" :popMenu="false" :pattern="pattern" horizontal="right" vertical="top" @fabClick="fabClick" />
 		<view class="uni-padding-wrap uni-common-mt" style="max-width: 450px;padding:0 15px">
 			<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" />
 		</view>
 		<view class="content">
-			<view v-if="current === 0">
-				<orderChildCalendarList :disHeightVal="disHeightVal"></orderChildCalendarList>
-			</view>
+			<keep-alive>
+				<view v-if="current === 0">
+					
+					<orderChildCalendarList :disHeightVal="disHeightVal"></orderChildCalendarList>
+				</view>
+			</keep-alive>
+			
 			<view v-if="current === 1">
 				<view class="mobile-show-style" style="max-width: 450px;">
 					<uni-collapse accordion v-model="accordionVal" @change="change">
@@ -30,9 +35,12 @@
 				</view>
 
 			</view>
-			<view v-if="current === 2">
-				<orderChildTableList></orderChildTableList>
-			</view>
+			<keep-alive>
+				<view v-if="current === 2">
+					<orderChildTableList></orderChildTableList>
+				</view>
+			</keep-alive>
+			
 
 		</view>
 		<uni-popup ref="popup" background-color="transprant" >
@@ -40,7 +48,7 @@
 				<view class="create-order-title-style">创建订单</view>
 				<view class="comContent">
 					<keep-alive>
-						<createOrder></createOrder>
+						<createOrder @closePopup="closePopup"></createOrder>
 					</keep-alive>
 					
 					</view>
@@ -48,7 +56,6 @@
 			</view>
 		</uni-popup>
 	</view>
-
 </template>
 
 <script>
@@ -114,6 +121,9 @@
 				}
 				this.$refs.popup.open();
 				
+			},
+			closePopup(){
+				this.$refs.popup.close();
 			},
 			testData(valArray) {
 

@@ -105,6 +105,12 @@
 			}
 
 		},
+		created() {
+				console.log("calendarList start");
+		},
+		activated() {
+				console.log("calendarList active....");
+		},
 		mounted() {
 			console.log(122222, this.testdate())
 		},

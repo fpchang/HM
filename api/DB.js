@@ -1,6 +1,8 @@
 
 class DB{
-  constructor(){}
+  constructor(){
+	  this.db=uniCloud.database();
+  }
   callFunction(name,data){
 	return  uniCloud.callFunction({
 	  	name:name,
@@ -14,9 +16,8 @@ class DB{
        reject("dbName is invalid")
       }
       console.log(dbName);
-      const db = uniCloud.database();
-     // wx.cloud.database()
-      db.collection(dbName).where(w).get().then(res=>{
+     
+      this.db.collection(dbName).where(w).get().then(res=>{
         console.log(res.result);
         resolve(res.result)
       }).catch(err=>{
@@ -28,9 +29,8 @@ class DB{
       if(!dbName){
        reject("dbName is invalid")
       }
-      console.log(dbName);
-      const db = uniCloud.Vs.database();
-      db.collection(dbName).where(w).orderBy(groupBy).get().then(res=>{
+     
+      this.db.collection(dbName).where(w).orderBy(groupBy).get().then(res=>{
         console.log(res.result);
         resolve(res.result)
       }).catch(err=>{
@@ -42,8 +42,7 @@ class DB{
       if(!dbName){
        reject("dbName is invalid")
       }
-      const db = uniCloud.Vs.database();
-      db.collection(dbName).add(r).then(res=>{
+      this.db.collection(dbName).add(r).then(res=>{
         resolve(res.result);
       }).catch(er=>{
         console.error(er);
