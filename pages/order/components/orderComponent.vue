@@ -9,7 +9,7 @@
 			<keep-alive>
 				<view v-if="current === 0">
 					
-					<orderChildCalendarList :disHeightVal="disHeightVal"></orderChildCalendarList>
+					<orderChildCalendarList :disHeightVal="disHeightVal" ref="orderChildCalendarListRef"></orderChildCalendarList>
 				</view>
 			</keep-alive>
 			
@@ -37,7 +37,7 @@
 			</view>
 			<keep-alive>
 				<view v-if="current === 2">
-					<orderChildTableList></orderChildTableList>
+					<orderChildTableList ref="orderChildTableListRef"></orderChildTableList>
 				</view>
 			</keep-alive>
 			
@@ -122,8 +122,10 @@
 				this.$refs.popup.open();
 				
 			},
-			closePopup(){
+			 closePopup(){
 				this.$refs.popup.close();
+				 this.$refs.orderChildTableListRef.getOrderListByCondition();
+				 this.$refs.orderChildCalendarList.getOrderList();
 			},
 			testData(valArray) {
 

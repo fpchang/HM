@@ -12,7 +12,7 @@ exports.main = async (event, context) => {
 	startTime = new Date(dateFormat(new Date(startTime), "yyyy/MM/dd") + " 14:00:00").getTime();
 	endTime = new Date(dateFormat(new Date(endTime), "yyyy/MM/dd") + " 12:00:00").getTime();
 	//console.log("sss",new Date(dateFormat(new Date(startTime), "yyyy/MM/dd")),new Date(dateFormat(new Date(startTime), "yyyy/MM/dd")+" 13:00:00"));
-	let jql =`hotel_id=='${hotel_id}'&&(`+
+	let jql =`hotel_id=='${hotel_id}'&&orderStatus!=10&&(`+
 		`${endTime}<=checkInEndDateTimeStamp&&${endTime}>checkInStartDateTimeStamp||` +
 		`${startTime}>=checkInStartDateTimeStamp&&${endTime}<=checkInEndDateTimeStamp||` +
 		`${startTime}>=checkInStartDateTimeStamp&&${startTime}<checkInEndDateTimeStamp||` +

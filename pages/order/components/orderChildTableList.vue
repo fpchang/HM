@@ -51,7 +51,7 @@
 
 					<view class="uni-group">
 						<button class="uni-button" size="mini" type="primary">修改</button>
-						<button class="uni-button" size="mini" type="warn">删除</button>
+						<button class="uni-button" size="mini" type="warn" @click="deleteOrder(item)">删除</button>
 					</view>
 				</uni-td>
 			</uni-tr>
@@ -170,7 +170,7 @@
 
 			console.log("tableList start");
 			await this.getOrderListByCondition();
-			uni.hideLoading()
+			
 		},
 		activated() {
 			console.log("tableList active....");
@@ -187,7 +187,7 @@
 				let date = this.selectCondition.dateRangeArray;
 				let startTime = new Date(new Date(date[0]).Format("yyyy/MM/dd 14:00:00")).getTime();
 				let endTime = new Date(new Date(date[1]).Format("yyyy/MM/dd 12:00:00")).getTime();
-				let jql = `hotel_id=='${getApp().globalData.hotel_id}'&&(checkInStartDateTimeStamp>=${startTime} ||` +
+				let jql = `hotel_id=='${getApp().globalData.hotel_id}'&&orderStatus!=10&&(checkInStartDateTimeStamp>=${startTime} ||` +
 					`(${endTime}<checkInEndDateTimeStamp && ${endTime}>checkInStartDateTimeStamp))`;
 				return DB.getCollection("hm-order", jql).then(res => {
 					console.log("344", res)
@@ -197,6 +197,33 @@
 					console.log(err)
 					uni.hideLoading();
 				})
+			},
+			async deleteOrder(item){
+				console.log(item)
+				let _id = item._id;
+				const conf=await uni.showModal({
+					title:'确认取消订单',
+					content:'取消后将无法恢复,需要重新创建订单',
+					cancelText:'取消',
+					confirmText:'确认'
+				})
+				if(conf['cancel']){
+					return;
+				}
+				uni.showLoading();
+				const res = await uniCloud.callFunction({
+					name:'hm-deleteOrder',
+					data:{_id}
+				});
+				uni.hideLoading();
+				if(res.result.code==0){
+					uni.showToast({
+						title:'取消成功'
+					});
+				}
+				
+				console.log(res);
+				this.getOrderListByCondition();
 			},
 			testData(valArray) {
 				let item = this.checkInOrderList[0]

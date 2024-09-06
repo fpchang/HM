@@ -176,7 +176,10 @@
 					}
 				}).then(res=>{
 					console.log("前端数据",res)
-					this.remainRoomTypeList = res.result;
+					this.remainRoomTypeList = res.result.map(it=>{
+						it.selectCount =1;
+						return it;
+						});
 					uni.hideLoading();
 				})
 				
@@ -218,14 +221,13 @@
 					orderSouce_Zn:sourceObj.name_Zn ,
 					orderStatus: 0,
 				}
-				
-				console.log(obj,this.roomTypeArray);
+								
 				DB.insertData("hm-order",obj).then(res=>{					
 					uni.hideLoading();
 					this.submitLoading=false;
 					this.$emit('closePopup');
 					
-				})
+				});
 				
 			}
 		},

@@ -56,9 +56,7 @@ class DB{
       return db.collection(dbName).add(r)  
   }
   update(dbName,_id="",data={}){
-    const db = uniCloud.Vs.database();
-    console.log(arguments)
-    return db.collection(dbName).doc(_id).update(data);
+    return this.db.collection(dbName).doc(_id).update(data);
   }
 }
 module.exports = new DB();
