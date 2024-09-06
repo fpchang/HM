@@ -4,7 +4,7 @@
 			<view class="th-style"><text>房间号</text></view>
 			<view class="td-style" v-for="item in roomTypeList">
 				<text>
-					{{item.name_Zn}}
+					{{item.name}}
 				</text>
 			</view>
 		</view>
@@ -37,82 +37,89 @@
 </template>
 
 <script>
+	import DB from '../../../api/DB';
 	export
 	default {
 		props: {},
 		data() {
 			return {
-				roomIdList: ["t1", "t2", "t3", "t4", "t5"],
-				roomTypeList: [{
-					value: 't1',
-					name: "大床房",
-					count:5
-				}, {
-					value: 't2',
-					name: "商务大床房",
-					count:2
-				}, {
-					value: 't3',
-					name: "标间",
-					count:4
-				}, {
-					value: 't4',
-					name: "商务标间",
-					count:3
-				}],
-				checkInOrderList: [{
-						createTime: 111,
-						roomTypeArray: ["t1", "t2"],
-						userName: "张三",
-						checkInStartDateTimeStamp: 1724824800000,
-						checkInEndDateTimeStamp: 1724904000000,
-						checkInStartDate: "2024-08-28 14:00:00",
-						checkInEndDate: "2024-08-29 12:00:00",
-						phone: "13900991112",
-						orderSource: 0,
-						orderSouce_Zn: "携程",
-						orderStatus: 0
-					},
-					{
-							createTime: 111,
-							roomTypeArray: ["t1", "t2","t3", "t4"],
-							userName: "张234",
-							checkInStartDateTimeStamp: 1725256800000,
-							checkInEndDateTimeStamp: 1725508800000,
-							checkInStartDate: "2024-09-02 14:00:00",
-							checkInEndDate: "2024-09-05 12:00:00",
-							phone: "13900991112",
-							orderSource: 0,
-							orderSouce_Zn: "携程",
-							orderStatus: 0
-						},
-					{
-						createTime: 111,
-						roomTypeArray: ["t3", "t4"],
-						userName: "李4",
-						checkInStartDateTimeStamp: 1726034400000,
-						checkInEndDateTimeStamp: 1726113600000,
-						checkInStartDate: "2024-09-11 14:00:00",
-						checkInEndDate: "2024-09-12 12:00:00",
-						phone: "13900991112",
-						orderSource: 0,
-						orderSouce_Zn: "携程",
-						orderStatus: 0
-					},
+				
+				roomTypeList:[],
+				// roomTypeList: [{
+				// 	value: 't1',
+				// 	name: "大床房",
+				// 	count:5
+				// }, {
+				// 	value: 't2',
+				// 	name: "商务大床房",
+				// 	count:2
+				// }, {
+				// 	value: 't3',
+				// 	name: "标间",
+				// 	count:4
+				// }, {
+				// 	value: 't4',
+				// 	name: "商务标间",
+				// 	count:3
+				// }],
+				checkInOrderList:[]
+				// checkInOrderList: [{
+				// 		createTime: 111,
+				// 		roomTypeArray: ["t1", "t2"],
+				// 		userName: "张三",
+				// 		checkInStartDateTimeStamp: 1724824800000,
+				// 		checkInEndDateTimeStamp: 1724904000000,
+				// 		checkInStartDate: "2024-08-28 14:00:00",
+				// 		checkInEndDate: "2024-08-29 12:00:00",
+				// 		phone: "13900991112",
+				// 		orderSource: 0,
+				// 		orderSouce_Zn: "携程",
+				// 		orderStatus: 0
+				// 	},
+				// 	{
+				// 			createTime: 111,
+				// 			roomTypeArray: ["t1", "t2","t3", "t4"],
+				// 			userName: "张234",
+				// 			checkInStartDateTimeStamp: 1725256800000,
+				// 			checkInEndDateTimeStamp: 1725508800000,
+				// 			checkInStartDate: "2024-09-02 14:00:00",
+				// 			checkInEndDate: "2024-09-05 12:00:00",
+				// 			phone: "13900991112",
+				// 			orderSource: 0,
+				// 			orderSouce_Zn: "携程",
+				// 			orderStatus: 0
+				// 		},
+				// 	{
+				// 		createTime: 111,
+				// 		roomTypeArray: ["t3", "t4"],
+				// 		userName: "李4",
+				// 		checkInStartDateTimeStamp: 1726034400000,
+				// 		checkInEndDateTimeStamp: 1726113600000,
+				// 		checkInStartDate: "2024-09-11 14:00:00",
+				// 		checkInEndDate: "2024-09-12 12:00:00",
+				// 		phone: "13900991112",
+				// 		orderSource: 0,
+				// 		orderSouce_Zn: "携程",
+				// 		orderStatus: 0
+				// 	},
 
 
-				]
+				// ]
 			}
 
 		},
-		created() {
+		async created() {
 				console.log("calendarList start");
+				uni.showLoading();
+				await this.getRoomTypeList();
+				await	this.getOrderList();
+				uni.hideLoading();
 		},
 		activated() {
 				console.log("calendarList active....");
 		},
 		mounted() {
-			console.log(122222, this.testdate())
+			
 		},
 		computed: {
 			dateTabList() {
@@ -151,15 +158,16 @@
 				for (let i = 0; i < this.roomTypeList.length; i++) {
 
 
-					let roomType = this.roomTypeList[i].value;
-					result.push(fillRoomType(roomType));
+					let t = this.roomTypeList[i].value;
+					result.push(fillRoomType(t));
 				}
 
 				function fillRoomType(t) {
 					let fillArray = [];
 					for (let j = 0; j < or.length; j++) {
 						let obj = checkInOrderList.find(item => {
-							return item.roomTypeArray.includes(t) && (or[j] >= item.checkInStartDateTimeStamp &&
+								let o = item.roomTypeArray.find(is=>is.value==t);
+							return o && (or[j] >= item.checkInStartDateTimeStamp &&
 								or[j] < item.checkInEndDateTimeStamp)
 						})
 						fillArray.push(obj || []);
@@ -172,6 +180,28 @@
 
 		},
 		methods: {
+			getRoomTypeList(){
+				return uniCloud.callFunction({
+					name:"hm_getRoomType",
+					data:{hotel_id:getApp().globalData.hotel_id}
+				}).then(res=>{
+					
+					console.log("酒店列表",res);
+					this.roomTypeList = res.result.data[0].roomType;
+				})
+			},
+			getOrderList(){
+				let jql = `checkInStartDateTimeStamp>=${new Date(new Date().Format("yyyy/MM/dd 14:00:00")).getTime()} ||`+
+				`(${new Date().getTime()}<checkInEndDateTimeStamp) && ${new Date().getTime()}>checkInStartDateTimeStamp`;
+				
+				return DB.getCollection("hm-order",jql).then(res=>{
+					console.log("获取的列表",res);
+					this.checkInOrderList = res.data;
+					
+				}).catch(error=>{
+					console.log(error);
+				})
+			},
 			testdate() {
 				let result = [];
 				let or = this.orderDateRange;

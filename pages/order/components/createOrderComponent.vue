@@ -166,7 +166,7 @@
 			initValidRoomTypeData(){
 				uni.showLoading();
 				let startTime = this.dateRangeArrayFormat[0],endTime =this.dateRangeArrayFormat[1];			
-				let hotel_id='66a313e521f99966aa73584c';
+				let hotel_id=getApp().globalData.hotel_id;
 				uniCloud.callFunction({
 					name:'hm_getRemainderRoomType',
 					data:{
@@ -204,7 +204,7 @@
 				let dateRange = this.dateRangeArrayFormat;
 				let sourceObj = this.source.find(item=>item.value==this.orderForm.orderSource);
 				let obj = {
-					hotel_id:'66a313e521f99966aa73584c',
+					hotel_id:getApp().globalData.hotel_id,
 					createTime: new Date().getTime(),
 					roomTypeArray: this.roomTypeArray,
 					userName: this.orderForm.userName,

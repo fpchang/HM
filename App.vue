@@ -28,7 +28,9 @@
 		},
 		globalData:{
 			systemInfo:uni.getSystemInfoSync(),
-			user:null
+			user:null,
+			hotelList:[],//酒店列表
+			hotel_id:'66a313e521f99966aa73584c'//当前酒店
 		}
 	}
 </script>

@@ -21,6 +21,7 @@ class DB{
         console.log(res.result);
         resolve(res.result)
       }).catch(err=>{
+		  reject(err)
       })
     })
   }
