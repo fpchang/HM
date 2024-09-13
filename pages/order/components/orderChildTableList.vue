@@ -1,24 +1,31 @@
 <template>
 	<view class="h5-show-style">
-		<view style="box-sizing: border-box;display: flex;flex-wrap: wrap;">
+		<view class="cond-c">
 
-			<view style="width: 240px;padding:0 10px">
-				<uni-section class="mb-10" title="日期选择:">
-					<uni-datetime-picker v-model="selectCondition.dateRangeArray" type="daterange"
-						@change="getOrderListByCondition()" />
-				</uni-section>
+			<view style="display: flex;" class="cond-item-style">
+				<!-- <uni-section class="mb-10" title="日期选择:"> -->
+				<view>日期选择：</view>
+				<view style="width: 240px;padding:0 10px;"><uni-datetime-picker v-model="selectCondition.dateRangeArray"
+						type="daterange" @change="getOrderListByCondition()" /></view>
+
+				<!-- </uni-section> -->
 			</view>
 
-			<view style="width: 130px;padding:0 10px">
-				<uni-section class="mb-10" title="用户名:">
+			<view style="display: flex;" class="cond-item-style">
+				<!-- <uni-section class="mb-10" title="用户名:"> -->
+				<view>用户名：</view>
+				<view style="width: 130px;padding:0 10px;">
 					<uni-easyinput class="uni-mt-5" suffixIcon="search" v-model="selectCondition.userName"
 						placeholder="" @iconClick="getOrderListByCondition()"></uni-easyinput>
-				</uni-section>
+				</view>
+
+				<!-- </uni-section> -->
 			</view>
 			<view style="padding:0 10px">
 
 			</view>
 		</view>
+		<view style="height: 10px;"></view>
 		<uni-table border stripe emptyText="暂无更多数据">
 			<!-- 表头行 -->
 			<uni-tr>
@@ -51,7 +58,7 @@
 
 					<view class="uni-group">
 						<button class="uni-button" size="mini" type="primary">修改</button>
-						<button class="uni-button" size="mini" type="warn" @click="deleteOrder(item)">删除</button>
+						<button class="uni-button" size="mini" type="warn" @click="deleteOrder(item)">撤销</button>
 					</view>
 				</uni-td>
 			</uni-tr>
@@ -144,9 +151,9 @@
 
 			}
 		},
-		computed:{
-			fitlerUserNameOrderList(){
-				return this.checkInOrderList.filter(item=>{
+		computed: {
+			fitlerUserNameOrderList() {
+				return this.checkInOrderList.filter(item => {
 					return item.userName.includes(this.selectCondition.userName)
 				})
 			}
@@ -170,7 +177,7 @@
 
 			console.log("tableList start");
 			await this.getOrderListByCondition();
-			
+
 		},
 		activated() {
 			console.log("tableList active....");
@@ -187,7 +194,8 @@
 				let date = this.selectCondition.dateRangeArray;
 				let startTime = new Date(new Date(date[0]).Format("yyyy/MM/dd 14:00:00")).getTime();
 				let endTime = new Date(new Date(date[1]).Format("yyyy/MM/dd 12:00:00")).getTime();
-				let jql = `hotel_id=='${getApp().globalData.hotel_id}'&&orderStatus!=10&&(checkInStartDateTimeStamp>=${startTime} ||` +
+				let jql =
+					`hotel_id=='${getApp().globalData.hotel_id}'&&orderStatus!=10&&(checkInStartDateTimeStamp>=${startTime} ||` +
 					`(${endTime}<checkInEndDateTimeStamp && ${endTime}>checkInStartDateTimeStamp))`;
 				return DB.getCollection("hm-order", jql).then(res => {
 					console.log("344", res)
@@ -198,30 +206,32 @@
 					uni.hideLoading();
 				})
 			},
-			async deleteOrder(item){
+			async deleteOrder(item) {
 				console.log(item)
 				let _id = item._id;
-				const conf=await uni.showModal({
-					title:'确认取消订单',
-					content:'取消后将无法恢复,需要重新创建订单',
-					cancelText:'取消',
-					confirmText:'确认'
+				const conf = await uni.showModal({
+					title: '确认取消订单',
+					content: '取消后将无法恢复,需要重新创建订单',
+					cancelText: '取消',
+					confirmText: '确认'
 				})
-				if(conf['cancel']){
+				if (conf['cancel']) {
 					return;
 				}
 				uni.showLoading();
 				const res = await uniCloud.callFunction({
-					name:'hm-deleteOrder',
-					data:{_id}
+					name: 'hm-deleteOrder',
+					data: {
+						_id
+					}
 				});
 				uni.hideLoading();
-				if(res.result.code==0){
+				if (res.result.code == 0) {
 					uni.showToast({
-						title:'取消成功'
+						title: '取消成功'
 					});
 				}
-				
+
 				console.log(res);
 				this.getOrderListByCondition();
 			},
@@ -249,5 +259,19 @@
 	.strongText {
 		color: red;
 		font-weight: bold;
+	}
+
+	.cond-c {
+		box-sizing: border-box;
+		display: flex;
+		flex-wrap: wrap;
+		padding: 0 20px;
+	}
+
+	.cond-item-style {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding-right: 20px;
 	}
 </style>

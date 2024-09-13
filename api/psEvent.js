@@ -6,14 +6,12 @@ class psEvent{
   constructor(){
     this.events={};
     this.topicalList=[
-      'getSlideShow',//轮播
+      'getOrderList'//获取所有订单
+	 
   
    ]
   }
-  isLogin() {
-    return false;
-  }
- 
+
 
  subcribe(topical = '', fn) {
     if (!topical || typeof fn != 'function') {
@@ -31,15 +29,12 @@ class psEvent{
        func: fn
     });
     //如果有存在的值，直接发布
-    if (this.events[topical]['value']&&this.isLogin()) {
+    if (this.events[topical]['value']) {
        this.publish(topical, this.events[topical]['value']);
     }
     return token;
  }
- publish(topical, value,sn) {
-    if(!this.isLogin()){
-       return;
-    }
+ publish(topical, value) {
     let event = this.events[topical];
     if (!event) {
        return;

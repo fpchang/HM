@@ -15,25 +15,7 @@
 			<!-- </keep-alive> -->
 			
 			<view v-if="current === 1">
-				<view class="mobile-show-style" style="max-width: 450px;">
-					<uni-collapse accordion v-model="accordionVal" @change="change">
-						<uni-collapse-item title="手风琴效果">
-							<view class="content">
-								<text class="text">手风琴效果同时只会保留一个组件的打开状态，其余组件会自动关闭。</text>
-							</view>
-						</uni-collapse-item>
-						<uni-collapse-item title="手风琴效果">
-							<view class="content">
-								<text class="text">手风琴效果同时只会保留一个组件的打开状态，其余组件会自动关闭。</text>
-							</view>
-						</uni-collapse-item>
-						<uni-collapse-item title="手风琴效果">
-							<view class="content">
-								<text class="text">手风琴效果同时只会保留一个组件的打开状态，其余组件会自动关闭。</text>
-							</view>
-						</uni-collapse-item>
-					</uni-collapse>
-				</view>
+				<orderChildList></orderChildList>
 
 			</view>
 			<!-- <keep-alive> -->
@@ -49,7 +31,7 @@
 				<view class="create-order-title-style">创建订单</view>
 				<view class="comContent">
 					<!-- <keep-alive> -->
-						<createOrder @closePopup="closePopup"></createOrder>
+						<createOrderComponent @closePopup="closePopup"></createOrderComponent>
 					<!-- </keep-alive> -->
 					
 					</view>
@@ -62,13 +44,15 @@
 <script>
 	import orderChildCalendarList from './orderChildCalendarList2';
 	import orderChildTableList from './orderChildTableList';
-	import createOrder from './createOrderComponent';
+	import createOrderComponent from './createOrderComponent';
+	import orderChildList from './orderChildList.vue';
 	import dataBase from '../../../api/dataBase.js';
 	export default {
 		components: {
-			createOrder,
+			createOrderComponent,
 			orderChildCalendarList,
-			orderChildTableList
+			orderChildTableList,
+			orderChildList
 		},
 		props: ['disHeightVal'],
 		data() {
@@ -124,9 +108,14 @@
 				
 			},
 			 closePopup(){
-				this.$refs.popup.close();
-				 this.$refs.orderChildTableListRef.getOrderListByCondition();
-				 this.$refs.orderChildCalendarList.getOrderList();
+				 try{
+				 	this.$refs.popup.close();
+				 	 this.$refs.orderChildTableListRef.getOrderListByCondition();
+				 	 this.$refs.orderChildCalendarList.getOrderList();
+				 }catch(e){
+				 	//TODO handle the exception
+				 }
+				
 			},
 			testData(valArray) {
 

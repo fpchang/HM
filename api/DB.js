@@ -17,7 +17,7 @@ class DB{
       }
       console.log(dbName);
      
-      this.db.collection(dbName).where(w).get().then(res=>{
+      this.db.collection(dbName).where(w).limit(100).get().then(res=>{
         console.log(res.result);
         resolve(res.result)
       }).catch(err=>{

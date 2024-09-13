@@ -73,12 +73,10 @@
 <script>
 	import gatherComponent from './components/gatherComponent.vue';
 	import orderComponent from '../order/components/orderComponent';
-	import createOrderComponent from '../order/components/createOrderComponent';
 	export default {
 		components: {
 			gatherComponent,
-			orderComponent,
-			createOrderComponent
+			orderComponent
 		},
 		data() {
 			return {
