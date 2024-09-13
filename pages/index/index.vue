@@ -45,8 +45,7 @@
 							<orderComponent :disHeightVal="disHeightVal" v-if="item.ComponentName=='orderComponent'">
 							</orderComponent>
 
-							<createComponent :disHeightVal="disHeightVal" v-if="item.ComponentName=='createComponent'">
-							</createComponent>
+						
 						<!-- </keep-alive> -->
 
 					</view>

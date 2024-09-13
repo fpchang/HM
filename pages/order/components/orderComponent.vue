@@ -15,7 +15,7 @@
 			<!-- </keep-alive> -->
 			
 			<view v-if="current === 1">
-				<orderChildList></orderChildList>
+				<orderChildList ref="orderChildListRef"></orderChildList>
 
 			</view>
 			<!-- <keep-alive> -->
@@ -112,6 +112,7 @@
 				 	this.$refs.popup.close();
 				 	 this.$refs.orderChildTableListRef.getOrderListByCondition();
 				 	 this.$refs.orderChildCalendarList.getOrderList();
+					 this.$refs.orderChildListRef.getOrderList();
 				 }catch(e){
 				 	//TODO handle the exception
 				 }
