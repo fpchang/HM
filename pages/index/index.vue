@@ -39,15 +39,15 @@
 			<swiper-item v-for="item in tabList">
 				<scroll-view :scroll-y="true" show-scrollbar="false" :scroll-top="0" :style="{height:scrollHeight}">
 					<view>
-						<keep-alive>
-							<gatherComponent :disHeightVal="disHeightVal" v-if="item.ComponentName=='gatherComponent'">
+					<!-- 	<keep-alive :id="new Date().getTime()"> -->
+							 <gatherComponent :disHeightVal="disHeightVal" v-if="item.ComponentName=='gatherComponent'">
 							</gatherComponent>
 							<orderComponent :disHeightVal="disHeightVal" v-if="item.ComponentName=='orderComponent'">
 							</orderComponent>
 
 							<createComponent :disHeightVal="disHeightVal" v-if="item.ComponentName=='createComponent'">
 							</createComponent>
-						</keep-alive>
+						<!-- </keep-alive> -->
 
 					</view>
 				</scroll-view>

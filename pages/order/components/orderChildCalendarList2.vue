@@ -9,8 +9,8 @@
 			</view>
 		</view>
 		<view class="checkInTable-style" style="flex: 1;">
-			<view class="checkIntable-content">
-				<view>
+			<scroll-view class="checkIntable-content-scroll" :scroll-y="false" :scroll-x="true">
+				<view class="checkIntable-content">
 					<view class="checkIntable-h-list">
 						<view class=" th-style checkIntable-h-list-h" style="background-color: #eee;"
 							v-for="item in orderDateRangeFormat">
@@ -28,7 +28,7 @@
 					</view>
 
 				</view>
-			</view>
+			</scroll-view>
 			<view class="checkIntable-h-head" style="flex-direction: column;">
 
 			</view>
@@ -232,11 +232,12 @@
 
 <style lang="scss">
 	/* pages/management/checkIn/checkIn.wxss */
-	.checkIntable-content {
-		display: flex;
+	.checkIntable-content-scroll{
 		width: calc(100vw - 120px);
-		overflow-x: scroll;
-		flex-direction: row;
+		height: 100%;
+	}
+	.checkIntable-content {
+		width: fit-content;
 		font-size: $uni-font-size-lg;
 	}
 

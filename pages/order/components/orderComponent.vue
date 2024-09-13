@@ -5,13 +5,14 @@
 		<view class="uni-padding-wrap uni-common-mt" style="max-width: 450px;padding:0 15px">
 			<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" />
 		</view>
+		<view style="height: 15px;"></view>
 		<view class="content">
-			<keep-alive>
+			<!-- <keep-alive> -->
 				<view v-if="current === 0">
 					
 					<orderChildCalendarList :disHeightVal="disHeightVal" ref="orderChildCalendarListRef"></orderChildCalendarList>
 				</view>
-			</keep-alive>
+			<!-- </keep-alive> -->
 			
 			<view v-if="current === 1">
 				<view class="mobile-show-style" style="max-width: 450px;">
@@ -35,11 +36,11 @@
 				</view>
 
 			</view>
-			<keep-alive>
+			<!-- <keep-alive> -->
 				<view v-if="current === 2">
 					<orderChildTableList ref="orderChildTableListRef"></orderChildTableList>
 				</view>
-			</keep-alive>
+			<!-- </keep-alive> -->
 			
 
 		</view>
@@ -47,9 +48,9 @@
 			<view class="popup-content" >
 				<view class="create-order-title-style">创建订单</view>
 				<view class="comContent">
-					<keep-alive>
+					<!-- <keep-alive> -->
 						<createOrder @closePopup="closePopup"></createOrder>
-					</keep-alive>
+					<!-- </keep-alive> -->
 					
 					</view>
 				
