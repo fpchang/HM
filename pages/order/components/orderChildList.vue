@@ -45,6 +45,11 @@
 		created() {
 			this.getOrderList();
 		},
+		computed:{
+			hotel_id(){
+				return this.$store.state.hotel_id;
+			}
+		},
 		filters: {
 			formatDateTitle(item) {
 				return `${new Date(item.checkInStartDateTimeStamp).Format("MM-dd")}~${new Date(item.checkInEndDateTimeStamp).Format("MM-dd")}`;
@@ -59,7 +64,7 @@
 				let startTime = new Date(new Date().Format("yyyy/MM/dd 14:00:00")).getTime();
 				let endTime = new Date(new Date().Format("yyyy/MM/dd 12:00:00")).getTime();
 				let jql =
-					`hotel_id=='${getApp().globalData.hotel_id}'&&orderStatus!=10&&(checkInStartDateTimeStamp>=${startTime} ||` +
+					`hotel_id=='${this.hotel_id}'&&orderStatus!=10&&(checkInStartDateTimeStamp>=${startTime} ||` +
 					`(${endTime}<checkInEndDateTimeStamp && ${endTime}>checkInStartDateTimeStamp))`;
 
 				return DB.getCollection("hm-order", jql).then(res => {

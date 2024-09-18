@@ -1,4 +1,5 @@
-import App from './App'
+import App from './App';
+import store from './store/store';
 
 // #ifndef VUE3
 import Vue from 'vue'
@@ -6,6 +7,7 @@ import './uni.promisify.adaptor';
 import uView from '@/uni_modules/uview-ui';
 import {CF} from './static/utils/CF';
 Vue.use(uView);
+Vue.prototype.$store = store;
 Vue.config.productionTip = false
 App.mpType = 'app'
 const app = new Vue({

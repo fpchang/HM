@@ -20,7 +20,7 @@
 							<view style="display: flex;align-items: center;">
 							<view style="width: 200px;">
 								<uni-data-select
-								        v-model="hotel_id"
+								        :value="hotel_id"
 								        :localdata="hotelListFormat"
 								        @change="checkHotel"
 										:clear="false"
@@ -126,7 +126,7 @@
 				styleObj: {
 					navTopHeight: getApp().globalData.systemInfo.deviceType == 'pc' ? 0 : '60px'
 				},
-				hotel_id: '',
+				
 				isSticky: false,
 				opacityVal: 1,
 				currentTab_index: 1,
@@ -161,8 +161,8 @@
 					name_Zn: "",
 					subName: "1店",
 					logoSrc: "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png"
-				},
-				hotelList: []
+				}
+				//hotelList: []
 				
 
 			}
@@ -183,6 +183,12 @@
 		},
 	
 		computed: {
+			hotel_id(){
+				return this.$store.state.hotel_id;
+			},
+			hotelList(){
+							return this.$store.state.hotelList;
+						},
 			dataHasRead(){
 				return this.hotelList.length&&this.hotel_id;
 			},
@@ -208,8 +214,14 @@
 			showCheckHotel() {
 				this.showDrawerEvent();
 			},
-			checkHotel(item) {
-				console.log(item,this.hotel_id);
+			checkHotel(hotel_id) {
+				if(hotel_id==this.hotel_id){
+					return;
+				}
+				this.$store.commit("checkHotel",hotel_id);
+				// this.setDefaultHotel(hotel_id);
+				// this.getHotelList();
+				// console.log(hotel_id);
 			},
 			showDrawerEvent() {
 				this.showDrawer = true
@@ -257,27 +269,21 @@
 				
 			},
 			getHotelList(){
-				return DB.getCollection("hm-hotel",{blongUserId:getApp().globalData.user.mobile}).then(res=>{
+				return DB.getCollection("hm-hotel",{blongUserId:this.$store.state.user.mobile}).then(res=>{
 					this.hotelList=res.data;
-					getApp().globalData.hotelList=res.data;
+					this.$store.commit('updateHotelList',res.data);
 					console.log("33322dd",this.hotelList)
 				})
 			},
-			setDefaultHotel(hotel_id){
-				console.log("setDefaultHotle",hotel_id);
+			setDefaultHotel(){
+				console.log("setDefaultHotle");
 				if(!this.hotelList.length){
-					return;
-				}
-				if(hotel_id){
-					uni.setStorageSync("defaultHotel_id",hotel_id);
-					getApp().globalData.hotel_id = hotel_id;
-					this.hotel_id= hotel_id;
 					return;
 				}
 				let _hotel_id = uni.getStorageSync("hotel_id")||this.hotelList[0]._id;
 				let h = this.hotelList.find(item=>{return item._id == _hotel_id});
 				if(h){
-					this.setDefaultHotel(_hotel_id);
+					this.$store.commit('checkHotel',_hotel_id);
 				}
 			}
 		}

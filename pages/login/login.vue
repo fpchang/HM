@@ -154,6 +154,7 @@
 				const userRes = await db.collection("hm-user").where(`mobile=='${this.userForm.mobile}'`).get();
 				console.log("更新userInfo",userRes.result.data[0]);
 				uni.setStorageSync('user',userRes.result.data[0]);
+				this.$store.commit("setUser",userRes.result.data[0]);
 				uni.reLaunch({
 					url:'/pages/index/index'
 				})

@@ -70,12 +70,16 @@
 					selectedColor: '#007AFF',
 					buttonColor: 'rgba(41, 121, 255,1)',
 					iconColor: '#fff'
-				},
-				roomTypeList: dataBase.roomTypeList,
+				}
+				//roomTypeList: dataBase.roomTypeList,
 
 			}
 		},
-		computed: {},
+		computed: {
+			roomTypeList(){
+							return this.$store.state.roomTypeList;
+						}
+		},
 
 		created() {
 			console.log('orderComponent create');
@@ -138,25 +142,5 @@
 	.uni-button {
 		white-space: nowrap;
 	}
-	.popup-content{
-		width: 500px;
-		background-color: #fff;
-		border-radius: 12px;
-		max-height:calc(100vh - 130px) ;
-		
-		box-sizing: border-box;
-		overflow-x: hidden;
-		overflow-y: auto;
-		.comContent{
-			padding:20px 30px;
-		}
-		.create-order-title-style{
-			height: 35px;
-			line-height: 36px;
-			padding-top: 20px;
-			font-weight: bold;
-			text-align: center;
-		}
-		
-	}
+	
 </style>

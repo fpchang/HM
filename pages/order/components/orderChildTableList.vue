@@ -152,10 +152,19 @@
 			}
 		},
 		computed: {
+			hotel_id(){
+				return this.$store.state.hotel_id;
+			},
 			fitlerUserNameOrderList() {
 				return this.checkInOrderList.filter(item => {
 					return item.userName.includes(this.selectCondition.userName)
 				})
+			}
+		},
+		watch:{
+			hotel_id(newval,oldval){
+				console.warn("XXXXXXX",newval,oldval);
+				this.getOrderListByCondition();
 			}
 		},
 		filters: {
@@ -195,7 +204,7 @@
 				let startTime = new Date(new Date(date[0]).Format("yyyy/MM/dd 14:00:00")).getTime();
 				let endTime = new Date(new Date(date[1]).Format("yyyy/MM/dd 12:00:00")).getTime();
 				let jql =
-					`hotel_id=='${getApp().globalData.hotel_id}'&&orderStatus!=10&&(checkInStartDateTimeStamp>=${startTime} ||` +
+					`hotel_id=='${this.hotel_id}'&&orderStatus!=10&&(checkInStartDateTimeStamp>=${startTime} ||` +
 					`(${endTime}<checkInEndDateTimeStamp && ${endTime}>checkInStartDateTimeStamp))`;
 				return DB.getCollection("hm-order", jql).then(res => {
 					console.log("344", res)

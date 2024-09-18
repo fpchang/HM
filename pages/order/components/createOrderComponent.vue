@@ -124,6 +124,9 @@
 			
 		},
 		computed: {
+			hotel_id(){
+				return this.$store.state.hotel_id;
+			},
 			noSelectDate() {
 				//return false;
 				return  this.orderForm.dateRangeArray.length < 1;
@@ -166,7 +169,7 @@
 			initValidRoomTypeData(){
 				uni.showLoading();
 				let startTime = this.dateRangeArrayFormat[0],endTime =this.dateRangeArrayFormat[1];			
-				let hotel_id=getApp().globalData.hotel_id;
+				let hotel_id=this.hotel_id;
 				uniCloud.callFunction({
 					name:'hm_getRemainderRoomType',
 					data:{

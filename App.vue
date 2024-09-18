@@ -14,6 +14,7 @@
 			let user = uni.getStorageSync("user");
 			if(user){
 				this.globalData.user=user;
+				this.$store.commit("setUser",user);
 				return;
 			}
 			uni.reLaunch({

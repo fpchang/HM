@@ -44,24 +44,7 @@
 		data() {
 			return {
 				
-				roomTypeList:[],
-				// roomTypeList: [{
-				// 	value: 't1',
-				// 	name: "大床房",
-				// 	count:5
-				// }, {
-				// 	value: 't2',
-				// 	name: "商务大床房",
-				// 	count:2
-				// }, {
-				// 	value: 't3',
-				// 	name: "标间",
-				// 	count:4
-				// }, {
-				// 	value: 't4',
-				// 	name: "商务标间",
-				// 	count:3
-				// }],
+		
 				checkInOrderList:[]
 				// checkInOrderList: [{
 				// 		createTime: 111,
@@ -122,6 +105,12 @@
 			
 		},
 		computed: {
+			hotel_id(){
+				return this.$store.state.hotel_id;
+			},
+			roomTypeList(){
+					return this.$store.state.roomTypeList;
+			},
 			dateTabList() {
 				let curDateTimeStamp = new Date().getTime();
 				let dateList = [];
@@ -179,22 +168,30 @@
 
 
 		},
+		watch:{
+			hotel_id(newval,oldval){
+				this.getOrderList();
+			}
+		},
 		methods: {
 			getRoomTypeList(){
 				return uniCloud.callFunction({
 					name:"hm_getRoomType",
-					data:{hotel_id:getApp().globalData.hotel_id}
+					data:{hotel_id:this.hotel_id}
 				}).then(res=>{
 					
 					console.log("酒店列表",res);
-					this.roomTypeList = res.result.data[0].roomType;
+					//this.roomTypeList = res.result.data[0].roomType;
+					if(res.result.data.length){
+						this.$store.commit("updateRoomTypeList",res.result.data[0].roomType);
+					}
 				})
 			},
 			getOrderList(){
 				let startTime = new Date(new Date().Format("yyyy/MM/dd 14:00:00")).getTime();
 				let endTime = new Date(new Date().Format("yyyy/MM/dd 12:00:00")).getTime();
 				let jql =
-					`hotel_id=='${getApp().globalData.hotel_id}'&&orderStatus!=10&&(checkInStartDateTimeStamp>=${startTime} ||` +
+					`hotel_id=='${this.hotel_id}'&&orderStatus!=10&&(checkInStartDateTimeStamp>=${startTime} ||` +
 					`(${endTime}<checkInEndDateTimeStamp && ${endTime}>checkInStartDateTimeStamp))`;
 				// let jql = `hotel_id==${getApp().globalData.hotel_id}'&&orderStatus!=10&&(checkInStartDateTimeStamp>=${new Date(new Date().Format("yyyy/MM/dd 14:00:00")).getTime()} ||`+
 				// `(${new Date().getTime()}<checkInEndDateTimeStamp) && ${new Date().getTime()}>checkInStartDateTimeStamp)`;
