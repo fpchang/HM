@@ -185,7 +185,7 @@
 			try {
 				await this.getHotelList();				
 				this.setDefaultHotel();
-				await this.$store.commit("getRoomTypeList");
+				await this.$store.commit("getRoomType");
 				await this.$store.commit("getOrderListTodayAfter");
 			} catch (e) {
 				console.error(e)
@@ -230,14 +230,13 @@
 			showCheckHotel() {
 				this.showDrawerEvent();
 			},
-			checkHotel(hotel_id) {
+			 checkHotel(hotel_id) {
 				if (hotel_id == this.hotel_id) {
 					return;
 				}
 				this.$store.commit("checkHotel", hotel_id);
-				// this.setDefaultHotel(hotel_id);
-				// this.getHotelList();
-				// console.log(hotel_id);
+				this.$store.commit("getRoomType");
+				this.$store.commit("getOrderListTodayAfter");
 			},
 			showDrawerEvent() {
 				this.showDrawer = true

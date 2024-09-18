@@ -1,6 +1,9 @@
 <template>
 
 	<view class="roomType-component">
+		<view class="add-content-style" style="">
+			<view><button class="uni-button" size="mini" type="primary" @click="deleteRoomType(item)">添加房型</button></view>
+		</view>
 		<view v-if="isPcShow">
 			<uni-table border stripe emptyText="暂无更多数据">
 				<!-- 表头行 -->
@@ -11,7 +14,7 @@
 					<uni-th align="center" width="200px">操作</uni-th>
 				</uni-tr>
 				<!-- 表格数据行 -->
-				<uni-tr v-for="item of roomTypeList">
+				<uni-tr v-for="item of roomType.roomTypeList">
 					<uni-td>{{item.name}}</uni-td>
 					<uni-td>{{item.count}}</uni-td>
 
@@ -19,7 +22,7 @@
 					<uni-td align="center">
 						<view class="uni-group">
 							<button class="uni-button" size="mini" type="primary">修改</button>
-							<button class="uni-button" size="mini" type="warn" @click="deleteRoomType(item)">撤销</button>
+							<button class="uni-button" size="mini" type="warn" @click="deleteRoomType(item)">删除</button>
 						</view>
 					</uni-td>
 				</uni-tr>
@@ -46,8 +49,8 @@
 							<view class="list-item" style="justify-content: flex-end;">
 
 								<view class="list-item-c" style="width: 130px;">
-									<button class="uni-button" size="mini" type="warn"
-										@click="deleteRoomType(item)">修改</button>
+									<button class="uni-button" size="mini" type="primary"
+										@click="editRoomType(item)">修改</button>
 									<button class="uni-button" size="mini" type="warn"
 										@click="deleteRoomType(item)">删除</button>
 								</view>
@@ -115,34 +118,56 @@
 			hotel_id(){
 				return this.$store.state.hotel_id
 			},
-			roomTypeList() {
-				return this.$store.state.roomTypeList;
+			roomType() {
+				return this.$store.state.roomType;
 			}
 		},
 		created() {
-			console.warn("roomType>>>>>>>>>>>>>>>>>", this.roomTypeList);
-			if(this.roomTypeList.length<1){
-				this.getRoomTypeList();
-			}
+			// console.warn("roomType>>>>>>>>>>>>>>>>>", this.roomTypeList);
+			// if(this.roomTypeList.length<1){
+			// 	this.getRoomTypeList();
+			// }
 			
 		},
 		methods:{
-			getRoomTypeList(){
-				return uniCloud.callFunction({
-					name:"hm_getRoomType",
-					data:{hotel_id:this.hotel_id}
-				}).then(res=>{
-					
-					if(res.result.data.length){
-						this.$store.commit("updateRoomTypeList",res.result.data[0].roomTypeList);
-					}
+			editRoomType(rt){
+				console.log("editRoomType",rt);
+			},
+			async deleteRoomType(rt){
+				const conf = await uni.showModal({
+					title: '确认删除房型',
+					content: '删除后将无法恢复,确认删除吗?',
+					cancelText: '取消',
+					confirmText: '确认'
 				})
+				if (conf['cancel']) {
+					return;
+				}
+				let newRoomTypeList = this.roomType.roomTypeList.filter(item=>{
+					return item.value != rt.value;
+				})
+				console.log("deleteRoomType",rt,newRoomTypeList);
+				
 			}
+			// getRoomTypeList(){
+			// 	return uniCloud.callFunction({
+			// 		name:"hm_getRoomType",
+			// 		data:{hotel_id:this.hotel_id}
+			// 	}).then(res=>{
+					
+			// 		if(res.result.data.length){
+			// 			this.$store.commit("updateRoomTypeList",res.result.data[0].roomTypeList);
+			// 		}
+			// 	})
+			// }
 		}
 	}
 </script>
 
-<style>
+<style lang="scss">
+	.add-content-style{
+		display: flex;justify-content: flex-end;padding:0 20px;box-sizing: border-box;
+	}
 	.uni-group {
 		display: flex;
 		justify-content: space-between;

@@ -67,8 +67,11 @@
 			hotel_id(){
 				return this.$store.state.hotel_id;
 			},
+			roomType(){
+				return this.$store.state.roomType;
+			},
 			roomTypeList(){
-					return this.$store.state.roomTypeList;
+					return this.roomType.roomTypeList;
 			},
 			checkInOrderList(){
 				return this.$store.state.orderListTodayAfter;
@@ -155,12 +158,8 @@
 				let jql =
 					`hotel_id=='${this.hotel_id}'&&orderStatus!=10&&(checkInStartDateTimeStamp>=${startTime} ||` +
 					`(${endTime}<checkInEndDateTimeStamp && ${endTime}>checkInStartDateTimeStamp))`;
-				// let jql = `hotel_id==${getApp().globalData.hotel_id}'&&orderStatus!=10&&(checkInStartDateTimeStamp>=${new Date(new Date().Format("yyyy/MM/dd 14:00:00")).getTime()} ||`+
-				// `(${new Date().getTime()}<checkInEndDateTimeStamp) && ${new Date().getTime()}>checkInStartDateTimeStamp)`;
-				
 				return DB.getCollection("hm-order",jql).then(res=>{
 					console.log("获取的列表",res);
-					//this.checkInOrderList = res.data;
 					this.$store.commit("updateOrderListTodayAfter",res.data);
 					
 				}).catch(error=>{
