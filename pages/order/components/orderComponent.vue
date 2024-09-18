@@ -1,5 +1,5 @@
 <template>
-	
+
 	<view class="order-component">
 		<uni-fab ref="fab" :popMenu="false" :pattern="pattern" horizontal="right" vertical="top" @fabClick="fabClick" />
 		<view class="uni-padding-wrap uni-common-mt" style="max-width: 450px;padding:0 15px">
@@ -8,34 +8,35 @@
 		<view style="height: 15px;"></view>
 		<view class="content">
 			<!-- <keep-alive> -->
-				<view v-if="current === 0">
-					
-					<orderChildCalendarList :disHeightVal="disHeightVal" ref="orderChildCalendarListRef"></orderChildCalendarList>
-				</view>
+			<view v-if="current === 0">
+
+				<orderChildCalendarList :disHeightVal="disHeightVal" ref="orderChildCalendarListRef">
+				</orderChildCalendarList>
+			</view>
 			<!-- </keep-alive> -->
-			
+
 			<view v-if="current === 1">
 				<orderChildList ref="orderChildListRef"></orderChildList>
 
 			</view>
 			<!-- <keep-alive> -->
-				<view v-if="current === 2">
-					<orderChildTableList ref="orderChildTableListRef"></orderChildTableList>
-				</view>
+			<view v-if="current === 2">
+				<orderChildTableList ref="orderChildTableListRef"></orderChildTableList>
+			</view>
 			<!-- </keep-alive> -->
-			
+
 
 		</view>
-		<uni-popup ref="popup" background-color="transprant" >
-			<view class="popup-content" >
+		<uni-popup ref="popup" background-color="transprant">
+			<view class="popup-content">
 				<view class="create-order-title-style">创建订单</view>
 				<view class="comContent">
 					<!-- <keep-alive> -->
-						<createOrderComponent @closePopup="closePopup"></createOrderComponent>
+					<createOrderComponent @closePopup="closePopup"></createOrderComponent>
 					<!-- </keep-alive> -->
-					
-					</view>
-				
+
+				</view>
+
 			</view>
 		</uni-popup>
 	</view>
@@ -76,9 +77,9 @@
 			}
 		},
 		computed: {
-			roomTypeList(){
-							return this.$store.state.roomTypeList;
-						}
+			roomTypeList() {
+				return this.$store.state.roomTypeList;
+			}
 		},
 
 		created() {
@@ -102,25 +103,25 @@
 				}
 			},
 			fabClick() {
-				if(getApp().globalData.systemInfo.deviceType=="phone"){
+				if (getApp().globalData.systemInfo.deviceType == "phone") {
 					uni.navigateTo({
-						url:'/pages/order/createOrder/createOrder'
+						url: '/pages/order/createOrder/createOrder'
 					})
 					return;
 				}
 				this.$refs.popup.open();
-				
+
 			},
-			 closePopup(){
-				 try{
-				 	this.$refs.popup.close();
-				 	 this.$refs.orderChildTableListRef.getOrderListByCondition();
-				 	 this.$refs.orderChildCalendarList.getOrderList();
-					 this.$refs.orderChildListRef.getOrderList();
-				 }catch(e){
-				 	//TODO handle the exception
-				 }
-				
+			closePopup() {
+				try {
+					this.$refs.popup.close();
+					this.$refs.orderChildTableListRef.getOrderListByCondition();
+					this.$refs.orderChildCalendarList.getOrderList();
+					this.$refs.orderChildListRef.getOrderList();
+				} catch (e) {
+					//TODO handle the exception
+				}
+
 			},
 			testData(valArray) {
 
@@ -142,5 +143,4 @@
 	.uni-button {
 		white-space: nowrap;
 	}
-	
 </style>

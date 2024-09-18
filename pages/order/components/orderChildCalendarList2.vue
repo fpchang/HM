@@ -45,58 +45,17 @@
 			return {
 				
 		
-				checkInOrderList:[]
-				// checkInOrderList: [{
-				// 		createTime: 111,
-				// 		roomTypeArray: ["t1", "t2"],
-				// 		userName: "张三",
-				// 		checkInStartDateTimeStamp: 1724824800000,
-				// 		checkInEndDateTimeStamp: 1724904000000,
-				// 		checkInStartDate: "2024-08-28 14:00:00",
-				// 		checkInEndDate: "2024-08-29 12:00:00",
-				// 		phone: "13900991112",
-				// 		orderSource: 0,
-				// 		orderSouce_Zn: "携程",
-				// 		orderStatus: 0
-				// 	},
-				// 	{
-				// 			createTime: 111,
-				// 			roomTypeArray: ["t1", "t2","t3", "t4"],
-				// 			userName: "张234",
-				// 			checkInStartDateTimeStamp: 1725256800000,
-				// 			checkInEndDateTimeStamp: 1725508800000,
-				// 			checkInStartDate: "2024-09-02 14:00:00",
-				// 			checkInEndDate: "2024-09-05 12:00:00",
-				// 			phone: "13900991112",
-				// 			orderSource: 0,
-				// 			orderSouce_Zn: "携程",
-				// 			orderStatus: 0
-				// 		},
-				// 	{
-				// 		createTime: 111,
-				// 		roomTypeArray: ["t3", "t4"],
-				// 		userName: "李4",
-				// 		checkInStartDateTimeStamp: 1726034400000,
-				// 		checkInEndDateTimeStamp: 1726113600000,
-				// 		checkInStartDate: "2024-09-11 14:00:00",
-				// 		checkInEndDate: "2024-09-12 12:00:00",
-				// 		phone: "13900991112",
-				// 		orderSource: 0,
-				// 		orderSouce_Zn: "携程",
-				// 		orderStatus: 0
-				// 	},
-
-
-				// ]
+				//checkInOrderList:[]
+		
 			}
 
 		},
 		async created() {
-				console.log("calendarList start");
-				uni.showLoading();
-				await this.getRoomTypeList();
-				await	this.getOrderList();
-				uni.hideLoading();
+				// console.log("calendarList start");
+				// uni.showLoading();				
+				// await this.getRoomTypeList();
+				// await	this.getOrderList();
+				// uni.hideLoading();
 		},
 		activated() {
 				console.log("calendarList active....");
@@ -110,6 +69,9 @@
 			},
 			roomTypeList(){
 					return this.$store.state.roomTypeList;
+			},
+			checkInOrderList(){
+				return this.$store.state.orderListTodayAfter;
 			},
 			dateTabList() {
 				let curDateTimeStamp = new Date().getTime();
@@ -183,7 +145,7 @@
 					console.log("酒店列表",res);
 					//this.roomTypeList = res.result.data[0].roomType;
 					if(res.result.data.length){
-						this.$store.commit("updateRoomTypeList",res.result.data[0].roomType);
+						this.$store.commit("updateRoomTypeList",res.result.data[0].roomTypeList);
 					}
 				})
 			},
@@ -198,7 +160,8 @@
 				
 				return DB.getCollection("hm-order",jql).then(res=>{
 					console.log("获取的列表",res);
-					this.checkInOrderList = res.data;
+					//this.checkInOrderList = res.data;
+					this.$store.commit("updateOrderListTodayAfter",res.data);
 					
 				}).catch(error=>{
 					console.log(error);

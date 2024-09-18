@@ -4,13 +4,8 @@
 	export default {
 		onLaunch: function() {
 			console.log('App Launch XXXXXXXXXX')
-			if(this.globalData.systemInfo.deviceType=='pc'){
-				uni.hideTabBar({
-					success:()=>{
-						console.log("隐藏成功")
-					}
-				});
-			}
+		
+			this.initData();
 			let user = uni.getStorageSync("user");
 			if(user){
 				this.globalData.user=user;
@@ -22,18 +17,31 @@
 			});
 		},
 		onShow: function() {
-			console.log('App Show')
+			console.log('App Show');
+			this.initData();
 		},
 		onHide: function() {
 			console.log('App Hide')
 		},
+		onPullDownRefresh() {
+			console.log("app veu refrush");
+		},
+		methods:{
+			initData(){
+				if(this.globalData.systemInfo.deviceType=='pc' ||this.globalData.systemInfo.windowWidth>750){
+					uni.hideTabBar({
+						success:()=>{
+							console.log("隐藏成功")
+						}
+					});
+					this.globalData.isPcShow=true;
+					this.$store.commit("setPcShow",true);
+				}
+			}
+		},
 		globalData:{
 			systemInfo:uni.getSystemInfoSync(),
-			user:null,
-			hotelList:[
-				
-			],//酒店列表
-			hotel_id:''//当前酒店
+			isPcShow:false
 		}
 	}
 </script>

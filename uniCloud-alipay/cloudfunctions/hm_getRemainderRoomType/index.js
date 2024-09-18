@@ -30,7 +30,7 @@ exports.main = async (event, context) => {
 		}
 	})
 	
-	let roomTypeList = roomTypeListRes.result.data[0]['roomType']||[];
+	let roomTypeList = roomTypeListRes.result.data[0]['roomTypeList'];
 	console.log("YYYY11",roomTypeList);
 	const usedListRes= await dbJQL.collection('hm-order').where(jql).get();
 	let userRoomList=usedListRes.data;

@@ -79,82 +79,17 @@
 					dateRangeArray: [new Date().getTime(), new Date().getTime() + (1000 * 60 * 60 * 24 * 30)], //默认30天
 					userName: ''
 				},
-
-				roomTypeList: dataBase.roomTypeList,
 				checkInOrderList: []
-				// checkInOrderList: [{
-				// 		createTime: 1725090732098,
-				// 		roomTypeArray: [{
-				// 			value: 't1',
-				// 			name: "大床房",
-				// 			count: 1
-				// 		}, {
-				// 			value: 't2',
-				// 			name: "商务大床房",
-				// 			count: 2
-				// 		}],
-				// 		userName: "张三",
-				// 		checkInStartDateTimeStamp: 1724824800000,
-				// 		checkInEndDateTimeStamp: 1724904000000,
-				// 		checkInStartDate: "2024-08-28 14:00:00",
-				// 		checkInEndDate: "2024-08-29 12:00:00",
-				// 		phone: "13900991112",
-				// 		orderSource: 0,
-				// 		orderSouce_Zn: "携程",
-				// 		orderStatus: 0
-				// 	},
-				// 	{
-				// 		createTime: 111,
-				// 		roomTypeArray: [{
-				// 			value: 't1',
-				// 			name: "大床房",
-				// 			count: 1
-				// 		}, {
-				// 			value: 't4',
-				// 			name: "商务标间",
-				// 			count: 1
-				// 		}],
-				// 		userName: "张234",
-				// 		checkInStartDateTimeStamp: 1725256800000,
-				// 		checkInEndDateTimeStamp: 1725508800000,
-				// 		checkInStartDate: "2024-09-02 14:00:00",
-				// 		checkInEndDate: "2024-09-05 12:00:00",
-				// 		phone: "13900991112",
-				// 		orderSource: 0,
-				// 		orderSouce_Zn: "携程",
-				// 		orderStatus: 0
-				// 	},
-				// 	{
-				// 		createTime: 111,
-				// 		roomTypeArray: [{
-				// 			value: 't1',
-				// 			name: "大床房",
-				// 			count: 1
-				// 		}, {
-				// 			value: 't4',
-				// 			name: "商务标间",
-				// 			count: 1
-				// 		}],
-				// 		userName: "李4",
-				// 		checkInStartDateTimeStamp: 1726034400000,
-				// 		checkInEndDateTimeStamp: 1726113600000,
-				// 		checkInStartDate: "2024-09-11 14:00:00",
-				// 		checkInEndDate: "2024-09-12 12:00:00",
-				// 		phone: "13900991112",
-				// 		orderSource: 0,
-				// 		orderSouce_Zn: "携程",
-				// 		orderStatus: 0
-				// 	},
-
-
-				// ]
-
 			}
 		},
 		computed: {
 			hotel_id(){
 				return this.$store.state.hotel_id;
 			},
+			roomTypeList(){
+				return this.$store.state.roomTypeList;
+			},
+			
 			fitlerUserNameOrderList() {
 				return this.checkInOrderList.filter(item => {
 					return item.userName.includes(this.selectCondition.userName)

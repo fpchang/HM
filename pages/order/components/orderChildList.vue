@@ -35,19 +35,24 @@
 	export default {
 		data() {
 			return {
-				accordionVal: '0',
-				checkInOrderList: []
+				accordionVal: '0'
 			}
 		},
 		onLoad() {
 			console.log("orderChildList.....")
 		},
 		created() {
-			this.getOrderList();
+			//this.getOrderList();
+			// if(this.checkInOrderList.length<1){
+			// 	this.getOrderList();
+			// }
 		},
 		computed:{
 			hotel_id(){
 				return this.$store.state.hotel_id;
+			},
+			checkInOrderList(){
+				return this.$store.state.orderListTodayAfter;
 			}
 		},
 		filters: {
@@ -68,7 +73,8 @@
 					`(${endTime}<checkInEndDateTimeStamp && ${endTime}>checkInStartDateTimeStamp))`;
 
 				return DB.getCollection("hm-order", jql).then(res => {
-					this.checkInOrderList = res.data;
+					//this.checkInOrderList = res.data;
+					this.$store.commit("updateOrderListTodayAfter",res.data);
 					uni.hideLoading();
 				}).catch(err => {
 					console.log(err)

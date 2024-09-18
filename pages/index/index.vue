@@ -5,7 +5,7 @@
 				<view :style="{height:styleObj.navTopHeight}"></view>
 				<view :class="['top-area',isSticky?'sticky-style':'']">
 					<view class="title-area" :style="{opacity:opacityVal}">
-					<!-- 	<view class="check-area" @click="showCheckHotel">
+						<!-- 	<view class="check-area" @click="showCheckHotel">
 							<text class="$uni-font-size-lg"
 								style="white-space: nowrap;text-overflow: ellipsis; overflow: hidden;">见山舍民宿</text>
 							<u-icon name="arrow-down-fill" color="#000" size="20px" top="2"></u-icon>
@@ -17,18 +17,14 @@
 							</view>
 						</view> -->
 
-							<view style="display: flex;align-items: center;">
+						<view style="display: flex;align-items: center;">
 							<view style="width: 200px;">
-								<uni-data-select
-								        :value="hotel_id"
-								        :localdata="hotelListFormat"
-								        @change="checkHotel"
-										:clear="false"
-								      ></uni-data-select>
+								<uni-data-select :value="hotel_id" :localdata="hotelListFormat" @change="checkHotel"
+									:clear="false"></uni-data-select>
 							</view>
-							
-								 <!-- <u-icon name="arrow-down-fill" color="#000" size="20px" top="2"></u-icon> -->
-						</view> 
+
+							<!-- <u-icon name="arrow-down-fill" color="#000" size="20px" top="2"></u-icon> -->
+						</view>
 
 						<view class="add-area">
 							<u-icon name="plus-circle" color="#007aff" label-color="#007aff" size="20px" label="新增店面"
@@ -62,14 +58,19 @@
 				<scroll-view :scroll-y="true" show-scrollbar="false" :scroll-top="0" :style="{height:scrollHeight}">
 					<view v-if="dataHasRead">
 						<!-- 	<keep-alive :id="new Date().getTime()"> -->
-						<gatherComponent :disHeightVal="disHeightVal" v-if="item.ComponentName=='gatherComponent'">
+						<gatherComponent :disHeightVal="disHeightVal"
+							v-if="item.index== currentTab_index&&item.ComponentName=='gatherComponent'">
 						</gatherComponent>
-						<orderComponent :disHeightVal="disHeightVal" v-if="item.ComponentName=='orderComponent'">
+						<orderComponent :disHeightVal="disHeightVal"
+							v-if="item.index== currentTab_index&&item.ComponentName=='orderComponent'">
 						</orderComponent>
 
-						<hotelSetComponent :disHeightVal="disHeightVal" v-if="item.ComponentName=='hotelSetComponent'">
+						<hotelSetComponent :disHeightVal="disHeightVal"
+							v-if="item.index== currentTab_index&&item.ComponentName=='hotelSetComponent'">
 						</hotelSetComponent>
-
+						<roomTypeListComponent
+							v-if="item.index== currentTab_index&&item.ComponentName=='roomTypeListComponent'">
+						</roomTypeListComponent>
 						<!-- </keep-alive> -->
 
 					</view>
@@ -89,16 +90,16 @@
 				</u-list-item>
 			</u-list>
 		</u-popup>
-		<uni-popup ref="popupHotelCreate" background-color="transprant" >
-			<view class="popup-content" >
+		<uni-popup ref="popupHotelCreate" background-color="transprant">
+			<view class="popup-content">
 				<view class="create-order-title-style">创建酒店</view>
 				<view class="comContent">
 					<!-- <keep-alive> -->
-						<createHotelComponent @closePopup="closePopup"></createHotelComponent>
+					<createHotelComponent @closePopup="closePopup"></createHotelComponent>
 					<!-- </keep-alive> -->
-					
-					</view>
-				
+
+				</view>
+
 			</view>
 		</uni-popup>
 	</view>
@@ -110,47 +111,56 @@
 	import orderComponent from '../order/components/orderComponent';
 	import hotelSetComponent from './components/hotelSetComponent';
 	import createHotelComponent from '../hotelManage/components/createHotelComponent';
+	import roomTypeListComponent from '../hotelManage/components/roomTypeListComponent.vue'
 	import DB from '../../api/DB';
 	export default {
 		components: {
 			gatherComponent,
 			orderComponent,
 			hotelSetComponent,
-			createHotelComponent
+			createHotelComponent,
+			roomTypeListComponent
 		},
-	
-		
+
+
 		data() {
 			return {
 				title: 'Hello',
 				styleObj: {
 					navTopHeight: getApp().globalData.systemInfo.deviceType == 'pc' ? 0 : '60px'
 				},
-				
+
 				isSticky: false,
 				opacityVal: 1,
-				currentTab_index: 1,
+				currentTab_index: 5,
 				showDrawer: false,
 
 				tabList: [{
+					index: 0,
 					name: '关注',
 					ComponentName: "gatherComponent"
 				}, {
+					index: 1,
 					name: '订房管理',
 					ComponentName: "orderComponent"
 				}, {
+					index: 2,
 					name: '合作景点',
 					ComponentName: "createComponent"
 				}, {
+					index: 3,
 					name: '订餐',
 					ComponentName: "orderComponent2"
 				}, {
+					index: 4,
 					name: '发票',
 					ComponentName: "orderComponent5"
 				}, {
+					index: 5,
 					name: '房型管理',
-					ComponentName: "orderComponent2"
+					ComponentName: "roomTypeListComponent"
 				}, {
+					index: 6,
 					name: '人员管理',
 					ComponentName: "orderComponent3"
 				}],
@@ -163,34 +173,40 @@
 					logoSrc: "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png"
 				}
 				//hotelList: []
-				
+
 
 			}
 		},
-		 onLoad:async function(){
+		onLoad: async function() {
 			//this.inidData();
 			uni.showLoading({
-				
+
 			});
-			try{
-				await this.getHotelList();
+			try {
+				await this.getHotelList();				
 				this.setDefaultHotel();
-				console.log("tttt",this)
-			}catch(e){
+				await this.$store.commit("getRoomTypeList");
+				await this.$store.commit("getOrderListTodayAfter");
+			} catch (e) {
 				console.error(e)
 			}
 			uni.hideLoading();
 		},
-	
+		mounted() {
+		console.log("dddd",this.hotel_id,this.hotelList)	
+		},
+		onPullDownRefresh() {
+			console.log("index veu refrush");
+		},
 		computed: {
-			hotel_id(){
+			hotel_id() {
 				return this.$store.state.hotel_id;
 			},
-			hotelList(){
-							return this.$store.state.hotelList;
-						},
-			dataHasRead(){
-				return this.hotelList.length&&this.hotel_id;
+			hotelList() {
+				return this.$store.state.hotelList;
+			},
+			dataHasRead() {
+				return this.hotelList.length && this.hotel_id;
 			},
 			hotelListFormat() {
 				return this.hotelList.map(item => {
@@ -210,15 +226,15 @@
 			}
 		},
 		methods: {
-		
+
 			showCheckHotel() {
 				this.showDrawerEvent();
 			},
 			checkHotel(hotel_id) {
-				if(hotel_id==this.hotel_id){
+				if (hotel_id == this.hotel_id) {
 					return;
 				}
-				this.$store.commit("checkHotel",hotel_id);
+				this.$store.commit("checkHotel", hotel_id);
 				// this.setDefaultHotel(hotel_id);
 				// this.getHotelList();
 				// console.log(hotel_id);
@@ -230,7 +246,6 @@
 				this.showDrawer = false
 			},
 			clickTab(e) {
-				console.log("clickTab", e)
 				this.currentTab_index = e.index;
 			},
 			checkTab(e) {
@@ -248,42 +263,46 @@
 				this.currentTab_index = e.detail.current;
 			},
 			addNewHotel() {
-				if(getApp().globalData.systemInfo.deviceType=="phone"){
+				if (getApp().globalData.systemInfo.deviceType == "phone") {
 					uni.navigateTo({
-						url:'/pages/order/createOrder/createOrder'
+						url: '/pages/order/createOrder/createOrder'
 					})
 					return;
 				}
 				this.$refs.popupHotelCreate.open();
-				
+
 			},
-			 closePopup(){
-				 try{
-				 	this.$refs.popupHotelCreate.close();
-				 	//  this.$refs.orderChildTableListRef.getOrderListByCondition();
-				 	//  this.$refs.orderChildCalendarList.getOrderList();
-					 // this.$refs.orderChildListRef.getOrderList();
-				 }catch(e){
-				 	//TODO handle the exception
-				 }
-				
+			closePopup() {
+				try {
+					this.$refs.popupHotelCreate.close();
+					//  this.$refs.orderChildTableListRef.getOrderListByCondition();
+					//  this.$refs.orderChildCalendarList.getOrderList();
+					// this.$refs.orderChildListRef.getOrderList();
+				} catch (e) {
+					//TODO handle the exception
+				}
+
 			},
-			getHotelList(){
-				return DB.getCollection("hm-hotel",{blongUserId:this.$store.state.user.mobile}).then(res=>{
-					this.hotelList=res.data;
-					this.$store.commit('updateHotelList',res.data);
-					console.log("33322dd",this.hotelList)
+			getHotelList() {
+				return DB.getCollection("hm-hotel", {
+					blongUserId: this.$store.state.user.mobile
+				}).then(res => {
+					this.hotelList = res.data;
+					this.$store.commit('updateHotelList', res.data);
+					console.log("33322dd", this.hotelList)
 				})
 			},
-			setDefaultHotel(){
+			setDefaultHotel() {
 				console.log("setDefaultHotle");
-				if(!this.hotelList.length){
+				if (!this.hotelList.length) {
 					return;
 				}
-				let _hotel_id = uni.getStorageSync("hotel_id")||this.hotelList[0]._id;
-				let h = this.hotelList.find(item=>{return item._id == _hotel_id});
-				if(h){
-					this.$store.commit('checkHotel',_hotel_id);
+				let _hotel_id = uni.getStorageSync("hotel_id") || this.hotelList[0]._id;
+				let h = this.hotelList.find(item => {
+					return item._id == _hotel_id
+				});
+				if (h) {
+					this.$store.commit('checkHotel', _hotel_id);
 				}
 			}
 		}
@@ -336,8 +355,8 @@
 				.check-panal {
 					width: 120px;
 					max-width: 200px;
-					padding:10px 0;
-					position:absolute;
+					padding: 10px 0;
+					position: absolute;
 					top: 50px;
 					left: 20px;
 					background-color: #ddd;
@@ -398,6 +417,4 @@
 		background-color: #ddd !important;
 		/*border:2rpx solid blue;*/
 	}
-
-	
 </style>
