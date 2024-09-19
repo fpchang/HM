@@ -254,7 +254,7 @@
 			clickTab(e) {
 				if(this.currentTab_index == e.index){
 					//只触发刷新
-					this.tabList[e.index-1].time= new Date().getTime();
+					this.tabList[e.index].time= new Date().getTime();
 					return;
 				}
 				this.currentTab_index = e.index;
