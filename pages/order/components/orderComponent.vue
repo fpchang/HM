@@ -84,6 +84,7 @@
 
 		created() {
 			console.log('orderComponent create');
+			this.$store.commit("getOrderListTodayAfter");
 
 		},
 		onLoad: function() {

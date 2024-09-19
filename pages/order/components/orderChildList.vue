@@ -13,10 +13,10 @@
 				<view class="col-content">
 					<view class="list">
 						<view class="list-item">
-							<view class="list-item-c"><text>入住日期：</text><text>2019-09-22</text></view>
-							<view class="list-item-c"><text>退房日期：</text><text>2019-09-22</text></view>
+							<view class="list-item-c"><text>入住日期：</text><text>{{item.checkInStartDate}}</text></view>
+							<view class="list-item-c"><text>退房日期：</text><text>{{item.checkInEndDate}}</text></view>
 						</view>
-						<view class="list-item">
+						<view class="list-item">`
 							<view class="list-item-c"><text>房型：</text><text>大床房</text></view>
 							<view class="list-item-c"><button class="uni-button" size="mini" type="warn"
 									@click="deleteOrder(item)">撤消订单</button></view>

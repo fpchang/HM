@@ -56,7 +56,7 @@
 				</uni-td> -->
 				<uni-td>
 
-					<view class="uni-group">
+					<view class="uni-group" v-if="item.checkInEndtDateTimeStamp>new Date().getTime()">
 						<button class="uni-button" size="mini" type="primary">修改</button>
 						<button class="uni-button" size="mini" type="warn" @click="deleteOrder(item)">撤销</button>
 					</view>

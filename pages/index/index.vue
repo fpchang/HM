@@ -177,26 +177,17 @@
 
 			}
 		},
-		onLoad: async function() {
-			//this.inidData();
-			uni.showLoading({
-
-			});
-			try {
-				await this.getHotelList();				
-				this.setDefaultHotel();
-				await this.$store.commit("getRoomType");
-				await this.$store.commit("getOrderListTodayAfter");
-			} catch (e) {
-				console.error(e)
-			}
-			uni.hideLoading();
+		onLoad() {
+			this.initData();
+	
 		},
 		mounted() {
-		console.log("dddd",this.hotel_id,this.hotelList)	
+			console.log("dddd",this.hotel_id)	
 		},
 		onPullDownRefresh() {
 			console.log("index veu refrush");
+			this.initData();
+			uni.stopPullDownRefresh()
 		},
 		computed: {
 			hotel_id() {
@@ -225,8 +216,26 @@
 				return `calc(100vh - ${this.disHeightVal})`;
 			}
 		},
+		watch:{
+			hotelList(narr,oarr){
+				//this.setDefaultHotel()
+			}
+		},
 		methods: {
-
+			async initData(){
+				uni.showLoading({
+				
+				});
+				try {
+					 this.$store.commit("getHotelList");
+					 this.$store.commit("getRoomType");
+					
+					console.log("store====",this.$store.state)
+				} catch (e) {
+					console.error(e)
+				}
+				uni.hideLoading();
+			},
 			showCheckHotel() {
 				this.showDrawerEvent();
 			},
@@ -246,6 +255,7 @@
 			},
 			clickTab(e) {
 				this.currentTab_index = e.index;
+				console.log(e)
 			},
 			checkTab(e) {
 				//console.log("checkTab", e)
@@ -282,28 +292,16 @@
 				}
 
 			},
-			getHotelList() {
-				return DB.getCollection("hm-hotel", {
-					blongUserId: this.$store.state.user.mobile
-				}).then(res => {
-					this.hotelList = res.data;
-					this.$store.commit('updateHotelList', res.data);
-					console.log("33322dd", this.hotelList)
-				})
-			},
-			setDefaultHotel() {
-				console.log("setDefaultHotle");
-				if (!this.hotelList.length) {
-					return;
-				}
-				let _hotel_id = uni.getStorageSync("hotel_id") || this.hotelList[0]._id;
-				let h = this.hotelList.find(item => {
-					return item._id == _hotel_id
-				});
-				if (h) {
-					this.$store.commit('checkHotel', _hotel_id);
-				}
-			}
+			// getHotelList() {
+			// 	return DB.getCollection("hm-hotel", {
+			// 		blongUserId: this.$store.state.user.mobile
+			// 	}).then(res => {
+			// 		this.hotelList = res.data;
+			// 		this.$store.commit('updateHotelList', res.data);
+			// 		console.log("33322dd", this.hotelList)
+			// 	})
+			// },
+		
 		}
 	}
 </script>
