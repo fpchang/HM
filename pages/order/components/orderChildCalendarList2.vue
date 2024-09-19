@@ -68,13 +68,13 @@
 				return this.$store.state.hotel_id;
 			},
 			roomType(){
-				return this.$store.state.roomType;
+				return this.$store.state.roomType ||{};
 			},
 			roomTypeList(){
-					return this.roomType.roomTypeList;
+					return this.roomType.roomTypeList || [];
 			},
 			checkInOrderList(){
-				return this.$store.state.orderListTodayAfter;
+				return this.$store.state.orderListTodayAfter ||[];
 			},
 			dateTabList() {
 				let curDateTimeStamp = new Date().getTime();
@@ -106,6 +106,9 @@
 				})
 			},
 			checkInOrderListFormat() {
+				if(this.checkInOrderList.length<1 ||this.roomTypeList.length<1){
+					return [];
+				}
 				let result = [];
 				let or = this.orderDateRange;
 				let checkInOrderList = this.checkInOrderList;
@@ -135,7 +138,8 @@
 		},
 		watch:{
 			hotel_id(newval,oldval){
-				this.getOrderList();
+				console.warn("切换酒店了")
+				this.$store.commit("getOrderListTodayAfter");
 			}
 		},
 		methods: {

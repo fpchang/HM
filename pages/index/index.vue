@@ -58,18 +58,18 @@
 				<scroll-view :scroll-y="true" show-scrollbar="false" :scroll-top="0" :style="{height:scrollHeight}">
 					<view v-if="dataHasRead">
 						<!-- 	<keep-alive :id="new Date().getTime()"> -->
-						<gatherComponent :disHeightVal="disHeightVal"
-							v-if="item.index== currentTab_index&&item.ComponentName=='gatherComponent'">
+						<gatherComponent :key="item.time" :disHeightVal="disHeightVal"
+							v-if="item.ComponentName=='gatherComponent'">
 						</gatherComponent>
-						<orderComponent :disHeightVal="disHeightVal"
-							v-if="item.index== currentTab_index&&item.ComponentName=='orderComponent'">
+						<orderComponent :key="item.time" :disHeightVal="disHeightVal"
+							v-if="item.ComponentName=='orderComponent'">
 						</orderComponent>
 
-						<hotelSetComponent :disHeightVal="disHeightVal"
-							v-if="item.index== currentTab_index&&item.ComponentName=='hotelSetComponent'">
+						<hotelSetComponent :key="item.time" :disHeightVal="disHeightVal"
+							v-if="item.ComponentName=='hotelSetComponent'">
 						</hotelSetComponent>
-						<roomTypeListComponent
-							v-if="item.index== currentTab_index&&item.ComponentName=='roomTypeListComponent'">
+						<roomTypeListComponent :key="item.time"
+							v-if="item.ComponentName=='roomTypeListComponent'">
 						</roomTypeListComponent>
 						<!-- </keep-alive> -->
 
@@ -134,35 +134,42 @@
 				opacityVal: 1,
 				currentTab_index: 5,
 				showDrawer: false,
-
+				clickTime:0,
 				tabList: [{
 					index: 0,
 					name: '关注',
+					time:0,
 					ComponentName: "gatherComponent"
 				}, {
 					index: 1,
 					name: '订房管理',
+					time:0,
 					ComponentName: "orderComponent"
 				}, {
 					index: 2,
 					name: '合作景点',
-					ComponentName: "createComponent"
+					time:0,
+					ComponentName: ""
 				}, {
 					index: 3,
 					name: '订餐',
-					ComponentName: "orderComponent2"
+					time:0,
+					ComponentName: ""
 				}, {
 					index: 4,
 					name: '发票',
-					ComponentName: "orderComponent5"
+					time:0,
+					ComponentName: ""
 				}, {
 					index: 5,
 					name: '房型管理',
+					time:0,
 					ComponentName: "roomTypeListComponent"
 				}, {
 					index: 6,
 					name: '人员管理',
-					ComponentName: "orderComponent3"
+					time:0,
+					ComponentName: ""
 				}],
 				slelectHotelvalue: "",
 				activeHotle: {
@@ -226,14 +233,7 @@
 				uni.showLoading({
 				
 				});
-				try {
-					 this.$store.commit("getHotelList");
-					 this.$store.commit("getRoomType");
-					
-					console.log("store====",this.$store.state)
-				} catch (e) {
-					console.error(e)
-				}
+				 this.$store.commit("getHotelList");
 				uni.hideLoading();
 			},
 			showCheckHotel() {
@@ -244,8 +244,6 @@
 					return;
 				}
 				this.$store.commit("checkHotel", hotel_id);
-				this.$store.commit("getRoomType");
-				this.$store.commit("getOrderListTodayAfter");
 			},
 			showDrawerEvent() {
 				this.showDrawer = true
@@ -254,8 +252,12 @@
 				this.showDrawer = false
 			},
 			clickTab(e) {
+				if(this.currentTab_index == e.index){
+					//只触发刷新
+					this.tabList[e.index-1].time= new Date().getTime();
+					return;
+				}
 				this.currentTab_index = e.index;
-				console.log(e)
 			},
 			checkTab(e) {
 				//console.log("checkTab", e)

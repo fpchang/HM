@@ -60,7 +60,8 @@ const store = new Vuex.Store({
 		},
 		//获取当天开始的订单
 		async getOrderListTodayAfter(state) {
-			const res  =await hotelService.getOrderListTodayAfter(state.hotel_id);		
+			const res  =await hotelService.getOrderListTodayAfter(state.hotel_id);	
+			console.log("store-getOrderListTodayAfter",res.data)	
 			store.commit("updateOrderListTodayAfter", res.data);
 			// let startTime = new Date(new Date().Format("yyyy/MM/dd 14:00:00")).getTime();
 			// let endTime = new Date(new Date().Format("yyyy/MM/dd 12:00:00")).getTime();

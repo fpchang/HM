@@ -77,11 +77,18 @@
 			}
 		},
 		computed: {
+			hotel_id(){
+				return this.$store.state.hotel_id;
+			},
 			roomTypeList() {
 				return this.$store.state.roomTypeList;
 			}
 		},
+		watch:{
+			hotel_id(){
+				this.$store.commit("getOrderListTodayAfter");
 
+		}},
 		created() {
 			console.log('orderComponent create');
 			this.$store.commit("getOrderListTodayAfter");

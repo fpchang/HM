@@ -32,7 +32,7 @@
 		</view>
 		<view class="mobile-show-style" style="max-width: 450px;" v-if="!isPcShow">
 			<uni-collapse v-model="accordionVal" :accordion="true">
-				<uni-collapse-item v-for="item of roomTypeList">
+				<uni-collapse-item v-for="item of roomType.roomTypeList">
 					<template v-slot:title>
 						<uni-section class="mb-10" :title=" item.name " type="circle">
 							<template v-slot:right>
@@ -45,6 +45,9 @@
 						<view class="list">
 							<view class="list-item">
 								<view class="list-item-c"><text>房型设施：</text><text>--</text></view>
+							</view>
+							<view class="list-item">
+								<view class="list-item-c"><text>数量：</text><text style="font-weight:bold">{{item.count}}</text></view>
 							</view>
 							<view class="list-item" style="justify-content: flex-end;">
 
@@ -82,33 +85,7 @@
 		data() {
 			return {
 				accordionVal: '0',
-				// roomTypeList: [{
-				// 		"count": 1,
-				// 		"name": "包栋",
-				// 		"value": "t0"
-				// 	},
-				// 	{
-				// 		"count": 5,
-				// 		"name": "大床房",
-				// 		"value": "t1"
-				// 	},
-				// 	{
-				// 		"count": 7,
-				// 		"name": "标房",
-				// 		"value": "t2"
-				// 	},
-				// 	{
-				// 		"count": 2,
-				// 		"name": "商务大床房",
-				// 		"value": "t3"
-				// 	},
-				// 	{
-				// 		"count": 3,
-				// 		"name": "商务标间",
-				// 		"value": "t4"
-				// 	}
-				// ]
-
+				
 			}
 		},
 		computed: {
@@ -123,11 +100,14 @@
 			}
 		},
 		created() {
-			// console.warn("roomType>>>>>>>>>>>>>>>>>", this.roomTypeList);
-			// if(this.roomTypeList.length<1){
-			// 	this.getRoomTypeList();
-			// }
+			 console.warn("roomType>>>>>>>>>>>>>>>>>", this.roomTypeList);
+			this.$store.commit("getRoomType");
 			
+		},
+		watch:{
+			hotel_id(){
+				this.$store.commit("getRoomType");
+			}
 		},
 		methods:{
 			editRoomType(rt){

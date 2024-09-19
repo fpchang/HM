@@ -42,17 +42,14 @@
 			console.log("orderChildList.....")
 		},
 		created() {
-			//this.getOrderList();
-			// if(this.checkInOrderList.length<1){
-			// 	this.getOrderList();
-			// }
+			this.$store.commit("getOrderListTodayAfter");
 		},
 		computed:{
 			hotel_id(){
 				return this.$store.state.hotel_id;
 			},
 			checkInOrderList(){
-				return this.$store.state.orderListTodayAfter;
+				return this.$store.state.orderListTodayAfter ||[];
 			}
 		},
 		filters: {
