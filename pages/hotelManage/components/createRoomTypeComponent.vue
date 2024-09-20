@@ -1,19 +1,31 @@
 <template>
     <view>
-		<uni-forms ref="roomTypeRef" :modelValue="roomTypeForm" :rules="roomTypeRules">
+		<uni-forms ref="roomTypeRef" :modelValue="roomTypeForm" :rules="roomTypeRules" label-width="90px">
 
-			<uni-forms-item label="房型名称" required name="name">
+			<uni-forms-item label="房型名称" required name="name" >
 				<uni-easyinput v-model="roomTypeForm.name" placeholder="请输入房型名称" />
 			</uni-forms-item>
 			<uni-forms-item label="房型数量" name="count">
-				<view><uni-number-box v-model="roomTypeForm.count" min="1"
-                     @change="rnumchange()" /></view>
+				<view>
+                    <!-- <uni-number-box v-model="roomTypeForm.count" :min="1" :width="120"
+                    @change="roomTypeCountChange" @blur="roomTypeCountChange" /> -->
+                    <u-number-box :min="1"  integer  v-model="roomTypeForm.count">
+
+                        <input
+                        slot="input"
+                        style="width: 100px;text-align: center;"
+                        class="input"
+                         v-model="roomTypeForm.count"
+                    ></input>
+                    </u-number-box>
+                   
+                
+                </view>
 			</uni-forms-item>
-			<uni-forms-item>
-				<u-button type="success" text="保存" color="#007aff" @click="submitForm()" :disabled="submitDisabled"
-					:loading="submitLoading"></u-button>
-			</uni-forms-item>
+			
 		</uni-forms>
+        <u-button type="success" text="保存" color="#007aff" @click="submitForm()" :disabled="submitDisabled"
+					:loading="submitLoading"></u-button>
 	</view>
 </template>
 
@@ -27,24 +39,24 @@ export default {
 				//hotelList:getApp().globalData.hotelList,
 				roomTypeForm: {
                     
-                    "count": 5,
-                    "name": "大床房",
+                    "count": 1,
+                    "name": "",
                     "state": 1,
-                    "value": "t1"
+                    "value": `t${new Date().getTime()}`
                 
 				},
 				roomTypeRules: {
 					// 对name字段进行必填验证
-					hotelName: {
+					name: {
 						rules: [{
 								required: true,
-								errorMessage: '请输入酒店名',
+								errorMessage: '请输入房型名称',
 							},
 							{
 								validateFunction: (rule, value,data,callback)=> {									
-									let obj = this.hotelList.find(item=>{ return item.name==value});
+									let obj = this.roomTypeList.find(item=>{ return item.name==value});
 									if(obj){
-										callback('已存在酒店名')
+										callback('已存在相同房型名称')
 									}
 									return true;
 								}
@@ -57,7 +69,7 @@ export default {
 			};
 		},
 		created() {
-			console.log("user", getApp().globalData.user)
+			
 		},
 		computed: {
 			hotel_id(){
@@ -66,34 +78,40 @@ export default {
 			hotelList(){
 				return this.$store.state.hotelList;
 			},
+            roomTypeList() {
+				return this.$store.state.roomType.roomTypeList;
+			},
 			submitDisabled() {
 				return false
 			}
 		},
 		methods: {
-
+            roomTypeCountChange(val){
+                console.log(val)
+            },
 			submitForm() {
 				
-				this.$refs.hotelFormRef.validate().then(res => {
+				this.$refs.roomTypeRef.validate().then(res => {
 					uni.showLoading();
 					this.submitLoading = true;
 					let obj = {}
-					console.log(this.hotelForm);
-					DB.insertData("hm-hotel", this.hotelForm).then(res => {
-						console.log("添加成功");
-						uni.hideLoading();
-						uni.reLaunch({
-							url:"/pages/index/index"
-						})
-					}).catch(er => {
-						console.log("添加失败",er);
-						this.submitLoading = true;
-						uni.hideLoading();
-						uni.showModal({
-							content:"系统异常，请稍候再试！",
-							confirmText:"确认"
-						});
-					})
+                    this.roomTypeForm.value= `t${new Date().getTime()}`;
+					console.log(this.roomTypeForm);
+					// DB.insertData("hm-hotel", this.hotelForm).then(res => {
+					// 	console.log("添加成功");
+					// 	uni.hideLoading();
+					// 	uni.reLaunch({
+					// 		url:"/pages/index/index"
+					// 	})
+					// }).catch(er => {
+					// 	console.log("添加失败",er);
+					// 	this.submitLoading = true;
+					// 	uni.hideLoading();
+					// 	uni.showModal({
+					// 		content:"系统异常，请稍候再试！",
+					// 		confirmText:"确认"
+					// 	});
+					// })
 				});
 
 

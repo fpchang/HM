@@ -8,17 +8,27 @@
 			<uni-table border stripe emptyText="暂无更多数据">
 				<!-- 表头行 -->
 				<uni-tr>
-					<uni-th align="center">房型名称</uni-th>
-					<uni-th align="center">数量</uni-th>
-					<uni-th align="center">设施</uni-th>
-					<uni-th align="center" width="200px">操作</uni-th>
+					<uni-th align="center" width="120px">房型名称</uni-th>
+					<uni-th align="center" width="80px">数量</uni-th>
+					<uni-th align="center">房间号</uni-th>
+					<uni-th align="center" width="160px">操作</uni-th>
 				</uni-tr>
 				<!-- 表格数据行 -->
 				<uni-tr v-for="item of roomType.roomTypeList">
 					<uni-td>{{item.name}}</uni-td>
 					<uni-td>{{item.count}}</uni-td>
-
-					<uni-td>-</uni-td>
+					<uni-td>
+						<text v-for="it of sortRoomList(item.roomList)" v-if="item.roomList.length<=20">【{{it}}】</text>
+						<uni-collapse ref="collapse"  :border="false" v-if="item.roomList.length>20">
+							<uni-collapse-item title="显示房间号" >
+								<view class="content">
+									<text v-for="it of sortRoomList(item.roomList)">【{{it}}】</text>
+								</view>
+							</uni-collapse-item>
+							</uni-collapse>
+						
+						
+					</uni-td>
 					<uni-td align="center">
 						<view class="uni-group">
 							<button class="uni-button" size="mini" type="primary">修改</button>
@@ -44,7 +54,8 @@
 					<view class="col-content">
 						<view class="list">
 							<view class="list-item">
-								<view class="list-item-c"><text>房型设施：</text><text>--</text></view>
+								<view class="list-item-c"><text>房间号：</text><text>--</text></view>
+								<view class="list-item-c"><text>201</text><text>--</text></view>
 							</view>
 							<view class="list-item">
 								<view class="list-item-c"><text>数量：</text><text style="font-weight:bold">{{item.count}}</text></view>
@@ -114,6 +125,10 @@ import createRoomTypeComponent from './createRoomTypeComponent.vue';
 			}
 		},
 		methods:{
+			sortRoomList(list){
+				let newList = list.filter(item=>{return item})
+				return newList.sort();
+			},
 			editRoomType(rt){
 				console.log("editRoomType",rt);
 			},
