@@ -150,6 +150,9 @@ import createRoomTypeComponent from './createRoomTypeComponent.vue';
 				})
 				console.log("deleteRoomType",rt,newRoomTypeList);
 				
+			},
+			closePopup(){
+				this.$refs.popupCreateRoomType.close();
 			}
 			// getRoomTypeList(){
 			// 	return uniCloud.callFunction({

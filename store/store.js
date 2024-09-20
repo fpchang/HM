@@ -86,10 +86,11 @@ const store = new Vuex.Store({
 				return;
 			}
 			let _hotel_id = uni.getStorageSync("hotel_id");
+			
 			let h = state.hotelList.find(item => {
 				return item._id == _hotel_id
 			});
-			let n_hotel_id = h?_hotel_id:state.hotelList[0].hotel_id;
+			let n_hotel_id = h?_hotel_id:state.hotelList[0]._id;
 			if(n_hotel_id==state.hotel_id){
 				console.warn("与旧hotel_id相同，无需重置");
 				return;
