@@ -33,7 +33,7 @@
 					</view>
 					<view class="navbar">
 						<view class="nav-content">
-							<u-tabs @click="clickTab" @change="checkTab" :list="tabList" lineWidth="0"
+							<u-tabs @click="clickTab"  :list="tabList" lineWidth="0"
 								lineColor="#f56c6c" :current="currentTab_index" :activeStyle="{
 								    color: '#303133',
 								    fontWeight: 'bold',
@@ -53,7 +53,7 @@
 			</view>
 		</view>
 
-		<swiper :style="{height:scrollHeight}" :current="currentTab_index" @change="swiperContentEvent">
+		<swiper :style="{height:scrollHeight}" :current="currentTab_index" :disable-touch="true" @change="swiperContentEvent">
 			<swiper-item v-for="item in tabList">
 				<scroll-view :scroll-y="true" show-scrollbar="false" :scroll-top="0" :style="{height:scrollHeight}">
 					<view v-if="dataHasRead">
@@ -271,7 +271,10 @@
 			},
 			swiperContentEvent(e) {
 				console.log(e)
-				this.currentTab_index = e.detail.current;
+				if(e.detail['current']){
+					this.currentTab_index = e.detail.current;
+				}
+				
 			},
 			addNewHotel() {
 				if (getApp().globalData.systemInfo.deviceType == "phone") {

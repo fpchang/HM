@@ -2,7 +2,7 @@
 
 	<view class="roomType-component">
 		<view class="add-content-style" style="">
-			<view><button class="uni-button" size="mini" type="primary" @click="deleteRoomType(item)">添加房型</button></view>
+			<view><button class="uni-button" size="mini" type="primary" @click="addRoomType()">添加房型</button></view>
 		</view>
 		<view v-if="isPcShow">
 			<uni-table border stripe emptyText="暂无更多数据">
@@ -65,13 +65,13 @@
 
 			</uni-collapse>
 		</view>
-		<uni-popup ref="popup" background-color="transprant">
+		<uni-popup ref="popupCreateRoomType" background-color="transprant">
 			<view class="popup-content">
-				<view class="create-order-title-style">创建订单</view>
+				<view class="create-order-title-style">创建房型</view>
 				<view class="comContent">
-					<!-- <keep-alive> -->
-					<!-- <createOrderComponent @closePopup="closePopup"></createOrderComponent> -->
-					<!-- </keep-alive> -->
+					
+					 <createRoomTypeComponent @closePopup="closePopup"></createRoomTypeComponent> 
+				
 
 				</view>
 
@@ -81,7 +81,11 @@
 </template>
 
 <script>
+import createRoomTypeComponent from './createRoomTypeComponent.vue';
 	export default {
+		components:{
+			createRoomTypeComponent
+		},
 		data() {
 			return {
 				accordionVal: '0',
@@ -112,6 +116,9 @@
 		methods:{
 			editRoomType(rt){
 				console.log("editRoomType",rt);
+			},
+			addRoomType(){
+				this.$refs.popupCreateRoomType.open();
 			},
 			async deleteRoomType(rt){
 				const conf = await uni.showModal({
