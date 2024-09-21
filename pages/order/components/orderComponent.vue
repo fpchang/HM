@@ -111,7 +111,7 @@
 				}
 			},
 			fabClick() {
-				if (getApp().globalData.systemInfo.deviceType == "phone") {
+				if (!this.$store.state.isPcShow) {
 					uni.navigateTo({
 						url: '/pages/order/createOrder/createOrder'
 					})

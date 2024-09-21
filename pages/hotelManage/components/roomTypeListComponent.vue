@@ -32,7 +32,7 @@
 					<uni-td align="center">
 						<view class="uni-group">
 							<button class="uni-button" size="mini" type="primary">修改</button>
-							<button class="uni-button" size="mini" type="warn" @click="deleteRoomType(item)">删除</button>
+							<button class="uni-button" size="mini" type="warn" @click="deleteRoomType(item)" :loading="submitLoading">删除</button>
 						</view>
 					</uni-td>
 				</uni-tr>
@@ -66,7 +66,7 @@
 									<button class="uni-button" size="mini" type="primary"
 										@click="editRoomType(item)">修改</button>
 									<button class="uni-button" size="mini" type="warn"
-										@click="deleteRoomType(item)">删除</button>
+										@click="deleteRoomType(item)" :loading="submitLoading">删除</button>
 								</view>
 							</view>
 						</view>
@@ -99,6 +99,7 @@ import createRoomTypeComponent from './createRoomTypeComponent.vue';
 		},
 		data() {
 			return {
+				submitLoading: false,
 				accordionVal: '0',
 				
 			}
@@ -133,7 +134,15 @@ import createRoomTypeComponent from './createRoomTypeComponent.vue';
 				console.log("editRoomType",rt);
 			},
 			addRoomType(){
-				this.$refs.popupCreateRoomType.open();
+				if(this.$store.state.isPcShow){
+					this.$refs.popupCreateRoomType.open();
+					return;
+				}
+					
+				
+				uni.navigateTo({
+					url:'/pages/hotelManage/createRoomType/createRoomType'
+				})
 			},
 			async deleteRoomType(rt){
 				const conf = await uni.showModal({
@@ -145,10 +154,30 @@ import createRoomTypeComponent from './createRoomTypeComponent.vue';
 				if (conf['cancel']) {
 					return;
 				}
-				let newRoomTypeList = this.roomType.roomTypeList.filter(item=>{
-					return item.value != rt.value;
-				})
-				console.log("deleteRoomType",rt,newRoomTypeList);
+				this.submitLoading = true;
+				uni.showLoading();
+				console.log("deleteRoomType",rt);
+				uniCloud.callFunction({
+					name: "hm_deleteRoomType",
+					data:{
+						_id:this.roomType._id,
+						roomTypeObj:rt
+					}
+				}).then(res=>{
+                            console.log("删除成功");
+                        this.$store.commit("getRoomType");
+						this.submitLoading = false;
+						uni.hideLoading();
+							
+				}).catch(er => {
+						console.log("删除失败",er);
+						this.submitLoading = false;
+						uni.hideLoading();
+						uni.showModal({
+							content:"系统异常，请稍候再试！",
+							confirmText:"确认"
+						});
+					})
 				
 			},
 			closePopup(){
