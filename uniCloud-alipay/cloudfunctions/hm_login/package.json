@@ -1,7 +1,8 @@
 {
   "name": "hm_login",
   "dependencies": {
-    "dateFormat": "file:../common/dateFormat"
+    "dateFormat": "file:../common/dateFormat",
+    "jsonwebtoken": "^9.0.2"
   },
   "extensions": {
     "uni-cloud-jql": {},

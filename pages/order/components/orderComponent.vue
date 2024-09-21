@@ -1,26 +1,35 @@
 <template>
 
 	<view class="order-component">
-		<uni-fab ref="fab" :popMenu="false" :pattern="pattern" horizontal="right" vertical="top" @fabClick="fabClick" />
-		<view class="uni-padding-wrap uni-common-mt" style="max-width: 450px;padding:0 15px">
-			<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" />
+		<!-- <uni-fab ref="fab" :popMenu="false" :pattern="pattern" horizontal="right" vertical="top" @createOrderEvent="createOrderEvent" /> -->
+		<view class="tbs-style">
+			<view class="uni-padding-wrap uni-common-mt" style="flex:1;">
+				<view style="max-width:450px;padding:0 20px">
+					<uni-data-checkbox v-model="tabRadioVal" :localdata="tabitems"></uni-data-checkbox>
+					<!-- <uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" /> -->
+				</view>
+
+			</view>
+			<view class="tbs-c-btn"><button class="uni-button" size="mini" type="primary"
+					@click="createOrderEvent">创建订单</button></view>
 		</view>
+
 		<view style="height: 15px;"></view>
 		<view class="content">
 			<!-- <keep-alive> -->
-			<view v-if="current === 0">
+			<view v-if="tabRadioVal===0">
 
 				<orderChildCalendarList :disHeightVal="disHeightVal" ref="orderChildCalendarListRef">
 				</orderChildCalendarList>
 			</view>
 			<!-- </keep-alive> -->
 
-			<view v-if="current === 1">
+			<view v-if="tabRadioVal===1">
 				<orderChildList ref="orderChildListRef"></orderChildList>
 
 			</view>
 			<!-- <keep-alive> -->
-			<view v-if="current === 2">
+			<view v-if="tabRadioVal===2">
 				<orderChildTableList ref="orderChildTableListRef"></orderChildTableList>
 			</view>
 			<!-- </keep-alive> -->
@@ -43,13 +52,15 @@
 </template>
 
 <script>
-	import orderChildCalendarList from './orderChildCalendarList2';
+	import CreateOrder from '../createOrder/createOrder'
+import orderChildCalendarList from './orderChildCalendarList2';
 	import orderChildTableList from './orderChildTableList';
 	import createOrderComponent from './createOrderComponent';
 	import orderChildList from './orderChildList.vue';
 	import dataBase from '../../../api/dataBase.js';
 	export default {
 		components: {
+    CreateOrder,
 			createOrderComponent,
 			orderChildCalendarList,
 			orderChildTableList,
@@ -60,7 +71,17 @@
 			return {
 				ss: 15868865907,
 				current: 2,
-				items: ['日历', '列表', '表格'],
+				tabRadioVal:this.$store.state.isPcShow?2:0,
+				tabitems: [{
+					value:0,
+					text:'日历'
+				}, {
+					value:1,
+					text:'列表'
+				},{
+					value:2,
+					text:'表格'
+				}],
 				selectCondition: {
 					dateRangeArray: [new Date().getTime(), new Date().getTime() + (1000 * 60 * 60 * 24 * 30)], //默认30天
 					userName: ''
@@ -106,11 +127,12 @@
 
 			},
 			onClickItem(e) {
+				console.log(e)
 				if (this.current !== e.currentIndex) {
 					this.current = e.currentIndex
 				}
 			},
-			fabClick() {
+			createOrderEvent() {
 				if (!this.$store.state.isPcShow) {
 					uni.navigateTo({
 						url: '/pages/order/createOrder/createOrder'
@@ -139,16 +161,27 @@
 </script>
 
 <style lang="scss">
-	.order-component {
-		box-sizing: border-box;
-	}
+.order-component {
+	box-sizing: border-box;
+}
 
-	.uni-group {
+.uni-group {
+	display: flex;
+	align-items: center;
+}
+
+.uni-button {
+	white-space: nowrap;
+}
+
+.tbs-style {
+	display: flex;
+	align-items: center;
+
+	.tbs-c-btn {
+		width: 92px;
 		display: flex;
 		align-items: center;
 	}
-
-	.uni-button {
-		white-space: nowrap;
-	}
+}
 </style>

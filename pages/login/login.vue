@@ -76,10 +76,56 @@
 				return  this.userForm.mobile.length != 11||this.userForm.smsCode.length != 4;
 			}
 		},
+		onload(){
+			
+		},
 		methods: {
 
 			codeChange(text) {
 				this.tips = text;
+			},
+			getCode1(){
+				const uniIdCo = uniCloud.importObject("uni-id-co", {
+					customUI: true
+				})
+				console.log('sendSmsCode',{
+					"mobile": this.mobile,
+					"scene": "login-by-sms",
+					"captcha": ""
+				});
+				uniIdCo.sendSmsCode({
+					"mobile": "18516285834",
+					"scene": "login-by-sms",
+					"captcha": ""
+				}).then(result => {
+					uni.showToast({
+						title: "短信验证码发送成功",
+						icon: 'none',
+						duration: 3000
+					});
+					this.reverseNumber = Number(this.count);
+					console.log(result)
+					//this.getCode();
+				}).catch(e => {
+					console.log(e)
+					if (e.code == "uni-id-invalid-sms-template-id") {
+						this.modelValue = "123456"
+						uni.showToast({
+							title: '已启动测试模式,详情【控制台信息】',
+							icon: 'none',
+							duration: 3000
+						});
+						console.warn(e.message);
+					} else {
+						//this.getImageCaptcha()
+						this.captcha = ""
+						uni.showToast({
+							title: e.message,
+							icon: 'none',
+							duration: 3000
+						});
+					}
+				})
 			},
 			getCode() {
 				this.$refs.uForm.validateField('mobile', (err) => {
@@ -117,14 +163,10 @@
 
 
 			},
+			submit1(){
+
+			},
 			submit(){
-				// console.log(this.userForm);
-				// const db = uniCloud.database()
-				// const collection = db.collection('hm-user');
-				//  collection.where(`mobile=='${this.userForm.mobile}'`).get().then(res=>{
-				// 	console.log("111",res);
-				// })
-				
 				this.$refs.uForm.validate().then(async res => {
 					//uni.$u.toast('校验通过');
 					this.submitLoading=true;

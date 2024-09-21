@@ -4,17 +4,20 @@
 	export default {
 		onLaunch: function() {
 			console.log('App Launch XXXXXXXXXX')
-		
 			this.initData();
 			let user = uni.getStorageSync("user");
-			if(user){
-				this.globalData.user=user;
-				this.$store.commit("setUser",user);
-				return;
-			}
+			// if(user){
+			// 	this.globalData.user=user;
+			// 	this.$store.commit("setUser",user);
+			// 	return;
+			// }
 			uni.reLaunch({
 				url:'/pages/login/login'
 			});
+			// uni.reLaunch({
+			// 	url:'/uni_modules/uni-id-pages/pages/login/login-smscode-hm?phoneNumber=18516285834',
+				
+			// })
 		},
 		onShow: function() {
 			console.log('App Show');

@@ -2,7 +2,7 @@
 	
 	<view>
 		<scroll-view :scroll-y="true" :scroll-x="false" class="scroll-view" style="">
-			<createRoomTypeComponent></createRoomTypeComponent>
+			<createRoomTypeComponent @closePopup="closePopup"></createRoomTypeComponent>
 		</scroll-view>
 		
 	</view>
@@ -20,7 +20,9 @@ import createRoomTypeComponent from '../components/createRoomTypeComponent.vue';
 			}
 		},
 		methods: {
-			
+			closePopup(){
+				uni.navigateBack();
+			}
 		}
 	}
 </script>
