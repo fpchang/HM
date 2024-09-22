@@ -30,6 +30,18 @@
 		"hotelIntroduction": {
 			"description": "酒店简介",
 			"bsonType": "string"
+		},
+		"administrator":{
+			"description": "超级管理员",
+			"bsonType": "string"
+		},
+		"manager": {
+			"description": "管理员",
+			"bsonType": "array"
+		},
+		"employment":{
+			"description": "员工",
+			"bsonType": "array"
 		}
 	}
 }

@@ -7,6 +7,14 @@ class HotelService{
      * 获取当前用户酒店列表
     */
       getHotelList(mobile){
+        if(!mobile){
+            console.log("error,mobile is not valid");
+            return new Promise((resolve,reject)=>{reject({
+                code:"1002",
+                text:"手机号无效"
+            })});
+        }
+        console.log( " service getHotelList")
               return DB.getCollection("hm-hotel", {
                     blongUserId:mobile
                  });
@@ -16,10 +24,10 @@ class HotelService{
      * 获取当前酒店房型信息
     */
      getRoomType(hotel_id){
-           return uniCloud.callFunction({
-                name:"hm_getRoomType",
-                data:{hotel_id}
-            });
+           return DB.callFunction(
+                "hm_getRoomType",
+                {hotel_id}
+            );
             let obj = res.result.data.length?res.result.data[0]:{};
            return obj;
      

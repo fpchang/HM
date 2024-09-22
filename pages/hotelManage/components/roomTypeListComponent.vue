@@ -93,6 +93,7 @@
 
 <script>
 import createRoomTypeComponent from './createRoomTypeComponent.vue';
+import DB from '../../../api/DB';
 	export default {
 		components:{
 			createRoomTypeComponent
@@ -157,13 +158,12 @@ import createRoomTypeComponent from './createRoomTypeComponent.vue';
 				this.submitLoading = true;
 				uni.showLoading();
 				console.log("deleteRoomType",rt);
-				uniCloud.callFunction({
-					name: "hm_deleteRoomType",
-					data:{
+				DB.callFunction("hm_deleteRoomType",
+					{
 						_id:this.roomType._id,
 						roomTypeObj:rt
 					}
-				}).then(res=>{
+				).then(res=>{
                             console.log("删除成功");
                         this.$store.commit("getRoomType");
 						this.submitLoading = false;

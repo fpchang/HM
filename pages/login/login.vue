@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import DB from '../../api/DB';
 	export default {
 		data() {
 			return {
@@ -168,12 +169,9 @@
 			},
 			submit(){
 				this.$refs.uForm.validate().then(async res => {
-					//uni.$u.toast('校验通过');
+					console.log("2222222222")
 					this.submitLoading=true;
-					uniCloud.callFunction({
-						name:'hm_login',
-						data:this.userForm
-					}).then(res=>{
+					DB.callFunction('hm_login',{userForm:this.userForm}).then(res=>{
 						console.log("login result----",res)
 						
 						if(res.result.errCode==0){

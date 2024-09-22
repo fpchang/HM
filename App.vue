@@ -6,11 +6,11 @@
 			console.log('App Launch XXXXXXXXXX')
 			this.initData();
 			let user = uni.getStorageSync("user");
-			// if(user){
-			// 	this.globalData.user=user;
-			// 	this.$store.commit("setUser",user);
-			// 	return;
-			// }
+			if(user){
+				this.globalData.user=user;
+				this.$store.commit("setUser",user);
+				return;
+			}
 			uni.reLaunch({
 				url:'/pages/login/login'
 			});
@@ -44,7 +44,8 @@
 		},
 		globalData:{
 			systemInfo:uni.getSystemInfoSync(),
-			isPcShow:false
+			appId:"",
+			secret:"****"
 		}
 	}
 </script>

@@ -71,6 +71,7 @@
 						<roomTypeListComponent :key="item.time"
 							v-if="item.ComponentName=='roomTypeListComponent'">
 						</roomTypeListComponent>
+						<employeeConmponent v-if="item.ComponentName=='employeeConmponent'"></employeeConmponent>
 						<!-- </keep-alive> -->
 
 					</view>
@@ -111,7 +112,8 @@
 	import orderComponent from '../order/components/orderComponent';
 	import hotelSetComponent from './components/hotelSetComponent';
 	import createHotelComponent from '../hotelManage/components/createHotelComponent';
-	import roomTypeListComponent from '../hotelManage/components/roomTypeListComponent.vue'
+	import roomTypeListComponent from '../hotelManage/components/roomTypeListComponent.vue';
+	import employeeConmponent from '../hotelManage/components/employeeConmponent.vue';
 	import DB from '../../api/DB';
 	export default {
 		components: {
@@ -119,7 +121,8 @@
 			orderComponent,
 			hotelSetComponent,
 			createHotelComponent,
-			roomTypeListComponent
+			roomTypeListComponent,
+			employeeConmponent
 		},
 
 
@@ -132,7 +135,7 @@
 
 				isSticky: false,
 				opacityVal: 1,
-				currentTab_index: 5,
+				currentTab_index: 6,
 				showDrawer: false,
 				clickTime:0,
 				tabList: [{
@@ -169,7 +172,7 @@
 					index: 6,
 					name: '人员管理',
 					time:0,
-					ComponentName: ""
+					ComponentName: "employeeConmponent"
 				}],
 				slelectHotelvalue: "",
 				activeHotle: {

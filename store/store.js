@@ -29,6 +29,7 @@ const store = new Vuex.Store({
 			store.commit("setDefaultHotel");
 		},
 		async getHotelList(state){
+			console.log("store get hotel list",state);
 			const res = await hotelService.getHotelList( store.state.user.mobile);
 			store.commit('updateHotelList', res.data);
 			//  DB.getCollection("hm-hotel", {
