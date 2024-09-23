@@ -1,0 +1,7 @@
+{
+  "name": "deleteEmployee",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}

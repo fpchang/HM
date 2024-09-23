@@ -1,6 +1,6 @@
 {
 	"bsonType": "object",
-	"required": [],
+	"required": ["hotel_id"],
 	"permission": {
 		"read": true,
 		"create": true,
@@ -13,7 +13,8 @@
 		},
 		"hotel_id":{
 			"description": "酒店id",
-			"bsonType": "string"
+			"bsonType": "string",
+			"foreignKey": "hotel._id"
 		},
 		"createTime": {
 			"description": "创建时间",
@@ -62,6 +63,6 @@
 		"orderStatus": {
 			"description": "订单状态",
 			"bsonType": "int"
-		},
+		}
 	}
 }

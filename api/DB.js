@@ -14,7 +14,7 @@ class DB{
 	  })
   }
    getCollection(dbName,w={}){
-     
+     console.log("DB getCollection ---",arguments);
     return new Promise((resolve,reject)=>{
       if(!dbName){
        reject("dbName is invalid")
@@ -25,7 +25,7 @@ class DB{
         console.log(res.result);
         resolve(res.result)
       }).catch(err=>{
-		  reject(err)
+		    reject(err)
       })
     })
   }
@@ -43,17 +43,11 @@ class DB{
     })
   }
   insertData(dbName,r={}){
-    return new Promise((resolve,reject)=>{
-      if(!dbName){
-       reject("dbName is invalid")
-      }
-      this.db.collection(dbName).add(r).then(res=>{
-        resolve(res.result);
-      }).catch(er=>{
-        console.error(er);
-        reject(er)
-      })
-    });
+    if(!dbName){
+       return "dbName is invalid"
+     }
+    return this.db.collection(dbName).add(r);
+
   }
   add(dbName,r={}){
     const db = uniCloud.Vs.database();

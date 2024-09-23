@@ -5,9 +5,9 @@
 			<view class="subtitle">手机号快捷登录/注册</view>
 			<view style="height: 80px;"></view>
 			<u-form labelPosition="left" :model="userForm" :rules="rules" errorType="none" ref="uForm">
-				<u-form-item label="" prop="mobile" ref="item1">
+				<u-form-item label="" prop="phone" ref="item1">
 					<u-input maxlength="11" type="number" placeholder="请输入手机号" border="surround"
-						v-model="userForm.mobile" clearable shape="circle" class="inputStyle">
+						v-model="userForm.phone" clearable shape="circle" class="inputStyle">
 						<u-text text="+86" slot="prefix" margin="0 6px 0 0" type="tips"></u-text>
 					</u-input>
 				</u-form-item>
@@ -42,14 +42,14 @@ import DB from '../../api/DB';
 				submitLoading:false,
 				tips: '获取验证码',
 				value: '',
-				mobile: '',
+				phone: '',
 				userForm: {
 					smsCode: '1234',
-					mobile: '18516285834'
+					phone: '18516285834'
 				},
 				rules: {
 					
-					mobile: [{
+					phone: [{
 							required: true,
 							message: '请输入手机号',
 							trigger: ['blur'],
@@ -58,8 +58,8 @@ import DB from '../../api/DB';
 							// 自定义验证函数，见上说明
 							validator: (rule, value, callback) => {
 								// 上面有说，返回true表示校验通过，返回false表示不通过
-								// uni.$u.test.mobile()就是返回true或者false的
-								return uni.$u.test.mobile(value);
+								// uni.$u.test.phone()就是返回true或者false的
+								return uni.$u.test.phone(value);
 							},
 							message: '手机号码不正确',
 							// 触发器可以同时用blur和change
@@ -71,10 +71,10 @@ import DB from '../../api/DB';
 		},
 		computed: {
 			sendSmsDisabled() {
-				return this.userForm.mobile.length != 11;
+				return this.userForm.phone.length != 11;
 			},
 			submitDisabled() {
-				return  this.userForm.mobile.length != 11||this.userForm.smsCode.length != 4;
+				return  this.userForm.phone.length != 11||this.userForm.smsCode.length != 4;
 			}
 		},
 		onload(){
@@ -90,12 +90,12 @@ import DB from '../../api/DB';
 					customUI: true
 				})
 				console.log('sendSmsCode',{
-					"mobile": this.mobile,
+					"phone": this.phone,
 					"scene": "login-by-sms",
 					"captcha": ""
 				});
 				uniIdCo.sendSmsCode({
-					"mobile": "18516285834",
+					"phone": "18516285834",
 					"scene": "login-by-sms",
 					"captcha": ""
 				}).then(result => {
@@ -129,7 +129,7 @@ import DB from '../../api/DB';
 				})
 			},
 			getCode() {
-				this.$refs.uForm.validateField('mobile', (err) => {
+				this.$refs.uForm.validateField('phone', (err) => {
 					if (err && err.length) {
 						console.log("手机号不正确");
 						return;
@@ -189,9 +189,9 @@ import DB from '../../api/DB';
 				})
 			},
 			async getUserInfo(){
-				console.log(this.userForm.mobile);
+				console.log(this.userForm.phone);
 				const db = uniCloud.database();
-				const userRes = await db.collection("hm-user").where(`mobile=='${this.userForm.mobile}'`).get();
+				const userRes = await db.collection("hm-user").where(`phone=='${this.userForm.phone}'`).get();
 				console.log("更新userInfo",userRes.result.data[0]);
 				uni.setStorageSync('user',userRes.result.data[0]);
 				this.$store.commit("setUser",userRes.result.data[0]);

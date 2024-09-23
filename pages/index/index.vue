@@ -302,7 +302,7 @@
 			},
 			// getHotelList() {
 			// 	return DB.getCollection("hm-hotel", {
-			// 		blongUserId: this.$store.state.user.mobile
+			// 		blongUserId: this.$store.state.user.phone
 			// 	}).then(res => {
 			// 		this.hotelList = res.data;
 			// 		this.$store.commit('updateHotelList', res.data);

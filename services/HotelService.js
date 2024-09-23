@@ -6,9 +6,9 @@ class HotelService{
     /** 
      * 获取当前用户酒店列表
     */
-      getHotelList(mobile){
-        if(!mobile){
-            console.log("error,mobile is not valid");
+      getHotelList(phone){
+        if(!phone){
+            console.log("error,phone is not valid");
             return new Promise((resolve,reject)=>{reject({
                 code:"1002",
                 text:"手机号无效"
@@ -16,7 +16,7 @@ class HotelService{
         }
         console.log( " service getHotelList")
               return DB.getCollection("hm-hotel", {
-                    blongUserId:mobile
+                    blong:phone
                  });
          
     }

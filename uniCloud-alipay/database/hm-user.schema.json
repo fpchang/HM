@@ -1,6 +1,6 @@
 {
 	"bsonType": "object",
-	"required": [],
+	"required": ["phone"],
 	"permission": {
 		"read": true,
 		"create": true,
@@ -27,7 +27,7 @@
 			"description": "昵称",
 			"bsonType": "string"
 		},
-		"mobile": {
+		"phone": {
 			"description": "手机号",
 			"bsonType": "string"
 		},
@@ -59,7 +59,7 @@
 			"description": "微信openid",
 			"bsonType": "string"
 		},
-		"blongEmployment":{
+		"blongEmployment": {
 			"description": "所属于店铺",
 			"bsonType": "array"
 		}

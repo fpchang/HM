@@ -28,7 +28,7 @@
 				submitLoading: false,
 				//hotelList:getApp().globalData.hotelList,
 				hotelForm: {
-					blongUserId: getApp().globalData.user.mobile,
+					blong: this.user.phone,
 					hotelName: "",
 					hotelAdress: "",
 					hotelCoordinate: [],
@@ -61,6 +61,9 @@
 			console.log("user", getApp().globalData.user)
 		},
 		computed: {
+			user(){
+				return this.$store.state.user
+			},
 			hotel_id(){
 				return this.$store.state.hotel_id;
 			},

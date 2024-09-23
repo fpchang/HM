@@ -1,0 +1,38 @@
+{
+	"bsonType": "object",
+	"required": [
+		"hotel_id","administrator"
+	],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"hotel_id": {
+			"description": "关联酒店id",
+			"bsonType": "string"
+		},
+		"hotelName": {
+			"description": "关联酒店名称",
+			"bsonType": "string"
+		},
+		"administrator": {
+			"description": "超级管理员-手机号",
+			"bsonType": "string"
+		},
+		"manager": {
+			"description": "管理员",
+			"bsonType": "array"
+		},
+		"employee": {
+			"description": "普通员工",
+			"bsonType": "array"
+		}
+
+	}
+}

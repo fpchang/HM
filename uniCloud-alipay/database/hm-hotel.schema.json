@@ -1,6 +1,6 @@
 {
 	"bsonType": "object",
-	"required": ["blongUserId","hotelName"],
+	"required": ["blong", "hotelName"],
 	"permission": {
 		"read": true,
 		"create": true,
@@ -11,14 +11,15 @@
 		"_id": {
 			"description": "ID，系统自动生成"
 		},
-		"blongUserId": {
+		"blong": {
 			"description": "所属账号",
-			"bsonType": "string"
+			"bsonType": "string",
+			"foreignKey": "hm-user.phone"
 		},
 		"hotelName": {
 			"description": "酒店名称",
 			"bsonType": "string"
-		},					
+		},
 		"hotelAdress": {
 			"description": "酒店地址",
 			"bsonType": "string"
@@ -31,17 +32,24 @@
 			"description": "酒店简介",
 			"bsonType": "string"
 		},
-		"administrator":{
-			"description": "超级管理员",
-			"bsonType": "string"
-		},
-		"manager": {
-			"description": "管理员",
-			"bsonType": "array"
-		},
-		"employment":{
+		"employee": {
 			"description": "员工",
-			"bsonType": "array"
+			"bsonType": "array",
+			"properties":{
+				"required": [
+					
+				],
+				"role":{
+					
+					 "description": "manager：管理员，normal：员工",
+					 "bsonType": "string",
+					 "enum":["manager","normal"]
+				},
+				"phone":{
+					"description": "手机号",
+					"bsonType": "string"
+				}
+			}
 		}
 	}
 }

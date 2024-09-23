@@ -10,7 +10,7 @@ exports.main = async (event, context) => {
 		userForm,
 		token
 	} = event;
-	let {smsCode,mobile}=userForm;
+	let {smsCode,phone}=userForm;
 	const secret = "****";
 	const newToken = tokenEvent.getToken({name:"123"},secret,new Date().getTime());
 	const verifT = tokenEvent.verifyToken(newToken,secret);
@@ -25,7 +25,7 @@ exports.main = async (event, context) => {
 			event,
 			context
 		})
-	const user = await dbJQL.collection('hm-user').where(`mobile=='${mobile}'`).get();
+	const user = await dbJQL.collection('hm-user').where(`phone=='${phone}'`).get();
 	if(user.data.length>0){
 		return user;
 	}
@@ -33,13 +33,13 @@ exports.main = async (event, context) => {
 	//添加新用记到数据表hm-user
 	const res = await uniCloud.callFunction({
 		name:'hm-addUser',
-		data:{userInfo:getUser(mobile)}
+		data:{userInfo:getUser(phone)}
 	})
 	return res;
 	
 };
 
-function getUser(mobile,token) {
+function getUser(phone,token) {
 	let vipStartDateStamp = new Date().getTime();
 	let vipEndDateStamp = new Date().getTime()+ 7*1000*60*60*24;
 	return  {
@@ -47,8 +47,8 @@ function getUser(mobile,token) {
 		"vipStartDateStamp": vipStartDateStamp,
 		"isVip": true,
 		"nickName": "",
-		"mobile": mobile,
-		"userId": mobile,
+		"phone": phone,
+		"userId": phone,
 		"userName": "",
 		"vipEndDate": dateFormat(new Date(vipEndDateStamp),"yyyy-MM-dd HH:mm:ss"),
 		"vipEndDateStamp":vipEndDateStamp,
