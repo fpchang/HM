@@ -14,10 +14,21 @@ class HotelService{
                 text:"手机号无效"
             })});
         }
-        console.log( " service getHotelList")
-              return DB.getCollection("hm-hotel", {
+            const dbCmd = uniCloud.database().command;
+              return DB.getCollection("hm-hotel",dbCmd.or([
+                {
                     blong:phone
-                 });
+                 },
+                 {
+                    employee: dbCmd.elemMatch({
+                        "phone":phone
+                    })
+                 }
+              ]));
+            // return DB.getCollection("hm-hotel",
+            //     {
+            //         blong:phone
+            //      });
          
     }
     /** 
