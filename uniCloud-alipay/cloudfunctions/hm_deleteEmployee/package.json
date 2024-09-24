@@ -1,5 +1,5 @@
 {
-  "name": "deleteEmployee",
+  "name": "hm_deleteEmployee",
   "dependencies": {},
   "extensions": {
     "uni-cloud-jql": {}

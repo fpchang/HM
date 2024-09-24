@@ -23,7 +23,8 @@
 					</view>
 					<view class="checkIntable-h-list" v-for="it in checkInOrderListFormat">
 						<view :class="['checkIntable-h-list-h','td-style',1?'isContinueCheckIn':'']"
-							v-for="i in it" @click="showDetail">{{i.userName?i.userName:''}}
+							v-for="i in it" @click="showDetail">
+							<text class="tx">{{i.userName?i.userName:''}}</text>
 						</view>
 					</view>
 
@@ -262,6 +263,11 @@
 		text-align: center;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-
+		.tx{
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			padding:0 4px;
+		}
 	}
 </style>

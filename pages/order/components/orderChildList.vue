@@ -1,6 +1,6 @@
 <template>
 	<view class="mobile-show-style" style="max-width: 450px;">
-		<uni-collapse v-model="accordionVal" :accordion="true">
+		<uni-collapse v-model="accordionVal" >
 			<uni-collapse-item v-for="item of checkInOrderList">
 				<template v-slot:title>
 					<uni-section class="mb-10" :title=" item.userName " :sub-title="item| formatDateTitle">
@@ -14,12 +14,25 @@
 					<view class="list">
 						<view class="list-item">
 							<view class="list-item-c"><text>入住日期：</text><text>{{item.checkInStartDate}}</text></view>
+							
+						</view>
+						<view  class="list-item">
 							<view class="list-item-c"><text>退房日期：</text><text>{{item.checkInEndDate}}</text></view>
 						</view>
-						<view class="list-item">`
+						<view class="list-item">
+							<view class="list-item-c"><text>创建人：</text><text>{{item.createrPhone}}【{{item.createrNmae}}】</text></view>
+							
+						</view>
+						<view  class="list-item">
+							<view class="list-item-c"><text>创建日期：</text><text>{{new Date(item.createTime).Format("yyyy/MM/dd HH:mm:ss")}}</text></view>
+						</view>
+						<view class="list-item">
 							<view class="list-item-c"><text>房型：</text><text>大床房</text></view>
+							
+						</view>
+						<view class="list-item" style="justify-content:flex-end">
 							<view class="list-item-c"><button class="uni-button" size="mini" type="warn"
-									@click="deleteOrder(item)">撤消订单</button></view>
+								@click="deleteOrder(item)">撤消订单</button></view>
 						</view>
 					</view>
 

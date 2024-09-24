@@ -179,7 +179,7 @@ import orderChildCalendarList from './orderChildCalendarList2';
 	align-items: center;
 
 	.tbs-c-btn {
-		width: 92px;
+		width: 105px;
 		display: flex;
 		align-items: center;
 	}

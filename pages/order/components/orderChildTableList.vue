@@ -33,6 +33,8 @@
 				<uni-th align="center">截止日期</uni-th>
 				<uni-th align="center">姓名</uni-th>
 				<uni-th align="center">房型</uni-th>
+				<uni-th align="center">联系电话</uni-th>
+				<uni-th align="center">创建人</uni-th>
 				<uni-th align="center">天数</uni-th>
 				<!-- <uni-th align="center">定餐</uni-th> -->
 				<uni-th align="center">操作</uni-th>
@@ -48,12 +50,11 @@
 							:class="[it.count>1?'strongText':'']">{{it.count}}</text></text>
 				</uni-td>
 
+				<uni-td>{{item.phone}}</uni-td>
+				<uni-td>{{item.createrPhone}}【{{ item.createrName }}】</uni-td>
 				<uni-td>
 					<text
 						style="color: red;font-weight: bold;letter-spacing: 3px;">{{"" | dayNum([item.checkInStartDateTimeStamp,item.checkInEndDateTimeStamp])}}</text><text>晚</text></uni-td>
-				<!-- <uni-td align="center"><u-icon name="more-dot-fill" label="566元" labelPos="top" labelColor="red"
-						color="blue"></u-icon>
-				</uni-td> -->
 				<uni-td>
 
 					<view class="uni-group" v-if="item.checkInEndtDateTimeStamp>new Date().getTime()">

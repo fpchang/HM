@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<scroll-view :scroll-y="true" :scroll-x="false" class="scroll-view" style="">
-			<createOrderComponent></createOrderComponent>
+			<createOrderComponent @closePopup="closePopup"></createOrderComponent>
 		</scroll-view>
 
 	</view>
@@ -20,7 +20,9 @@
 		},
 
 		methods: {
-
+			closePopup(){
+				uni.navigateBack();
+			}
 		}
 	}
 </script>

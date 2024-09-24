@@ -83,7 +83,7 @@
                     class="uni-button"
                     size="mini"
                     type="warn"
-                    @click="deleteRoomType(item)"
+                    @click="deleteEmployee(item)"
                     :loading="submitLoading"
                   >
                     删除
@@ -156,7 +156,7 @@ export default {
         url: "/pages/hotelManage/addEmployee/addEmployee",
       });
     },
-    async deleteEmployee(rt) {
+    async deleteEmployee(em) {
       const conf = await uni.showModal({
         title: "确认删除房型",
         content: "删除后将无法恢复,确认删除吗?",
@@ -168,14 +168,14 @@ export default {
       }
       this.submitLoading = true;
       uni.showLoading();
-      console.log("deleteEmployee", rt);
+      console.log("deleteEmployee", em);
       DB.callFunction("hm_deleteEmployee", {
         _id: this.hotel._id,
-        roomTypeObj: rt,
+        employee: em,
       })
         .then((res) => {
           console.log("删除成功");
-          this.$store.commit("getRoomType");
+          this.$store.commit("getHotelList");
           this.submitLoading = false;
           uni.hideLoading();
         })

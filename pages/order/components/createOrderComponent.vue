@@ -180,6 +180,9 @@ export default {
     hotel_id() {
       return this.$store.state.hotel_id;
     },
+	user(){
+		return this.$store.state.user;
+	},
     noSelectDate() {
       //return false;
       return this.orderForm.dateRangeArray.length < 1;
@@ -274,6 +277,8 @@ export default {
         checkInStartDate: new Date(dateRange[0]).Format("yyyy/MM/dd HH:mm:ss"),
         checkInEndDate: new Date(dateRange[1]).Format("yyyy/MM/dd HH:mm:ss"),
         phone: this.orderForm.phone,
+		createrPhone:this.user.phone,
+		createrName:this.user.userName,
         orderSource: Number(this.orderForm.orderSource),
         wxNickName: this.orderForm.wxNickName,
         orderSouce_Zn: sourceObj.name_Zn,
