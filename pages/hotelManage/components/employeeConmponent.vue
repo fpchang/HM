@@ -46,7 +46,7 @@
       </uni-table>
     </view>
     <view class="phone-show-style" style="max-width: 450px" v-if="!isPcShow">
-      <uni-collapse v-model="accordionVal" :accordion="true">
+      <uni-collapse v-model="accordionVal">
         <uni-collapse-item v-for="item of hotel.employee">
           <template v-slot:title>
             <uni-section class="mb-10" :title="item.userName" type="circle" :sub-title="item.phone">
