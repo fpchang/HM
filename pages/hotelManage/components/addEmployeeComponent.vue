@@ -4,7 +4,7 @@
       ref="employeeRef"
       :modelValue="employeeForm"
       :rules="employeeFormRules"
-      label-width="90px"
+      label-width="130px"
     >
       <uni-forms-item label="用户名" required name="userName">
         <uni-easyinput
@@ -12,15 +12,16 @@
           placeholder="请输入员工名"
         />
       </uni-forms-item>
-      <uni-forms-item label="手机号" name="phone">
+      <uni-forms-item label="手机号(登录账号)" name="phone">
         <u-input
           maxlength="11"
           type="number"
           placeholder="请输入手机号"
           border="surround"
+		  :disabled="type==1"
           v-model="employeeForm.phone"
           clearable
-          shape="circle"
+          
           class="inputStyle"
         >
         </u-input>
@@ -48,18 +49,22 @@ import DB from "../../../api/DB.js";
 export default {
   name: "addEmployeeComponent",
   props: {
-	
-	type:0 // 0 新增，1编辑
+	em:Object,
+	type:Number // 0 新增，1编辑
   },
   data() {
     return {
       submitLoading: false,
       //hotelList:getApp().globalData.hotelList,
-	  employeeForm: {
-        userName: "",
-        phone: "",
-        role: "normal",
-      },
+	  employeeForm:this.type==1? {
+        userName: this.em.userName,
+        phone: this.em.phone,
+        role: this.em.role
+      }:{
+		userName: "",
+        phone:"",
+        role: "normal"
+	  },
       roleItems: [
         {
           value: "manager",
@@ -101,6 +106,15 @@ export default {
         },
       },
     };
+  },
+  created(){
+	// if(this.type==1){
+	// 	this.employeeForm={
+    //     userName: this.em.userName,
+    //     phone: this.em.phone,
+    //     role: this.em.role
+    //   }
+	// }
   },
   computed: {
     hotel_id() {
