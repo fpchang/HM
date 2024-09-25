@@ -17,7 +17,7 @@ class HotelService{
             const dbCmd = uniCloud.database().command;
               return DB.getCollection("hm-hotel",dbCmd.or([
                 {
-                    blong:phone
+                    belong:phone
                  },
                  {
                     employee: dbCmd.elemMatch({

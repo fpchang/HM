@@ -11,6 +11,7 @@ const store = new Vuex.Store({
 		"isPcShow": false,
 		"user": {},
 		"hotelList": [],
+		"employeeList":[],
 		"hotel_id": "",
 		"roomType":{},
 		"orderListTodayAfter": [] //今天至未来订单
@@ -33,6 +34,10 @@ const store = new Vuex.Store({
 			const res = await hotelService.getHotelList( store.state.user.phone);
 			store.commit('updateHotelList', res.data);
 
+		},
+		updateEmployeeList(state, list) {
+			console.warn("store updateEmployeeList",list)
+			state.employeeList = list;			
 		},
 		updateRoomType(state, obj) {
 			state.roomType = obj;

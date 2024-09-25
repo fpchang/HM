@@ -28,7 +28,7 @@
 				submitLoading: false,
 				//hotelList:getApp().globalData.hotelList,
 				hotelForm: {
-					blong: this.user.phone,
+					belong: "",
 					hotelName: "",
 					hotelAdress: "",
 					hotelCoordinate: [],
@@ -43,7 +43,7 @@
 							},
 							{
 								validateFunction: (rule, value,data,callback)=> {									
-									let obj = this.hotelList.find(item=>{ return item.name==value});
+									let obj = this.hotelList.find(item=>{ return item.hotelName==value});
 									if(obj){
 										callback('已存在酒店名')
 									}
@@ -83,6 +83,7 @@
 					this.submitLoading = true;
 					let obj = {}
 					console.log(this.hotelForm);
+					this.hotelForm.belong=this.user.phone;
 					DB.insertData("hm-hotel", this.hotelForm).then(res => {
 						console.log("添加成功");
 						uni.hideLoading();

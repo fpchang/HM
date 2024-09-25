@@ -57,10 +57,12 @@ export default {
       submitLoading: false,
       //hotelList:getApp().globalData.hotelList,
 	  employeeForm:this.type==1? {
-        userName: this.em.userName,
+		hotel_id:"",
+        employee_name: this.em.employee_name,
         phone: this.em.phone,
         role: this.em.role
       }:{
+		hotel_id:"",
 		userName: "",
         phone:"",
         role: "normal"
@@ -90,13 +92,13 @@ export default {
 			},
             {
               validateFunction: (rule, value, data, callback) => {
-                let obj = this.hotel.employee.find((item) => {
+                let obj = this.employeeList.find((item) => {
                   return item.phone == value;
                 });
                 if (obj) {
                   callback("已存在相同手机号");
                 }
-                if (value == this.hotel.blong) {
+                if (value == this.hotel.belong) {
                   callback("此用户为超级管理员");
                 }
                 return true;
@@ -126,27 +128,47 @@ export default {
         (item) => item._id == this.hotel_id
       );
     },
+	employeeList(){
+		return this.$store.state.employeeList;
+	},
     submitDisabled() {
       return !this.employeeForm.phone;
     },
   },
   methods: {
+	getEmployeeList(){
+      DB.getCollection("hm-employee",{
+        hotel_id:this.hotel_id
+      }).then(res=>{
+        console.log("ree>>>>",res)
+        this.$store.commit("updateEmployeeList",res.data);
+        uni.hideLoading();
+		this.$emit("closePopup");
+      }).catch(err=>{
+        console.error(err)
+        uni.hideLoading();
+		uni.showModal({
+              content: "系统异常，请稍候再试！",
+              confirmText: "确认",
+            });
+      })
+    },
     submitForm() {
       this.$refs.employeeRef.validate().then((res) => {
         console.log(this.employeeForm);
 
         uni.showLoading();
         this.submitLoading = true;
-
+		this.employeeForm.hotel_id = this.hotel_id;
         DB.callFunction("hm_addEmployee", {
-          _id: this.hotel_id,
           employeeObj: this.employeeForm,
         })
           .then((res) => {
             console.log("添加成功");
             this.$store.commit("getHotelList");
-            this.$emit("closePopup");
-            uni.hideLoading();
+			this.getEmployeeList()
+           
+           // uni.hideLoading();
           })
           .catch((er) => {
             console.log("添加失败", er);
@@ -159,6 +181,12 @@ export default {
           });
       });
     },
+	addEmployee(){
+
+	},
+	editEmployee(){
+
+	}
   },
   watch: {},
 

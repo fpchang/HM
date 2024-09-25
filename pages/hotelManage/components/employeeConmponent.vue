@@ -16,19 +16,24 @@
       <uni-table border stripe emptyText="暂无更多数据">
         <!-- 表头行 -->
         <uni-tr>
-          <uni-th align="center" >用户手机</uni-th>
-          <uni-th align="center" >用户名</uni-th>
+          <uni-th align="center">用户手机</uni-th>
+          <uni-th align="center">用户名</uni-th>
           <uni-th align="center">角色</uni-th>
           <uni-th align="center" width="200px">操作</uni-th>
         </uni-tr>
         <!-- 表格数据行 -->
-        <uni-tr v-for="item of hotel.employee">
+        <uni-tr v-for="item of employeeList">
           <uni-td>{{ item.phone }}</uni-td>
-          <uni-td>{{ item.userName }}</uni-td>
-          <uni-td>{{item.role=="manager"?"管理员":"员工"}}</uni-td>
+          <uni-td>{{ item.employee_name }}</uni-td>
+          <uni-td>{{ item.role == "manager" ? "管理员" : "员工" }}</uni-td>
           <uni-td align="center">
             <view class="uni-group">
-              <button class="uni-button" @click="editEmployee(item)" size="mini" type="primary">
+              <button
+                class="uni-button"
+                @click="editEmployee(item)"
+                size="mini"
+                type="primary"
+              >
                 修改
               </button>
               <button
@@ -49,9 +54,16 @@
       <uni-collapse v-model="accordionVal">
         <uni-collapse-item v-for="item of hotel.employee">
           <template v-slot:title>
-            <uni-section class="mb-10" :title="item.userName" type="circle" :sub-title="item.phone">
+            <uni-section
+              class="mb-10"
+              :title="item.userName"
+              type="circle"
+              :sub-title="item.phone"
+            >
               <template v-slot:right>
-                <text style="font-weight: bold">{{item.role=="manager"?"管理员":"员工"}}</text>
+                <text style="font-weight: bold">{{
+                  item.role == "manager" ? "管理员" : "员工"
+                }}</text>
               </template>
             </uni-section>
           </template>
@@ -59,14 +71,15 @@
             <view class="list">
               <view class="list-item">
                 <view class="list-item-c"
-                  ><text>员工姓名：</text><text>{{item.userName}}</text></view
+                  ><text>员工姓名：</text><text>{{ item.userName }}</text></view
                 >
-                
               </view>
               <view class="list-item">
                 <view class="list-item-c"
                   ><text>角色：</text
-                  ><text style="font-weight: bold">{{ item.role=="manager"?"管理员":"员工"}}</text></view
+                  ><text style="font-weight: bold">{{
+                    item.role == "manager" ? "管理员" : "员工"
+                  }}</text></view
                 >
               </view>
               <view class="list-item" style="justify-content: flex-end">
@@ -97,7 +110,9 @@
     </view>
     <uni-popup ref="popupCreateRoomType" background-color="transprant">
       <view class="popup-content">
-        <view class="create-order-title-style">{{type==1?"修改员工信息":"新增员工"}}</view>
+        <view class="create-order-title-style">{{
+          type == 1 ? "修改员工信息" : "新增员工"
+        }}</view>
         <view class="comContent">
           <addEmployeeComponent
             @closePopup="closePopup"
@@ -121,8 +136,8 @@ export default {
     return {
       submitLoading: false,
       accordionVal: "0",
-      type:0,
-      emObj:{}
+      type: 0,
+      emObj: {}
     };
   },
   computed: {
@@ -133,38 +148,59 @@ export default {
       return this.$store.state.hotel_id;
     },
     hotel() {
-      return this.$store.state.hotelList.find(item=>item._id==this.hotel_id);
-    }
+      return this.$store.state.hotelList.find(
+        (item) => item._id == this.hotel_id
+      );
+    },
+    employeeList() {
+      return this.$store.state.employeeList;
+    },
   },
   created() {
+    console.log("employeeComponent>>>>>");
 
-    if (!this.hotel) {
-      this.$store.commit("getHotelList");
-    }
+    this.getEmployeeList();
   },
   watch: {
     hotel_id() {
-      this.$store.commit("getHotelList");
+      this.getEmployeeList();
     },
   },
   methods: {
     sortRoomList(list) {},
+    getEmployeeList() {
+      uni.showLoading();
+      DB.getCollection("hm-employee", {
+        hotel_id: this.hotel_id,
+      })
+        .then((res) => {
+          console.log("ree", res);
+          this.$store.commit("updateEmployeeList", res.data);
+          uni.hideLoading();
+        })
+        .catch((err) => {
+          console.error(err);
+          uni.hideLoading();
+        });
+    },
     editEmployee(em) {
-      this.emObj=em;
-      this.type=1;
+      this.emObj = em;
+      this.type = 1;
       if (this.$store.state.isPcShow) {
-        	this.$refs.popupCreateRoomType.open();
+        this.$refs.popupCreateRoomType.open();
         return;
       }
 
       uni.navigateTo({
-        url: `/pages/hotelManage/addEmployee/addEmployee?type=${this.type}&&em=${JSON.stringify(this.emObj)}`,
+        url: `/pages/hotelManage/addEmployee/addEmployee?type=${
+          this.type
+        }&&em=${JSON.stringify(this.emObj)}`,
       });
     },
     addEmployee() {
-      this.type=0;
+      this.type = 0;
       if (this.$store.state.isPcShow) {
-        	this.$refs.popupCreateRoomType.open();
+        this.$refs.popupCreateRoomType.open();
         return;
       }
 

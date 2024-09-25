@@ -2,6 +2,7 @@
 exports.main = async (event, context) => {
 	//event为客户端上传的参数
 	let {
+		_id,
 		employeeObj
 	} = event;
 	console.log("hm_updateEmployee", event);
@@ -10,10 +11,9 @@ exports.main = async (event, context) => {
 		context
 	})
 	const db = uniCloud.database();
-	//const dCmd = db.command;
-	// const result = await db.collection('hm-hotel').doc(_id).update({
-	// 	employee: dCmd.push([employeeObj])
-	// });
-	const result = await db.collection('hm-employee').add(employeeObj);
+	const dCmd = db.command;
+	const result = await db.collection('hm-hotel').doc(_id).update({
+		employee: dCmd.push([employeeObj])
+	});
 	return result;
 };
