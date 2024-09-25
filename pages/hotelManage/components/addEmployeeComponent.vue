@@ -47,12 +47,15 @@
 import DB from "../../../api/DB.js";
 export default {
   name: "addEmployeeComponent",
-  props: {},
+  props: {
+	
+	type:0 // 0 新增，1编辑
+  },
   data() {
     return {
       submitLoading: false,
       //hotelList:getApp().globalData.hotelList,
-      employeeForm: {
+	  employeeForm: {
         userName: "",
         phone: "",
         role: "normal",

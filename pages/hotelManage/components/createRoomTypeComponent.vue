@@ -28,7 +28,10 @@
 <script>
 import DB from "../../../api/DB.js";
 export default {
-    
+		props:{
+			type:0,
+			rt:{}
+		},
 		data() {
 			return {
 				submitLoading: false,

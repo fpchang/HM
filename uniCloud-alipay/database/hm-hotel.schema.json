@@ -7,6 +7,11 @@
 		"update": true,
 		"delete": true
 	},
+	 // "fieldRules": [{
+  //   "rule": "end_date == null || end_date != null && create_date < end_date", // 校验规则
+  //   "errorMessage": "创建时间和结束时间不匹配", // 错误提示信息（仅在新增时生效，更新数据时不会提示此信息）
+  //   "client": false // schema2code时，当前规则是否带到前端也进行校验。目前此属性暂不生效，fieldRules不会在客户端校验数据，仅会在云端进行校验
+  // }],
 	"properties": {
 		"_id": {
 			"description": "ID，系统自动生成"

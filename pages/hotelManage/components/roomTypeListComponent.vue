@@ -31,7 +31,7 @@
 					</uni-td>
 					<uni-td align="center">
 						<view class="uni-group">
-							<button class="uni-button" size="mini" type="primary">修改</button>
+							<button class="uni-button" size="mini" type="primary" @click="editRoomType(item)">修改</button>
 							<button class="uni-button" size="mini" type="warn" @click="deleteRoomType(item)" :loading="submitLoading">删除</button>
 						</view>
 					</uni-td>
@@ -78,10 +78,10 @@
 		</view>
 		<uni-popup ref="popupCreateRoomType" background-color="transprant">
 			<view class="popup-content">
-				<view class="create-order-title-style">创建房型</view>
+				<view class="create-order-title-style">{{type==1?"修改房型":"创建房型"}}</view>
 				<view class="comContent">
 					
-					 <createRoomTypeComponent @closePopup="closePopup"></createRoomTypeComponent> 
+					 <createRoomTypeComponent @closePopup="closePopup" :type="type" :rt="rt"></createRoomTypeComponent> 
 				
 
 				</view>
@@ -100,6 +100,8 @@ import DB from '../../../api/DB';
 		},
 		data() {
 			return {
+				type:0,
+				rt:{},
 				submitLoading: false,
 				accordionVal: '0',
 				
@@ -133,8 +135,20 @@ import DB from '../../../api/DB';
 			},
 			editRoomType(rt){
 				console.log("editRoomType",rt);
+				this.type=1;
+				this.rt =rt;
+				if(this.$store.state.isPcShow){
+					this.$refs.popupCreateRoomType.open();
+					return;
+				}
+					
+				
+				uni.navigateTo({
+					url:`/pages/hotelManage/createRoomType/createRoomType?type=${this.type}&&rt=${JSON.stringify(this.rt)}`
+				})
 			},
 			addRoomType(){
+				this.type=0;
 				if(this.$store.state.isPcShow){
 					this.$refs.popupCreateRoomType.open();
 					return;

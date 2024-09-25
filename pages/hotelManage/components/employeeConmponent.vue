@@ -28,7 +28,7 @@
           <uni-td>{{item.role=="manager"?"管理员":"员工"}}</uni-td>
           <uni-td align="center">
             <view class="uni-group">
-              <button class="uni-button" size="mini" type="primary">
+              <button class="uni-button" @click="editEmployee(item)" size="mini" type="primary">
                 修改
               </button>
               <button
@@ -75,7 +75,7 @@
                     class="uni-button"
                     size="mini"
                     type="primary"
-                    @click="editRoomType(item)"
+                    @click="editEmployee(item)"
                   >
                     修改
                   </button>
@@ -97,10 +97,12 @@
     </view>
     <uni-popup ref="popupCreateRoomType" background-color="transprant">
       <view class="popup-content">
-        <view class="create-order-title-style">新增员工</view>
+        <view class="create-order-title-style">{{type==1?"修改员工信息":"新增员工"}}</view>
         <view class="comContent">
           <addEmployeeComponent
             @closePopup="closePopup"
+            :type="type"
+            :em="emObj"
           ></addEmployeeComponent>
         </view>
       </view>
@@ -119,6 +121,8 @@ export default {
     return {
       submitLoading: false,
       accordionVal: "0",
+      type:0,
+      emObj:{}
     };
   },
   computed: {
@@ -145,15 +149,27 @@ export default {
   },
   methods: {
     sortRoomList(list) {},
-    editRoomType(rt) {},
-    addEmployee() {
+    editEmployee(em) {
+      this.emObj=em;
+      this.type=1;
       if (this.$store.state.isPcShow) {
         	this.$refs.popupCreateRoomType.open();
         return;
       }
 
       uni.navigateTo({
-        url: "/pages/hotelManage/addEmployee/addEmployee",
+        url: `/pages/hotelManage/addEmployee/addEmployee?type=${this.type}&&em=${JSON.stringify(this.emObj)}`,
+      });
+    },
+    addEmployee() {
+      this.type=0;
+      if (this.$store.state.isPcShow) {
+        	this.$refs.popupCreateRoomType.open();
+        return;
+      }
+
+      uni.navigateTo({
+        url: `/pages/hotelManage/addEmployee/addEmployee`,
       });
     },
     async deleteEmployee(em) {
