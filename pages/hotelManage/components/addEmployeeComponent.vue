@@ -6,9 +6,9 @@
       :rules="employeeFormRules"
       label-width="130px"
     >
-      <uni-forms-item label="用户名" required name="userName">
+      <uni-forms-item label="用户名" required name="employee_name">
         <uni-easyinput
-          v-model="employeeForm.userName"
+          v-model="employeeForm.employee_name"
           placeholder="请输入员工名"
         />
       </uni-forms-item>
@@ -63,7 +63,7 @@ export default {
         role: this.em.role
       }:{
 		hotel_id:"",
-		userName: "",
+		employee_name: "",
         phone:"",
         role: "normal"
 	  },
@@ -112,7 +112,7 @@ export default {
   created(){
 	// if(this.type==1){
 	// 	this.employeeForm={
-    //     userName: this.em.userName,
+    //     employee_name: this.em.employee_name,
     //     phone: this.em.phone,
     //     role: this.em.role
     //   }
