@@ -11,9 +11,7 @@ exports.main = async (event, context) => {
 		context
 	})
 	const db = uniCloud.database();
-	const dCmd = db.command;
-	const result = await db.collection('hm-hotel').doc(_id).update({
-		employee: dCmd.push([employeeObj])
-	});
+	//const dCmd = db.command;
+	const result = await db.collection('hm-employee').doc(_id).update(employeeObj);
 	return result;
 };

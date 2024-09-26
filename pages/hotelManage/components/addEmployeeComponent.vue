@@ -18,10 +18,8 @@
           type="number"
           placeholder="请输入手机号"
           border="surround"
-		  :disabled="type==1"
           v-model="employeeForm.phone"
           clearable
-          
           class="inputStyle"
         >
         </u-input>
@@ -49,24 +47,27 @@ import DB from "../../../api/DB.js";
 export default {
   name: "addEmployeeComponent",
   props: {
-	em:Object,
-	type:Number // 0 新增，1编辑
+    em: Object,
+    type: Number, // 0 新增，1编辑
   },
   data() {
     return {
       submitLoading: false,
       //hotelList:getApp().globalData.hotelList,
-	  employeeForm:this.type==1? {
-		hotel_id:"",
-        employee_name: this.em.employee_name,
-        phone: this.em.phone,
-        role: this.em.role
-      }:{
-		hotel_id:"",
-		employee_name: "",
-        phone:"",
-        role: "normal"
-	  },
+      employeeForm:
+        this.type == 1
+          ? {
+              hotel_id: "",
+              employee_name: this.em.employee_name,
+              phone: this.em.phone,
+              role: this.em.role,
+            }
+          : {
+              hotel_id: "",
+              employee_name: "",
+              phone: "",
+              role: "normal",
+            },
       roleItems: [
         {
           value: "manager",
@@ -83,13 +84,12 @@ export default {
           rules: [
             {
               required: true,
-              errorMessage: "请输入手机号"
+              errorMessage: "请输入手机号",
             },
-			{
-				pattern: "^[1][3,4,5,6,7,8,9][0-9]{9}$",
-				errorMessage: "手机号不正确"
-
-			},
+            {
+              pattern: "^[1][3,4,5,6,7,8,9][0-9]{9}$",
+              errorMessage: "手机号不正确",
+            },
             {
               validateFunction: (rule, value, data, callback) => {
                 let obj = this.employeeList.find((item) => {
@@ -109,14 +109,14 @@ export default {
       },
     };
   },
-  created(){
-	// if(this.type==1){
-	// 	this.employeeForm={
+  created() {
+    // if(this.type==1){
+    // 	this.employeeForm={
     //     employee_name: this.em.employee_name,
     //     phone: this.em.phone,
     //     role: this.em.role
     //   }
-	// }
+    // }
   },
   computed: {
     hotel_id() {
@@ -128,47 +128,53 @@ export default {
         (item) => item._id == this.hotel_id
       );
     },
-	employeeList(){
-		return this.$store.state.employeeList;
-	},
+    employeeList() {
+      return this.$store.state.employeeList;
+    },
     submitDisabled() {
       return !this.employeeForm.phone;
     },
   },
   methods: {
-	getEmployeeList(){
-      DB.getCollection("hm-employee",{
-        hotel_id:this.hotel_id
-      }).then(res=>{
-        console.log("ree>>>>",res)
-        this.$store.commit("updateEmployeeList",res.data);
-        uni.hideLoading();
-		this.$emit("closePopup");
-      }).catch(err=>{
-        console.error(err)
-        uni.hideLoading();
-		uni.showModal({
-              content: "系统异常，请稍候再试！",
-              confirmText: "确认",
-            });
+    getEmployeeList() {
+      DB.getCollection("hm-employee", {
+        hotel_id: this.hotel_id,
       })
+        .then((res) => {
+          console.log("ree>>>>", res);
+          this.$store.commit("updateEmployeeList", res.data);
+          uni.hideLoading();
+          this.$emit("closePopup");
+        })
+        .catch((err) => {
+          console.error(err);
+          uni.hideLoading();
+          uni.showModal({
+            content: "系统异常，请稍候再试！",
+            confirmText: "确认",
+          });
+        });
     },
     submitForm() {
       this.$refs.employeeRef.validate().then((res) => {
         console.log(this.employeeForm);
-
         uni.showLoading();
         this.submitLoading = true;
-		this.employeeForm.hotel_id = this.hotel_id;
-        DB.callFunction("hm_addEmployee", {
+        this.employeeForm.hotel_id = this.hotel_id;
+        if(this.type==1){
+          this.editEmployee();
+          return;
+        }
+       this.addEmployee();
+      });
+    },
+    addEmployee() {
+      DB.callFunction("hm_addEmployee", {
           employeeObj: this.employeeForm,
         })
           .then((res) => {
             console.log("添加成功");
-            this.$store.commit("getHotelList");
-			this.getEmployeeList()
-           
-           // uni.hideLoading();
+            this.getEmployeeList();
           })
           .catch((er) => {
             console.log("添加失败", er);
@@ -179,14 +185,26 @@ export default {
               confirmText: "确认",
             });
           });
-      });
     },
-	addEmployee(){
-
-	},
-	editEmployee(){
-
-	}
+    editEmployee() {
+      DB.callFunction("hm_editEmployee", {
+          _id:this.em._id,
+          employeeObj: this.employeeForm,
+        })
+          .then((res) => {
+            console.log("修改成功");
+            this.getEmployeeList();
+          })
+          .catch((er) => {
+            console.log("修改失败", er);
+            this.submitLoading = false;
+            uni.hideLoading();
+            uni.showModal({
+              content: "系统异常，请稍候再试！",
+              confirmText: "确认",
+            });
+          });
+    },
   },
   watch: {},
 

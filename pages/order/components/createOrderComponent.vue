@@ -269,7 +269,7 @@ export default {
       );
       let obj = {
         hotel_id:this.hotel_id,
-        createTime: new Date().getTime(),
+       // createTime: new Date().getTime(),
         roomTypeArray: this.roomTypeArray,
         userName: this.orderForm.userName,
         checkInStartDateTimeStamp: dateRange[0],

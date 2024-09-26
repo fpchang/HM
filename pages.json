@@ -138,7 +138,7 @@
 				"navigationBarTitleText": "添加员工"
 			}
 		}
-	],
+],
 	"tabBar": {
 		"color": "#1d1d1f",
 		"selectedColor": "#0071e3",

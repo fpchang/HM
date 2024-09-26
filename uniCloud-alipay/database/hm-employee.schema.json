@@ -1,6 +1,6 @@
 {
 	"bsonType": "object",
-	"required": ["hotel_id", "phone","permissions"],
+	"required": ["hotel_id", "phone","data_status","permissions"],
 	"permission": {
 		"read": true,
 		"create": true,
@@ -13,7 +13,8 @@
 		},
 		"hotel_id": {
 			"description": "关联酒店id",
-			"bsonType": "string"
+			"bsonType": "string",
+			"foreignKey": "hm-hotel._id"
 		},
 		"phone": {
 			"description": "员工手机号",
@@ -41,6 +42,7 @@
 		},
 		"permissions": {
 			"description": "权限",
+			"title":"权限",
 			"bsonType": "array",
 			"defaultValue":[]
 		},
@@ -62,7 +64,7 @@
 			"description": "数据状态 0 此数据已经删除,1 正常数据",
 			"bsonType": "int",
 			"enum":[0,1],
-			"defaultValue":0
+			"defaultValue":1
 		},
 		"mark":{
 			"description": "备注",

@@ -1,16 +1,17 @@
 <template>
   <view class="employee-component">
     <view class="add-content-style" style="">
-      <view
-        ><button
+      <view>
+       
+        <button
           class="uni-button"
           size="mini"
           type="primary"
           @click="addEmployee()"
         >
           添加员工
-        </button></view
-      >
+        </button>
+        </view>
     </view>
     <view v-if="isPcShow">
       <uni-table border stripe emptyText="暂无更多数据">
@@ -222,7 +223,7 @@ export default {
       uni.showLoading();
       console.log("deleteEmployee", em);
       DB.callFunction("hm_deleteEmployee", {
-        _id: this.hotel._id,
+        _id: this.em._id,
         employee: em,
       })
         .then((res) => {

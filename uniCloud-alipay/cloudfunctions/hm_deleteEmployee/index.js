@@ -7,14 +7,6 @@ exports.main = async (event, context) => {
 	} = event;
 	console.log("hm_deleteREmployee", event);
 	const db = uniCloud.database();
-	const dCmd = db.command;
-	let updateObj= {
-			employee: dCmd.pull({
-				phone: employee.phone
-			})
-		}
-
-	
-	const result = await db.collection('hm-hotel').doc(_id).update(updateObj);
+	const result = await db.collection('hm-employee').doc(_id).remove();
 	return result;
 };
