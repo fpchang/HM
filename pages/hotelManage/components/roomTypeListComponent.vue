@@ -14,7 +14,7 @@
 					<uni-th align="center" width="160px">操作</uni-th>
 				</uni-tr>
 				<!-- 表格数据行 -->
-				<uni-tr v-for="item of roomType.roomTypeList">
+				<uni-tr v-for="item of roomType">
 					<uni-td>{{item.name}}</uni-td>
 					<uni-td>{{item.count}}</uni-td>
 					<uni-td>
@@ -42,7 +42,7 @@
 		</view>
 		<view class="mobile-show-style" style="max-width: 450px;" v-if="!isPcShow">
 			<uni-collapse v-model="accordionVal" :accordion="true">
-				<uni-collapse-item v-for="item of roomType.roomTypeList">
+				<uni-collapse-item v-for="item of roomType">
 					<template v-slot:title>
 						<uni-section class="mb-10" :title=" item.name " type="circle">
 							<template v-slot:right>
@@ -119,7 +119,7 @@ import DB from '../../../api/DB';
 			}
 		},
 		created() {
-			 console.warn("roomType>>>>>>>>>>>>>>>>>", this.roomTypeList);
+		
 			this.$store.commit("getRoomType");
 			
 		},
@@ -174,8 +174,7 @@ import DB from '../../../api/DB';
 				console.log("deleteRoomType",rt);
 				DB.callFunction("hm_deleteRoomType",
 					{
-						_id:this.roomType._id,
-						roomTypeObj:rt
+						_id:rt._id
 					}
 				).then(res=>{
                             console.log("删除成功");

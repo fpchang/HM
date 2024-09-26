@@ -36,13 +36,14 @@ export default {
 			return {
 				submitLoading: false,
 				//hotelList:getApp().globalData.hotelList,
-				roomTypeForm: {
-                    
+				roomTypeForm: this.type==1?{
+                    "count": this.rt.count,
+                    "name": this.rt.name,
+                    "roomList":this.rt.roomList
+				}: {
                     "count": 1,
                     "name": "",
-                    "state": 1,
-                    "roomList":[],
-                    "value": `t${new Date().getTime()}`
+                    "roomList":[]
                 
 				},
 				roomTypeRules: {
@@ -54,7 +55,10 @@ export default {
 							},
 							{
 								validateFunction: (rule, value,data,callback)=> {									
-									let obj = this.roomTypeList.find(item=>{ return item.name==value});
+									let obj = this.roomType.find(item=>{ return item.name==value});
+									if(this.type==1){
+										 obj = this.roomType.find(item=>{ return item.name==value && item._id !=this.rt._id});
+									}
 									if(obj){
 										callback('已存在相同房型名称')
 									}
@@ -93,36 +97,26 @@ export default {
                 console.log(val)
             },
 			submitForm() {
-				
+				this.roomTypeForm.hotel_id=this.hotel_id;
 				this.$refs.roomTypeRef.validate().then(res => {
 					uni.showLoading();
 					this.submitLoading = true;
-                    // let newRoomTypeArr= [...this.roomTypeList];
-                    // newRoomTypeArr.push(this.roomTypeForm)
-                    // console.log(newRoomTypeArr);
-                   // const dbCmd = DB.db.command;
-					// DB.update("hm-roomType", this.roomType._id,{roomType:dbCmd.push([this.roomTypeForm])}).then(res => {
-					// 	console.log("添加成功");
-                    //     this.$store.commit("getRoomType");
-                    //     this.$emit('closePopup');
-					// 	uni.hideLoading();
-						
-					// }).catch(er => {
-					// 	console.log("添加失败",er);
-					// 	this.submitLoading = false;
-					// 	uni.hideLoading();
-					// 	uni.showModal({
-					// 		content:"系统异常，请稍候再试！",
-					// 		confirmText:"确认"
-					// 	});
-					// })
-                    uniCloud.callFunction({
-							name:"hm_updateRoomType",
-							data:{
-								_id:this.roomType._id,
+            
+					if(this.type==1){
+						this.updateRoomType();
+						return ;
+					}
+					this.addRoomType();
+
+			})
+		},
+		addRoomType(){
+			DB.callFunction(
+							"hm_addRoomType",
+							{
                                 roomTypeObj:this.roomTypeForm
 							}
-						}).then(res=>{
+						).then(res=>{
                             console.log("添加成功");
                         this.$store.commit("getRoomType");
                         this.$emit('closePopup');
@@ -137,9 +131,29 @@ export default {
 							confirmText:"确认"
 						});
 					})
-
-
-			})
+		},
+		updateRoomType(){
+			DB.callFunction(
+							"hm_updateRoomType",
+							{
+								_id:this.rt._id,
+                                roomTypeObj:this.roomTypeForm
+							}
+						).then(res=>{
+                            console.log("修改成功");
+                        this.$store.commit("getRoomType");
+                        this.$emit('closePopup');
+						uni.hideLoading();
+							
+				}).catch(er => {
+						console.log("修改失败",er);
+						this.submitLoading = false;
+						uni.hideLoading();
+						uni.showModal({
+							content:"系统异常，请稍候再试！",
+							confirmText:"确认"
+						});
+					})
 		}
 	}
 }

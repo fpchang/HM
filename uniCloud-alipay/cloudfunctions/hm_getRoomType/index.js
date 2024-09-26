@@ -8,6 +8,6 @@ exports.main = async (event, context) => {
 			event,
 			context
 		})
-	const roomTypeList  = await dbJQL.collection('hm-roomType').where(`hotel_id=='${hotel_id}'`).field("roomType as roomTypeList").get();
+	const roomTypeList  = await dbJQL.collection('hm-roomType').where(`hotel_id=='${hotel_id}'`).get();
 	return roomTypeList;
 };

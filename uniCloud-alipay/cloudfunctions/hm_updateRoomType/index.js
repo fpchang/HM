@@ -6,14 +6,17 @@ exports.main = async (event, context) => {
 		roomTypeObj
 	} = event;
 	console.log("hm_updateRoomType", event);
+	if(!_id){
+		return new Promise((resolve,reject)=>{
+			reject({errMsg:"缺少_id",errCode:"300"});
+		})
+	}
 	const dbJQL = uniCloud.databaseForJQL({
 		event,
 		context
 	})
 	const db = uniCloud.database();
 	const dCmd = db.command;
-	const result = await db.collection('hm-roomType').doc(_id).update({
-		roomType: dCmd.push([roomTypeObj])
-	});
+	const result = await dbJQL.collection('hm-roomType').doc(_id).update(roomTypeObj);
 	return result;
 };

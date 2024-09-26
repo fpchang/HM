@@ -92,9 +92,15 @@ export default {
             },
             {
               validateFunction: (rule, value, data, callback) => {
-                let obj = this.employeeList.find((item) => {
-                  return item.phone == value;
+                let obj= this.employeeList.find((item) => {
+                  return item._id !=this.em._id;
                 });
+                if(this.type==1){
+                  obj = this.employeeList.find((item) => {
+                  return item.phone == value&&item._id !=this.em._id;
+                });
+                }
+
                 if (obj) {
                   callback("已存在相同手机号");
                 }

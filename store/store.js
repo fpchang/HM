@@ -44,7 +44,7 @@ const store = new Vuex.Store({
 		},
 		async getRoomType(state){
 			const res  = await hotelService.getRoomType(state.hotel_id);
-			 	let obj = res.result.data.length?res.result.data[0]:{};
+			 	let obj = res.result.data.length?res.result.data:[];
 			 	store.commit("updateRoomType",obj);
 			//  uniCloud.callFunction({
 			// 	name:"hm_getRoomType",
