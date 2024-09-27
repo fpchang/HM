@@ -53,11 +53,11 @@
     </view>
     <view class="phone-show-style" style="max-width: 450px" v-if="!isPcShow">
       <uni-collapse v-model="accordionVal">
-        <uni-collapse-item v-for="item of hotel.employee">
+        <uni-collapse-item v-for="item of employeeList">
           <template v-slot:title>
             <uni-section
               class="mb-10"
-              :title="item.userName"
+              :title="item.employee_name"
               type="circle"
               :sub-title="item.phone"
             >
@@ -72,7 +72,7 @@
             <view class="list">
               <view class="list-item">
                 <view class="list-item-c"
-                  ><text>员工姓名：</text><text>{{ item.userName }}</text></view
+                  ><text>员工姓名：</text><text>{{ item.employee_name }}</text></view
                 >
               </view>
               <view class="list-item">
@@ -223,14 +223,15 @@ export default {
       uni.showLoading();
       console.log("deleteEmployee", em);
       DB.callFunction("hm_deleteEmployee", {
-        _id: this.em._id,
+        _id: em._id,
         employee: em,
       })
         .then((res) => {
           console.log("删除成功");
           this.$store.commit("getHotelList");
           this.submitLoading = false;
-          uni.hideLoading();
+          this.getEmployeeList();
+          
         })
         .catch((er) => {
           console.log("删除失败", er);

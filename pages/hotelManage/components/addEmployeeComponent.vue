@@ -93,7 +93,7 @@ export default {
             {
               validateFunction: (rule, value, data, callback) => {
                 let obj= this.employeeList.find((item) => {
-                  return item._id !=this.em._id;
+                  return item.phone == value;
                 });
                 if(this.type==1){
                   obj = this.employeeList.find((item) => {

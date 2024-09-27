@@ -11,7 +11,7 @@
 					<uni-th align="center" width="120px">房型名称</uni-th>
 					<uni-th align="center" width="80px">数量</uni-th>
 					<uni-th align="center">房间号</uni-th>
-					<uni-th align="center" width="160px">操作</uni-th>
+					<uni-th align="center" width="180px">操作</uni-th>
 				</uni-tr>
 				<!-- 表格数据行 -->
 				<uni-tr v-for="item of roomType">
@@ -54,11 +54,15 @@
 					<view class="col-content">
 						<view class="list">
 							<view class="list-item">
-								<view class="list-item-c"><text>房间号：</text><text>--</text></view>
-								<view class="list-item-c"><text>201</text><text>--</text></view>
+								<view class="list-item-c">
+									<view style="width:60px;"><text class="stitle">房间号：</text></view>
+									<view style="flex:1"><text v-for="i of sortRoomList(item.roomList)"">【{{i}}】</text></view>
+								
+								</view>
+								
 							</view>
 							<view class="list-item">
-								<view class="list-item-c"><text>数量：</text><text style="font-weight:bold">{{item.count}}</text></view>
+								<view class="list-item-c"><text class="stitle">数量：</text><text>{{item.count}}</text></view>
 							</view>
 							<view class="list-item" style="justify-content: flex-end;">
 
@@ -239,6 +243,9 @@ import DB from '../../../api/DB';
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
+					.stitle{
+						font-weight: bold;
+					}
 				}
 			}
 		}

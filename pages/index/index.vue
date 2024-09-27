@@ -58,6 +58,7 @@
 				<scroll-view :scroll-y="true" show-scrollbar="false" :scroll-top="0" :style="{height:scrollHeight}">
 					<view v-if="dataHasRead">
 						<!-- 	<keep-alive :id="new Date().getTime()"> -->
+						<share_app_to_weechat v-if="item.ComponentName=='share_app_to_weechat'"></share_app_to_weechat>
 						<gatherComponent :key="item.time" :disHeightVal="disHeightVal"
 							v-if="item.ComponentName=='gatherComponent'">
 						</gatherComponent>
@@ -142,7 +143,7 @@
 					index: 0,
 					name: '关注',
 					time:0,
-					ComponentName: "gatherComponent"
+					ComponentName: "share_app_to_weechat"
 				}, {
 					index: 1,
 					name: '订房管理',
@@ -273,7 +274,6 @@
 				//	this.isSticky = (scrollTop >= 60 ? true : false);
 			},
 			swiperContentEvent(e) {
-				console.log(e)
 				if(e.detail['current']){
 					this.currentTab_index = e.detail.current;
 				}
