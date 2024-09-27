@@ -175,7 +175,6 @@ export default {
         hotel_id: this.hotel_id,
       })
         .then((res) => {
-          console.log("ree", res);
           this.$store.commit("updateEmployeeList", res.data);
           uni.hideLoading();
         })
@@ -221,7 +220,6 @@ export default {
       }
       this.submitLoading = true;
       uni.showLoading();
-      console.log("deleteEmployee", em);
       DB.callFunction("hm_deleteEmployee", {
         _id: em._id,
         employee: em,

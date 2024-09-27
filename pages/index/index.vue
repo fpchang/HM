@@ -73,7 +73,8 @@
 							v-if="item.ComponentName=='roomTypeListComponent'">
 						</roomTypeListComponent>
 						<employeeConmponent v-if="item.ComponentName=='employeeConmponent'"></employeeConmponent>
-						<!-- </keep-alive> -->
+					<menuManageComponent v-if="item.ComponentName=='menuManageComponent'"></menuManageComponent>	
+					<!-- </keep-alive> -->
 
 					</view>
 				</scroll-view>
@@ -115,6 +116,7 @@
 	import createHotelComponent from '../hotelManage/components/createHotelComponent';
 	import roomTypeListComponent from '../hotelManage/components/roomTypeListComponent.vue';
 	import employeeConmponent from '../hotelManage/components/employeeConmponent.vue';
+	import menuManageComponent from '../catering/components/menuManageComponent.vue';
 	import DB from '../../api/DB';
 	export default {
 		components: {
@@ -123,7 +125,8 @@
 			hotelSetComponent,
 			createHotelComponent,
 			roomTypeListComponent,
-			employeeConmponent
+			employeeConmponent,
+			menuManageComponent
 		},
 
 
@@ -136,7 +139,7 @@
 
 				isSticky: false,
 				opacityVal: 1,
-				currentTab_index: 6,
+				currentTab_index: 3,
 				showDrawer: false,
 				clickTime:0,
 				tabList: [{
@@ -158,7 +161,7 @@
 					index: 3,
 					name: '订餐',
 					time:0,
-					ComponentName: ""
+					ComponentName: "menuManageComponent"
 				}, {
 					index: 4,
 					name: '发票',

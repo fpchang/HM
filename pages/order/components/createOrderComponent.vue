@@ -26,11 +26,11 @@
               class="disabled-style"
               style="display: flex"
               v-for="item in remainRoomTypeList"
-              :key="item.value"
+              :key="item._id"
             >
               <view>
                 <checkbox
-                  :value="item.value"
+                  :value="item._id"
                   emptyText="请先选择日期"
                   :checked="item.checked"
                   :disabled="noSelectDate"
@@ -212,7 +212,7 @@ export default {
         return item["checked"];
       });
       return list.map((item) => {
-        return { value: item.value, count: item.selectCount, name: item.name };
+        return { roomType_id: item._id, count: item.selectCount, name: item.name };
       });
     },
     submitDisabled() {
@@ -252,8 +252,9 @@ export default {
     //复选框事件
     roomTypeCheckboxChange(e) {
       let valArray = e.detail.value;
+      console.log(e)
       this.remainRoomTypeList = this.remainRoomTypeList.map((item) => {
-        item.checked = valArray.includes(item.value);
+        item.checked = valArray.includes(item._id);
         return item;
       });
     },

@@ -30,7 +30,7 @@ exports.main = async (event, context) => {
 		}
 	})
 	
-	let roomTypeList = roomTypeListRes.result.data[0]['roomTypeList'];
+	let roomTypeList = roomTypeListRes.result.data;
 	console.log("YYYY11",roomTypeList);
 	const usedListRes= await dbJQL.collection('hm-order').where(jql).get();
 	let userRoomList=usedListRes.data;
@@ -38,7 +38,7 @@ exports.main = async (event, context) => {
 	let remainList=roomTypeList.map(item=>{
 		let sumCount =0;
 		for(const it of userRoomList){
-			let is = it.roomTypeArray.find(i=>{return i.value==item.value});
+			let is = it.roomTypeArray.find(i=>{return i.roomType_id==item._id});
 			if(is){
 				sumCount+=is.count
 				continue;

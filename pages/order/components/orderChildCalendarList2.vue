@@ -2,7 +2,7 @@
 	<view style="display: flex;">
 		<view class="left-table-style">
 			<view class="th-style"><text>房间号</text></view>
-			<view class="td-style" v-for="item in roomTypeList">
+			<view class="td-style" v-for="item in roomType">
 				<text>
 					{{item.name}}
 				</text>
@@ -71,9 +71,6 @@
 			roomType(){
 				return this.$store.state.roomType ||{};
 			},
-			roomTypeList(){
-					return this.roomType.roomTypeList || [];
-			},
 			checkInOrderList(){
 				return this.$store.state.orderListTodayAfter ||[];
 			},
@@ -107,24 +104,24 @@
 				})
 			},
 			checkInOrderListFormat() {
-				if(this.checkInOrderList.length<1 ||this.roomTypeList.length<1){
+				if(this.checkInOrderList.length<1 ||this.roomType.length<1){
 					return [];
 				}
 				let result = [];
 				let or = this.orderDateRange;
 				let checkInOrderList = this.checkInOrderList;
-				for (let i = 0; i < this.roomTypeList.length; i++) {
+				for (let i = 0; i < this.roomType.length; i++) {
 
 
-					let t = this.roomTypeList[i].value;
-					result.push(fillRoomType(t));
+					let roomType_id = this.roomType[i]._id;
+					result.push(fillRoomType(roomType_id));
 				}
 
-				function fillRoomType(t) {
+				function fillRoomType(roomType_id) {
 					let fillArray = [];
 					for (let j = 0; j < or.length; j++) {
 						let obj = checkInOrderList.find(item => {
-								let o = item.roomTypeArray.find(is=>is.value==t);
+								let o = item.roomTypeArray.find(is=>is.roomType_id==roomType_id);
 							return o && (or[j] >= item.checkInStartDateTimeStamp &&
 								or[j] < item.checkInEndDateTimeStamp)
 						})
@@ -151,9 +148,9 @@
 				}).then(res=>{
 					
 					console.log("酒店列表",res);
-					//this.roomTypeList = res.result.data[0].roomType;
+				
 					if(res.result.data.length){
-						this.$store.commit("updateRoomTypeList",res.result.data[0].roomTypeList);
+						this.$store.commit("updateRoomTypeList",res.result.data[0]);
 					}
 				})
 			},
@@ -172,28 +169,29 @@
 				})
 			},
 			testdate() {
-				let result = [];
-				let or = this.orderDateRange;
-				let checkInOrderList = this.checkInOrderList;
-				for (let i = 0; i < this.roomTypeList.length; i++) {
+				// let result = [];
+				// let or = this.orderDateRange;
+				// let checkInOrderList = this.checkInOrderList;
+				// for (let i = 0; i < this.roomType.length; i++) {
 
 
-					let roomType = this.roomTypeList[i].value;
-					result.push(fillRoomType(roomType));
-				}
+				// 	let roomType_id = this.roomType[i]._id;
+				// 	result.push(fillRoomType(roomType_id));
+				// }
 
-				function fillRoomType(t) {
-					let fillArray = [];
-					for (let j = 0; j < or.length; j++) {
-						let obj = checkInOrderList.find(item => {
-							return item.roomTypeArray.includes(t) && (or[j] >= item.checkInStartDateTimeStamp &&
-								or[j] < item.checkInEndDateTimeStamp)
-						})
-						fillArray.push(obj || []);
-					}
-					return fillArray;
-				}
-				return result;
+				// function fillRoomType(roomType_id) {
+				// 	let fillArray = [];
+				// 	console.log("0999");
+				// 	for (let j = 0; j < or.length; j++) {
+				// 		let obj = checkInOrderList.find(item => {
+				// 			return item.roomTypeArray.includes(t) && (or[j] >= item.checkInStartDateTimeStamp &&
+				// 				or[j] < item.checkInEndDateTimeStamp)
+				// 		})
+				// 		fillArray.push(obj || []);
+				// 	}
+				// 	return fillArray;
+				// }
+				// return result;
 			}
 		}
 	}
