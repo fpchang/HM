@@ -21,12 +21,12 @@
           </view>
        </uni-col>
         <uni-col :span="10" class="col-pa">
-         <view>官方价：<text style="text-decoration:line-through">40元/人</text></view> 
-         <view>结算价：<text>40元/人</text></view> 
-         <view>出售价：<text>40元/人</text></view> 
+         <view class="pr-item">官方价：<text style="text-decoration:line-through">40元/人</text></view> 
+         <view class="pr-item">结算价：<text>40元/人</text></view> 
+         <view class="pr-item">出售价：<text>40元/人</text></view> 
         </uni-col>
-        <uni-col :span="4" class="col-pa">
-          <view class="icon-area">
+        <uni-col :span="4" class="col-pa" v-if="isEdit">
+          <view class="icon-area" >
             <u-icon name="edit-pen-fill" color="#000" size="20" label="" labelPos="bottom" labelSize="12px"></u-icon>
             <u-icon name="trash-fill" color="#000" size="20" label="" labelPos="bottom" labelSize="12px"></u-icon>
           </view>
@@ -83,6 +83,18 @@ export default Vue.extend({
   padding: 10px 0;
   .col-pa{
     font-size: 12px;
+    .pr-item{
+      padding:5px 0;
+      &:nth-child(1){
+        color: #d1d0d0;
+      }
+      &:nth-child(2){
+        color: #9d2525;
+      }
+      &:nth-child(3){
+        color: #265c34;
+      }
+    }
   }
   .icon-area{
     display: flex;

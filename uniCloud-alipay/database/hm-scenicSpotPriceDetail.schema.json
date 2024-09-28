@@ -1,0 +1,32 @@
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"scenicSpot_id": {
+			"description": "景点id",
+			"bsonType": "string",
+			"foreignKey": "hm-scenicSpot._id"
+		},
+		"package_name":{
+			"description": "套餐名称"
+		},
+		"scenicSpot_price": {
+			"description": "官方价格"
+		},
+		"settlement_price": {
+			"description": "结算价格"
+		},
+		"offering_price": {
+			"description": "销售价格"
+		}
+	}
+}

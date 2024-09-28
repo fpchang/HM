@@ -84,10 +84,7 @@ export default {
 			},
             roomType() {
 				return this.$store.state.roomType;
-			},
-            roomTypeList() {
-				return this.$store.state.roomType.roomTypeList;
-			},
+			},          
 			submitDisabled() {
 				return false
 			}

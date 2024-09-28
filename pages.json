@@ -137,8 +137,15 @@
 			"style": {
 				"navigationBarTitleText": "添加员工"
 			}
+		},
+		{
+			"path" : "pages/scenicSpot/addScenicSpot/addScenicSpot",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
 		}
-],
+	],
 	"tabBar": {
 		"color": "#1d1d1f",
 		"selectedColor": "#0071e3",
