@@ -11,26 +11,32 @@
   </view>
     
     <uni-section class="mb-10" title="价目表" sub-title="" type="line"></uni-section>
-    <uni-row class="uni-row" v-for="item in 10">
-      <uni-col :span="14" class="col-pa">
-        <view>
-            <text>  
-              单人周末价格
-            </text>
-        </view>
-     </uni-col>
-      <uni-col :span="6" class="col-pa">
-       <view style="text-align:center;font-size:14px;font-weight:bold"><text>40元/人</text></view> 
-      </uni-col>
-      <uni-col :span="4" class="col-pa">
-        <view class="icon-area">
-          <u-icon name="edit-pen-fill" color="#000" size="20" label="" labelPos="bottom" labelSize="12px"></u-icon>
-          <u-icon name="trash-fill" color="#000" size="20" label="" labelPos="bottom" labelSize="12px"></u-icon>
-        </view>
-        
-        
-      </uni-col>
-    </uni-row>
+    <view v-for="item in 10"> 
+      <uni-row class="uni-row" >
+        <uni-col :span="10" class="col-pa">
+          <view>
+              <text>  
+                单人周末价格
+              </text>
+          </view>
+       </uni-col>
+        <uni-col :span="10" class="col-pa">
+         <view>官方价：<text style="text-decoration:line-through">40元/人</text></view> 
+         <view>结算价：<text>40元/人</text></view> 
+         <view>出售价：<text>40元/人</text></view> 
+        </uni-col>
+        <uni-col :span="4" class="col-pa">
+          <view class="icon-area">
+            <u-icon name="edit-pen-fill" color="#000" size="20" label="" labelPos="bottom" labelSize="12px"></u-icon>
+            <u-icon name="trash-fill" color="#000" size="20" label="" labelPos="bottom" labelSize="12px"></u-icon>
+          </view>
+          
+          
+        </uni-col>
+      </uni-row>
+      <u-line></u-line>
+    </view>
+    
   </view>
 </template>
 <script>
@@ -74,7 +80,7 @@ export default Vue.extend({
   display: flex;
   align-items: center;
   min-height: 35px;
-  padding-bottom: 15px;
+  padding: 10px 0;
   .col-pa{
     font-size: 12px;
   }
