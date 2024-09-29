@@ -18,7 +18,7 @@
 			<view class="popup-content">
 				<view class="create-order-title-style">{{type==1?"修改景点":"创建景点"}}</view>
 				<view class="comContent">				
-					 <addScenicSpotComponent @getScenicSpotList="getScenicSpotList" @closePopup="closePopup" :type="type" :targetObj="targetObj"></addScenicSpotComponent> 
+					 <addScenicSpotComponent  @closePopup="closePopup" :type="type" :targetObj="targetObj"></addScenicSpotComponent> 
 				</view>
 
 			</view>
@@ -71,15 +71,23 @@ export default({
   created(){
     this.getScenicSpotList();
   },
+  provide(){
+    return{
+      getSS:()=>{
+       this.getScenicSpotList()
+    }
+    }
+  },
   methods: {
   
     async getScenicSpotList(){
+      console.log("刷新getScenicSpotList列表");
       try {
         const res = await   HotelService.getScenicSpotList(this.hotel_id);
         console.log("景点列表",res)
         this.scenicSpotList=res.result.data;
         uni.hideLoading();
-        this.$emit("closePopup");
+       // this.$emit("closePopup");
       } catch (error) {
         console.error(error);
         uni.hideLoading();

@@ -13,21 +13,20 @@
      
     </view>
   </view>
-    
     <uni-section class="mb-10" title="价目表" sub-title="" type="line"></uni-section>
-    <view v-for="item in 2"> 
+    <view v-for="item of scenicSpot._id['hm-scenicSpotPriceDetail']"> 
       <uni-row class="uni-row" >
         <uni-col :span="10" class="col-pa">
           <view>
               <text>  
-                单人周末价格
+                {{ item.package_name }}
               </text>
           </view>
        </uni-col>
         <uni-col :span="10" class="col-pa">
-         <view class="pr-item">官方价：<text style="text-decoration:line-through">40元/人</text></view> 
-         <view class="pr-item">结算价：<text>40元/人</text></view> 
-         <view class="pr-item">出售价：<text>40元/人</text></view> 
+         <view class="pr-item">官方价：<text style="text-decoration:line-through">{{item.scenicSpot_price}}元</text></view> 
+         <view class="pr-item">结算价：<text>{{item.settlement_price}}元</text></view> 
+         <view class="pr-item">出售价：<text>{{item.offering_price}}元</text></view> 
         </uni-col>
         <uni-col :span="4" class="col-pa" v-if="isEdit">
           <view class="icon-area" >
@@ -42,7 +41,7 @@
 			<view class="popup-content">
 				<view class="create-order-title-style">{{type==1?"修改套餐":"创建套餐"}}</view>
 				<view class="comContent">				
-					 <addScenicSpotDetailComponent @getScenicSpotList="getScenicSpotList" @closePopup="closePopup" :type="type" :targetObj="scenicSpot"></addScenicSpotDetailComponent> 
+					 <addScenicSpotDetailComponent  @closePopup="closePopup" :type="type" :scenicSpot="scenicSpot"></addScenicSpotDetailComponent> 
 				</view>
 
 			</view>
@@ -59,6 +58,7 @@ export default({
   components:{
     addScenicSpotDetailComponent
   },
+  inject:["getSS"],
   data() {
     return {
       type:0,
@@ -73,15 +73,10 @@ export default({
   
   watch: {
     scenicSpot_id(){
-      this.getScenicSpotDetail();
+     
     }
   },
   methods: {
-    getScenicSpotList(){
-      this.emit("getScenicSpotList");
-     
-
-    },
     addScenicSpotDetail(targetObj){
       this.type=0;
       this.targetObj=targetObj;
@@ -99,11 +94,13 @@ export default({
       this.type=1;
       this.targetObj=targetObj;
     },
-    closePopup(){
-      this.$refs.popupScenicSpotDetail.close();
+    closePopup(){   
       if(this.$store.state.isPcShow){
-        uni.navigateBack()
+        this.$refs.popupScenicSpotDetail.close();
+        return;
+        
       }
+      uni.navigateBack()
     }
   },
   // 组件周期函数--监听组件挂载完毕

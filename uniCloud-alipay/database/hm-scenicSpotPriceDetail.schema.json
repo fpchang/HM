@@ -1,6 +1,6 @@
 {
 	"bsonType": "object",
-	"required": ["package_name"],
+	"required": ["package_name","scenicSpot_id"],
 	"permission": {
 		"read": true,
 		"create": true,
