@@ -3,7 +3,7 @@
  
 	export default {
 		onLaunch: function() {
-			console.log('App Launch XXXXXXXXXX')
+			console.log('App Launch XXXXXXXXXX',uni.getSystemInfoSync())
 			this.initData();
 			let user = uni.getStorageSync("user");
 			if(user){

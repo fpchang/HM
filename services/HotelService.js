@@ -25,10 +25,6 @@ class HotelService{
                     })
                  }
               ]));
-            // return DB.getCollection("hm-hotel",
-            //     {
-            //         blong:phone
-            //      });
          
     }
     /** 
@@ -39,18 +35,24 @@ class HotelService{
                 "hm_getRoomType",
                 {hotel_id}
             );
-            let obj = res.result.data.length?res.result.data[0]:{};
+            let obj = res.result.data.length?res.result.data:[];
            return obj;
      
-       
-    //    .then(res=>{				
-    //        console.log("酒店房型",res);
-    //        let obj = res.result.data.length?res.result.data[0]:{};
-    //        store.commit("updateRoomType",obj);
-           
-    //    })
    }
-
+      /** 
+     * 获取当前酒店合作景点信息
+    */
+       getScenicSpotList(hotel_id){
+        console.log("hotelService,getScenicSpotList",hotel_id);
+        const db = uniCloud.database();
+        const ss=   db.collection("hm-scenicSpot").where({hotel_id}).getTemp();
+        const ssd =  db.collection("hm-scenicSpotPriceDetail").getTemp();
+       return   db.collection(ss,ssd).get();
+  
+}
+  /** 
+     * 获取当前酒店今天以后的订单信息
+    */
   getOrderListTodayAfter(hotel_id) {
     let startTime = new Date(new Date().Format("yyyy/MM/dd 14:00:00")).getTime();
     let endTime = new Date(new Date().Format("yyyy/MM/dd 12:00:00")).getTime();
@@ -59,14 +61,6 @@ class HotelService{
         `(${endTime}<checkInEndDateTimeStamp && ${endTime}>checkInStartDateTimeStamp))`;
     return   this.DB.getCollection("hm-order", jql);
    
-        
-    //  .then(res => {
-    //     console.log("获取的列表", res);
-    //     store.commit("updateOrderListTodayAfter", res.data);
-
-    // }).catch(error => {
-    //     console.log(error);
-    // })
 }
 }
 module.exports =new HotelService();

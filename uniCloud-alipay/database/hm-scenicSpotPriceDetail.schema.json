@@ -1,6 +1,6 @@
 {
 	"bsonType": "object",
-	"required": [],
+	"required": ["package_name"],
 	"permission": {
 		"read": true,
 		"create": true,
@@ -17,16 +17,28 @@
 			"foreignKey": "hm-scenicSpot._id"
 		},
 		"package_name":{
-			"description": "套餐名称"
+			"description": "套餐名称",
+			"bsonType": "string"
 		},
 		"scenicSpot_price": {
-			"description": "官方价格"
+			"description": "官方价格",
+			"bsonType": "double",
+			"defaultValue":0.0
 		},
 		"settlement_price": {
-			"description": "结算价格"
+			"description": "结算价格",
+			"bsonType": "double",
+			"defaultValue":0.0
+			
 		},
 		"offering_price": {
-			"description": "销售价格"
+			"description": "销售价格",
+			"bsonType": "double",
+			"defaultValue":0.0
+		},
+		"mark": {
+			"description": "备注",
+			"bsonType": "string"
 		}
 	}
 }

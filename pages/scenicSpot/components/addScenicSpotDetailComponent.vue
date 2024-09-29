@@ -1,20 +1,22 @@
 <template>
   <view>
-    <uni-forms ref="scenicSpotRef" :modelValue="scenicSpotForm" :rules="scenicSpotRules" label-width="120px">
-      <uni-forms-item label="景点名称" required name="scenicSport_name">
-        <uni-easyinput v-model="scenicSpotForm.scenicSport_name" placeholder="景点名称" />
+    <uni-forms ref="scenicSpotRef" :modelValue="scenicSpotDetailForm" :rules="scenicSpotRules" label-width="120px">
+
+      <uni-forms-item label="套餐名称"  type="textarea" required name="package_name">
+        <uni-easyinput v-model="scenicSpotDetailForm.package_name" placeholder="景点名称" />
       </uni-forms-item>
-      <uni-forms-item label="景点地址" name="scenicSport_address">
-        <uni-easyinput v-model="scenicSpotForm.scenicSport_address" placeholder="景点地址" />
+
+      <uni-forms-item label="官方价格" name="scenicSpot_price">
+        <uni-easyinput type="number" v-model="scenicSpotDetailForm.scenicSpot_price" placeholder="景点联系电话" />
       </uni-forms-item>
-      <uni-forms-item label="景点联系人" name="scenicSport_user">
-        <uni-easyinput v-model="scenicSpotForm.scenicSport_user" placeholder="景点联系人" />
+      <uni-forms-item label="结算价格" name="settlement_price">
+        <uni-easyinput type="number" v-model="scenicSpotDetailForm.settlement_price" placeholder="景点联系电话" />
       </uni-forms-item>
-      <uni-forms-item label="景点联系电话" name="scenicSport_phone">
-        <uni-easyinput  maxlength="11" type="number" v-model="scenicSpotForm.scenicSport_phone" placeholder="景点联系电话" />
+      <uni-forms-item label="销售价格" name="offering_price">
+        <uni-easyinput type="number" v-model="scenicSpotDetailForm.offering_price" placeholder="景点联系电话" />
       </uni-forms-item>
       <uni-forms-item label="备注" name="scenicSport_mark">
-        <uni-easyinput v-model="scenicSpotForm.scenicSport_mark" type="textarea" placeholder="" />
+        <uni-easyinput  v-model="scenicSpotDetailForm.scenicSport_mark" type="textarea" placeholder="" />
       </uni-forms-item>
 
 
@@ -37,22 +39,22 @@ export default({
     return {
       submitLoading: false,
       scenicSpotList:[],
-      scenicSpotForm:this.type==1?{
-        "scenicSport_name": targetOjb.scenicSport_name,
-        "scenicSport_address": targetOjb.scenicSport_address,
-        "scenicSport_user":targetOjb.scenicSport_user,
-        "scenicSport_phone":targetOjb.scenicSport_phone,
-        "scenicSport_mark":targetOjb.scenicSport_mark
+      scenicSpotDetailForm:this.type==1?{
+        "package_name": targetOjb.package_name,
+        "scenicSpot_price": targetOjb.scenicSpot_price,
+        "settlement_price":targetOjb.settlement_price,
+        "offering_price":targetOjb.offering_price,
+        "mark":targetOjb.scenicSport_mark
       }:{
-        "scenicSport_name": "",
-        "scenicSport_address": "",
-        "scenicSport_user":"",
-        "scenicSport_phone":"",
-        "scenicSport_mark":""
+        "package_name": "",
+        "scenicSpot_price": "",
+        "settlement_price":"",
+        "offering_price":"",
+        "mark":""
       },
       scenicSpotRules:{
         // 对name字段进行必填验证
-        scenicSport_name: {
+        package_name: {
           rules: [
             {
               required: true,
@@ -119,10 +121,10 @@ beforeDestroy() {},
     },
     submitForm(){
       this.$refs.scenicSpotRef.validate().then((res) => {
-        console.log(this.scenicSpotForm);
+        console.log(this.scenicSpotDetailForm);
         uni.showLoading();
         this.submitLoading = true;
-        this.scenicSpotForm.hotel_id = this.hotel_id;
+        this.scenicSpotDetailForm.hotel_id = this.hotel_id;
         if(this.type==1){
           this.editScenicSpot();
           return;
@@ -132,7 +134,7 @@ beforeDestroy() {},
     },
     addScenicSpot(){
       DB.callFunction("hm_addScenicSpot", {
-        scenicSpotObj: this.scenicSpotForm,
+        scenicSpotObj: this.scenicSpotDetailForm,
         })
           .then((res) => {
             console.log("添加成功");

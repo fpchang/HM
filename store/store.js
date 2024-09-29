@@ -14,7 +14,7 @@ const store = new Vuex.Store({
 		"employeeList":[],
 		"hotel_id": "",
 		"roomType":{},
-		"orderListTodayAfter": [] //今天至未来订单
+		"orderListTodayAfter": [], //今天至未来订单
 	},
 
 	mutations: {
@@ -46,15 +46,6 @@ const store = new Vuex.Store({
 			const res  = await hotelService.getRoomType(state.hotel_id);
 			 	let obj = res.result.data.length?res.result.data:[];
 			 	store.commit("updateRoomType",obj);
-			//  uniCloud.callFunction({
-			// 	name:"hm_getRoomType",
-			// 	data:{hotel_id:state.hotel_id}
-			// }).then(res=>{				
-			// 	console.log("酒店房型",res);
-			// 	let obj = res.result.data.length?res.result.data[0]:{};
-			// 	store.commit("updateRoomType",obj);
-				
-			// })
 		},
 		updateOrderListTodayAfter(state, list) {
 			state.orderListTodayAfter = list;
@@ -64,23 +55,15 @@ const store = new Vuex.Store({
 			const res  =await hotelService.getOrderListTodayAfter(state.hotel_id);	
 			console.log("store-getOrderListTodayAfter",res.data)	
 			store.commit("updateOrderListTodayAfter", res.data);
-			// let startTime = new Date(new Date().Format("yyyy/MM/dd 14:00:00")).getTime();
-			// let endTime = new Date(new Date().Format("yyyy/MM/dd 12:00:00")).getTime();
-			// let jql =
-			// 	`hotel_id=='${state.hotel_id}'&&orderStatus!=10&&(checkInStartDateTimeStamp>=${startTime} ||` +
-			// 	`(${endTime}<checkInEndDateTimeStamp && ${endTime}>checkInStartDateTimeStamp))`;
-			//  DB.getCollection("hm-order", jql).then(res => {
-			// 	console.log("获取的列表", res);
-			// 	store.commit("updateOrderListTodayAfter", res.data);
-
-			// }).catch(error => {
-			// 	console.log(error);
-			// })
 		},
 		checkHotel(state, hotel_id) {
 			state.hotel_id = hotel_id;
 			uni.setStorageSync("hotel_id", hotel_id);
 		},
+		updateScenicSpot(state, list) {
+			state.scenicSpotList = list;
+		},
+	
 		setDefaultHotel(state) {
 			console.log("setDefaultHotle");
 			if (!state.hotelList.length) {
