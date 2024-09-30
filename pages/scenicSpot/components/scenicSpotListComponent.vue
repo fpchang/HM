@@ -3,7 +3,7 @@
     <view class="add-content-style" style="">
 			<view><button class="uni-button" size="mini" type="primary" @click="addScenicSpot()">添加景点</button></view>
 		</view>
-    <view class="">
+    <view style="display: flex;justify-content:center">
     
         <view class="card-container" :style="{width:`${cardContainerWidth}px`}"> 
           <view class="card" v-for="item of scenicSpotList" :style="{width:`${cardWidth}px`}">
@@ -19,7 +19,7 @@
 				<view class="create-order-title-style">{{type==1?"修改景点":"创建景点"}}</view>
 				<view class="comContent">				
 					 <addScenicSpotComponent  @closePopup="closePopup" :type="type" :targetObj="targetObj"></addScenicSpotComponent> 
-				</view>container-style
+				</view>
 
 			</view>
 		</uni-popup>
@@ -52,18 +52,22 @@ export default({
       scenicSpotList(){
         return this.$scenicSpotStore.state.scenicSpotList
       },
-      windowWidth(){
-      return  uni.getSystemInfoSync().windowWidth +this.widthTemp-this.widthTemp
+      viewWidth(){
+        let viewWidth=uni.getSystemInfoSync().windowWidth||uni.getSystemInfoSync().screenWidth
+        return  viewWidth +this.widthTemp-this.widthTemp
     },
    
     cardWidth(){
-      let windowWidth = getApp().globalData.systemInfo.windowWidth - 20;//-20 为pc端滚动条宽度
-      let count =Math.floor(windowWidth/375);
+      let windowWidth = this.viewWidth - 20;//-20 为pc端滚动条宽度
+      let count = Math.floor(windowWidth/375);
+      if(count==0){
+        return windowWidth;
+      }
       let ys= windowWidth % 375
-      return 375+ ys/count
+      return 375+ (ys/count)
     },
     cardContainerWidth(){
-      let count =Math.floor(this.windowWidth/375);
+      let count =Math.floor(this.viewWidth/375);
       return this.cardWidth * count
     },
     isPcShow(){
@@ -123,23 +127,24 @@ export default({
 .add-content-style{
   display: flex;justify-content: flex-end;padding:0 20px;box-sizing: border-box;
 }
-.card-container{
-  display: flex;
-  justify-content: center;
-}
+
 .card-container{
   display:flex;
   flex-wrap:wrap;
+
   .card{
     min-width:375px ;
     max-width: 450px;
     padding:10px;
     box-sizing:border-box;
     .card-item{
+      height: 100%;
+      box-sizing: border-box;
       background: #fff;
       padding: 10px 20px;
       box-shadow: 0 0 4px 4px #e4e0e0;
       border-radius: 8px;
+
     }
   }
 }

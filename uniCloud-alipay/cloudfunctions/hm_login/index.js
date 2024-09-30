@@ -4,7 +4,8 @@ const jwt = require('../node_modules/jsonwebtoken');
 const tokenEvent = require('tokenEvent');
 exports.main = async (event, context) => {
 	//event为客户端上传的参数
-	console.log('event : ', event)
+	console.log('event : ', event);
+	const starttime = new Date().getTime();
 	let {
 		
 		userForm,
@@ -21,21 +22,34 @@ exports.main = async (event, context) => {
 // 		retrn 
 // 	}
 // }
+console.warn("1111", new Date().getTime()-starttime);
+		const db = uniCloud.database();
 		const dbJQL = uniCloud.databaseForJQL({ // 获取JQL database引用，此处需要传入云函数的event和context，必传
 			event,
 			context
 		})
-	const user = await dbJQL.collection('hm-user').where(`phone=='${phone}'`).get();
-	if(user.data.length>0){
-		return user;
-	}
+		try{
+			console.warn("2222", new Date().getTime()-starttime);
+			const user = await dbJQL.collection('hm-user').where(`phone=='${phone}'`).get();
+			//const user = await db.collection('hm-user').where({"phone":phone}).get();
+			console.warn("3333",user, new Date().getTime()-starttime);
+			if(user.data.length>0){
+				return user;
+			}
+			//添加新用记到数据表hm-user
+			const res = await uniCloud.callFunction({
+				name:'hm-addUser',
+				data:{userInfo:getUser(phone)}
+			})
+			console.warn("4444", new Date().getTime()-starttime);
+			return res;
+		}catch(e){
+			console.error("login error",e)
+		}
 	
-	//添加新用记到数据表hm-user
-	const res = await uniCloud.callFunction({
-		name:'hm-addUser',
-		data:{userInfo:getUser(phone)}
-	})
-	return res;
+	
+	
+	
 	
 };
 
