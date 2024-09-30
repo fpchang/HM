@@ -3,7 +3,7 @@
     <view class="add-content-style" style="">
 			<view><button class="uni-button" size="mini" type="primary" @click="addScenicSpot()">添加景点</button></view>
 		</view>
-    <view class="container-style">
+    <view class="">
     
         <view class="card-container" :style="{width:`${cardContainerWidth}px`}"> 
           <view class="card" v-for="item of scenicSpotList" :style="{width:`${cardWidth}px`}">
@@ -19,7 +19,7 @@
 				<view class="create-order-title-style">{{type==1?"修改景点":"创建景点"}}</view>
 				<view class="comContent">				
 					 <addScenicSpotComponent  @closePopup="closePopup" :type="type" :targetObj="targetObj"></addScenicSpotComponent> 
-				</view>
+				</view>container-style
 
 			</view>
 		</uni-popup>
@@ -99,9 +99,12 @@ export default({
 
   // 组件周期函数--监听组件挂载完毕
   mounted() {
-    window.onresize=()=>{
+    if(window){
+      window.onresize=()=>{
       this.widthTemp=Math.random(10);
     }
+    }
+   
   },
   // 组件周期函数--监听组件数据更新之前
   beforeUpdate() {},
@@ -120,11 +123,13 @@ export default({
 .add-content-style{
   display: flex;justify-content: flex-end;padding:0 20px;box-sizing: border-box;
 }
-
+.card-container{
+  display: flex;
+  justify-content: center;
+}
 .card-container{
   display:flex;
   flex-wrap:wrap;
-  margin:auto;
   .card{
     min-width:375px ;
     max-width: 450px;
