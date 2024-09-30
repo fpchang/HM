@@ -5,7 +5,7 @@
     <view style="flex:1;display:flex;justify-content:flex-end;gap:15px"> 
       
       <u-icon name="plus-circle-fill" color="#000" size="22" label="添加" labelPos="bottom" labelSize="12px" @click="addScenicSpotDetail"></u-icon> 
-      <u-icon name="trash-fill" color="#000" size="22" label="删除" labelPos="bottom" labelSize="12px"></u-icon>   
+      <u-icon name="trash-fill" color="#000" size="22" label="删除" labelPos="bottom" labelSize="12px" @click="deleteScenicSpot"></u-icon>   
       <u-icon name="edit-pen-fill" color="#000" size="22" label="编辑" labelPos="bottom" labelSize="12px"></u-icon>    
       <u-icon name="checkmark-circle-fill" color="#000" v-if="isEdit" size="22" label="保存" labelPos="bottom" labelSize="12px"></u-icon>    
       <u-icon name="eye-fill" color="#000" size="22"  label="预览" labelPos="bottom" labelSize="12px"></u-icon>           
@@ -28,7 +28,7 @@
          <view class="pr-item">结算价：<text>{{item.settlement_price}}元</text></view> 
          <view class="pr-item">出售价：<text>{{item.offering_price}}元</text></view> 
         </uni-col>
-        <uni-col :span="4" class="col-pa" v-if="isEdit">
+        <uni-col :span="4" class="col-pa">
           <view class="icon-area" >
             <u-icon name="edit-pen-fill" color="#000" size="20" label="" labelPos="bottom" labelSize="12px"></u-icon>
             <u-icon name="trash-fill" color="#000" size="20" label="" labelPos="bottom" labelSize="12px"></u-icon>
@@ -49,7 +49,8 @@
   </view>
 </template>
 <script>
-import addScenicSpotDetailComponent from './addScenicSpotDetailComponent'
+import addScenicSpotDetailComponent from './addScenicSpotDetailComponent';
+import ScenicSpotService from '../../../services/ScenicSpotService';
 export default({
   name: "scenicSpotCardComponent",
   props: {
@@ -58,7 +59,7 @@ export default({
   components:{
     addScenicSpotDetailComponent
   },
-  inject:["getSS"],
+  //inject:["getSS"],
   data() {
     return {
       type:0,
@@ -67,7 +68,7 @@ export default({
   },
   computed: {
     scenicSpot_id(){
-      return this.scenicSpot._id
+      return this.scenicSpot._id._value
     }
   },
   
@@ -93,6 +94,30 @@ export default({
     editScenicSpotDetail(targetObj){
       this.type=1;
       this.targetObj=targetObj;
+    },
+    async deleteScenicSpot(){
+      if(!this.scenicSpot_id){
+        return ;
+      }
+      const conf = await uni.showModal({
+        title: "确认删除景点",
+        content: "删除后将同步删除所有价格信息，并且无法恢复,确认删除吗?",
+        cancelText: "取消",
+        confirmText: "确认",
+      });
+      if (conf["cancel"]) {
+        return;
+      }
+      uni.showLoading();
+      try {
+
+        const res = await ScenicSpotService.removeScenicSpot(this.scenicSpot_id);
+        console.log("删除成功");
+        this.$scenicSpotStore.commit("getScenicSpotList",this.hotel_id);
+      } catch (error) {
+        console.log("删除失败",error);
+      }
+      
     },
     closePopup(){   
       if(this.$store.state.isPcShow){

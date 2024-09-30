@@ -29,6 +29,7 @@
 import DB from "../../../api/DB.js";
 export default({
   name: "addScenicSport",
+  //inject:['getSS'],
   props: {
     type:0,
     targetOjb:{}
@@ -83,7 +84,6 @@ export default({
 
   watch: {},
   created(){
-    //this.getScenicSpotList();
   },
 // 组件周期函数--监听组件挂载完毕
 mounted() {},
@@ -98,25 +98,6 @@ deactivated() {},
 // 组件周期函数--监听组件销毁之前
 beforeDestroy() {},
   methods: {
-    getScenicSpotList(){
-      DB.getCollection("hm-scenicSpot", {
-        hotel_id: this.hotel_id,
-      })
-        .then((res) => {
-          console.log("ree>>>>", res);
-          this.scenicSpotList= res.data;
-          uni.hideLoading();
-         // this.$emit("closePopup");
-        })
-        .catch((err) => {
-          console.error(err);
-          uni.hideLoading();
-          uni.showModal({
-            content: "系统异常，请稍候再试！",
-            confirmText: "确认",
-          });
-        });
-    },
     submitForm(){
       this.$refs.scenicSpotRef.validate().then((res) => {
         console.log(this.scenicSpotForm);
@@ -137,8 +118,9 @@ beforeDestroy() {},
           .then((res) => {
             console.log("添加成功");
 
-            this.$emit("getScenicSpotList");
+           // this.getSS();
             this.$emit("closePopup");
+            this.$scenicSpotStore.commit("getScenicSpotList");
           })
           .catch((er) => {
             console.log("添加失败", er);
@@ -157,7 +139,7 @@ beforeDestroy() {},
         })
           .then((res) => {
             console.log("修改成功");
-            this.getScenicSpotList();
+            this.$scenicSpotStore.commit("getScenicSpotList",this.hotel_id);
           })
           .catch((er) => {
             console.log("修改失败", er);

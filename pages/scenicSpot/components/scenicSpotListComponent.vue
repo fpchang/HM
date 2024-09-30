@@ -40,7 +40,6 @@ export default({
   data() {
     return {
       widthTemp:0,
-      scenicSpotList:[],
       type:0,
       targetObj:{}
 
@@ -50,6 +49,9 @@ export default({
     hotel_id(){
 				return this.$store.state.hotel_id;
 			},
+      scenicSpotList(){
+        return this.$scenicSpotStore.state.scenicSpotList
+      },
       windowWidth(){
       return  uni.getSystemInfoSync().windowWidth +this.widthTemp-this.widthTemp
     },
@@ -69,35 +71,10 @@ export default({
 			}
   },
   created(){
-    this.getScenicSpotList();
-  },
-  provide(){
-    return{
-      getSS:()=>{
-       this.getScenicSpotList()
-    }
-    }
+    this.$scenicSpotStore.commit("getScenicSpotList",this.hotel_id);
   },
   methods: {
-  
-    async getScenicSpotList(){
-      console.log("刷新getScenicSpotList列表");
-      try {
-        const res = await   HotelService.getScenicSpotList(this.hotel_id);
-        console.log("景点列表",res)
-        this.scenicSpotList=res.result.data;
-        uni.hideLoading();
-       // this.$emit("closePopup");
-      } catch (error) {
-        console.error(error);
-        uni.hideLoading();
-          uni.showModal({
-            content: "系统异常，请稍候再试！",
-            confirmText: "确认",
-          });
-      }
-    },
-    addScenicSpot(){
+    addScenicSpot(item={}){
       this.type=0;
 				if(this.$store.state.isPcShow){
 					this.$refs.popupScenicSpot.open();
@@ -106,7 +83,8 @@ export default({
 					
 				
 				uni.navigateTo({
-					url:'/pages/hotelManage/createRoomType/createRoomType'
+					url:`/pages/scenicSpot/addScenicSpot/addScenicSpot?type=${
+          this.type}&&targetObj=${JSON.stringify(item)}`
 				})
     },
     closePopup(){

@@ -35,7 +35,7 @@ export default({
     type:0,
     scenicSpot:{}
   },
-  inject:["getSS"],
+  //inject:["getSS"],
   data() {
     return {
       submitLoading: false,
@@ -166,8 +166,7 @@ beforeDestroy() {},
         })
           .then((res) => {
             console.log("添加成功");
-            //this.$emit("getScenicSpotList");
-            this.getSS();
+            this.$scenicSpotStore.commit("getScenicSpotList",this.hotel_id);
             this.$emit("closePopup");
           })
           .catch((er) => {
