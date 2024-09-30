@@ -142,14 +142,14 @@
 			"path" : "pages/scenicSpot/addScenicSpot/addScenicSpot",
 			"style" : 
 			{
-				"navigationBarTitleText" : ""
+				"navigationBarTitleText" : "新增景点"
 			}
 		},
 		{
 			"path" : "pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail",
 			"style" : 
 			{
-				"navigationBarTitleText" : ""
+				"navigationBarTitleText" : "新增景点价目"
 			}
 		}
 	],

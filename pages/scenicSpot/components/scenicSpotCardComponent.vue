@@ -78,22 +78,29 @@ export default({
     }
   },
   methods: {
-    addScenicSpotDetail(targetObj){
+    addScenicSpotDetail(){
       this.type=0;
-      this.targetObj=targetObj;
       if(this.$store.state.isPcShow){
 					this.$refs.popupScenicSpotDetail.open();
 					return;
 				}
 					
-				
-				uni.navigateTo({
-					url:'/pages/scenicSpot/addSencicSpotDetail'
+        uni.navigateTo({
+					url:`/pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail?type=${
+          this.type}&&targetObj=${JSON.stringify(this.scenicSpot)}`
 				})
     },
-    editScenicSpotDetail(targetObj){
+    editScenicSpotDetail(){
       this.type=1;
-      this.targetObj=targetObj;
+      if(this.$store.state.isPcShow){
+					this.$refs.popupScenicSpotDetail.open();
+					return;
+				}
+								
+        uni.navigateTo({
+					url:`/pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail?type=${
+          this.type}&&targetObj=${JSON.stringify(this.scenicSpot)}`
+				})
     },
     async deleteScenicSpot(){
       if(!this.scenicSpot_id){

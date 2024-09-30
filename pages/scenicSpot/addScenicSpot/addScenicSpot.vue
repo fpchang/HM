@@ -1,10 +1,12 @@
 <template>
   <view>
+	<scroll-view :scroll-y="true" :scroll-x="false" class="scroll-view" style="">
     <addScenicSpotComponent
       @closePopup="closePopup"
       :type="type"
       :targetObj="targetObj"
     ></addScenicSpotComponent>
+</scroll-view>
   </view>
 </template>
 
@@ -20,27 +22,29 @@ export default {
       	targetObj:{}
 	};
   },
-  provide(){
-    return{
-      getSS:()=>{
-       this.getScenicSpotList()
-    }
-    }
-  },
+//   provide(){
+//     return{
+//       getSS:()=>{
+//        this.getScenicSpotList()
+//     }
+//     }
+//   },
   onLoad(obj) {
     console.log("参数传递", obj);
     try {
       this.type = obj.type;
       this.targetObj = JSON.parse(obj.targetObj);
       uni.setNavigationBarTitle({
-        title: obj.type == "1" ? "修改员工信息" : "新增员工",
+        title: obj.type == "1" ? "修改景点信息" : "新增景点",
       });
     } catch (error) {
       this.type = 0;
     }
   },
   methods: {
-    closePopup() {},
+    closePopup() {
+		uni.navigateBack();
+	},
 	async getScenicSpotList(){
       console.log("刷新getScenicSpotList列表");
       try {
@@ -62,4 +66,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.scroll-view {
+	padding: 20px 15px;
+	box-sizing: border-box;
+	height: calc(100vh - 44px)
+}
+</style>
