@@ -207,6 +207,9 @@
 			uni.stopPullDownRefresh()
 		},
 		computed: {
+			isPcshow(){
+				return this.$store.isPcshow;
+			},
 			hotel_id() {
 				return this.$store.state.hotel_id;
 			},
@@ -286,12 +289,15 @@
 				
 			},
 			addNewHotel() {
-				if (getApp().globalData.systemInfo.deviceType == "phone") {
+				console.log("1111")
+				if (!this.isPcshow) {
+					console.log("222222")
 					uni.navigateTo({
-						url: '/pages/order/createOrder/createOrder'
+						url: '/pages/hotelManage/createHotel/createHotel'
 					})
 					return;
 				}
+				console.log(3333)
 				this.$refs.popupHotelCreate.open();
 
 			},

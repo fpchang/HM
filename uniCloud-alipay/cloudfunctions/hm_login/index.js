@@ -1,6 +1,6 @@
 'use strict';
 const dateFormat = require('dateFormat');
-const jwt = require('../node_modules/jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const tokenEvent = require('tokenEvent');
 exports.main = async (event, context) => {
 	//event为客户端上传的参数

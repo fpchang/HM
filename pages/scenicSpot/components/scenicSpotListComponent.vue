@@ -99,7 +99,11 @@ export default({
      uni.navigateBack();
     }
   },
-  watch: {},
+  watch: {
+	  hotel_id(){
+		  this.$scenicSpotStore.commit("getScenicSpotList",this.hotel_id);
+	  }
+  },
 
   // 组件周期函数--监听组件挂载完毕
   mounted() {

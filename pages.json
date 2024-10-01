@@ -151,6 +151,13 @@
 			{
 				"navigationBarTitleText" : "新增景点价目"
 			}
+		},
+		{
+			"path" : "pages/hotelManage/createHotel/createHotel",
+			"style" : 
+			{
+				"navigationBarTitleText" : "新增酒店"
+			}
 		}
 	],
 	"tabBar": {

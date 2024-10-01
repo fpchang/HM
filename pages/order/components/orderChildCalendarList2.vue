@@ -141,6 +141,7 @@
 			}
 		},
 		methods: {
+			showDetail(){},
 			getRoomTypeList(){
 				return uniCloud.callFunction({
 					name:"hm_getRoomType",
