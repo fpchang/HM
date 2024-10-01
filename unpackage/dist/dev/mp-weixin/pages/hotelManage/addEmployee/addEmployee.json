@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "添加员工",
+  "usingComponents": {
+    "add-employee-component": "/pages/hotelManage/components/addEmployeeComponent"
+  }
+}

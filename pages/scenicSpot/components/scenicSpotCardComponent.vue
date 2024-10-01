@@ -13,7 +13,7 @@
      
     </view>
   </view>
-    <uni-section class="mb-10" title="价目表" sub-title="" type="line"></uni-section>
+    <uni-section class="mb-10" title="价目表" type="line"></uni-section>
     <view v-for="item of scenicSpot._id['hm-scenicSpotPriceDetail']"> 
       <uni-row class="uni-row" >
         <uni-col :span="10" class="col-pa">
@@ -30,8 +30,8 @@
         </uni-col>
         <uni-col :span="4" class="col-pa">
           <view class="icon-area" >
-            <u-icon name="edit-pen-fill" color="#000" size="20" label="" labelPos="bottom" labelSize="12px"></u-icon>
-            <u-icon name="trash-fill" color="#000" size="20" label="" labelPos="bottom" labelSize="12px"></u-icon>
+            <u-icon name="edit-pen-fill" color="#000" size="20"  labelPos="bottom" labelSize="12px"></u-icon>
+            <u-icon name="trash-fill" color="#000" size="20"  labelPos="bottom" labelSize="12px"></u-icon>
           </view>         
         </uni-col>
       </uni-row>
@@ -163,26 +163,26 @@ export default({
   align-items: center;
   min-height: 35px;
   padding: 10px 0;
-  .col-pa{
-    font-size: 12px;
-    .pr-item{
-      padding:5px 0;
-      &:nth-child(1){
-        color: #d1d0d0;
-      }
-      &:nth-child(2){
-        color: #9d2525;
-      }
-      &:nth-child(3){
-        color: #265c34;
-      }
-    }
-  }
-  .icon-area{
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-  }
+ 
+ 
 
+}
+.icon-area{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.pr-item{
+  font-size: 12px;
+  padding:5px 0;
+  &:nth-child(1){
+    color: #d1d0d0;
+  }
+  &:nth-child(2){
+    color: #9d2525;
+  }
+  &:nth-child(3){
+    color: #265c34;
+  }
 }
 </style>

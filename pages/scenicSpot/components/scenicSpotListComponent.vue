@@ -67,7 +67,7 @@ export default({
       return 375+ (ys/count)
     },
     cardContainerWidth(){
-      let count =Math.floor(this.viewWidth/375);
+      let count =Math.max(Math.floor(this.viewWidth/375),1) ;
       return this.cardWidth * count
     },
     isPcShow(){
@@ -135,7 +135,7 @@ export default({
 .card-container{
   display:flex;
   flex-wrap:wrap;
-
+  min-width:375px ;
   .card{
     min-width:375px ;
     max-width: 450px;

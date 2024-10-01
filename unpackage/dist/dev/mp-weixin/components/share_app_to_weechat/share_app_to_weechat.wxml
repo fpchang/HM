@@ -1,0 +1,1 @@
+<button type="default" data-event-opts="{{[['tap',[['uniShare',['$event']]]]]}}" bindtap="__e">显示</button>

@@ -1,0 +1,1 @@
+<view class="content"><scroll-view class="scroll-view" scroll-y="{{true}}" scroll-x="{{false}}"><create-order-component bind:closePopup="__e" vue-id="7d8998fb-1" data-event-opts="{{[['^closePopup',[['closePopup']]]]}}" bind:__l="__l"></create-order-component></scroll-view></view>

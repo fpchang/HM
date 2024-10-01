@@ -1,0 +1,24 @@
+{
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "uni-data-select": "/uni_modules/uni-data-select/components/uni-data-select/uni-data-select",
+    "u-icon": "/uni_modules/uview-ui/components/u-icon/u-icon",
+    "u-tabs": "/uni_modules/uview-ui/components/u-tabs/u-tabs",
+    "share_app_to_weechat": "/components/share_app_to_weechat/share_app_to_weechat",
+    "u-popup": "/uni_modules/uview-ui/components/u-popup/u-popup",
+    "u-list": "/uni_modules/uview-ui/components/u-list/u-list",
+    "u-list-item": "/uni_modules/uview-ui/components/u-list-item/u-list-item",
+    "u-cell": "/uni_modules/uview-ui/components/u-cell/u-cell",
+    "u-avatar": "/uni_modules/uview-ui/components/u-avatar/u-avatar",
+    "uni-popup": "/uni_modules/uni-popup/components/uni-popup/uni-popup",
+    "gather-component": "/pages/index/components/gatherComponent",
+    "order-component": "/pages/order/components/orderComponent",
+    "hotel-set-component": "/pages/index/components/hotelSetComponent",
+    "create-hotel-component": "/pages/hotelManage/components/createHotelComponent",
+    "room-type-list-component": "/pages/hotelManage/components/roomTypeListComponent",
+    "employee-conmponent": "/pages/hotelManage/components/employeeConmponent",
+    "menu-manage-component": "/pages/catering/components/menuManageComponent",
+    "scenic-spot-list-component": "/pages/scenicSpot/components/scenicSpotListComponent"
+  }
+}

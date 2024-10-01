@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "创建房型",
+  "usingComponents": {
+    "create-room-type-component": "/pages/hotelManage/components/createRoomTypeComponent"
+  }
+}

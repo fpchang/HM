@@ -1,0 +1,1 @@
+<view><scroll-view class="scroll-view" scroll-y="{{true}}" scroll-x="{{false}}"><add-scenic-spot-component vue-id="0ae4de4a-1" type="{{type}}" targetObj="{{targetObj}}" data-event-opts="{{[['^closePopup',[['closePopup']]]]}}" bind:closePopup="__e" bind:__l="__l"></add-scenic-spot-component></scroll-view></view>

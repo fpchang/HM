@@ -1,0 +1,1 @@
+<view><scroll-view class="scroll-view" scroll-y="{{true}}" scroll-x="{{false}}"><add-employee-component vue-id="2adc3d76-1" type="{{type}}" em="{{em}}" data-event-opts="{{[['^closePopup',[['closePopup']]]]}}" bind:closePopup="__e" bind:__l="__l"></add-employee-component></scroll-view></view>

@@ -1,0 +1,14 @@
+{
+  "component": true,
+  "usingComponents": {
+    "uni-table": "/uni_modules/uni-table/components/uni-table/uni-table",
+    "uni-tr": "/uni_modules/uni-table/components/uni-tr/uni-tr",
+    "uni-th": "/uni_modules/uni-table/components/uni-th/uni-th",
+    "uni-td": "/uni_modules/uni-table/components/uni-td/uni-td",
+    "uni-collapse": "/uni_modules/uni-collapse/components/uni-collapse/uni-collapse",
+    "uni-collapse-item": "/uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item",
+    "uni-section": "/uni_modules/uni-section/components/uni-section/uni-section",
+    "uni-popup": "/uni_modules/uni-popup/components/uni-popup/uni-popup",
+    "create-room-type-component": "/pages/hotelManage/components/createRoomTypeComponent"
+  }
+}
