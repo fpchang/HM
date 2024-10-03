@@ -11,9 +11,6 @@
 							<u-icon name="arrow-down-fill" color="#000" size="20px" top="2"></u-icon>
 							<view class="check-panal">
 								<view>11111111</view>
-								<view>11111111</view>
-								<view>11111111</view>
-								<view>11111111</view>
 							</view>
 						</view> -->
 
@@ -194,7 +191,18 @@
 
 			}
 		},
-		onLoad() {
+		onLoad(e) {
+			
+				console.log("APP index  onload 参数信息",e)
+				let user = uni.getStorageSync("user");
+			if(!user){
+				uni.reLaunch({
+				url:'/pages/login/login'
+			});
+			}
+			
+			getApp().globalData.user=user;
+				this.$store.commit("setUser",user);
 			this.initData();
 	
 		},

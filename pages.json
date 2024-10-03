@@ -158,6 +158,15 @@
 			{
 				"navigationBarTitleText" : "新增酒店"
 			}
+		},
+		{
+			"path" : "pages/catering/orderDishes/orderDishes",
+			"style" : 
+			{
+				"navigationStyle": "custom",
+				"navigationBarTitleText" : ""
+				
+			}
 		}
 	],
 	"tabBar": {

@@ -305,7 +305,16 @@ var _default = {
       //hotelList: []
     };
   },
-  onLoad: function onLoad() {
+  onLoad: function onLoad(e) {
+    console.log("APP index  onload 参数信息", e);
+    var user = uni.getStorageSync("user");
+    if (!user) {
+      uni.reLaunch({
+        url: '/pages/login/login'
+      });
+    }
+    getApp().globalData.user = user;
+    this.$store.commit("setUser", user);
     this.initData();
   },
   mounted: function mounted() {

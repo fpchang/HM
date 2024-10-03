@@ -2,22 +2,14 @@
 	import uniIdPageInit from '@/uni_modules/uni-id-pages/init.js';
  
 	export default {
-		onLaunch: function() {
+		onLoad(e) {
+			console.log("APP onload 参数信息",e)
+		},
+		onLaunch: function(ob) {
+			console.log("参数信息",ob)
 			console.log('App Launch XXXXXXXXXX',uni.getSystemInfoSync())
 			this.initData();
-			let user = uni.getStorageSync("user");
-			if(user){
-				this.globalData.user=user;
-				this.$store.commit("setUser",user);
-				return;
-			}
-			uni.reLaunch({
-				url:'/pages/login/login'
-			});
-			// uni.reLaunch({
-			// 	url:'/uni_modules/uni-id-pages/pages/login/login-smscode-hm?phoneNumber=18516285834',
-				
-			// })
+			
 		},
 		onShow: function() {
 			console.log('App Show');

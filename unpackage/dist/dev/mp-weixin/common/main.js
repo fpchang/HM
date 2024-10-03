@@ -109,24 +109,14 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _init = _interopRequireDefault(__webpack_require__(/*! @/uni_modules/uni-id-pages/init.js */ 42));
 var _default = {
-  onLaunch: function onLaunch() {
+  onLoad: function onLoad(e) {
+    console.log("APP onload 参数信息", e);
+  },
+  onLaunch: function onLaunch(ob) {
+    console.log("参数信息", ob);
     console.log('App Launch XXXXXXXXXX', uni.getSystemInfoSync());
     this.initData();
-    var user = uni.getStorageSync("user");
-    if (user) {
-      this.globalData.user = user;
-      this.$store.commit("setUser", user);
-      return;
-    }
-    uni.reLaunch({
-      url: '/pages/login/login'
-    });
-    // uni.reLaunch({
-    // 	url:'/uni_modules/uni-id-pages/pages/login/login-smscode-hm?phoneNumber=18516285834',
-
-    // })
   },
-
   onShow: function onShow() {
     console.log('App Show');
     this.initData();

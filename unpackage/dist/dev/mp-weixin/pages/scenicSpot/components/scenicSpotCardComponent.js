@@ -191,6 +191,32 @@ var _default = {
     scenicSpot_id: function scenicSpot_id() {}
   },
   methods: {
+    shareWx: function shareWx() {
+      uni.share({
+        provider: 'weixin',
+        //分享服务提供商（即weixin|qq|sinaweibo）
+        type: 0,
+        //图文
+        scene: 'WXSceneSession',
+        //provider 为 weixin 时必选 WXSceneSession分享到聊天界面，WXSceneTimeline分享到朋友圈，WXSceneFavorite分享到微信收藏
+        title: "民宿点菜",
+        //分享内容的标题
+        summary: "点菜内容",
+        //分享内容的摘要
+        href: 'https://env-00jxh1m2dpmq-static.normal.cloudstatic.cn/pages/catering/orderDishes/orderDishes?user=122',
+        //跳转链接，type 为 0 时必选
+        imageUrl: '',
+        //图片地址，type 为 0、2、5 时必选
+        success: function success(res) {
+          //成功返回的参数
+          console.log(res);
+        },
+        fail: function fail(err) {
+          //失败返回的参数
+          console.log(err);
+        }
+      });
+    },
     addScenicSpotDetail: function addScenicSpotDetail() {
       this.type = 0;
       if (this.$store.state.isPcShow) {

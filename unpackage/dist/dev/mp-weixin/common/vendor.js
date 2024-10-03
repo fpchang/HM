@@ -18186,6 +18186,11 @@ var _default = {
     "style": {
       "navigationBarTitleText": "新增酒店"
     }
+  }, {
+    "path": "pages/catering/orderDishes/orderDishes",
+    "style": {
+      "navigationBarTitleText": "点菜系统"
+    }
   }],
   "tabBar": {
     "color": "#1d1d1f",

@@ -9,7 +9,7 @@
       <u-icon name="edit-pen-fill" color="#000" size="22" label="编辑" labelPos="bottom" labelSize="12px"></u-icon>    
       <u-icon name="checkmark-circle-fill" color="#000" v-if="isEdit" size="22" label="保存" labelPos="bottom" labelSize="12px"></u-icon>    
       <u-icon name="eye-fill" color="#000" size="22"  label="预览" labelPos="bottom" labelSize="12px"></u-icon>           
-      <u-icon name="share-fill" color="#000" size="22" label="分享" labelPos="bottom" labelSize="12px"></u-icon>            
+      <u-icon name="share-fill" color="#000" size="22" label="分享" labelPos="bottom" labelSize="12px" @click="shareWx"></u-icon>            
      
     </view>
   </view>
@@ -78,6 +78,27 @@ export default({
     }
   },
   methods: {
+    shareWx(){
+      uni.share({
+		  provider: 'weixin',//分享服务提供商（即weixin|qq|sinaweibo）
+		  type: 0,//图文
+		  scene: 'WXSceneSession',//provider 为 weixin 时必选 WXSceneSession分享到聊天界面，WXSceneTimeline分享到朋友圈，WXSceneFavorite分享到微信收藏
+		  title:"民宿点菜",//分享内容的标题
+		  summary:"点菜内容",//分享内容的摘要
+		  href: 'https://env-00jxh1m2dpmq-static.normal.cloudstatic.cn/index.html#/pages/catering/orderDishes/orderDishes?user=123',//跳转链接，type 为 0 时必选
+		  imageUrl:'',//图片地址，type 为 0、2、5 时必选
+		  success(res) {
+		    //成功返回的参数
+		    console.log(res);
+		  },
+		  fail(err) {
+		    //失败返回的参数
+		    console.log(err);
+		  }
+		})
+
+
+    },
     addScenicSpotDetail(){
       this.type=0;
       if(this.$store.state.isPcShow){

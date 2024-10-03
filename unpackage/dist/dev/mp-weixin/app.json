@@ -24,7 +24,8 @@
     "pages/hotelManage/addEmployee/addEmployee",
     "pages/scenicSpot/addScenicSpot/addScenicSpot",
     "pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail",
-    "pages/hotelManage/createHotel/createHotel"
+    "pages/hotelManage/createHotel/createHotel",
+    "pages/catering/orderDishes/orderDishes"
   ],
   "subPackages": [],
   "window": {
