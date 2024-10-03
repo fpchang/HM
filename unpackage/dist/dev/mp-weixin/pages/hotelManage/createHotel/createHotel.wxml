@@ -1,1 +1,0 @@
-<view><scroll-view class="scroll-view" scroll-y="{{true}}" scroll-x="{{false}}"><create-hotel-component vue-id="68940ee4-1" bind:__l="__l"></create-hotel-component></scroll-view></view>

@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "新增景点价目",
-  "usingComponents": {
-    "add-scenic-spot-detail-component": "/pages/scenicSpot/components/addScenicSpotDetailComponent"
-  }
-}

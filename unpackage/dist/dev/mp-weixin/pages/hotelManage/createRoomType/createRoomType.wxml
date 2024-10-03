@@ -1,1 +1,0 @@
-<view><scroll-view class="scroll-view" scroll-y="{{true}}" scroll-x="{{false}}"><create-room-type-component vue-id="5b6d1594-1" type="{{type}}" rt="{{rt}}" data-event-opts="{{[['^closePopup',[['closePopup']]]]}}" bind:closePopup="__e" bind:__l="__l"></create-room-type-component></scroll-view></view>

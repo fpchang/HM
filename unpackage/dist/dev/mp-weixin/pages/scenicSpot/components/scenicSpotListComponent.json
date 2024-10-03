@@ -1,8 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "uni-popup": "/uni_modules/uni-popup/components/uni-popup/uni-popup",
-    "scenic-spot-card-component": "/pages/scenicSpot/components/scenicSpotCardComponent",
-    "add-scenic-spot-component": "/pages/scenicSpot/components/addScenicSpotComponent"
-  }
-}

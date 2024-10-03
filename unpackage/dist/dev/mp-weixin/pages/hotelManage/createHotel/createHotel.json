@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "新增酒店",
-  "usingComponents": {
-    "create-hotel-component": "/pages/hotelManage/components/createHotelComponent"
-  }
-}

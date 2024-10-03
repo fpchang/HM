@@ -1,1 +1,0 @@
-<view><u-button bind:click="__e" vue-id="bae1c640-1" data-event-opts="{{[['^click',[['login']]]]}}" bind:__l="__l" vue-slots="{{['default']}}">login</u-button></view>
