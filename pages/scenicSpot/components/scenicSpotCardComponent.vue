@@ -6,7 +6,7 @@
       
       <u-icon name="plus-circle-fill" color="#000" size="22" label="添加" labelPos="bottom" labelSize="12px" @click="addScenicSpotDetail"></u-icon> 
       <u-icon name="trash-fill" color="#000" size="22" label="删除" labelPos="bottom" labelSize="12px" @click="deleteScenicSpot"></u-icon>   
-      <u-icon name="edit-pen-fill" color="#000" size="22" label="编辑" labelPos="bottom" labelSize="12px"></u-icon>    
+      <u-icon name="edit-pen-fill" color="#000" size="22" label="编辑" labelPos="bottom" labelSize="12px" @click="editScenicSpot"></u-icon>    
       <u-icon name="checkmark-circle-fill" color="#000" v-if="isEdit" size="22" label="保存" labelPos="bottom" labelSize="12px"></u-icon>    
       <u-icon name="eye-fill" color="#000" size="22"  label="预览" labelPos="bottom" labelSize="12px"></u-icon>           
       <u-icon name="share-fill" color="#000" size="22" label="分享" labelPos="bottom" labelSize="12px" @click="shareWx"></u-icon>            
@@ -99,6 +99,10 @@ export default({
 
 
     },
+	editScenicSpot(){
+		console.log("modify----")
+		this.$emit("editScenicSpot",this.scenicSpot)
+	},
     addScenicSpotDetail(){
       this.type=0;
       if(this.$store.state.isPcShow){

@@ -14,7 +14,7 @@ class DB{
 	  })
   }
    getCollection(dbName,w={}){
-     console.log("DB getCollection ---",arguments);
+   //  console.log("DB getCollection ---",arguments);
     return new Promise((resolve,reject)=>{
       if(!dbName){
        reject("dbName is invalid")

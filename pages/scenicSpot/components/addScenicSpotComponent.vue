@@ -32,18 +32,18 @@ export default({
   //inject:['getSS'],
   props: {
     type:0,
-    targetOjb:{}
+    targetObj:{}
   },
   data() {
     return {
       submitLoading: false,
       scenicSpotList:[],
       scenicSpotForm:this.type==1?{
-        "scenicSport_name": targetOjb.scenicSport_name,
-        "scenicSport_address": targetOjb.scenicSport_address,
-        "scenicSport_user":targetOjb.scenicSport_user,
-        "scenicSport_phone":targetOjb.scenicSport_phone,
-        "scenicSport_mark":targetOjb.scenicSport_mark
+        "scenicSport_name": this.targetObj.scenicSport_name,
+        "scenicSport_address": this.targetObj.scenicSport_address,
+        "scenicSport_user":this.targetObj.scenicSport_user,
+        "scenicSport_phone":this.targetObj.scenicSport_phone,
+        "scenicSport_mark":this.targetObj.scenicSport_mark
       }:{
         "scenicSport_name": "",
         "scenicSport_address": "",
@@ -84,6 +84,7 @@ export default({
 
   watch: {},
   created(){
+	  console.log("111111",this.targetObj)
   },
 // 组件周期函数--监听组件挂载完毕
 mounted() {},
@@ -117,8 +118,6 @@ beforeDestroy() {},
         })
           .then((res) => {
             console.log("添加成功");
-
-           // this.getSS();
             this.$emit("closePopup");
             this.$scenicSpotStore.commit("getScenicSpotList");
           })
@@ -134,12 +133,13 @@ beforeDestroy() {},
     },
     editScenicSpot(){
       DB.callFunction("hm_editScenicSpot", {
-          _id:this.em._id,
-          employeeObj: this.employeeForm,
+          _id:this.targetObj._id._value,
+          scenicSpotObj: this.scenicSpotForm
         })
           .then((res) => {
             console.log("修改成功");
             this.$scenicSpotStore.commit("getScenicSpotList",this.hotel_id);
+            this.$emit("closePopup");
           })
           .catch((er) => {
             console.log("修改失败", er);

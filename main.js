@@ -1,6 +1,7 @@
 import App from './App';
 import store from './store/store';
 import scenicSpotStore from './store/scenicSpotStore';
+import './routeIntercept.js'
 
 // #ifndef VUE3
 import Vue from 'vue'

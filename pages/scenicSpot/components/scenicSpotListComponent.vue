@@ -8,7 +8,7 @@
         <view class="card-container" :style="{width:`${cardContainerWidth}px`}"> 
           <view class="card" v-for="item of scenicSpotList" :style="{width:`${cardWidth}px`}">
             <view class="card-item">
-              <scenicSpotCardComponent :scenicSpot="item" ></scenicSpotCardComponent>
+              <scenicSpotCardComponent :scenicSpot="item" @editScenicSpot="editScenicSpot"></scenicSpotCardComponent>
             </view>
             
            </view>
@@ -91,6 +91,18 @@ export default({
           this.type}&&targetObj=${JSON.stringify(item)}`
 				})
     },
+	editScenicSpot(item={}){
+	  this.type=1;
+    this.targetObj =item;
+				if(this.$store.state.isPcShow){
+					this.$refs.popupScenicSpot.open();
+					return;
+				}									
+				uni.navigateTo({
+					url:`/pages/scenicSpot/addScenicSpot/addScenicSpot?type=${
+	      this.type}&&targetObj=${JSON.stringify(item)}`
+				})
+	},
     closePopup(){
       if(this.$store.state.isPcShow){
         this.$refs.popupScenicSpot.close();

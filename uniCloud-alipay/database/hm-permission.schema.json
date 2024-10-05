@@ -1,0 +1,27 @@
+{
+	"bsonType": "object",
+	"required": ["permission_name"],
+	"permission": {
+		"read": true,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"hotel_id":{
+			"bsonType": "string",
+			"foreignKey": "hm-hotel._id"
+		},
+		"permission_name":{
+			"description": "权限名称",
+			"bsonType": "string"
+		},
+		"permission_name_Zn":{
+			"description": "权限中文名称",
+			"bsonType": "string"
+		}
+	}
+}
