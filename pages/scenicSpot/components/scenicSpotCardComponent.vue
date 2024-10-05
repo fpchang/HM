@@ -31,7 +31,7 @@
         <uni-col :span="4" class="col-pa">
           <view class="icon-area" >
             <u-icon name="edit-pen-fill" color="#000" size="20"  labelPos="bottom" labelSize="12px"></u-icon>
-            <u-icon name="trash-fill" color="#000" size="20"  labelPos="bottom" labelSize="12px"></u-icon>
+            <u-icon name="trash-fill" color="#000" size="20"  labelPos="bottom" labelSize="12px" @click="deleteScenicSportPrice(item)"></u-icon>
           </view>         
         </uni-col>
       </uni-row>
@@ -99,8 +99,32 @@ export default({
 
 
     },
+    async deleteScenicSportPrice(item){
+      console.log(item)
+      if(!this.scenicSpot_id){
+        return ;
+      }
+      const conf = await uni.showModal({
+        title: "确认删除价格信息",
+        content: "删除后将同步删除所有价格信息，并且无法恢复,确认删除吗?",
+        cancelText: "取消",
+        confirmText: "确认",
+      });
+      if (conf["cancel"]) {
+        return;
+      }
+      uni.showLoading();
+      try {
+
+        const res = await ScenicSpotService.removeScenicSpotDetail(item._id);
+        console.log("删除成功");
+        this.$scenicSpotStore.commit("getScenicSpotList",this.hotel_id);
+      } catch (error) {
+        console.log("删除失败",error);
+      }
+      
+    },
 	editScenicSpot(){
-		console.log("modify----")
 		this.$emit("editScenicSpot",this.scenicSpot)
 	},
     addScenicSpotDetail(){
@@ -108,8 +132,7 @@ export default({
       if(this.$store.state.isPcShow){
 					this.$refs.popupScenicSpotDetail.open();
 					return;
-				}
-					
+				}					
         uni.navigateTo({
 					url:`/pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail?type=${
           this.type}&&targetObj=${JSON.stringify(this.scenicSpot)}`
@@ -120,8 +143,7 @@ export default({
       if(this.$store.state.isPcShow){
 					this.$refs.popupScenicSpotDetail.open();
 					return;
-				}
-								
+				}								
         uni.navigateTo({
 					url:`/pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail?type=${
           this.type}&&targetObj=${JSON.stringify(this.scenicSpot)}`

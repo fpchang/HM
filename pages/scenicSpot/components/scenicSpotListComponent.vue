@@ -64,10 +64,10 @@ export default({
         return windowWidth;
       }
       let ys= windowWidth % 375
-      return 375+ (ys/count)
+      return  Math.min(375+ (ys/count),450)
     },
     cardContainerWidth(){
-      let count =Math.max(Math.floor(this.viewWidth/375),1) ;
+      let count =Math.max(Math.floor(this.viewWidth/this.cardWidth),1) ;
       return this.cardWidth * count
     },
     isPcShow(){
@@ -122,6 +122,7 @@ export default({
     if(window){
       window.onresize=()=>{
       this.widthTemp=Math.random(10);
+	  console.log(this.widthTemp)
     }
     }
    
