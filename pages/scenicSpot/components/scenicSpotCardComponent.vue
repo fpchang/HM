@@ -30,7 +30,7 @@
         </uni-col>
         <uni-col :span="4" class="col-pa">
           <view class="icon-area" >
-            <u-icon name="edit-pen-fill" color="#000" size="20"  labelPos="bottom" labelSize="12px"></u-icon>
+            <u-icon name="edit-pen-fill" color="#000" size="20"  labelPos="bottom" labelSize="12px" @click="editScenicSportPrice(item)"></u-icon>
             <u-icon name="trash-fill" color="#000" size="20"  labelPos="bottom" labelSize="12px" @click="deleteScenicSportPrice(item)"></u-icon>
           </view>         
         </uni-col>
@@ -41,7 +41,7 @@
 			<view class="popup-content">
 				<view class="create-order-title-style">{{type==1?"修改套餐":"创建套餐"}}</view>
 				<view class="comContent">				
-					 <addScenicSpotDetailComponent  @closePopup="closePopup" :type="type" :scenicSpot="scenicSpot"></addScenicSpotDetailComponent> 
+					 <addScenicSpotDetailComponent  @closePopup="closePopup" :type="type" :targetObj="targetObj"></addScenicSpotDetailComponent> 
 				</view>
 
 			</view>
@@ -63,7 +63,8 @@ export default({
   data() {
     return {
       type:0,
-      isEdit:false
+      isEdit:false,
+      targetObj:{}
     }
   },
   computed: {
@@ -99,6 +100,31 @@ export default({
 
 
     },
+    addScenicSpotDetail(){
+      this.type=0;
+      this.targetObj = this.scenicSpot;
+      if(this.$store.state.isPcShow){
+					this.$refs.popupScenicSpotDetail.open();
+					return;
+				}					
+        uni.navigateTo({
+					url:`/pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail?type=${
+          this.type}&&targetObj=${JSON.stringify(this.scenicSpot)}`
+				})
+    },
+     editScenicSportPrice(item){
+      
+      this.type=1;
+      this.targetObj = item;
+      if(this.$store.state.isPcShow){
+					this.$refs.popupScenicSpotDetail.open();
+					return;
+				}					
+        uni.navigateTo({
+					url:`/pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail?type=${
+          this.type}&&targetObj=${JSON.stringify(item)}`
+				})
+    },
     async deleteScenicSportPrice(item){
       console.log(item)
       if(!this.scenicSpot_id){
@@ -127,28 +153,18 @@ export default({
 	editScenicSpot(){
 		this.$emit("editScenicSpot",this.scenicSpot)
 	},
-    addScenicSpotDetail(){
-      this.type=0;
-      if(this.$store.state.isPcShow){
-					this.$refs.popupScenicSpotDetail.open();
-					return;
-				}					
-        uni.navigateTo({
-					url:`/pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail?type=${
-          this.type}&&targetObj=${JSON.stringify(this.scenicSpot)}`
-				})
-    },
-    editScenicSpotDetail(){
-      this.type=1;
-      if(this.$store.state.isPcShow){
-					this.$refs.popupScenicSpotDetail.open();
-					return;
-				}								
-        uni.navigateTo({
-					url:`/pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail?type=${
-          this.type}&&targetObj=${JSON.stringify(this.scenicSpot)}`
-				})
-    },
+    
+    // editScenicSpotDetail(){
+    //   this.type=1;
+    //   if(this.$store.state.isPcShow){
+		// 			this.$refs.popupScenicSpotDetail.open();
+		// 			return;
+		// 		}								
+    //     uni.navigateTo({
+		// 			url:`/pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail?type=${
+    //       this.type}&&targetObj=${JSON.stringify(this.scenicSpot)}`
+		// 		})
+    // },
     async deleteScenicSpot(){
       if(!this.scenicSpot_id){
         return ;

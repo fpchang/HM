@@ -27,6 +27,23 @@ class scenicSpotService{
     removeScenicSpotDetail(scenicSpotDetail_id){
         return this.DB.callFunction("hm_deleteScenicSpotDetail",{_id:scenicSpotDetail_id})
     }
-
+    /**
+     * 添加价格条目
+     * @param {*} scenicSpotDetailObj 
+     * @returns 
+     */
+    addScenicSpotDetail(scenicSpotDetailObj){
+        return  DB.callFunction("hm_addScenicSpotDetail", {
+                scenicSpotDetailObj,
+            })
+    }
+    /**
+     * 编辑价格条目
+     * @param {*} obj 
+     * @returns 
+     */
+    editScenicSpotDetail(obj){
+      return  DB.callFunction("hm_editScenicSportDetail", obj)
+    }
 }
 module.exports =new scenicSpotService();

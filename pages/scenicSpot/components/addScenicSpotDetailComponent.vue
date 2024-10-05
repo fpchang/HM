@@ -15,8 +15,8 @@
       <uni-forms-item label="销售价格" name="offering_price">
         <uni-easyinput type="digit" v-model="scenicSpotDetailForm.offering_price" placeholder="销售价格" />
       </uni-forms-item>
-      <uni-forms-item label="备注" name="scenicSport_mark">
-        <uni-easyinput  v-model="scenicSpotDetailForm.scenicSport_mark" type="textarea" placeholder="" />
+      <uni-forms-item label="备注" name="mark">
+        <uni-easyinput  v-model="scenicSpotDetailForm.mark" type="textarea" placeholder="" />
       </uni-forms-item>
 
 
@@ -29,11 +29,12 @@
 
 <script>
 import DB from "../../../api/DB.js";
+import ScenicSpotService from '../../../services/ScenicSpotService';
 export default({
   name: "addScenicSport",
   props: {
     type:0,
-    scenicSpot:{}
+    targetObj:{} //新增加为scenicport 数据，修改为scenicportdetail 数据
   },
   //inject:["getSS"],
   data() {
@@ -41,11 +42,11 @@ export default({
       submitLoading: false,
       scenicSpotList:[],
       scenicSpotDetailForm:this.type==1?{
-        "package_name": targetOjb.package_name,
-        "scenicSpot_price": targetOjb.scenicSpot_price,
-        "settlement_price":targetOjb.settlement_price,
-        "offering_price":targetOjb.offering_price,
-        "mark":targetOjb.scenicSport_mark
+        "package_name": this.targetObj.package_name,
+        "scenicSpot_price": this.targetObj.scenicSpot_price,
+        "settlement_price":this.targetObj.settlement_price,
+        "offering_price":this.targetObj.offering_price,
+        "mark":this.targetObj.mark
       }:{
         "package_name": "",
         "scenicSpot_price": "",
@@ -97,7 +98,7 @@ export default({
       scenicSpotDetailFormParse(){
         let {package_name,scenicSpot_price,settlement_price,offering_price,mark}= this.scenicSpotDetailForm;
        return {
-        scenicSpot_id:this.scenicSpot._id._value,
+        scenicSpot_id:this.targetObj._id._value,
         package_name:package_name,
         scenicSpot_price:Number(scenicSpot_price),
         settlement_price:Number(settlement_price),
@@ -150,20 +151,18 @@ beforeDestroy() {},
         console.log(this.scenicSpotDetailForm);
         uni.showLoading();
         this.submitLoading = true;
-        this.scenicSpotDetailForm.scenicSpot_id = this.scenicSpot._id;
+        this.scenicSpotDetailForm.scenicSpot_id = this.targetObj._id;
         
-       console.log("222",this.scenicSpotDetailFormParse,this.scenicSpot)
+       console.log("222",this.scenicSpotDetailFormParse,this.targetObj)
         if(this.type==1){
-         // this.editScenicSpot();
+          this.editScenicSpotDetail();
           return;
         }
        this.addScenicSpotDetail();
       });
     },
     addScenicSpotDetail(){
-      DB.callFunction("hm_addScenicSpotDetail", {
-        scenicSpotDetailObj: this.scenicSpotDetailFormParse,
-        })
+      ScenicSpotService.addScenicSpotDetail(this.scenicSpotDetailFormParse)
           .then((res) => {
             console.log("添加成功");
             this.$scenicSpotStore.commit("getScenicSpotList",this.hotel_id);
@@ -179,14 +178,15 @@ beforeDestroy() {},
             });
           });
     },
-    editScenicSpot(){
-      DB.callFunction("hm_editScenicSpot", {
-          _id:this.em._id,
-          employeeObj: this.employeeForm,
-        })
+    editScenicSpotDetail(){
+      ScenicSpotService.editScenicSpotDetail({
+        _id:this.targetObj._id,
+        scenicSpotPriceDetail:this.scenicSpotDetailFormParse
+      })
           .then((res) => {
             console.log("修改成功");
-            this.getScenicSpotList();
+            this.$scenicSpotStore.commit("getScenicSpotList",this.hotel_id);
+            this.$emit("closePopup");
           })
           .catch((er) => {
             console.log("修改失败", er);
