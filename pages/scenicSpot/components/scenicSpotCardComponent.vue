@@ -13,6 +13,14 @@
      
     </view>
   </view>
+  <uni-collapse>
+    <uni-collapse-item :title="scenicSpot.scenicSport_user " subtitle="1111" type="line">
+      <view class="content">
+        <text class="text">折叠内容主体，这是一段比较长内容。默认折叠主要内容，只显示当前项标题。点击标题展开，才能看到这段文字。再次点击标题，折叠内容。</text>
+      </view>
+    </uni-collapse-item>
+  </uni-collapse>
+  
     <uni-section class="mb-10" title="价目表" type="line"></uni-section>
     <view v-for="item of scenicSpot._id['hm-scenicSpotPriceDetail']"> 
       <uni-row class="uni-row" >
