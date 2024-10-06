@@ -1,142 +1,234 @@
 <template>
   <view>
-  <view class="header-style">
-    <view class="tit-style"><text style="">{{scenicSpot.scenicSport_name}}</text></view>
-    <view style="flex:1;display:flex;justify-content:flex-end;gap:15px"> 
-      
-      <u-icon name="plus-circle-fill" color="#000" size="22" label="添加" labelPos="bottom" labelSize="12px" @click="addScenicSpotDetail"></u-icon> 
-      <u-icon name="trash-fill" color="#000" size="22" label="删除" labelPos="bottom" labelSize="12px" @click="deleteScenicSpot"></u-icon>   
-      <u-icon name="edit-pen-fill" color="#000" size="22" label="编辑" labelPos="bottom" labelSize="12px" @click="editScenicSpot"></u-icon>    
-      <u-icon name="checkmark-circle-fill" color="#000" v-if="isEdit" size="22" label="保存" labelPos="bottom" labelSize="12px"></u-icon>    
-      <u-icon name="eye-fill" color="#000" size="22"  label="预览" labelPos="bottom" labelSize="12px"></u-icon>           
-      <u-icon name="share-fill" color="#000" size="22" label="分享" labelPos="bottom" labelSize="12px" @click="shareWx"></u-icon>            
-     
+    <view class="header-style">
+      <view class="tit-style"
+        ><text style="">{{ scenicSpot.scenicSport_name }}</text></view
+      >
+      <view
+        style="flex: 1; display: flex; justify-content: flex-end; gap: 15px"
+      >
+        <u-icon
+          name="plus-circle-fill"
+          color="#000"
+          size="22"
+          label="添加"
+          labelPos="bottom"
+          labelSize="12px"
+          @click="addScenicSpotDetail"
+        ></u-icon>
+        <u-icon
+          name="trash-fill"
+          color="#000"
+          size="22"
+          label="删除"
+          labelPos="bottom"
+          labelSize="12px"
+          @click="deleteScenicSpot"
+        ></u-icon>
+        <u-icon
+          name="edit-pen-fill"
+          color="#000"
+          size="22"
+          label="编辑"
+          labelPos="bottom"
+          labelSize="12px"
+          @click="editScenicSpot"
+        ></u-icon>
+        <u-icon
+          name="checkmark-circle-fill"
+          color="#000"
+          v-if="isEdit"
+          size="22"
+          label="保存"
+          labelPos="bottom"
+          labelSize="12px"
+        ></u-icon>
+        <u-icon
+          name="eye-fill"
+          color="#000"
+          size="22"
+          label="预览"
+          labelPos="bottom"
+          labelSize="12px"
+        ></u-icon>
+        <u-icon
+          name="share-fill"
+          color="#000"
+          size="22"
+          label="分享"
+          labelPos="bottom"
+          labelSize="12px"
+          @click="shareWx"
+        ></u-icon>
+      </view>
     </view>
-  </view>
-  <uni-collapse>
+    <!-- <uni-collapse>
     <uni-collapse-item :title="scenicSpot.scenicSport_user " subtitle="1111" type="line">
       <view class="content">
         <text class="text">折叠内容主体，这是一段比较长内容。默认折叠主要内容，只显示当前项标题。点击标题展开，才能看到这段文字。再次点击标题，折叠内容。</text>
       </view>
     </uni-collapse-item>
-  </uni-collapse>
-  
+  </uni-collapse> -->
+    <view class="scenicSpot-content-style">
+      <view class="sc-item">
+        <view class="tit"><text>地址:</text></view
+        ><view style="flex: 1" class="text-overflow-ellipsis"
+          ><text class="add-text-style" @click="addressEvent(scenicSpot.scenicSport_name)">{{ scenicSpot.scenicSport_name }}</text></view
+        ></view
+      >
+      <view class="sc-item">
+        <view class="tit"> <text>联系人:</text></view>
+        <view style="flex: 1" class="text-overflow-ellipsis">
+          <text>{{ scenicSpot.scenicSport_user }}</text
+          >【
+          <text
+            @click="makePhoneCallEvent(scenicSpot.scenicSport_phone)"
+            class="phone-style"
+            >{{ scenicSpot.scenicSport_phone }}</text
+          >】
+        </view>
+      </view>
+    </view>
     <uni-section class="mb-10" title="价目表" type="line"></uni-section>
-    <view v-for="item of scenicSpot._id['hm-scenicSpotPriceDetail']"> 
-      <uni-row class="uni-row" >
+    <view v-for="item of scenicSpot._id['hm-scenicSpotPriceDetail']">
+      <uni-row class="uni-row">
         <uni-col :span="10" class="col-pa">
           <view>
-              <text>  
-                {{ item.package_name }}
-              </text>
+            <text>
+              {{ item.package_name }}
+            </text>
           </view>
-       </uni-col>
+        </uni-col>
         <uni-col :span="10" class="col-pa">
-         <view class="pr-item">官方价：<text style="text-decoration:line-through">{{item.scenicSpot_price}}元</text></view> 
-         <view class="pr-item">结算价：<text>{{item.settlement_price}}元</text></view> 
-         <view class="pr-item">出售价：<text>{{item.offering_price}}元</text></view> 
+          <view class="pr-item"
+            >官方价：<text style="text-decoration: line-through"
+              >{{ item.scenicSpot_price }}元</text
+            ></view
+          >
+          <view class="pr-item"
+            >结算价：<text>{{ item.settlement_price }}元</text></view
+          >
+          <view class="pr-item"
+            >出售价：<text>{{ item.offering_price }}元</text></view
+          >
         </uni-col>
         <uni-col :span="4" class="col-pa">
-          <view class="icon-area" >
-            <u-icon name="edit-pen-fill" color="#000" size="20"  labelPos="bottom" labelSize="12px" @click="editScenicSportPrice(item)"></u-icon>
-            <u-icon name="trash-fill" color="#000" size="20"  labelPos="bottom" labelSize="12px" @click="deleteScenicSportPrice(item)"></u-icon>
-          </view>         
+          <view class="icon-area">
+            <u-icon
+              name="edit-pen-fill"
+              color="#000"
+              size="20"
+              labelPos="bottom"
+              labelSize="12px"
+              @click="editScenicSportPrice(item)"
+            ></u-icon>
+            <u-icon
+              name="trash-fill"
+              color="#000"
+              size="20"
+              labelPos="bottom"
+              labelSize="12px"
+              @click="deleteScenicSportPrice(item)"
+            ></u-icon>
+          </view>
         </uni-col>
       </uni-row>
       <u-line></u-line>
     </view>
     <uni-popup ref="popupScenicSpotDetail" background-color="transprant">
-			<view class="popup-content">
-				<view class="create-order-title-style">{{type==1?"修改套餐":"创建套餐"}}</view>
-				<view class="comContent">				
-					 <addScenicSpotDetailComponent  @closePopup="closePopup" :type="type" :targetObj="targetObj"></addScenicSpotDetailComponent> 
-				</view>
-
-			</view>
-		</uni-popup>
+      <view class="popup-content">
+        <view class="create-order-title-style">{{
+          type == 1 ? "修改套餐" : "创建套餐"
+        }}</view>
+        <view class="comContent">
+          <addScenicSpotDetailComponent
+            @closePopup="closePopup"
+            :type="type"
+            :targetObj="targetObj"
+          ></addScenicSpotDetailComponent>
+        </view>
+      </view>
+    </uni-popup>
   </view>
 </template>
 <script>
-import addScenicSpotDetailComponent from './addScenicSpotDetailComponent';
-import ScenicSpotService from '../../../services/ScenicSpotService';
-export default({
+import addScenicSpotDetailComponent from "./addScenicSpotDetailComponent";
+import ScenicSpotService from "../../../services/ScenicSpotService";
+export default {
   name: "scenicSpotCardComponent",
   props: {
-    scenicSpot:Object
+    scenicSpot: Object,
   },
-  components:{
-    addScenicSpotDetailComponent
+  components: {
+    addScenicSpotDetailComponent,
   },
   //inject:["getSS"],
   data() {
     return {
-      type:0,
-      isEdit:false,
-      targetObj:{}
-    }
+      type: 0,
+      isEdit: false,
+      targetObj: {},
+    };
   },
   computed: {
-    scenicSpot_id(){
-      return this.scenicSpot._id._value
-    }
+    scenicSpot_id() {
+      return this.scenicSpot._id._value;
+    },
   },
-  
+
   watch: {
-    scenicSpot_id(){
-     
-    }
+    scenicSpot_id() {},
   },
   methods: {
-    shareWx(){
+    shareWx() {
       uni.share({
-		  provider: 'weixin',//分享服务提供商（即weixin|qq|sinaweibo）
-		  type: 0,//图文
-		  scene: 'WXSceneSession',//provider 为 weixin 时必选 WXSceneSession分享到聊天界面，WXSceneTimeline分享到朋友圈，WXSceneFavorite分享到微信收藏
-		  title:"民宿点菜",//分享内容的标题
-		  summary:"点菜内容",//分享内容的摘要
-		  href: 'https://env-00jxh1m2dpmq-static.normal.cloudstatic.cn/index.html#/pages/catering/orderDishes/orderDishes?user=123',//跳转链接，type 为 0 时必选
-		  imageUrl:'',//图片地址，type 为 0、2、5 时必选
-		  success(res) {
-		    //成功返回的参数
-		    console.log(res);
-		  },
-		  fail(err) {
-		    //失败返回的参数
-		    console.log(err);
-		  }
-		})
-
-
+        provider: "weixin", //分享服务提供商（即weixin|qq|sinaweibo）
+        type: 0, //图文
+        scene: "WXSceneSession", //provider 为 weixin 时必选 WXSceneSession分享到聊天界面，WXSceneTimeline分享到朋友圈，WXSceneFavorite分享到微信收藏
+        title: "民宿点菜", //分享内容的标题
+        summary: "点菜内容", //分享内容的摘要
+        href: "https://env-00jxh1m2dpmq-static.normal.cloudstatic.cn/index.html#/pages/catering/orderDishes/orderDishes?user=123", //跳转链接，type 为 0 时必选
+        imageUrl: "", //图片地址，type 为 0、2、5 时必选
+        success(res) {
+          //成功返回的参数
+          console.log(res);
+        },
+        fail(err) {
+          //失败返回的参数
+          console.log(err);
+        },
+      });
     },
-    addScenicSpotDetail(){
-      this.type=0;
+    addScenicSpotDetail() {
+      this.type = 0;
       this.targetObj = this.scenicSpot;
-      if(this.$store.state.isPcShow){
-					this.$refs.popupScenicSpotDetail.open();
-					return;
-				}					
-        uni.navigateTo({
-					url:`/pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail?type=${
-          this.type}&&targetObj=${JSON.stringify(this.scenicSpot)}`
-				})
+      if (this.$store.state.isPcShow) {
+        this.$refs.popupScenicSpotDetail.open();
+        return;
+      }
+      uni.navigateTo({
+        url: `/pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail?type=${
+          this.type
+        }&&targetObj=${JSON.stringify(this.scenicSpot)}`,
+      });
     },
-     editScenicSportPrice(item){
-      
-      this.type=1;
+    editScenicSportPrice(item) {
+      this.type = 1;
       this.targetObj = item;
-      if(this.$store.state.isPcShow){
-					this.$refs.popupScenicSpotDetail.open();
-					return;
-				}					
-        uni.navigateTo({
-					url:`/pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail?type=${
-          this.type}&&targetObj=${JSON.stringify(item)}`
-				})
+      if (this.$store.state.isPcShow) {
+        this.$refs.popupScenicSpotDetail.open();
+        return;
+      }
+      uni.navigateTo({
+        url: `/pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail?type=${
+          this.type
+        }&&targetObj=${JSON.stringify(item)}`,
+      });
     },
-    async deleteScenicSportPrice(item){
-      console.log(item)
-      if(!this.scenicSpot_id){
-        return ;
+    async deleteScenicSportPrice(item) {
+      console.log(item);
+      if (!this.scenicSpot_id) {
+        return;
       }
       const conf = await uni.showModal({
         title: "确认删除价格信息",
@@ -149,33 +241,31 @@ export default({
       }
       uni.showLoading();
       try {
-
         const res = await ScenicSpotService.removeScenicSpotDetail(item._id);
         console.log("删除成功");
-        this.$scenicSpotStore.commit("getScenicSpotList",this.hotel_id);
+        this.$scenicSpotStore.commit("getScenicSpotList", this.hotel_id);
       } catch (error) {
-        console.log("删除失败",error);
+        console.log("删除失败", error);
       }
-      
     },
-	editScenicSpot(){
-		this.$emit("editScenicSpot",this.scenicSpot)
-	},
-    
+    editScenicSpot() {
+      this.$emit("editScenicSpot", this.scenicSpot);
+    },
+
     // editScenicSpotDetail(){
     //   this.type=1;
     //   if(this.$store.state.isPcShow){
-		// 			this.$refs.popupScenicSpotDetail.open();
-		// 			return;
-		// 		}								
+    // 			this.$refs.popupScenicSpotDetail.open();
+    // 			return;
+    // 		}
     //     uni.navigateTo({
-		// 			url:`/pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail?type=${
+    // 			url:`/pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail?type=${
     //       this.type}&&targetObj=${JSON.stringify(this.scenicSpot)}`
-		// 		})
+    // 		})
     // },
-    async deleteScenicSpot(){
-      if(!this.scenicSpot_id){
-        return ;
+    async deleteScenicSpot() {
+      if (!this.scenicSpot_id) {
+        return;
       }
       const conf = await uni.showModal({
         title: "确认删除景点",
@@ -188,23 +278,51 @@ export default({
       }
       uni.showLoading();
       try {
-
-        const res = await ScenicSpotService.removeScenicSpot(this.scenicSpot_id);
+        const res = await ScenicSpotService.removeScenicSpot(
+          this.scenicSpot_id
+        );
         console.log("删除成功");
-        this.$scenicSpotStore.commit("getScenicSpotList",this.hotel_id);
+        this.$scenicSpotStore.commit("getScenicSpotList", this.hotel_id);
       } catch (error) {
-        console.log("删除失败",error);
+        console.log("删除失败", error);
       }
-      
     },
-    closePopup(){   
-      if(this.$store.state.isPcShow){
+    closePopup() {
+      if (this.$store.state.isPcShow) {
         this.$refs.popupScenicSpotDetail.close();
         return;
-        
       }
-      uni.navigateBack()
-    }
+      uni.navigateBack();
+    },
+    addressEvent(address){
+      uni.setClipboardData({
+        data: address,
+        success: function () {
+          console.log("success");
+        },
+      });
+    },
+    //手机则拨打电话，其它设备复制
+    makePhoneCallEvent(phone) {
+      console.log(phone, uni.getSystemInfoSync());
+
+      let deviceType = uni.getSystemInfoSync().deviceType;
+      if (deviceType == "phone") {
+        uni.makePhoneCall({
+          phoneNumber: phone, //仅为示例
+          success: (success) => {
+            console.log("调用成功", success);
+          },
+        });
+        return;
+      }
+      uni.setClipboardData({
+        data: phone,
+        success: function () {
+          console.log("success");
+        },
+      });
+    },
   },
   // 组件周期函数--监听组件挂载完毕
   mounted() {},
@@ -218,41 +336,65 @@ export default({
   deactivated() {},
   // 组件周期函数--监听组件销毁之前
   beforeDestroy() {},
-}) 
+};
 </script>
 
 <style scoped lang="scss">
-.header-style{
-  display:flex;align-items:center;justify-content:space-between;
-  .tit-style{
-    font-weight:bold;
-    color:$uni-color-title
+.header-style {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .tit-style {
+    font-weight: bold;
+    color: $uni-color-title;
   }
-};
-.uni-row{
+}
+.scenicSpot-content-style {
+  .sc-item {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    font-size: $uni-font-size-base;
+    .tit {
+      width: 60px;
+      font-weight: bold;
+      padding-right: 12px;
+    }
+    .add-text-style{
+      color: $font-color-control;
+      &:hover {
+        color: $font-color-control-hover;
+      }
+    };
+    .phone-style {
+      color: $font-color-control;
+      &:hover {
+        color: $font-color-control-hover;
+      }
+    }
+  }
+}
+.uni-row {
   display: flex;
   align-items: center;
   min-height: 35px;
   padding: 10px 0;
- 
- 
-
 }
-.icon-area{
+.icon-area {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
-.pr-item{
+.pr-item {
   font-size: 12px;
-  padding:5px 0;
-  &:nth-child(1){
+  padding: 5px 0;
+  &:nth-child(1) {
     color: #d1d0d0;
   }
-  &:nth-child(2){
+  &:nth-child(2) {
     color: #9d2525;
   }
-  &:nth-child(3){
+  &:nth-child(3) {
     color: #265c34;
   }
 }
