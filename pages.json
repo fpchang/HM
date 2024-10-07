@@ -160,6 +160,22 @@
 			}
 		},
 		{
+			"path" : "pages/catering/addMenuType/addMenuType",
+			"style" : 
+			{
+				"navigationBarTitleText" : "新增菜单分类"
+				
+			}
+		},
+		{
+			"path" : "pages/catering/addMenuDetail/addMenuDetail",
+			"style" : 
+			{
+				"navigationBarTitleText" : "新增菜单详情"
+				
+			}
+		},
+		{
 			"path" : "pages/catering/orderDishes/orderDishes",
 			"style" : 
 			{

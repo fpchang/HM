@@ -1,0 +1,37 @@
+{
+	"bsonType": "object",
+	"required": ["menuType_id","name","price"],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"menuType_id": {
+			"description": "所属分类",
+			"bsonType": "string",
+			"foreignKey": "hm-menuType._id"
+		},
+		"name": {
+			"description": "菜名",
+			"bsonType": "string"
+		},
+		"price": {
+			"description": "价格",
+			"bsonType": "double"
+		},
+		"isOffer":{
+			"description": "是否正常供应",
+			"bsonType": "bool",
+			"defaultValue":true
+		},
+		"mark":{
+			"description": "备注",
+			"bsonType": "string"
+		}
+	}
+}

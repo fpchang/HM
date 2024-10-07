@@ -1,6 +1,7 @@
 import App from './App';
 import store from './store/store';
 import scenicSpotStore from './store/scenicSpotStore';
+import menuStore from './store/menuStore';
 import './routeIntercept.js'
 
 // #ifndef VUE3
@@ -11,6 +12,7 @@ import {CF} from './static/utils/CF';
 Vue.use(uView);
 Vue.prototype.$store = store;
 Vue.prototype.$scenicSpotStore = scenicSpotStore;
+Vue.prototype.$menuStore = menuStore;
 Vue.config.productionTip = false
 App.mpType = 'app'
 const app = new Vue({
