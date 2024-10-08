@@ -2,6 +2,7 @@ import App from './App';
 import store from './store/store';
 import scenicSpotStore from './store/scenicSpotStore';
 import menuStore from './store/menuStore';
+import orderStore from './store/orderStore';
 import './routeIntercept.js'
 
 // #ifndef VUE3
@@ -11,6 +12,7 @@ import uView from '@/uni_modules/uview-ui';
 import {CF} from './static/utils/CF';
 Vue.use(uView);
 Vue.prototype.$store = store;
+Vue.prototype.$orderStore= orderStore;
 Vue.prototype.$scenicSpotStore = scenicSpotStore;
 Vue.prototype.$menuStore = menuStore;
 Vue.config.productionTip = false

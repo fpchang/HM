@@ -22,9 +22,12 @@
 						</view>
 					</view>
 					<view class="checkIntable-h-list" v-for="it in checkInOrderListFormat">
-						<view :class="['checkIntable-h-list-h','td-style',1?'isContinueCheckIn':'']"
+						<view :class="['checkIntable-h-list-h','td-style',(i.checkInEndDateTimeStamp-i.checkInStartDateTimeStamp)>1000*60*60*24?'isContinueCheckIn':'']"
 							v-for="i in it" @click="showDetail">
+							<view v-if="i.userName" style="position:absolute;right:5px;top:5px"><u-icon name="question-circle-fill" color="#ff0000" size="16"></u-icon> </view>
+							
 							<text class="tx">{{i.userName?i.userName:''}}</text>
+							
 						</view>
 					</view>
 
@@ -38,28 +41,19 @@
 </template>
 
 <script>
-	import DB from '../../../api/DB';
 	export
 	default {
 		props: {},
 		data() {
 			return {
-				
-		
-				//checkInOrderList:[]
-		
 			}
 
 		},
 		async created() {
-				// console.log("calendarList start");
-				// uni.showLoading();				
-				// await this.getRoomTypeList();
-				// await	this.getOrderList();
-				// uni.hideLoading();
+		
 		},
 		activated() {
-				console.log("calendarList active....");
+				
 		},
 		mounted() {
 			
@@ -87,7 +81,6 @@
 				let rangeDate = [];
 				let minTime = Math.min(...this.checkInOrderList.map(item => item.checkInStartDateTimeStamp));
 				let maxTime = Math.max(...this.checkInOrderList.map(item => item.checkInEndDateTimeStamp));
-				console.log("222", minTime, maxTime)
 				for (let i = minTime; i <= maxTime; i = (i + 1000 * 60 * 60 * 24)) {
 					rangeDate.push(i);
 				}
@@ -136,7 +129,6 @@
 		},
 		watch:{
 			hotel_id(newval,oldval){
-				console.warn("切换酒店了")
 				this.$store.commit("getOrderListTodayAfter");
 			}
 		},
@@ -147,52 +139,13 @@
 					name:"hm_getRoomType",
 					data:{hotel_id:this.hotel_id}
 				}).then(res=>{
-					
-					console.log("酒店列表",res);
-				
 					if(res.result.data.length){
 						this.$store.commit("updateRoomTypeList",res.result.data[0]);
 					}
 				})
 			},
-			getOrderList(){
-				let startTime = new Date(new Date().Format("yyyy/MM/dd 14:00:00")).getTime();
-				let endTime = new Date(new Date().Format("yyyy/MM/dd 12:00:00")).getTime();
-				let jql =
-					`hotel_id=='${this.hotel_id}'&&orderStatus!=10&&(checkInStartDateTimeStamp>=${startTime} ||` +
-					`(${endTime}<checkInEndDateTimeStamp && ${endTime}>checkInStartDateTimeStamp))`;
-				return DB.getCollection("hm-order",jql).then(res=>{
-					console.log("获取的列表",res);
-					this.$store.commit("updateOrderListTodayAfter",res.data);
-					
-				}).catch(error=>{
-					console.log(error);
-				})
-			},
 			testdate() {
-				// let result = [];
-				// let or = this.orderDateRange;
-				// let checkInOrderList = this.checkInOrderList;
-				// for (let i = 0; i < this.roomType.length; i++) {
-
-
-				// 	let roomType_id = this.roomType[i]._id;
-				// 	result.push(fillRoomType(roomType_id));
-				// }
-
-				// function fillRoomType(roomType_id) {
-				// 	let fillArray = [];
-				// 	console.log("0999");
-				// 	for (let j = 0; j < or.length; j++) {
-				// 		let obj = checkInOrderList.find(item => {
-				// 			return item.roomTypeArray.includes(t) && (or[j] >= item.checkInStartDateTimeStamp &&
-				// 				or[j] < item.checkInEndDateTimeStamp)
-				// 		})
-				// 		fillArray.push(obj || []);
-				// 	}
-				// 	return fillArray;
-				// }
-				// return result;
+			
 			}
 		}
 	}
@@ -236,10 +189,12 @@
 		text-align: center;
 		font-size: $uni-font-size-base;
 		margin-bottom: 10px;
+		position: relative;
 	}
 
 	.isContinueCheckIn {
-		background-color: rgba(238, 187, 187, 0.5);
+		font-weight: bold;
+		
 	}
 
 	.left-table-style .td-style {

@@ -73,6 +73,7 @@
 <script>
 	import dataBase from '../../../api/dataBase.js';
 	import DB from '../../../api/DB';
+	import OrderService from '../../../services/OrderService.js';
 	export default {
 		data() {
 			return {
@@ -99,13 +100,11 @@
 		},
 		watch:{
 			hotel_id(newval,oldval){
-				console.warn("XXXXXXX",newval,oldval);
 				this.getOrderListByCondition();
 			}
 		},
 		filters: {
 			roomType_Zn(valArray) {
-				console.log(12222, valArray)
 				// let newArray = valArray.map(item => {
 				// 	let obj = roomTypeList.find(it => {
 				// 		return it.value == item.value
@@ -119,9 +118,7 @@
 			}
 		},
 		async created() {
-
-			console.log("tableList start");
-			await this.getOrderListByCondition();
+			 this.getOrderListByCondition();
 
 		},
 		activated() {
@@ -134,26 +131,19 @@
 			showNewTag(timeStamp) {
 				return (new Date().getTime() - timeStamp) < 1000 * 60 * 60 * 2
 			},
-			getOrderListByCondition() {
-				uni.showLoading();
-				let date = this.selectCondition.dateRangeArray;
-				let startTime = new Date(new Date(date[0]).Format("yyyy/MM/dd 14:00:00")).getTime();
-				let endTime = new Date(new Date(date[1]).Format("yyyy/MM/dd 12:00:00")).getTime();
-				let jql =
-					`hotel_id=='${this.hotel_id}'&&orderStatus!=10&&(checkInStartDateTimeStamp>=${startTime} ||` +
-					`(${endTime}<checkInEndDateTimeStamp && ${endTime}>checkInStartDateTimeStamp))`;
-				return DB.getCollection("hm-order", jql).then(res => {
-					console.log("344", res)
-					this.checkInOrderList = res.data;
-					uni.hideLoading();
-				}).catch(err => {
-					console.log(err)
-					uni.hideLoading();
-				})
+			async getOrderListByCondition() {
+				 uni.showLoading();
+				 let date = this.selectCondition.dateRangeArray;
+				try {
+					const res = await OrderService.getOrderListByCondition(this.hotel_id,date[0],date[1]);
+					this.checkInOrderList = res.data;			
+				} catch (error) {
+					console.error("获取订单列表失败",error);
+				}
+				uni.hideLoading();
 			},
 			async deleteOrder(item) {
-				console.log(item)
-				let _id = item._id;
+				let order_id = item._id;
 				const conf = await uni.showModal({
 					title: '确认取消订单',
 					content: '取消后将无法恢复,需要重新创建订单',
@@ -164,21 +154,14 @@
 					return;
 				}
 				uni.showLoading();
-				const res = await uniCloud.callFunction({
-					name: 'hm-deleteOrder',
-					data: {
-						_id
-					}
-				});
-				uni.hideLoading();
-				if (res.result.code == 0) {
-					uni.showToast({
-						title: '取消成功'
-					});
-				}
-
-				console.log(res);
+				try {
+				const res = await OrderService.deleteOrder(order_id);					
 				this.getOrderListByCondition();
+				} catch (error) {
+					console.error("系统异常，删除订单失败")
+				}
+			
+				
 			},
 			testData(valArray) {
 				let item = this.checkInOrderList[0]

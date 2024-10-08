@@ -136,11 +136,10 @@ import orderChildCalendarList from './orderChildCalendarList2';
 		},
 		methods: {
 			getOrderList() {
-				console.log(this.selectCondition.dateRangeArray)
+				
 
 			},
 			onClickItem(e) {
-				console.log(e)
 				if (this.current !== e.currentIndex) {
 					this.current = e.currentIndex
 				}

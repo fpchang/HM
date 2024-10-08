@@ -87,12 +87,10 @@
 					this.$store.commit("updateOrderListTodayAfter",res.data);
 					uni.hideLoading();
 				}).catch(err => {
-					console.log(err)
 					uni.hideLoading();
 				})
 			},
 			async deleteOrder(item) {
-				console.log(item)
 				let _id = item._id;
 				const conf = await uni.showModal({
 					title: '确认取消订单',
@@ -116,8 +114,6 @@
 						title: '取消成功'
 					});
 				}
-
-				console.log(res);
 				this.getOrderList();
 			}
 		}
