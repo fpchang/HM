@@ -1,8 +1,27 @@
 <template>
   <view>
     <view class="add-content-style" style="">
-			<view><button class="uni-button" size="mini" type="primary" @click="addScenicSpot()">添加景点</button></view>
-		</view>
+     <view class="control-panal" style="">
+     <u-icon
+        name="plus-circle-fill"
+        color="#000"
+        size="22"
+        label="添加景点"
+        labelPos="bottom"
+        labelSize="12px"
+        @click="addScenicSpot"
+      ></u-icon>
+      <u-icon
+        name="share-fill"
+        color="#000"
+        size="22"
+        label="分享至微信"
+        labelPos="bottom"
+        labelSize="12px"
+        @click="shareWx"
+      ></u-icon>
+    </view>
+    </view>
     <view style="display: flex;justify-content:center">
     
         <view class="card-container" :style="{width:`${cardContainerWidth}px`}"> 
@@ -141,10 +160,19 @@ export default({
 </script>
 
 <style scoped lang="scss">
-.add-content-style{
-  display: flex;justify-content: flex-end;padding:0 20px;box-sizing: border-box;
+.add-content-style {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 20px;
+  box-sizing: border-box;
+  background: #f4f4f4;
+  .control-panal {
+    display: flex;
+    padding: 10px 20px;
+    border-radius: 8px;
+    gap: 20px;
+  }
 }
-
 .card-container{
   display:flex;
   flex-wrap:wrap;

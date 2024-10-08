@@ -165,10 +165,10 @@ beforeDestroy() {},
           });
     },
     editMenuDetail(){
-      MenuService.editMenuTypeDetail({
-        _id:this.targetObj._id,
-        menuDetail:this.menuDetailFormParse
-      })
+      MenuService.editMenuDetail(
+        this.targetObj._id,
+        this.menuDetailFormParse
+      )
           .then((res) => {
             console.log("修改成功");
             this.$menuStore.commit("getMenuList",this.hotel_id);

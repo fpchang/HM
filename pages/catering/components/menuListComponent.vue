@@ -1,131 +1,165 @@
 <template>
   <view>
     <view class="add-content-style" style="">
-			<view><button class="uni-button" size="mini" type="primary" @click="addMenuType()">添加菜单分类</button></view>
-		</view>
-    <view style="display: flex;justify-content:center">
-    
-        <view class="card-container" :style="{width:`${cardContainerWidth}px`}"> 
-          <view class="card" v-for="item of menuList" :style="{width:`${cardWidth}px`}">
-            <view class="card-item">
-              <menuCardComponent :menuItem="item" @editMenuType="editMenuType"></menuCardComponent>
-            </view>
-            
-           </view>
-        </view> 
+      <view class="control-panal" style="">
+        <!-- <button class="uni-button" size="mini" type="primary" @click="addMenuType()">添加菜单分类</button> -->
+        <u-icon
+          name="plus-circle-fill"
+          color="#000"
+          size="22"
+          label="添加菜单"
+          labelPos="bottom"
+          labelSize="12px"
+          @click="addMenuType"
+        ></u-icon>
+        <u-icon
+          name="share-fill"
+          color="#000"
+          size="22"
+          label="分享至微信"
+          labelPos="bottom"
+          labelSize="12px"
+          @click="shareWx"
+        ></u-icon>
+      </view>
+    </view>
+    <view style="display: flex; justify-content: center">
+      <view
+        class="card-container"
+        :style="{ width: `${cardContainerWidth}px` }"
+      >
+        <view
+          class="card"
+          v-for="item of menuList"
+          :style="{ width: `${cardWidth}px` }"
+        >
+          <view class="card-item">
+            <menuCardComponent
+              :menuItem="item"
+              @editMenuType="editMenuType"
+            ></menuCardComponent>
+          </view>
+        </view>
+      </view>
     </view>
     <uni-popup ref="popupMenuType" background-color="transprant">
-			<view class="popup-content">
-				<view class="create-order-title-style">{{type==1?"修改菜单分类":"新增菜单分类"}}</view>
-				<view class="comContent">				
-					 <addMenuTypeComponent  @closePopup="closePopup" :type="type" :targetObj="targetObj"></addMenuTypeComponent> 
-				</view>
-
-			</view>
-		</uni-popup>
-   </view>
+      <view class="popup-content">
+        <view class="create-order-title-style">{{
+          type == 1 ? "修改菜单分类" : "新增菜单分类"
+        }}</view>
+        <view class="comContent">
+          <addMenuTypeComponent
+            @closePopup="closePopup"
+            :type="type"
+            :targetObj="targetObj"
+          ></addMenuTypeComponent>
+        </view>
+      </view>
+    </uni-popup>
+  </view>
 </template>
 
 <script>
 import menuCardComponent from "./menuCardComponent.vue";
 import addMenuTypeComponent from "./addMenuTypeComponent.vue";
-import HotelService from '../../../services/HotelService';
-export default({
+import HotelService from "../../../services/HotelService";
+export default {
   name: "menuList",
-  components:{
+  components: {
     menuCardComponent,
-    addMenuTypeComponent
+    addMenuTypeComponent,
   },
   props: {},
   data() {
     return {
-      widthTemp:0,
-      type:0,
-      targetObj:{}
-
-    }
+      widthTemp: 0,
+      type: 0,
+      targetObj: {},
+    };
   },
   computed: {
-    hotel_id(){
-				return this.$store.state.hotel_id;
-			},
-      menuList(){
-        return this.$menuStore.state.menuList
-      },
-      viewWidth(){
-        let viewWidth=uni.getSystemInfoSync().windowWidth||uni.getSystemInfoSync().screenWidth
-        return  viewWidth +this.widthTemp-this.widthTemp
+    hotel_id() {
+      return this.$store.state.hotel_id;
     },
-   
-    cardWidth(){
-      let windowWidth = this.viewWidth - 20;//-20 为pc端滚动条宽度
-      let count = Math.floor(windowWidth/375);
-      if(count==0){
+    menuList() {
+      return this.$menuStore.state.menuList;
+    },
+    viewWidth() {
+      let viewWidth =
+        uni.getSystemInfoSync().windowWidth ||
+        uni.getSystemInfoSync().screenWidth;
+      return viewWidth + this.widthTemp - this.widthTemp;
+    },
+
+    cardWidth() {
+      let windowWidth = this.viewWidth - 20; //-20 为pc端滚动条宽度
+      let count = Math.floor(windowWidth / 375);
+      if (count == 0) {
         return windowWidth;
       }
-      let ys= windowWidth % 375
-      return  Math.min(375+ (ys/count),450)
+      let ys = windowWidth % 375;
+      return Math.min(375 + ys / count, 450);
     },
-    cardContainerWidth(){
-      let count =Math.max(Math.floor(this.viewWidth/this.cardWidth),1) ;
-      return this.cardWidth * count
+    cardContainerWidth() {
+      let count = Math.max(Math.floor(this.viewWidth / this.cardWidth), 1);
+      return this.cardWidth * count;
     },
-    isPcShow(){
-				return this.$store.state.isPcShow;
-			}
+    isPcShow() {
+      return this.$store.state.isPcShow;
+    },
   },
-  created(){
-    this.$menuStore.commit("getMenuList",this.hotel_id);
+  created() {
+    this.$menuStore.commit("getMenuList", this.hotel_id);
   },
   methods: {
-    addMenuType(item={}){
-      this.type=0;
-				if(this.$store.state.isPcShow){
-					this.$refs.popupMenuType.open();
-					return;
-				}
-					
-				
-				uni.navigateTo({
-					url:`/pages/catering/addMenuType/addMenuType?type=${
-          this.type}&&targetObj=${JSON.stringify(item)}`
-				})
+    addMenuType(item = {}) {
+      this.type = 0;
+      if (this.$store.state.isPcShow) {
+        this.$refs.popupMenuType.open();
+        return;
+      }
+
+      uni.navigateTo({
+        url: `/pages/catering/addMenuType/addMenuType?type=${
+          this.type
+        }&&targetObj=${JSON.stringify(item)}`,
+      });
     },
-	editMenuType(item={}){
-	  this.type=1;
-    this.targetObj =item;
-				if(this.$store.state.isPcShow){
-					this.$refs.popupMenuType.open();
-					return;
-				}									
-				uni.navigateTo({
-					url:`/pages/cateromg/addMenuType/addMenuType?type=${
-	      this.type}&&targetObj=${JSON.stringify(item)}`
-				})
-	},
-    closePopup(){
-      if(this.$store.state.isPcShow){
+    editMenuType(item = {}) {
+      this.type = 1;
+      this.targetObj = item;
+      if (this.$store.state.isPcShow) {
+        this.$refs.popupMenuType.open();
+        return;
+      }
+      uni.navigateTo({
+        url: `/pages/cateromg/addMenuType/addMenuType?type=${
+          this.type
+        }&&targetObj=${JSON.stringify(item)}`,
+      });
+    },
+    closePopup() {
+      if (this.$store.state.isPcShow) {
         this.$refs.popupMenuType.close();
-					return;
-				}
-     uni.navigateBack();
-    }
+        return;
+      }
+      uni.navigateBack();
+    },
   },
   watch: {
-	  hotel_id(){
-		  this.$menuStore.commit("getMenuList",this.hotel_id);
-	  }
+    hotel_id() {
+      this.$menuStore.commit("getMenuList", this.hotel_id);
+    },
   },
 
   // 组件周期函数--监听组件挂载完毕
   mounted() {
-    if(window){
-      window.onresize=()=>{
-      this.widthTemp=Math.random(10);
-	  console.log(this.widthTemp)
+    if (window) {
+      window.onresize = () => {
+        this.widthTemp = Math.random(10);
+        console.log(this.widthTemp);
+      };
     }
-    }
-   
   },
   // 组件周期函数--监听组件数据更新之前
   beforeUpdate() {},
@@ -137,33 +171,29 @@ export default({
   deactivated() {},
   // 组件周期函数--监听组件销毁之前
   beforeDestroy() {},
-}) 
+};
 </script>
 
 <style scoped lang="scss">
-.add-content-style{
-  display: flex;justify-content: flex-end;padding:0 20px;box-sizing: border-box;
-}
 
-.card-container{
-  display:flex;
-  flex-wrap:wrap;
-  min-width:375px ;
-  .card{
-    min-width:375px ;
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 375px;
+  .card {
+    min-width: 375px;
     max-width: 450px;
-    padding:10px;
-    box-sizing:border-box;
-    .card-item{
+    padding: 10px;
+    box-sizing: border-box;
+    .card-item {
       height: 100%;
       box-sizing: border-box;
       background: #fff;
       padding: 10px 20px;
       box-shadow: 0 0 4px 4px #e4e0e0;
       border-radius: 8px;
-
     }
   }
 }
-
 </style>

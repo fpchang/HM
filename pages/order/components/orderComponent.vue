@@ -2,18 +2,31 @@
 
 	<view class="order-component">
 		<!-- <uni-fab ref="fab" :popMenu="false" :pattern="pattern" horizontal="right" vertical="top" @createOrderEvent="createOrderEvent" /> -->
-		<view class="tbs-style">
+		<!-- <view class="tbs-style">
 			<view class="uni-padding-wrap uni-common-mt" style="flex:1;">
 				<view style="max-width:450px;padding:0 20px">
-					<uni-data-checkbox v-model="tabRadioVal" :localdata="tabitems"></uni-data-checkbox>
-					<!-- <uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" /> -->
+					<uni-data-checkbox v-model="tabRadioVal" :localdata="tabitems"></uni-data-checkbox>				
 				</view>
-
 			</view>
 			<view class="tbs-c-btn"><button class="uni-button" size="mini" type="primary"
 					@click="createOrderEvent">创建订单</button></view>
-		</view>
-
+		</view> -->
+		<view class="add-content-style">
+			<view class="left-panal">
+				<uni-data-checkbox v-model="tabRadioVal" :localdata="tabitems"></uni-data-checkbox>				
+			</view>
+			<view class="control-panal">
+			<u-icon
+			   name="plus-circle-fill"
+			   color="#000"
+			   size="22"
+			   label="创建订单"
+			   labelPos="bottom"
+			   labelSize="12px"
+			   @click="createOrderEvent"
+			 ></u-icon>
+		   </view>
+		   </view>
 		<view style="height: 15px;"></view>
 		<view class="content">
 			<!-- <keep-alive> -->

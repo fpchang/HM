@@ -183,6 +183,13 @@
 				"navigationBarTitleText" : ""
 				
 			}
+		},
+		{
+			"path" : "pages/scenicSpot/showScenicSpot/showScenicSpot",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
 		}
 	],
 	"tabBar": {

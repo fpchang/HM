@@ -1,9 +1,22 @@
 <template>
 
 	<view class="roomType-component">
-		<view class="add-content-style" style="">
+		<!-- <view class="add-content-style" style="">
 			<view><button class="uni-button" size="mini" type="primary" @click="addRoomType()">添加房型</button></view>
-		</view>
+		</view> -->
+		<view class="add-content-style">
+			<view class="control-panal">
+			<u-icon
+			   name="plus-circle-fill"
+			   color="#000"
+			   size="22"
+			   label="添加房型"
+			   labelPos="bottom"
+			   labelSize="12px"
+			   @click="addRoomType"
+			 ></u-icon>
+		   </view>
+		   </view>
 		<view v-if="isPcShow">
 			<uni-table border stripe emptyText="暂无更多数据">
 				<!-- 表头行 -->

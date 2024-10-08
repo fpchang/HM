@@ -108,4 +108,23 @@ $font-color-control-hover:rgb(1, 85, 169);
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+/*操作区域*/
+.add-content-style {
+	display: flex;
+	justify-content: flex-end;
+	padding: 0 20px;
+	box-sizing: border-box;
+	background: #f4f4f4;
+	.left-panal{
+		flex: 1;
+		display: flex;
+		align-items: center
+	};
+	.control-panal {
+	  display: flex;
+	  padding: 10px 20px;
+	  border-radius: 8px;
+	  gap: 20px;
+	}
+  }
 

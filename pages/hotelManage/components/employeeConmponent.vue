@@ -1,6 +1,6 @@
 <template>
   <view class="employee-component">
-    <view class="add-content-style" style="">
+    <!-- <view class="add-content-style" style="">
       <view>
        
         <button
@@ -12,7 +12,20 @@
           添加员工
         </button>
         </view>
-    </view>
+    </view> -->
+    <view class="add-content-style">
+			<view class="control-panal">
+			<u-icon
+			   name="plus-circle-fill"
+			   color="#000"
+			   size="22"
+			   label="添加员工"
+			   labelPos="bottom"
+			   labelSize="12px"
+			   @click="addEmployee"
+			 ></u-icon>
+		   </view>
+		   </view>
     <view v-if="isPcShow">
       <uni-table border stripe emptyText="暂无更多数据">
         <!-- 表头行 -->

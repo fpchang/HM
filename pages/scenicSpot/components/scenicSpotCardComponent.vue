@@ -8,6 +8,7 @@
         style="flex: 1; display: flex; justify-content: flex-end; gap: 15px"
       >
         <u-icon
+        v-if="isEdit"
           name="plus-circle-fill"
           color="#000"
           size="22"
@@ -17,6 +18,7 @@
           @click="addScenicSpotDetail"
         ></u-icon>
         <u-icon
+        v-if="isEdit"
           name="trash-fill"
           color="#000"
           size="22"
@@ -26,6 +28,7 @@
           @click="deleteScenicSpot"
         ></u-icon>
         <u-icon
+          v-if="isEdit"
           name="edit-pen-fill"
           color="#000"
           size="22"
@@ -35,23 +38,16 @@
           @click="editScenicSpot"
         ></u-icon>
         <u-icon
-          name="checkmark-circle-fill"
-          color="#000"
-          v-if="isEdit"
-          size="22"
-          label="保存"
-          labelPos="bottom"
-          labelSize="12px"
-        ></u-icon>
-        <u-icon
-          name="eye-fill"
-          color="#000"
-          size="22"
-          label="预览"
-          labelPos="bottom"
-          labelSize="12px"
-        ></u-icon>
-        <u-icon
+        name="grid-fill"
+        :color="isEdit?'#06c':'#000'"
+        size="22"
+        label="编辑模式"
+        :labelColor="isEdit?'#06c':'#000'"
+        labelPos="bottom"
+        labelSize="12px"
+        @click="moreControl"
+      ></u-icon>
+        <!-- <u-icon
           name="share-fill"
           color="#000"
           size="22"
@@ -59,7 +55,7 @@
           labelPos="bottom"
           labelSize="12px"
           @click="shareWx"
-        ></u-icon>
+        ></u-icon> -->
       </view>
     </view>
     <!-- <uni-collapse>
@@ -115,6 +111,7 @@
         <uni-col :span="4" class="col-pa">
           <view class="icon-area">
             <u-icon
+            v-if="isEdit"
               name="edit-pen-fill"
               color="#000"
               size="20"
@@ -123,6 +120,7 @@
               @click="editScenicSportPrice(item)"
             ></u-icon>
             <u-icon
+            v-if="isEdit"
               name="trash-fill"
               color="#000"
               size="20"
@@ -198,6 +196,9 @@ export default {
           console.log(err);
         },
       });
+    },
+    moreControl(){
+      this.isEdit = !this.isEdit
     },
     addScenicSpotDetail() {
       this.type = 0;
