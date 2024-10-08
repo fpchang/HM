@@ -38,15 +38,15 @@
 							
 						</view>
 						<view class="list-item">
-							<view class="list-item-c"><text>定金：</text><text calss="num-style">{{item.downPayment}}</text>元</view>
+							<view class="list-item-c"><text>定金：</text><text class="num-style">{{item.downPayment}}</text>元</view>
 							
 						</view>
 						<view class="list-item">
-							<view class="list-item-c"><text>总金额：</text><text calss="num-style">{{item.totalAmount}}</text>元</view>
+							<view class="list-item-c"><text>总金额：</text><text class="num-style">{{item.totalAmount}}</text>元</view>
 							
 						</view>
 						<view class="list-item">
-							<view class="list-item-c"><text>欠款：</text><text calss="num-style" style="color:#e64340">{{item.totalAmount - item.downPayment}}</text>元</view>
+							<view class="list-item-c"><text>欠款：</text><text class="num-style" :style="{color:item.totalAmount - item.downPayment>0?'#e64340':''}">{{item.totalAmount - item.downPayment}}</text>元</view>
 							
 						</view>
 						<view class="list-item" style="justify-content:flex-end">
