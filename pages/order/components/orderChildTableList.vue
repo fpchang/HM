@@ -29,6 +29,8 @@
 		<uni-table border stripe emptyText="暂无更多数据">
 			<!-- 表头行 -->
 			<uni-tr>
+				
+				<uni-th align="center">订单来源</uni-th>
 				<uni-th align="center">入住日期</uni-th>
 				<uni-th align="center">截止日期</uni-th>
 				<uni-th align="center">姓名</uni-th>
@@ -41,6 +43,8 @@
 			</uni-tr>
 			<!-- 表格数据行 -->
 			<uni-tr v-for="item of fitlerUserNameOrderList">
+				
+				<uni-td>{{item.orderSouce_Zn}}</uni-td>
 				<uni-td>{{item.checkInStartDate}} <uni-tag size="mini" :circle="true" v-if="showNewTag(item.createTime)"
 						style="margin-left: 5px;" text="New" type="success" /></uni-td>
 				<uni-td>{{item.checkInEndDate}}</uni-td>

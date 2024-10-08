@@ -157,7 +157,6 @@ export default {
     if (window) {
       window.onresize = () => {
         this.widthTemp = Math.random(10);
-        console.log(this.widthTemp);
       };
     }
   },

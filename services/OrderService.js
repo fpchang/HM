@@ -4,6 +4,12 @@ class OrderService{
         this.DB=DB
     }
     /**
+     * 创建订单
+     */
+    addOrder(orderObj){
+        return this.DB.callFunction("hm_addOrder",{orderObj});
+    }
+    /**
      *  根据日期范围查找订单
      */
      

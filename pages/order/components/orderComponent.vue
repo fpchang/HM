@@ -66,20 +66,23 @@
 
 <script>
 	import CreateOrder from '../createOrder/createOrder'
-import orderChildCalendarList from './orderChildCalendarList2';
+import orderChildCalendarList from './orderChildCalendarList';
 	import orderChildTableList from './orderChildTableList';
 	import createOrderComponent from './createOrderComponent';
 	import orderChildList from './orderChildList.vue';
 	import dataBase from '../../../api/dataBase.js';
 	export default {
 		components: {
-    CreateOrder,
+    	CreateOrder,
 			createOrderComponent,
 			orderChildCalendarList,
 			orderChildTableList,
 			orderChildList
 		},
-		props: ['disHeightVal'],
+		props: {
+			disHeightVal:0,
+			createTime:0
+		},
 		data() {
 			return {
 				ss: 15868865907,
@@ -119,20 +122,17 @@ import orderChildCalendarList from './orderChildCalendarList2';
 			}
 		},
 		watch:{
-			hotel_id(){
-				this.$store.commit("getOrderListTodayAfter");
-
-		}},
+		
+	},
 		created() {
 			console.log('orderComponent create');
-			this.$store.commit("getOrderListTodayAfter");
 
 		},
 		onLoad: function() {
 			console.log('orderComponent Show')
 		},
 		mounted() {
-			this.testData(['t1', 't2'])
+			
 		},
 		methods: {
 			getOrderList() {

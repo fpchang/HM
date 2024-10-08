@@ -1,66 +1,72 @@
 <template>
-	<view>
-		
-			<u-calendar :height="calendarHeight" tipArr=[] :startYear="calendarStartYear" :end-year="calendarEndYear"></u-calendar>
+	<view style="display: flex;">
+		<view class="left-table-style">
+			<view class="th-style"><text>房间号</text></view>
+			<view class="td-style" v-for="item in roomType">
+				<text>
+					{{item.name}}
+				</text>
+			</view>
+		</view>
+		<view class="checkInTable-style" style="flex: 1;">
+			<scroll-view class="checkIntable-content-scroll" :scroll-y="false" :scroll-x="true">
+				<view class="checkIntable-content">
+					<view class="checkIntable-h-list">
+						<view class=" th-style checkIntable-h-list-h" style="background-color: #eee;"
+							v-for="item in orderDateRangeFormat">
+							<view style="display: flex;flex-direction: column;">
+								<text>{{item.de}}</text>
+								<text>{{item.dy}}</text>
+							</view>
+
+						</view>
+					</view>
+					<view class="checkIntable-h-list" v-for="it in checkInOrderListFormat">
+						<view :class="['checkIntable-h-list-h','td-style',(i.checkInEndDateTimeStamp-i.checkInStartDateTimeStamp)>1000*60*60*24?'isContinueCheckIn':'']"
+							v-for="i in it" @click="showDetail">
+							<view v-if="i.totalAmount - i.downPayment >0" style="position:absolute;right:5px;top:5px"><u-icon name="question-circle-fill" color="#ff0000" size="16"></u-icon> </view>
+							<text class="tx">{{i.userName?i.userName:''}}</text>
+							
+						</view>
+					</view>
+
+				</view>
+			</scroll-view>
+			<view class="checkIntable-h-head" style="flex-direction: column;">
+
+			</view>
+		</view>
 	</view>
 </template>
 
 <script>
+import OrderService from '../../../services/OrderService';
 	export
 	default {
-		props:[
-			'disHeightVal'
-		],
+		props: {},
 		data() {
 			return {
-				roomIdList: ["201", "202", "203", "204", "301", "302", "303"],
-				checkInOrderList: [{
-						createTime: 111,
-						romeId: "201",
-						roomArray: ["201", "202"],
-						userName: "张三",
-						checkInStartDateTimeStamp: 1720108800000,
-						checkInEndDateTimeStamp: 1720281600000,
-						checkInStartDate: "2024-07-05",
-						checkInEndDate: "2024-07-07",
-						phone: "13900991112",
-						orderSource: 1,
-						orderSouce_Zn: "携程",
-						orderStatus: 0
-					},
-					{
-						createTime: 222,
-						romeId: "202",
-						roomArray: ["203", "204"],
-						userName: "sbli",
-						checkInStartDateTimeStamp: 1720368000000,
-						checkInEndDateTimeStamp: 1720454400000,
-						checkInStartDate: "2024-07-08",
-						checkInEndDate: "2024-07-09",
-						phone: "13900991112",
-						orderSource: 1,
-						orderSouce_Zn: "携程",
-						orderStatus: 0
-					}
-
-				]
 			}
 
 		},
-		
-		created() {
-			console.log("val---",this.disHeightVal)
+	 created() {
+		this.getOrderList();
+		},
+		activated() {
+				
+		},
+		mounted() {
+			
 		},
 		computed: {
-			calendarHeight(){
-				let tabCheckHeight = '36px';
-				return `calc(100vh - ${tabCheckHeight} - ${this.disHeightVal})`;
+			hotel_id(){
+				return this.$store.state.hotel_id;
 			},
-			calendarStartYear(){
-				return new Date().getFullYear();
+			roomType(){
+				return this.$store.state.roomType ||{};
 			},
-			calendarEndYear(){
-				return new Date().getFullYear() + 1;
+			checkInOrderList(){
+				return this.$orderStore.state.orderListTodayAfter ||[];
 			},
 			dateTabList() {
 				let curDateTimeStamp = new Date().getTime();
@@ -70,30 +76,90 @@
 				}
 				return dateList
 			},
-			dateTabListFormat() {
-				
-				      let dyStr=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
-				      return this.dateTabList.map((item) =>{
-				        return {de:new Date(item).Format("MM-dd"),dy:dyStr[new Date(item).getDay()]}
-				      } )
-				    }
-			
+
+			orderDateRange() {
+				let rangeDate = [];
+				let minTime = Math.min(...this.checkInOrderList.map(item => item.checkInStartDateTimeStamp));
+				let maxTime = Math.max(...this.checkInOrderList.map(item => item.checkInEndDateTimeStamp));
+				for (let i = minTime; i <= maxTime; i = (i + 1000 * 60 * 60 * 24)) {
+					rangeDate.push(i);
+				}
+				return rangeDate;
+			},
+			orderDateRangeFormat() {
+
+				let dyStr = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+				return this.orderDateRange.map((item) => {
+					return {
+						de: new Date(item).Format("MM-dd"),
+						dy: dyStr[new Date(item).getDay()]
+					}
+				})
+			},
+			checkInOrderListFormat() {
+				if(this.checkInOrderList.length<1 ||this.roomType.length<1){
+					return [];
+				}
+				let result = [];
+				let or = this.orderDateRange;
+				let checkInOrderList = this.checkInOrderList;
+				for (let i = 0; i < this.roomType.length; i++) {
+
+
+					let roomType_id = this.roomType[i]._id;
+					result.push(fillRoomType(roomType_id));
+				}
+
+				function fillRoomType(roomType_id) {
+					let fillArray = [];
+					for (let j = 0; j < or.length; j++) {
+						let obj = checkInOrderList.find(item => {
+								let o = item.roomTypeArray.find(is=>is.roomType_id==roomType_id);
+							return o && (or[j] >= item.checkInStartDateTimeStamp &&
+								or[j] < item.checkInEndDateTimeStamp)
+						})
+						fillArray.push(obj || []);
+					}
+					return fillArray;
+				}
+				return result;
+			}
+
+
+		},
+		watch:{
+			hotel_id(newval,oldval){
+				this.$orderStore.commit("getOrderListTodayAfter",this.hotel_id);
+			}
+		},
+		methods: {
+			async getOrderList() {
+				uni.showLoading();
+				try {
+					const res  =await OrderService.getOrderListTodayAfter(this.hotel_id);	
+                this.$orderStore.commit("updateOrderListTodayAfter", res.data);
+				} catch (error) {
+					
+				}
+				uni.hideLoading();
+			},
 		}
 	}
 </script>
 
 <style lang="scss">
 	/* pages/management/checkIn/checkIn.wxss */
+	.checkIntable-content-scroll{
+		width: calc(100vw - 120px);
+		height: 100%;
+	}
 	.checkIntable-content {
-		display: flex;
-		width: 80vw;
-		overflow-x: scroll;
-		flex-direction: row;
-		font-size: 16px;
+		width: fit-content;
+		font-size: $uni-font-size-lg;
 	}
 
 	.left-table-style {
-		width: 20vw;
+		width: 120px;
 		display: flex;
 		flex-direction: column;
 		box-sizing: border-box;
@@ -103,20 +169,28 @@
 	.th-style {
 		height: 75px;
 		text-align: center;
-		line-height: 75px;
 		font-weight: bold;
+		display: flex;
+		align-items: center;
+		font-size: $uni-font-size-base;
+		justify-content: center;
+		letter-spacing: 2px;
 	}
 
 	.td-style {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		height: 80px;
 		text-align: center;
-		line-height: 80px;
-		font-size: 18px;
+		font-size: $uni-font-size-base;
 		margin-bottom: 10px;
+		position: relative;
 	}
 
 	.isContinueCheckIn {
-		background-color: rgba(238, 187, 187, 0.5);
+		font-weight: bold;
+		
 	}
 
 	.left-table-style .td-style {
@@ -128,18 +202,22 @@
 		display: flex;
 		flex-flow: row;
 		white-space: nowrap;
-		line-height: 35px;
 
 	}
 
 	.checkIntable-h-list .checkIntable-h-list-h {
-		width: 20vw;
+		width: 80px;
 		overflow: hidden;
 		vertical-align: center;
 		justify-content: center;
 		text-align: center;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-
+		.tx{
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			padding:0 4px;
+		}
 	}
 </style>

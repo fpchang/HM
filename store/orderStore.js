@@ -2,7 +2,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import DB from '../api/DB'
-import MenuService from '../services/MenuService';
+import OrderService from '../services/OrderService';
 Vue.use(Vuex); //vue的插件机制
 
 //Vuex.Store 构造器选项
@@ -16,8 +16,8 @@ const store = new Vuex.Store({
 			state.orderListTodayAfter = list;
 		},
 			//获取当天开始的订单
-            async getOrderListTodayAfter(state) {
-                const res  =await hotelService.getOrderListTodayAfter(state.hotel_id);	
+            async getOrderListTodayAfter(state,hotel_id) {
+                const res  =await OrderService.getOrderListTodayAfter(hotel_id);	
                 store.commit("updateOrderListTodayAfter", res.data);
             },
     }

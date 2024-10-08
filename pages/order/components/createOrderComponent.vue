@@ -67,6 +67,20 @@
           placeholder="请输入微信号或昵称"
         />
       </uni-forms-item>
+      <uni-forms-item label="定金">
+        <uni-easyinput
+          v-model="orderForm.downPayment"
+          type="number"
+          placeholder="请输入定金"
+        />
+      </uni-forms-item>
+      <uni-forms-item label="总金额">
+        <uni-easyinput
+          v-model="orderForm.totalAmount"
+          type="number"
+          placeholder="请输入总金额"
+        />
+      </uni-forms-item>
       <uni-forms-item label="备注">
         <uni-easyinput
           type="textarea"
@@ -89,7 +103,7 @@
 </template>
 
 <script>
-import DB from "../../../api/DB";
+import OrderService from "../../../services/OrderService";
 export default {
   data() {
     return {
@@ -160,7 +174,6 @@ export default {
       remainRoomTypeList: [],
       orderForm: {
         orderSource: 0,
-
         dateRangeArray: [],
         userName: "",
         // checkInStartDateTimeStamp: 1724824800000,
@@ -170,6 +183,8 @@ export default {
         phone: "",
         mark: "",
         wxNickName: "",
+        downPayment:0,
+        totalAmount:0
         //orderSouce_Zn: "携程",
         //orderStatus: 0,
       },
@@ -261,7 +276,7 @@ export default {
     numChange() {},
 
     getValidOrder() {},
-    submitForm() {
+    async submitForm() {
       uni.showLoading();
       this.submitLoading = true;
       let dateRange = this.dateRangeArrayFormat;
@@ -270,7 +285,6 @@ export default {
       );
       let obj = {
         hotel_id:this.hotel_id,
-       // createTime: new Date().getTime(),
         roomTypeArray: this.roomTypeArray,
         userName: this.orderForm.userName,
         checkInStartDateTimeStamp: dateRange[0],
@@ -278,29 +292,40 @@ export default {
         checkInStartDate: new Date(dateRange[0]).Format("yyyy/MM/dd HH:mm:ss"),
         checkInEndDate: new Date(dateRange[1]).Format("yyyy/MM/dd HH:mm:ss"),
         phone: this.orderForm.phone,
-		createrPhone:this.user.phone,
-		createrName:this.user.userName,
+		    createrPhone:this.user.phone,
+		    createrName:this.user.userName,
         orderSource: Number(this.orderForm.orderSource),
         wxNickName: this.orderForm.wxNickName,
         orderSouce_Zn: sourceObj.name_Zn,
         orderStatus: 0,
+        downPayment:Number(this.orderForm.downPayment),
+        totalAmount:Number(this.orderForm.totalAmount),
       };
-
-      DB.insertData("hm-order", obj)
-        .then((res) => {
-          uni.hideLoading();
-          this.submitLoading = false;
-          this.$emit("closePopup");
-        })
-        .catch((err) => {
-          uni.hideLoading();
-          uni.showModal({
-            confirmText: "确认",
-            content: "系统异常，请稍候再试",
-            showCancel: false,
-          });
-          this.submitLoading = false;
-        });
+      try {
+        await OrderService.addOrder(obj);
+       const res =  await OrderService.getOrderListTodayAfter(this.hotel_id);
+       this.$orderStore.commit("updateOrderListTodayAfter", res.data);
+      } catch (error) {
+        console.error("添加失败",error)
+      }
+      this.submitLoading = false;
+      uni.hideLoading();
+      this.$emit("closePopup");
+      // DB.insertData("hm-order", obj)
+      //   .then((res) => {
+      //     uni.hideLoading();
+      //     this.submitLoading = false;
+      //     this.$emit("closePopup");
+      //   })
+      //   .catch((err) => {
+      //     uni.hideLoading();
+      //     uni.showModal({
+      //       confirmText: "确认",
+      //       content: "系统异常，请稍候再试",
+      //       showCancel: false,
+      //     });
+      //     this.submitLoading = false;
+      //   });
     },
   },
 };

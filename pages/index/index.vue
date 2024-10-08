@@ -56,22 +56,22 @@
 					<view v-if="dataHasRead">
 						<!-- 	<keep-alive :id="new Date().getTime()"> -->
 						<share_app_to_weechat v-if="item.ComponentName=='share_app_to_weechat'"></share_app_to_weechat>
-						<gatherComponent :key="item.time" :disHeightVal="disHeightVal"
+						<gatherComponent :key="item.time" :createTime="item.time" :disHeightVal="disHeightVal"
 							v-if="item.ComponentName=='gatherComponent'">
 						</gatherComponent>
-						<orderComponent :key="item.time" :disHeightVal="disHeightVal"
+						<orderComponent :key="item.time" :createTime="item.time" :disHeightVal="disHeightVal"
 							v-if="item.ComponentName=='orderComponent'">
 						</orderComponent>
 
-						<hotelSetComponent :key="item.time" :disHeightVal="disHeightVal"
+						<hotelSetComponent :key="item.time" :createTime="item.time" :disHeightVal="disHeightVal"
 							v-if="item.ComponentName=='hotelSetComponent'">
 						</hotelSetComponent>
-						<roomTypeListComponent :key="item.time"
+						<roomTypeListComponent :key="item.time" :createTime="item.time"
 							v-if="item.ComponentName=='roomTypeListComponent'">
 						</roomTypeListComponent>
-						<employeeConmponent v-if="item.ComponentName=='employeeConmponent'"></employeeConmponent>
-						<menuListComponent v-if="item.ComponentName=='menuListComponent'"></menuListComponent>	
-					<scenicSpotListComponent v-if="item.ComponentName=='scenicSpotListComponent'"></scenicSpotListComponent>
+						<employeeConmponent :key="item.time" :createTime="item.time" v-if="item.ComponentName=='employeeConmponent'"></employeeConmponent>
+						<menuListComponent :key="item.time"  :createTime="item.time" v-if="item.ComponentName=='menuListComponent'"></menuListComponent>	
+					<scenicSpotListComponent :key="item.time" :createTime="item.time"  v-if="item.ComponentName=='scenicSpotListComponent'"></scenicSpotListComponent>
 					<!-- </keep-alive> -->
 
 					</view>
