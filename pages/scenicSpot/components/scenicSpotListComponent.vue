@@ -160,19 +160,7 @@ export default({
 </script>
 
 <style scoped lang="scss">
-.add-content-style {
-  display: flex;
-  justify-content: flex-end;
-  padding: 0 20px;
-  box-sizing: border-box;
-  background: #f4f4f4;
-  .control-panal {
-    display: flex;
-    padding: 10px 20px;
-    border-radius: 8px;
-    gap: 20px;
-  }
-}
+
 .card-container{
   display:flex;
   flex-wrap:wrap;
