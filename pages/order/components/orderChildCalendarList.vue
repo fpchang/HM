@@ -12,7 +12,7 @@
 			<scroll-view class="checkIntable-content-scroll" :scroll-y="false" :scroll-x="true">
 				<view class="checkIntable-content">
 					<view class="checkIntable-h-list">
-						<view class=" th-style checkIntable-h-list-h" style="background-color: #eee;"
+						<view class=" th-style checkIntable-h-list-h" style="background-color: #f4f4f4;"
 							v-for="item in orderDateRangeFormat">
 							<view style="display: flex;flex-direction: column;">
 								<text>{{item.de}}</text>
@@ -22,11 +22,15 @@
 						</view>
 					</view>
 					<view class="checkIntable-h-list" v-for="it in checkInOrderListFormat">
-						<view :class="['checkIntable-h-list-h','td-style',(i.checkInEndDateTimeStamp-i.checkInStartDateTimeStamp)>1000*60*60*24?'isContinueCheckIn':'']"
-							v-for="i in it" @click="showDetail">
-							<view v-if="i.totalAmount - i.downPayment >0" style="position:absolute;right:5px;top:5px"><u-icon name="question-circle-fill" color="#ff0000" size="16"></u-icon> </view>
-							<text class="tx">{{i.userName?i.userName:''}}</text>
-							
+						 <view class="checkIntable-h-list-h td-style"
+							v-for="i in it" @click="showDetail(i)">
+								<view v-for="is in i.orderList" class="tx-content">
+									<text  class="tx">{{is.userName?is.userName:''}}</text>
+								</view>
+								<view v-if="i.orderList.length>4"> 
+									<text class="tx">...</text>
+								</view> 
+							<uni-badge  :text="i.count" style="position: absolute; top:2px;right:2px"/>							
 						</view>
 					</view>
 
@@ -56,7 +60,7 @@ import OrderService from '../../../services/OrderService';
 				
 		},
 		mounted() {
-			
+			console.log("2222",this.checkInOrderListFormat)
 		},
 		computed: {
 			hotel_id(){
@@ -109,19 +113,30 @@ import OrderService from '../../../services/OrderService';
 					let roomType_id = this.roomType[i]._id;
 					result.push(fillRoomType(roomType_id));
 				}
-
+				console.log("checkInOrderList",this.checkInOrderList);
 				function fillRoomType(roomType_id) {
 					let fillArray = [];
+					//let fillObj ={orderList:[],count:0}
 					for (let j = 0; j < or.length; j++) {
-						let obj = checkInOrderList.find(item => {
+						let countT= 0;
+						let objArray = checkInOrderList.filter(item => {
 								let o = item.roomTypeArray.find(is=>is.roomType_id==roomType_id);
-							return o && (or[j] >= item.checkInStartDateTimeStamp &&
-								or[j] < item.checkInEndDateTimeStamp)
+								let flag = o && (or[j] >= item.checkInStartDateTimeStamp &&
+								or[j] < item.checkInEndDateTimeStamp);
+								if(flag){
+									countT+=o.count;
+								}
+							return flag;
 						})
-						fillArray.push(obj || []);
+						let obt= {orderList:objArray,count:countT}
+						fillArray.push(obt);
+						//fillObj.orderList.push(objArray || []);
+						
 					}
+					//fillObj.orderList=fillArray;
 					return fillArray;
 				}
+				console.log("resss",result)
 				return result;
 			}
 
@@ -133,6 +148,9 @@ import OrderService from '../../../services/OrderService';
 			}
 		},
 		methods: {
+			showDetail(arr){
+				console.log(arr)
+			},
 			async getOrderList() {
 				uni.showLoading();
 				try {
@@ -143,6 +161,14 @@ import OrderService from '../../../services/OrderService';
 				}
 				uni.hideLoading();
 			},
+			numRoom(arr=[]){
+				console.log(arr)
+				if(!arr.length){
+					return 0
+				}
+				
+				return 33
+			}
 		}
 	}
 </script>
@@ -179,13 +205,14 @@ import OrderService from '../../../services/OrderService';
 
 	.td-style {
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 		height: 80px;
 		text-align: center;
 		font-size: $uni-font-size-base;
-		margin-bottom: 10px;
 		position: relative;
+		font-size: 12px;
 	}
 
 	.isContinueCheckIn {
@@ -213,11 +240,21 @@ import OrderService from '../../../services/OrderService';
 		text-align: center;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		.tx{
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			padding:0 4px;
+		/**&:nth-child(even){
+			background-color: #f0efef
+		};*/
+		.tx-content{
+			&:nth-child(n+4){
+				display: none;
+			};
+			.tx{
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				padding:0 4px;
+				
+			}
 		}
+		
 	}
 </style>
