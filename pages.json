@@ -1,222 +1,220 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationStyle": "custom",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/mine/mine",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "uni_modules/uni-id-pages/pages/userinfo/deactivate/deactivate",
-			"style": {
-				"navigationBarTitleText": "注销账号"
-			}
-		},
-		{
-			"path": "uni_modules/uni-id-pages/pages/userinfo/userinfo",
-			"style": {
-				"navigationBarTitleText": "个人资料"
-			}
-		},
-		{
-			"path": "uni_modules/uni-id-pages/pages/userinfo/bind-mobile/bind-mobile",
-			"style": {
-				"navigationBarTitleText": "绑定手机号码"
-			}
-		},
-		{
-			"path": "uni_modules/uni-id-pages/pages/userinfo/cropImage/cropImage",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "uni_modules/uni-id-pages/pages/login/login-withoutpwd",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/login/login",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/order/createOrder/createOrder",
-			"style": {
-				"navigationBarTitleText": "创建订单"
-			}
-		},
-		{
-			"path": "pages/hotelManage/createRoomType/createRoomType",
-			"style": {
-				"navigationBarTitleText": "创建房型"
-			}
-		},
-		{
-			"path": "uni_modules/uni-id-pages/pages/register/register",
-			"style": {
-				"navigationBarTitleText": "注册"
-			}
-		},
-		{
-			"path": "uni_modules/uni-id-pages/pages/login/login-withpwd",
-			"style": {
-				"navigationBarTitleText": "账号密码登录"
-			}
-		},
-		{
-			"path": "uni_modules/uni-id-pages/pages/login/login-smscode-hm",
-			"style": {
-				"navigationBarTitleText": "手机验证码登录"
-			}
-		},
-		{
-			"path": "uni_modules/uni-id-pages/pages/register/register-by-email",
-			"style": {
-				"navigationBarTitleText": "邮箱验证码注册"
-			}
-		},
-		{
-			"path": "uni_modules/uni-id-pages/pages/retrieve/retrieve",
-			"style": {
-				"navigationBarTitleText": "重置密码"
-			}
-		},
-		{
-			"path": "uni_modules/uni-id-pages/pages/retrieve/retrieve-by-email",
-			"style": {
-				"navigationBarTitleText": "通过邮箱重置密码"
-			}
-		},
-		{
-			"path": "uni_modules/uni-id-pages/pages/common/webview/webview",
-			"style": {
-				"enablePullDownRefresh": false,
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "uni_modules/uni-id-pages/pages/userinfo/change_pwd/change_pwd",
-			"style": {
-				"enablePullDownRefresh": false,
-				"navigationBarTitleText": "修改密码"
-			}
-		},
-		{
-			"path": "uni_modules/uni-id-pages/pages/register/register-admin",
-			"style": {
-				"enablePullDownRefresh": false,
-				"navigationBarTitleText": "注册管理员账号"
-			}
-		},
-		{
-			"path": "uni_modules/uni-id-pages/pages/userinfo/set-pwd/set-pwd",
-			"style": {
-				"enablePullDownRefresh": false,
-				"navigationBarTitleText": "设置密码"
-			}
-		},
-		{
-			"path": "uni_modules/uni-id-pages/pages/userinfo/realname-verify/realname-verify",
-			"style": {
-				"enablePullDownRefresh": false,
-				"navigationBarTitleText": "实名认证"
-			}
-		},
-		{
-			"path": "pages/hotelManage/addEmployee/addEmployee",
-			"style": {
-				"navigationBarTitleText": "添加员工"
-			}
-		},
-		{
-			"path" : "pages/scenicSpot/addScenicSpot/addScenicSpot",
-			"style" : 
-			{
-				"navigationBarTitleText" : "新增景点"
-			}
-		},
-		{
-			"path" : "pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail",
-			"style" : 
-			{
-				"navigationBarTitleText" : "新增景点价目"
-			}
-		},
-		{
-			"path" : "pages/hotelManage/createHotel/createHotel",
-			"style" : 
-			{
-				"navigationBarTitleText" : "新增酒店"
-			}
-		},
-		{
-			"path" : "pages/catering/addMenuType/addMenuType",
-			"style" : 
-			{
-				"navigationBarTitleText" : "新增菜单分类"
-				
-			}
-		},
-		{
-			"path" : "pages/catering/addMenuDetail/addMenuDetail",
-			"style" : 
-			{
-				"navigationBarTitleText" : "新增菜单详情"
-				
-			}
-		},
-		{
-			"path" : "pages/catering/orderDishes/orderDishes",
-			"style" : 
-			{
-				"navigationStyle": "custom",
-				"navigationBarTitleText" : ""
-				
-			}
-		},
-		{
-			"path" : "pages/scenicSpot/showScenicSpot/showScenicSpot",
-			"style" : 
-			{
-				"navigationBarTitleText" : ""
-			}
-		}
-	],
-	"tabBar": {
-		"color": "#1d1d1f",
-		"selectedColor": "#0071e3",
-		"borderStyle": "black",
-		"backgroundColor": "#ffffff",
-		"list": [
-			{
-				"pagePath": "pages/index/index",
-				"iconPath": "static/img/home-black.png",
-				"selectedIconPath": "static/img/home-blue.png",
-				"text": "首页"
-			},
-			{
-				"pagePath": "pages/mine/mine",
-				"iconPath": "static/img/mine-black.png",
-				"selectedIconPath": "static/img/mine-blue.png",
-				"text": "我的"
-			}
-		]
-	},
-	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "",
-		"navigationBarBackgroundColor": "#FFFFFF",
-		"backgroundColor": "#FFFFFF"
-	},
-	"uniIdRouter": {}
+  "pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+  {
+      "path": "pages/catering/orderDishes/orderDishes",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": ""
+      }
+    },
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/mine/mine",
+      "style": {
+        "navigationBarTitleText": ""
+      }
+    },
+    {
+      "path": "uni_modules/uni-id-pages/pages/userinfo/deactivate/deactivate",
+      "style": {
+        "navigationBarTitleText": "注销账号"
+      }
+    },
+    {
+      "path": "uni_modules/uni-id-pages/pages/userinfo/userinfo",
+      "style": {
+        "navigationBarTitleText": "个人资料"
+      }
+    },
+    {
+      "path": "uni_modules/uni-id-pages/pages/userinfo/bind-mobile/bind-mobile",
+      "style": {
+        "navigationBarTitleText": "绑定手机号码"
+      }
+    },
+    {
+      "path": "uni_modules/uni-id-pages/pages/userinfo/cropImage/cropImage",
+      "style": {
+        "navigationBarTitleText": ""
+      }
+    },
+    {
+      "path": "uni_modules/uni-id-pages/pages/login/login-withoutpwd",
+      "style": {
+        "navigationBarTitleText": ""
+      }
+    },
+    {
+      "path": "pages/login/login",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/order/createOrder/createOrder",
+      "style": {
+        "navigationBarTitleText": "创建订单"
+      }
+    },
+    {
+      "path": "pages/hotelManage/createRoomType/createRoomType",
+      "style": {
+        "navigationBarTitleText": "创建房型"
+      }
+    },
+    {
+      "path": "uni_modules/uni-id-pages/pages/register/register",
+      "style": {
+        "navigationBarTitleText": "注册"
+      }
+    },
+    {
+      "path": "uni_modules/uni-id-pages/pages/login/login-withpwd",
+      "style": {
+        "navigationBarTitleText": "账号密码登录"
+      }
+    },
+    {
+      "path": "uni_modules/uni-id-pages/pages/login/login-smscode-hm",
+      "style": {
+        "navigationBarTitleText": "手机验证码登录"
+      }
+    },
+    {
+      "path": "uni_modules/uni-id-pages/pages/register/register-by-email",
+      "style": {
+        "navigationBarTitleText": "邮箱验证码注册"
+      }
+    },
+    {
+      "path": "uni_modules/uni-id-pages/pages/retrieve/retrieve",
+      "style": {
+        "navigationBarTitleText": "重置密码"
+      }
+    },
+    {
+      "path": "uni_modules/uni-id-pages/pages/retrieve/retrieve-by-email",
+      "style": {
+        "navigationBarTitleText": "通过邮箱重置密码"
+      }
+    },
+    {
+      "path": "uni_modules/uni-id-pages/pages/common/webview/webview",
+      "style": {
+        "enablePullDownRefresh": false,
+        "navigationBarTitleText": ""
+      }
+    },
+    {
+      "path": "uni_modules/uni-id-pages/pages/userinfo/change_pwd/change_pwd",
+      "style": {
+        "enablePullDownRefresh": false,
+        "navigationBarTitleText": "修改密码"
+      }
+    },
+    {
+      "path": "uni_modules/uni-id-pages/pages/register/register-admin",
+      "style": {
+        "enablePullDownRefresh": false,
+        "navigationBarTitleText": "注册管理员账号"
+      }
+    },
+    {
+      "path": "uni_modules/uni-id-pages/pages/userinfo/set-pwd/set-pwd",
+      "style": {
+        "enablePullDownRefresh": false,
+        "navigationBarTitleText": "设置密码"
+      }
+    },
+    {
+      "path": "uni_modules/uni-id-pages/pages/userinfo/realname-verify/realname-verify",
+      "style": {
+        "enablePullDownRefresh": false,
+        "navigationBarTitleText": "实名认证"
+      }
+    },
+    {
+      "path": "pages/hotelManage/addEmployee/addEmployee",
+      "style": {
+        "navigationBarTitleText": "添加员工"
+      }
+    },
+    {
+      "path": "pages/scenicSpot/addScenicSpot/addScenicSpot",
+      "style": {
+        "navigationBarTitleText": "新增景点"
+      }
+    },
+    {
+      "path": "pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail",
+      "style": {
+        "navigationBarTitleText": "新增景点价目"
+      }
+    },
+    {
+      "path": "pages/hotelManage/createHotel/createHotel",
+      "style": {
+        "navigationBarTitleText": "新增酒店"
+      }
+    },
+    {
+      "path": "pages/catering/addMenuType/addMenuType",
+      "style": {
+        "navigationBarTitleText": "新增菜单分类"
+      }
+    },
+    {
+      "path": "pages/catering/addMenuDetail/addMenuDetail",
+      "style": {
+        "navigationBarTitleText": "新增菜单详情"
+      }
+    },
+    {
+      "path": "pages/scenicSpot/showScenicSpot/showScenicSpot",
+      "style": {
+        "navigationBarTitleText": ""
+      }
+    },
+    {
+      "path": "pages/catering/tt/tt",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    }
+   
+  ],
+  "tabBar": {
+    "color": "#1d1d1f",
+    "selectedColor": "#0071e3",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/img/home-black.png",
+        "selectedIconPath": "static/img/home-blue.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "iconPath": "static/img/mine-black.png",
+        "selectedIconPath": "static/img/mine-blue.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#FFFFFF"
+  },
+  "uniIdRouter": {}
 }

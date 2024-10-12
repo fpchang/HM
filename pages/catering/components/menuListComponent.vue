@@ -1,7 +1,7 @@
 <template>
   <view>
-    <view class="add-content-style" style="">
-      <view class="control-panal" style="">
+    <view class="add-content-style">
+      <view class="control-panal">
         <!-- <button class="uni-button" size="mini" type="primary" @click="addMenuType()">添加菜单分类</button> -->
         <u-icon
           name="plus-circle-fill"

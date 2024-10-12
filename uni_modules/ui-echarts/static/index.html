@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title></title>
+		<style type="text/css">
+			html,
+			body,
+			.ui-echarts {
+				padding: 0;
+				margin: 0;
+				overflow: hidden;
+				background-color: transparent;
+				width: 100%;
+				height: 100%;
+			}
+			.ui-echarts {
+			}
+		</style>
+	</head>
+	<body>
+		<div class="ui-echarts" id="main" style="width: 100%;width: 100%;"></div>
+		<script type="text/javascript" src="./uni.webview.1.5.4.js"></script>
+		<script type="text/javascript" src="./echarts.min.js"></script>
+		<!-- <script type="text/javascript" src="./ecStat.min.js"></script>
+		<script type="text/javascript" src="./ecSimpleTransform.min.js"></script> -->
+		<script type="text/javascript">
+			let isReady = false;
+			let uiChart = null;
+			/**
+			 * 1: 准备就绪（webview）
+			 * 2: 初始化echarts
+			 * 3: 设置echarts option
+			 * 4: 导出图片
+			 * 5: 销毁echarts实例
+			 * */
+			/**
+			 * 初始化图表配置
+			 * */
+			function setOption (option) {
+ 				if (!uiChart) {
+					return;
+				}
+				uiChart.clear();
+				uiChart.setOption(option);
+				postMessage({ state: 3 });
+			}
+			/**
+			 * 初始化图表
+			 * */
+			function initChart () {
+				if (uiChart) {
+					return;
+				}
+				uiChart = echarts.init(document.getElementById('main'));
+				// echarts ready
+				postMessage({ state: 2 });
+			}
+			/**
+			 * 销毁实例
+			 * */
+			function clearChart() {
+				if (uiChart) {
+					return;
+				}
+				uiChart.clear();
+				postMessage({ state: 5 });
+			}
+			/**
+			 * 导出图片
+			 * */
+			function toImage () {
+				const imageStr = uiChart.getDataURL({
+					// [png|jpg|svg]注意：png, jpg 只有在 canvas 渲染器的时候可使用，svg 只有在使用 svg 渲染器的时候可用
+					// type: 'png',
+					// 导出的图片分辨率比例，默认为 1。
+					pixelRatio: 2,
+					backgroundColor: 'transparent',
+					// 忽略组件的列表，例如要忽略 toolbox 就是 ['toolbox']
+					// excludeComponents?: Array.<string>
+				});
+				postMessage({ state: 4, base64: imageStr });
+			}
+			/**
+			 * 推送消息
+			 * @onPostMessage
+			 * */
+			function postMessage (data) {
+				if (!isReady) {
+					console.error('ui-echarts 未准备就绪');
+					return;
+				}
+				uni.postMessage({ data: data });
+			}
+			document.addEventListener('UniAppJSBridgeReady', function() {
+				isReady = true;
+				// ready
+				postMessage({ state: 1 });
+				// init
+				initChart();
+			});
+		</script>
+	</body>
+</html>

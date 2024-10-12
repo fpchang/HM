@@ -77,18 +77,20 @@
         ></u-icon>
       </view>
     </view>
-    <uni-section class="mb-10" title="价目表" type="line"></uni-section>
-    <view  class="menu-detail-content" style="display:flex;flex-wrap:wrap">
+    <!-- <uni-section class="mb-10" title="价目表" type="line"></uni-section> -->
+     <view style="height:10px"></view>
+    <view  class="menu-detail-content" >
       <view class="menu-detail-content-item" v-for="item of menuItem._id['hm-menuDetail']" >
         <text class="itx-n">{{item.name}}</text>
         <view style="display: flex;"> 
           <text class="itx-p">{{item.price}}</text>
+          <text>元</text>
           <view class="icon-area">
             <u-icon
             v-if="isEdit"
               name="edit-pen-fill"
               color="#000"
-              size="20"
+              size="22"
               labelPos="bottom"
               labelSize="12px"
               @click="editMenuDetail(item)"
@@ -97,7 +99,7 @@
             v-if="isEdit"
               name="trash-fill"
               color="#000"
-              size="20"
+              size="22"
               labelPos="bottom"
               labelSize="12px"
               @click="deleteMenuDetail(item)"
@@ -364,7 +366,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding-left: 8px;
+  padding-left: 12px;
+  gap:10px;
 }
 .pr-item {
   font-size: 12px;
@@ -380,15 +383,15 @@ export default {
   }
 }
 .menu-detail-content{
-  display:flex;flex-wrap:wrap;
+  
   .menu-detail-content-item{
-    width:50%;display:flex;justify-content:space-between;
+    display:flex;justify-content:space-between;
     align-items: center;
     min-height: 35px;
     font-size: 14px;
     font-weight: 500;
     box-sizing: border-box;
-    &:nth-child(odd){
+    /**&:nth-child(odd){
       
         padding-right: 20px;
       
@@ -397,7 +400,7 @@ export default {
       
         padding-left: 20px;
       
-    };
+    };**/
   }
 }
 

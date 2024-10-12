@@ -76,7 +76,7 @@ export default {
         {
           value: "normal",
           text: "员工",
-        },
+        }
       ],
       employeeFormRules: {
         // 对name字段进行必填验证

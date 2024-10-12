@@ -108,7 +108,7 @@
 </template>
 
 <script>
-	import gatherComponent from './components/gatherComponent';
+	import gatherComponent from '../gather/components/gatherComponent';
 	import orderComponent from '../order/components/orderComponent';
 	import hotelSetComponent from './components/hotelSetComponent';
 	import createHotelComponent from '../hotelManage/components/createHotelComponent';
@@ -139,14 +139,14 @@
 
 				isSticky: false,
 				opacityVal: 1,
-				currentTab_index: 3,
+				currentTab_index: 0,
 				showDrawer: false,
 				clickTime:0,
 				tabList: [{
 					index: 0,
 					name: '关注',
 					time:0,
-					ComponentName: "share_app_to_weechat"
+					ComponentName: "gatherComponent"
 				}, {
 					index: 1,
 					name: '订房管理',
@@ -237,7 +237,7 @@
 			},
 			disHeightVal() {
 				let deviceType = getApp().globalData.systemInfo.deviceType;
-				return (deviceType == 'pc' ? '110px' : '170px')
+				return (this.isPcshow ? '110px' : '170px')
 
 			},
 			scrollHeight() {

@@ -30,7 +30,7 @@ class OrderService{
     let jql =
         `hotel_id=='${hotel_id}'&&orderStatus!=10&&(checkInStartDateTimeStamp>=${startTime} ||` +
         `(${endTime}<checkInEndDateTimeStamp && ${endTime}>checkInStartDateTimeStamp))`;
-    return   this.DB.getCollection("hm-order", jql);
+    return   this.DB.getCollectionGroupBy("hm-order", jql,"checkInStartDateTimeStamp asc");
    
 }
 /**
