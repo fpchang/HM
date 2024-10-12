@@ -1,5 +1,5 @@
 {
-    "name" : "HM2",
+    "name" : "莫干管家",
     "appid" : "__UNI__A73058A",
     "description" : "",
     "versionName" : "1.0.0",
@@ -41,7 +41,9 @@
                 ]
             },
             /* ios打包配置 */
-            "ios" : {},
+            "ios" : {
+                "dSYMs" : false
+            },
             /* SDK配置 */
             "sdkConfigs" : {}
         }

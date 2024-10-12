@@ -3,8 +3,7 @@
   {
       "path": "pages/catering/orderDishes/orderDishes",
       "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "定餐服务"
       }
     },
     {
@@ -179,13 +178,6 @@
       "path": "pages/scenicSpot/showScenicSpot/showScenicSpot",
       "style": {
         "navigationBarTitleText": ""
-      }
-    },
-    {
-      "path": "pages/catering/tt/tt",
-      "style": {
-        "navigationBarTitleText": "",
-        "enablePullDownRefresh": false
       }
     }
    

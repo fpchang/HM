@@ -81,6 +81,11 @@ $uni-font-size-paragraph:15px;
 /*操作文字颜色-蓝色*/
 $font-color-control:#06c;
 $font-color-control-hover:rgb(1, 85, 169);
+.flex-center{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 //pc 端弹出窗口
 .popup-content{
 		width: 500px;
