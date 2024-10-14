@@ -33,6 +33,10 @@
 			"description": "酒店坐标",
 			"bsonType": "array"
 		},
+		"contactPhone":{
+			"description": "联系电话",
+			"bsonType": "string"
+		},
 		"hotelIntroduction": {
 			"description": "酒店简介",
 			"bsonType": "string"

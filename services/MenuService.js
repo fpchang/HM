@@ -59,5 +59,16 @@ class MenuService{
 		  _id,menuDetail
 	  })
     }
+
+      /**
+     * 添加点菜单
+     * @param {*} orderDishesObj 
+     * @returns 
+     */
+      addOrderDishes(orderDishesObj){
+        return  DB.callFunction("hm_addOrderDishes", {
+            orderDishesObj
+            })
+    }
 }
 module.exports =new MenuService();

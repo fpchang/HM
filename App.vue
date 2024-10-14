@@ -7,7 +7,12 @@
 		},
 		onLaunch: function(ob) {
 			console.log("参数信息",ob)
-			console.log('App Launch XXXXXXXXXX',uni.getSystemInfoSync())
+			console.log('App Launch XXXXXXXXXX',uni.getSystemInfoSync());
+			let {hotel_id} = ob.query;
+			if(hotel_id){
+				console.log("cccc",hotel_id)
+				this.$store.commit("checkHotel",hotel_id);
+			}
 			this.initData();
 			
 		},

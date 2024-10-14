@@ -81,6 +81,13 @@ export default {
     hotel_id() {
       return this.$store.state.hotel_id;
     },
+    hotelList(){
+      return this.$store.state.hotelList;
+    },
+    hotelName(){
+      let tar= this.hotelList.find(item=>item._id == this.hotel_id);
+      return tar.hotelName
+    },
     menuList() {
       return this.$menuStore.state.menuList;
     },
@@ -145,6 +152,26 @@ export default {
       }
       uni.navigateBack();
     },
+    shareWx() {
+      uni.share({
+        provider: "weixin", //分享服务提供商（即weixin|qq|sinaweibo）
+        type: 0, //图文
+        scene: "WXSceneSession", //provider 为 weixin 时必选 WXSceneSession分享到聊天界面，WXSceneTimeline分享到朋友圈，WXSceneFavorite分享到微信收藏
+        title: "民宿点菜", //分享内容的标题
+        summary: "点菜内容", //分享内容的摘要
+        href: `https://env-00jxh1m2dpmq-static.normal.cloudstatic.cn/index.html#/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`, //跳转链接，type 为 0 时必选
+       //href: `http://localhost:8080/index.html#/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`, //跳转链接，type 为 0 时必选
+       imageUrl: "", //图片地址，type 为 0、2、5 时必选
+        success(res) {
+          //成功返回的参数
+          console.log(res);
+        },
+        fail(err) {
+          //失败返回的参数
+          console.log(err);
+        },
+      });
+    }
   },
   watch: {
     hotel_id() {

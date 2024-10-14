@@ -27,6 +27,13 @@ class HotelService{
               ]));
          
     }
+    /**
+     * 根据id获取酒店信息
+     */
+    getHotelInfoById(hotel_id){
+        return this.DB.getCollection("hm-hotel",{_id:hotel_id})
+    }
+    
     /** 
      * 获取当前酒店房型信息
     */

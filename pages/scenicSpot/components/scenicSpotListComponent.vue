@@ -97,6 +97,7 @@ export default({
     this.$scenicSpotStore.commit("getScenicSpotList",this.hotel_id);
   },
   methods: {
+	  shareWx(){},
     addScenicSpot(item={}){
       this.type=0;
 				if(this.$store.state.isPcShow){
