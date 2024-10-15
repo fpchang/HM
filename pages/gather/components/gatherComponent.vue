@@ -1,5 +1,5 @@
 <template>
-  <view>
+  <view class="gather">
     <uni-section class="mb-10" title="待办" type="line"></uni-section>
 
     <view style="display: flex; justify-content: center">
@@ -127,6 +127,9 @@ import gatherCardComponent from './gatherCardComponent.vue';
 </script>
 
 <style lang="scss">
+.gather{
+  padding:0 20px;
+}
 .card-container {
   display: flex;
   flex-wrap: wrap;
