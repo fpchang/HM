@@ -70,5 +70,14 @@ class MenuService{
             orderDishesObj
             })
     }
+
+    /**已下订单列表 */
+    getOrderDishesList(hotel_id){
+        return DB.getCollectionGroupBy("hm-orderDishes",{hotel_id},"mealDateTimestamp asc")
+    }
+    /**删除已下订单列表 */
+    removeOrderDishes(_id){
+        return this.DB.callFunction("hm_deleteOrderDishes",{_id})
+    }
 }
 module.exports =new MenuService();

@@ -1,7 +1,7 @@
 <template>
   <view>
-    <view class="add-content-style" style="">
-     <view class="control-panal" style="">
+    <view class="add-content-style">
+     <view class="control-panal">
      <u-icon
         name="plus-circle-fill"
         color="#000"
@@ -58,6 +58,7 @@ export default({
   props: {},
   data() {
     return {
+
       widthTemp:0,
       type:0,
       targetObj:{}

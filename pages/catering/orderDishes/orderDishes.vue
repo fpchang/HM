@@ -41,17 +41,21 @@
 							</view>
 							<view v-for="i of item._id['hm-menuDetail']" class="menuDetail-item">
 
-								<view>
-									<view><text style="padding-left:15px">{{i.name}}</text> </view>
+								<view  style="display:flex;align-items:center;">
+									<view ><text style="padding-left:15px">{{i.name}}</text> </view>
+									
+								</view>
+								<view style="display:flex;align-items:center"> 
 									<view class="price-style"><text>￥</text><text>{{i.price}}</text> </view>
+									<view class="ad-lose-num flex-center">
+										<uni-icons type="minus-filled" size="24" color="orange" @click="loseMenuCount(i)"
+											v-if="i.checkCount>0"></uni-icons>
+										<text style="padding:0 8px" v-if="i.checkCount>0">{{i.checkCount}}</text>
+										<uni-icons type="plus-filled" size="24" color="orange"
+											@click="addMenuCount(i)"></uni-icons>
+									</view>
 								</view>
-								<view class="ad-lose-num flex-center">
-									<uni-icons type="minus-filled" size="24" color="orange" @click="loseMenuCount(i)"
-										v-if="i.checkCount>0"></uni-icons>
-									<text style="padding:0 8px" v-if="i.checkCount>0">{{i.checkCount}}</text>
-									<uni-icons type="plus-filled" size="24" color="orange"
-										@click="addMenuCount(i)"></uni-icons>
-								</view>
+								
 
 								<!-- <u-number-box v-if="i.checkCount" :min="0" integer v-model="i.checkCount">
 									<input slot="input" style="width: 40px;text-align: center;" class="input"
@@ -458,15 +462,17 @@
 
 			.menuDetail {
 				.menuDetail-item {
-					height: 60px;
+					min-height: 40px;
 					display: flex;
 					align-items: center;
 					justify-content: space-between;
-					padding: 0 12px;
+					padding: 0 12px 12px 12px;
+					font-size: 15px;
+					font-weight: 400;
 
 					.price-style {
 						color: #ff0000;
-						padding: 4px 0 0 15px;
+						padding: 0 15px;
 					}
 				}
 			}

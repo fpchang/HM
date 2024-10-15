@@ -60,7 +60,7 @@ import OrderService from '../../../services/OrderService';
 				
 		},
 		mounted() {
-			console.log("2222",this.checkInOrderListFormat)
+			
 		},
 		computed: {
 			hotel_id(){
@@ -113,7 +113,7 @@ import OrderService from '../../../services/OrderService';
 					let roomType_id = this.roomType[i]._id;
 					result.push(fillRoomType(roomType_id));
 				}
-				console.log("checkInOrderList",this.checkInOrderList);
+		
 				function fillRoomType(roomType_id) {
 					let fillArray = [];
 					//let fillObj ={orderList:[],count:0}
@@ -136,7 +136,7 @@ import OrderService from '../../../services/OrderService';
 					//fillObj.orderList=fillArray;
 					return fillArray;
 				}
-				console.log("resss",result)
+			
 				return result;
 			}
 
@@ -149,7 +149,7 @@ import OrderService from '../../../services/OrderService';
 		},
 		methods: {
 			showDetail(arr){
-				console.log(arr)
+			
 			},
 			async getOrderList() {
 				uni.showLoading();
@@ -162,7 +162,7 @@ import OrderService from '../../../services/OrderService';
 				uni.hideLoading();
 			},
 			numRoom(arr=[]){
-				console.log(arr)
+			
 				if(!arr.length){
 					return 0
 				}

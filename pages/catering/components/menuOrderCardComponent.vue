@@ -1,174 +1,142 @@
 <template>
-  <view>
+  <view class="menuOrderCardComponent">
     <view class="header-style">
       <view class="tit-style"
-        ><text style="">{{ scenicSpot.scenicSport_name }}</text></view
+        ><text style="">{{ orderDishesItem.userName }} </text></view
       >
       <view
         style="flex: 1; display: flex; justify-content: flex-end; gap: 15px"
       >
+      
         <u-icon
-        v-if="isEdit"
-          name="plus-circle-fill"
-          color="#000"
-          size="22"
-          label="添加"
-          labelPos="bottom"
-          labelSize="12px"
-          @click="addScenicSpotDetail"
-        ></u-icon>
-        <u-icon
-        v-if="isEdit"
           name="trash-fill"
           color="#000"
           size="22"
-          label="删除"
+          label="撤销订单"
           labelPos="bottom"
           labelSize="12px"
-          @click="deleteScenicSpot"
+          @click="deleteOrderDishes"
         ></u-icon>
-        <u-icon
-          v-if="isEdit"
-          name="edit-pen-fill"
-          color="#000"
-          size="22"
-          label="编辑"
-          labelPos="bottom"
-          labelSize="12px"
-          @click="editScenicSpot"
-        ></u-icon>
-        <u-icon
-        name="grid-fill"
-        :color="isEdit?'#06c':'#000'"
-        size="22"
-        label="编辑模式"
-        :labelColor="isEdit?'#06c':'#000'"
-        labelPos="bottom"
-        labelSize="12px"
-        @click="moreControl"
-      ></u-icon>
-        <!-- <u-icon
-          name="share-fill"
-          color="#000"
-          size="22"
-          label="分享"
-          labelPos="bottom"
-          labelSize="12px"
-          @click="shareWx"
-        ></u-icon> -->
+
       </view>
     </view>
-    <view class="scenicSpot-content-style">
-      <view class="sc-item">
-        <view class="tit"><text>地址:</text></view
+    <!-- <uni-section class="mb-10" title="价目表" type="line"></uni-section> -->
+    <view class="card-nav">
+      <view class="card-nav-item">
+        <view class="tit"><text>就餐日期:</text></view
         ><view style="flex: 1" class="text-overflow-ellipsis"
-          ><text class="add-text-style" @click="addressEvent(scenicSpot.scenicSport_name)">{{ scenicSpot.scenicSport_name }}</text></view
+          ><text class="add-text-style" >{{ orderDishesItem.mealDate }}</text></view
         ></view
       >
-      <view class="sc-item">
-        <view class="tit"> <text>联系人:</text></view>
+      <view class="card-nav-item">
+        <view class="tit"> <text>联系电话:</text></view>
         <view style="flex: 1" class="text-overflow-ellipsis">
-          <text>{{ scenicSpot.scenicSport_user }}</text
-          >【
+          【
           <text
-            @click="makePhoneCallEvent(scenicSpot.scenicSport_phone)"
+            @click="makePhoneCallEvent(orderDishesItem.phone)"
             class="phone-style"
-            >{{ scenicSpot.scenicSport_phone }}</text
+            >{{ orderDishesItem.phone }}</text
           >】
         </view>
       </view>
     </view>
-    <uni-section class="mb-10" title="价目表" type="line"></uni-section>
-    <view v-for="item of scenicSpot._id['hm-scenicSpotPriceDetail']">
-      <uni-row class="uni-row">
-        <uni-col :span="10" class="col-pa">
-          <view>
-            <text>
-              {{ item.package_name }}
-            </text>
-          </view>
-        </uni-col>
-        <uni-col :span="10" class="col-pa">
-          <view class="pr-item"
-            >官方价：<text style="text-decoration: line-through"
-              >{{ item.scenicSpot_price }}元</text
-            ></view
-          >
-          <view class="pr-item"
-            >结算价：<text>{{ item.settlement_price }}元</text></view
-          >
-          <view class="pr-item"
-            >出售价：<text>{{ item.offering_price }}元</text></view
-          >
-        </uni-col>
-        <uni-col :span="4" class="col-pa">
+    <view  class="menu-detail-content" >
+      <view class="menu-detail-content-item" v-for="item of orderDishesItem.checkMenuList" >
+        <text class="itx-n">{{item.name}}<text v-if="item.checkCount>1">（{{item.checkCount}}）</text></text>
+        <view style="display: flex;"> 
+          <text class="itx-p">￥{{item.price *item.checkCount}} </text>
+   
           <view class="icon-area">
             <u-icon
             v-if="isEdit"
               name="edit-pen-fill"
               color="#000"
-              size="20"
+              size="22"
               labelPos="bottom"
               labelSize="12px"
-              @click="editScenicSportPrice(item)"
+              @click="editMenuDetail(item)"
             ></u-icon>
             <u-icon
             v-if="isEdit"
               name="trash-fill"
               color="#000"
-              size="20"
+              size="22"
               labelPos="bottom"
               labelSize="12px"
-              @click="deleteScenicSportPrice(item)"
+              @click="deleteMenuDetail(item)"
             ></u-icon>
           </view>
-        </uni-col>
-      </uni-row>
-      <u-line></u-line>
+        </view>
+        
+            
+      </view>
+       
     </view>
-    <uni-popup ref="popupScenicSpotDetail" background-color="transprant">
+    <view class="card-bottom">
+      <view class="priceTotal"> <text style="font-weight:bold">总价:</text> <text style="color:#ff0000;padding:0 8px">￥{{totalPrice}}</text></view>
+     
+    </view>
+ 
+    <!-- <uni-popup ref="popupMenuDetail" background-color="transprant">
       <view class="popup-content">
         <view class="create-order-title-style">{{
-          type == 1 ? "修改套餐" : "创建套餐"
+          type == 1 ? "修改菜单" : "创建菜单"
         }}</view>
         <view class="comContent">
-          <addScenicSpotDetailComponent
+          <addMenuDetailComponent
             @closePopup="closePopup"
             :type="type"
             :targetObj="targetObj"
-          ></addScenicSpotDetailComponent>
+          ></addMenuDetailComponent>
         </view>
       </view>
-    </uni-popup>
+    </uni-popup> -->
   </view>
 </template>
 <script>
-import addScenicSpotDetailComponent from "./addScenicSpotDetailComponent";
-import ScenicSpotService from "../../../services/ScenicSpotService";
+//import addMenuDetailComponent from "./addMenuDetailComponent";
+import MenuService from "../../../services/MenuService";
 export default {
-  name: "scenicSpotCardComponent",
+  name: "menuOrderCardComponent",
   props: {
-    scenicSpot: Object,
+    orderDishesItem: Object,
   },
   components: {
-    addScenicSpotDetailComponent,
+   // addMenuDetailComponent,
   },
-  //inject:["getSS"],
   data() {
     return {
+      submitLoading:false,
       type: 0,
       isEdit: false,
       targetObj: {},
     };
   },
   computed: {
-    scenicSpot_id() {
-      return this.scenicSpot._id._value;
+    order_id() {
+      return this.orderDishesItem._id;
     },
+    totalPrice(){
+      let totalprice=0;
+      try {
+        this.orderDishesItem.checkMenuList.map(item=>{
+        totalprice+= (item.price * item.checkCount)
+      });
+      return totalprice;
+      } catch (error) {
+        return 0;
+      }
+      
+    }
   },
 
   watch: {
-    scenicSpot_id() {},
+    order_id() {},
+  },
+  filter:{
+    formatMealType(val){
+      return val=='lunch'?'午餐':'晚餐';
+    }
   },
   methods: {
     shareWx() {
@@ -193,40 +161,40 @@ export default {
     moreControl(){
       this.isEdit = !this.isEdit
     },
-    addScenicSpotDetail() {
+    addMenuDetail() {
       this.type = 0;
-      this.targetObj = this.scenicSpot;
+      this.targetObj = this.orderDishesItem;
       if (this.$store.state.isPcShow) {
-        this.$refs.popupScenicSpotDetail.open();
+        this.$refs.popupMenuDetail.open();
         return;
       }
       uni.navigateTo({
-        url: `/pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail?type=${
+        url: `/pages/catering/addMenuDetail/addMenuDetail?type=${
           this.type
-        }&&targetObj=${JSON.stringify(this.scenicSpot)}`,
+        }&&targetObj=${JSON.stringify(this.orderDishesItem)}`,
       });
     },
-    editScenicSportPrice(item) {
+    editMenuDetail(item) {
       this.type = 1;
       this.targetObj = item;
       if (this.$store.state.isPcShow) {
-        this.$refs.popupScenicSpotDetail.open();
+        this.$refs.popupMenuDetail.open();
         return;
       }
       uni.navigateTo({
-        url: `/pages/scenicSpot/addSencicSpotDetail/addSencicSpotDetail?type=${
+        url: `/pages/catering/addMenuDetail/addMenuDetail?type=${
           this.type
         }&&targetObj=${JSON.stringify(item)}`,
       });
     },
-    async deleteScenicSportPrice(item) {
+    async deleteMenuDetail(item) {
       console.log(item);
-      if (!this.scenicSpot_id) {
+      if (!this.order_id) {
         return;
       }
       const conf = await uni.showModal({
-        title: "确认删除价格信息",
-        content: "删除后将同步删除所有价格信息，并且无法恢复,确认删除吗?",
+        title: "确认删除菜名",
+        content: "删除后无法恢复,确认删除吗?",
         cancelText: "取消",
         confirmText: "确认",
       });
@@ -235,23 +203,35 @@ export default {
       }
       uni.showLoading();
       try {
-        const res = await ScenicSpotService.removeScenicSpotDetail(item._id);
+        const res = await MenuService.removeMenuDetail(item._id);
         console.log("删除成功");
-        this.$scenicSpotStore.commit("getScenicSpotList", this.hotel_id);
+        this.$menuStore.commit("getMenuList", this.hotel_id);
       } catch (error) {
         console.log("删除失败", error);
       }
     },
-    editScenicSpot() {
-      this.$emit("editScenicSpot", this.scenicSpot);
+    editMenuType() {
+      this.$emit("editMenuType", this.orderDishesItem);
     },
-    async deleteScenicSpot() {
-      if (!this.scenicSpot_id) {
+
+    // editMenuTypeDetail(){
+    //   this.type=1;
+    //   if(this.$store.state.isPcShow){
+    // 			this.$refs.popupMenuTypeDetail.open();
+    // 			return;
+    // 		}
+    //     uni.navigateTo({
+    // 			url:`/pages/orderDishesItem/addMenuDetail/addMenuDetail?type=${
+    //       this.type}&&targetObj=${JSON.stringify(this.orderDishesItem)}`
+    // 		})
+    // },
+    async deleteOrderDishes() {
+      if (!this.order_id) {
         return;
       }
       const conf = await uni.showModal({
-        title: "确认删除景点",
-        content: "删除后将同步删除所有价格信息，并且无法恢复,确认删除吗?",
+        title: "确认删除订单",
+        content: "删除后无法恢复,确认删除吗?",
         cancelText: "取消",
         confirmText: "确认",
       });
@@ -259,19 +239,28 @@ export default {
         return;
       }
       uni.showLoading();
+      this.submitLoading = true;
       try {
-        const res = await ScenicSpotService.removeScenicSpot(
-          this.scenicSpot_id
+        const res = await MenuService.removeOrderDishes(
+          this.order_id
         );
         console.log("删除成功");
-        this.$scenicSpotStore.commit("getScenicSpotList", this.hotel_id);
+        this.submitLoading = false;
+        this.$emit("getOrderDishesList")
       } catch (error) {
-        console.log("删除失败", error);
+        console.log("添加失败", er);
+            this.submitLoading = false;
+            uni.hideLoading();
+          //   uni.showModal({
+          //     content: "系统异常，请稍候再试！",
+          //     confirmText: "确认",
+          //   });
+          // });
       }
     },
     closePopup() {
       if (this.$store.state.isPcShow) {
-        this.$refs.popupScenicSpotDetail.close();
+        this.$refs.popupMenuDetail.close();
         return;
       }
       uni.navigateBack();
@@ -286,7 +275,7 @@ export default {
     },
     //手机则拨打电话，其它设备复制
     makePhoneCallEvent(phone) {
-      console.log(phone, uni.getSystemInfoSync());
+      
 
       let deviceType = uni.getSystemInfoSync().deviceType;
       if (deviceType == "phone") {
@@ -307,7 +296,9 @@ export default {
     },
   },
   // 组件周期函数--监听组件挂载完毕
-  mounted() {},
+  mounted() {
+   
+  },
   // 组件周期函数--监听组件数据更新之前
   beforeUpdate() {},
   // 组件周期函数--监听组件数据更新之后
@@ -322,6 +313,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.menuOrderCardComponent{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 .header-style {
   display: flex;
   align-items: center;
@@ -331,8 +327,13 @@ export default {
     color: $uni-color-title;
   }
 }
-.scenicSpot-content-style {
-  .sc-item {
+.card-bottom{
+  flex: 1;
+  display: flex;
+  align-items: end;
+}
+.card-nav{
+  .card-nav-item {
     height: 30px;
     display: flex;
     align-items: center;
@@ -366,6 +367,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  padding-left: 12px;
+  gap:10px;
 }
 .pr-item {
   font-size: 12px;
@@ -380,4 +383,33 @@ export default {
     color: #265c34;
   }
 }
+.menu-detail-content{
+  
+  .menu-detail-content-item{
+    display:flex;justify-content:space-between;
+    align-items: center;
+    min-height: 35px;
+    font-size: 14px;
+    font-weight: 500;
+    box-sizing: border-box;
+    /**&:nth-child(odd){
+      
+        padding-right: 20px;
+      
+    };
+    &:nth-child(even){
+      
+        padding-left: 20px;
+      
+    };**/
+  }
+}
+
+.priceTotal{
+  flex: 1;
+  display: flex;
+  justify-content: end;
+}
+
+
 </style>

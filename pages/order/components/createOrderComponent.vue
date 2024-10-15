@@ -255,7 +255,6 @@ export default {
           },
         })
         .then((res) => {
-          console.log("前端数据", res);
           this.remainRoomTypeList = res.result.map((it) => {
             it.selectCount = 1;
             return it;
@@ -267,7 +266,6 @@ export default {
     //复选框事件
     roomTypeCheckboxChange(e) {
       let valArray = e.detail.value;
-      console.log(e)
       this.remainRoomTypeList = this.remainRoomTypeList.map((item) => {
         item.checked = valArray.includes(item._id);
         return item;
