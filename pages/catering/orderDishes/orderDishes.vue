@@ -1,6 +1,6 @@
 <template>
-	<view class="orderDishes-container" v-if="hotel._id">
-		<view class="header-title" style=""><text>【{{hotel.hotelName}}】用餐预定</text></view>
+	<view class="orderDishes-container">
+		<view class="header-title" style=""><text>【{{hotel.hotelName }}】用餐预定</text></view>
 		<!-- <uni-card :is-shadow="false">
 			<text class="uni-body">这是一个基础卡片示例，内容较少，此示例展示了一个没有任何属性不带阴影的卡片。</text>
 		</uni-card> -->
@@ -150,7 +150,12 @@
 
 		},
 		created(params) {
-			console.log("created", params);
+			console.log("created", params,uni.getSystemInfoSync());
+			try {
+				document.getElementsByTagName('uni-page-head')[0].style.display = 'none';	
+			} catch (error) {
+				
+			}
 			this.getData();
 		},
 		data() {
@@ -219,6 +224,9 @@
 		computed: {
 			hotel_id() {
 				return this.$store.state.hotel_id;
+			},
+			isPcshow(){
+				return this.$store.state.isPcshow;
 			},
 			checkMenuList() {
 				let resultArray = [];

@@ -86,7 +86,10 @@ $font-color-control-hover:rgb(1, 85, 169);
 	align-items: center;
 	justify-content: center;
 }
-
+.flx-column{
+	display: flex;
+	flex-direction: column;
+}
 //pc 端弹出窗口
 .popup-content{
 		width: 500px;

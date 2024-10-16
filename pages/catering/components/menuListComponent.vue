@@ -4,8 +4,11 @@
 			<view class="left-panal">
 				<uni-data-checkbox v-model="tabRadioVal" :localdata="tabitems"></uni-data-checkbox>
 			</view>
+			<view class="control-panal" v-show="tabRadioVal==0">
+				<u-icon name="plus-circle-fill" color="#000" size="22" label="点菜" labelPos="bottom" labelSize="12px"
+					@click="addOrderDishes"></u-icon>
+			</view>
 			<view class="control-panal" v-show="tabRadioVal==1">
-				<!-- <button class="uni-button" size="mini" type="primary" @click="addMenuType()">添加菜单分类</button> -->
 				<u-icon name="plus-circle-fill" color="#000" size="22" label="添加菜单" labelPos="bottom" labelSize="12px"
 					@click="addMenuType"></u-icon>
 				<u-icon name="share-fill" color="#000" size="22" label="分享至微信" labelPos="bottom" labelSize="12px"
@@ -125,6 +128,25 @@
       this.getOrderDishesList();
 		},
 		methods: {
+			addOrderDishes(){
+				try {
+					if(this.isPcShow){
+						let href = "#/pages/catering/orderDishes/orderDishes?hotel_id=66f4d677e4ec9dbeca1f8ff9";
+							window.open(href, '_blank');
+							return;
+					}
+					
+					uni.navigateTo({
+					url:"/pages/catering/orderDishes/orderDishes"
+				})
+				} catch (error) {
+					console.error(error);
+					uni.navigateTo({
+					url:"/pages/catering/orderDishes/orderDishes"
+				})
+				}
+				
+			},
 			addMenuType(item = {}) {
 				this.type = 0;
 				if (this.$store.state.isPcShow) {
