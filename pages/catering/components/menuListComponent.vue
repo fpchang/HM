@@ -131,18 +131,18 @@
 			addOrderDishes(){
 				try {
 					if(this.isPcShow){
-						let href = "#/pages/catering/orderDishes/orderDishes?hotel_id=66f4d677e4ec9dbeca1f8ff9";
+						let href = `#/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`;
 							window.open(href, '_blank');
 							return;
 					}
 					
 					uni.navigateTo({
-					url:"/pages/catering/orderDishes/orderDishes"
+					url:`/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`
 				})
 				} catch (error) {
 					console.error(error);
 					uni.navigateTo({
-					url:"/pages/catering/orderDishes/orderDishes"
+					url:`/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`
 				})
 				}
 				

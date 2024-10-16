@@ -152,7 +152,10 @@
 		created(params) {
 			console.log("created", params,uni.getSystemInfoSync());
 			try {
-				document.getElementsByTagName('uni-page-head')[0].style.display = 'none';	
+				if(this.isPcshow){
+					document.getElementsByTagName('uni-page-head')[0].style.display = 'none';	
+				}
+				
 			} catch (error) {
 				
 			}
