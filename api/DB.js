@@ -7,9 +7,9 @@ class DB{
 	return  uniCloud.callFunction({
 	  	name:name,
 	  	data:Object.assign(data,{
-        $_user:uni.getStorageSync('user'),
-        $_token:uni.getStorageSync('token'),
-        $_secret:getApp().globalData.secret
+        hm_user:uni.getStorageSync('user'),
+        hm_token:uni.getStorageSync('hm_token'),
+        hm_secret:getApp().globalData.secret
       })
 	  })
   }

@@ -3,7 +3,7 @@
 exports.main = async (event, context) => {
 	//event为客户端上传的参数
 	let {hotel_id} =event;
-	console.log("hm-getRoomType",event);
+	console.log("hm-getRoomType",event,context);
 	const dbJQL = uniCloud.databaseForJQL({
 			event,
 			context

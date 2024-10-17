@@ -150,8 +150,7 @@ import DB from '../../api/DB';
 						uniCloud.callFunction({
 							name:"hm-sendSms",
 							data:{
-								smsCode:this.userForm.smsCode,
-								appId:getApp().globalData.systemInfo.appId,
+								phone:this.userForm.phone,
 								templateId:"100"
 							}
 						}).then(res=>{
@@ -174,10 +173,11 @@ import DB from '../../api/DB';
 					DB.callFunction('hm_login',{userForm:this.userForm}).then(res=>{
 						console.log("login result----",res)
 						
-						if(res.result.errCode==0){
+						//if(res.result.errCode==0){
 							console.log("登录成功");
+							uni.setStorageSync("hm_token",res.result);
 							 this.getUserInfo();
-						}
+						
 						
 					}).catch(error=>{
 						console.error("登录注册失败",error);

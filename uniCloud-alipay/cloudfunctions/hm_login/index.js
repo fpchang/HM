@@ -9,40 +9,43 @@ exports.main = async (event, context) => {
 	let {
 		
 		userForm,
-		token
+		hm_token
 	} = event;
 	let {smsCode,phone}=userForm;
+	
 	const secret = "****";
-	const newToken = tokenEvent.getToken({name:"123"},secret,new Date().getTime());
-	const verifT = tokenEvent.verifyToken(newToken,secret);
-	console.log("token----",verifT.exp);
-// if(token){
-// 	const verifT = verifyToken(newToken,secret);
-// 	if(new Date().getTime()>verifT.exp){
-// 		retrn 
-// 	}
-// }
-console.warn("1111", new Date().getTime()-starttime);
+	
+	//const verifT = tokenEvent.verifyToken(newToken,secret);
+	//console.log("token----",verifT.exp);
 		const db = uniCloud.database();
 		const dbJQL = uniCloud.databaseForJQL({ // 获取JQL database引用，此处需要传入云函数的event和context，必传
 			event,
 			context
-		})
+		});
+		//检验短信正确性
+		
+		
+		
 		try{
-			console.warn("2222", new Date().getTime()-starttime);
-			const user = await dbJQL.collection('hm-user').where(`phone=='${phone}'`).get();
-			//const user = await db.collection('hm-user').where({"phone":phone}).get();
-			console.warn("3333",user, new Date().getTime()-starttime);
-			if(user.data.length>0){
-				return user;
+			const userRes = await dbJQL.collection('hm-user').where(`phone=='${phone}'`).get();			
+			if(userRes.data.length>0){				
+				const user  = userRes.data[0];
+				//更新token
+				const newToken = tokenEvent.getToken({phone:phone},secret,(new Date().getTime()+1000*60*60*24*30));
+			    const upuserRes= await dbJQL.collection('hm-user').doc(user._id).update({'hm_token':newToken});
+				user.hm_token =newToken;
+				return newToken;
 			}
+				//注册
+				const newToken = tokenEvent.getToken({phone:phone},secret,(new Date().getTime()+1000*60*60*24*30));
+				
+			
 			//添加新用记到数据表hm-user
 			const res = await uniCloud.callFunction({
 				name:'hm-addUser',
-				data:{userInfo:getUser(phone)}
+				data:{userInfo:getUser(phone,newToken)}
 			})
-			console.warn("4444", new Date().getTime()-starttime);
-			return res;
+			return newToken;
 		}catch(e){
 			console.error("login error",e)
 		}
@@ -52,10 +55,12 @@ console.warn("1111", new Date().getTime()-starttime);
 	
 	
 };
-
+async function validToken(token){
+	return false
+}
 function getUser(phone,token) {
 	let vipStartDateStamp = new Date().getTime();
-	let vipEndDateStamp = new Date().getTime()+ 7*1000*60*60*24;
+	let vipEndDateStamp = new Date().getTime()+ 30*1000*60*60*24;
 	return  {
 		"idCard": "",
 		"vipStartDateStamp": vipStartDateStamp,
@@ -69,7 +74,7 @@ function getUser(phone,token) {
 		"vipStartDate": dateFormat(new Date(vipStartDateStamp),"yyyy-MM-dd HH:mm:ss"),
 		"wxNickName": "",
 		"wxOpenId": "",
-		"token":token,
+		"hm_token":token,
 		"blongEmployment": []
 	}
 }
