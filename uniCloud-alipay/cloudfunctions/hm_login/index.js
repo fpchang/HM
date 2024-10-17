@@ -7,11 +7,10 @@ exports.main = async (event, context) => {
 	console.log('event : ', event);
 	const starttime = new Date().getTime();
 	let {
-		
 		userForm,
 		hm_token
 	} = event;
-	let {smsCode,phone}=userForm;
+	let {smsCode,phone,tk}=userForm;
 	
 	const secret = "****";
 	
@@ -23,8 +22,12 @@ exports.main = async (event, context) => {
 			context
 		});
 		//检验短信正确性
-		
-		
+		const verifT = tokenEvent.verifyToken(tk,secret);
+		if(!verifT||verifT.value.smsCode!=smsCode){
+			//短信验证码校验通过
+			 throw new Error("短信验证码不正确");
+			return ;
+		}
 		
 		try{
 			const userRes = await dbJQL.collection('hm-user').where(`phone=='${phone}'`).get();			
@@ -48,6 +51,7 @@ exports.main = async (event, context) => {
 			return newToken;
 		}catch(e){
 			console.error("login error",e)
+			return {code:"1000",msg:e}
 		}
 	
 	
