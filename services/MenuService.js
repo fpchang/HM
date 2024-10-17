@@ -70,7 +70,10 @@ class MenuService{
             orderDishesObj
             })
     }
-
+    /**条件选择已下订单列表 */
+    getOrderDishesListByCondition(w={}){
+        return DB.getCollectionGroupBy("hm-orderDishes",w,"mealDateTimestamp asc")
+    }
     /**已下订单列表 */
     getOrderDishesList(hotel_id){
         return DB.getCollectionGroupBy("hm-orderDishes",{hotel_id},"mealDateTimestamp asc")

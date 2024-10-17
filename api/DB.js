@@ -14,8 +14,7 @@ class DB{
 	  })
   }
    getCollection(dbName,w={}){
-   //  console.log("DB getCollection ---",arguments);
-    return new Promise((resolve,reject)=>{
+    return  new Promise((resolve,reject)=>{
       if(!dbName){
        reject("dbName is invalid")
       }
@@ -27,7 +26,8 @@ class DB{
       }).catch(err=>{
 		    reject(err)
       })
-    })
+    });
+  
   }
   getCollectionGroupBy(dbName,w={},groupBy="_id asc"){
     return new Promise((resolve,reject)=>{

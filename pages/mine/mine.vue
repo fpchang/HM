@@ -25,7 +25,7 @@
 		</view>
 		</view>
 			<!-- <uni-card :title="user.userName" :is-shadow="false" :border="false" :sub-title="user.phone" extra="" :thumbnail="avatar" @click="onClick">	
-			</uni-card> -->
+			</uni-card> xtst2023@outlook.com-->
 			
 
 	</view>

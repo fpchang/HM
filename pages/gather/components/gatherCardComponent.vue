@@ -2,7 +2,7 @@
   <view>
     <view class="header-style">
       <view class="tit-style"
-        ><text style="">{{ targetObj.title }}</text></view
+        ><text style="">{{ targetObj.title }}</text>【<text :style="{'color':targetObj.list.length?'#ff0000':''}">{{targetObj.list.length}}</text>】</view
       >
       <view
         style="flex: 1; display: flex; justify-content: flex-end; gap: 15px"
@@ -155,6 +155,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.c-list{background:red}
 .header-style {
   display: flex;
   align-items: center;
@@ -214,27 +215,7 @@ export default {
     color: #265c34;
   }
 }
-.menu-detail-content{
-  display:flex;flex-wrap:wrap;
-  .menu-detail-content-item{
-    width:50%;display:flex;justify-content:space-between;
-    align-items: center;
-    min-height: 35px;
-    font-size: 14px;
-    font-weight: 500;
-    box-sizing: border-box;
-    &:nth-child(odd){
-      
-        padding-right: 20px;
-      
-    };
-    &:nth-child(even){
-      
-        padding-left: 20px;
-      
-    };
-  }
-}
+
 
 
 
