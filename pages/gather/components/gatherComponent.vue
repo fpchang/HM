@@ -4,10 +4,9 @@
 
     <view style="display: flex; justify-content: center">
       <view class="card-container" :style="{width: `${cardContainerWidth}px`}">
-       
         <view class="card" v-for="(item,index) of dataList" :style="{width: `${cardWidth}px`}">
           <view class="card-item">
-            <gatherCardComponent :targetObj="item">
+            <gatherCardComponent :targetObj="item" :numCount="item.numCount">
               <template v-slot:content>
                 <view> 
                   <uni-section class="mb-10" title="详情" type="line"></uni-section>
@@ -19,7 +18,14 @@
                       </view>
                     </view>
                   </view>
-
+                  <view v-if="index==1" class="c-list"> 
+                    <view class="c-list-item" v-for="it of item.list">
+                      <text>{{it.userName}}</text>
+                      <view> 
+                        <text style="color: red;font-weight: bold;letter-spacing: 3px;">{{it | roomNum}}</text><text>间</text>               
+                      </view>
+                    </view>
+                  </view>
                   <view v-if="index==2" class="c-list"> 
                     <view class="c-list-item" v-for="it of item.list">
                       <text>{{it.userName}}</text>
@@ -64,17 +70,17 @@ import MenuService from '../../../services/MenuService';
 				dataList:[
 					{
 					title:"今日办理入住",
-          
+          numCount:0,
 					list:[]
 
 					},{
 						title:"今日入住房间数",
-            
+            numCount:0,
 						list:[]
 					}
           ,{
 						title:"今日餐饮订单",
-            
+            numCount:0,
 						list:[]
 					}
 					],
@@ -124,13 +130,22 @@ import MenuService from '../../../services/MenuService';
     },
     isPcShow() {
       return this.$store.state.isPcShow;
-    }
+    },
+    
 		},
     filters:{
       dayNum(val, params) {
-        console.log("params",params)
+        console.log("+++++++++params",val,params)
 				return Math.ceil((params[1] - params[0]) / (1000 * 60 * 60 * 24))
-			}
+			},
+      //今日客房数量
+      roomNum(it){
+        let num =0;
+        it.roomTypeArray.map(item=>{
+          num+=item.count;
+        })
+        return num
+      }
     },
 		
 		  mounted() {
@@ -157,6 +172,7 @@ import MenuService from '../../../services/MenuService';
 		  },
       created(){
         this.getOrderListByCheckInToday();
+        this.getOrderListToday();
         this.getOrderDishesToday();
       },
 		  methods:{
@@ -166,11 +182,35 @@ import MenuService from '../../../services/MenuService';
             const res = await OrderService.getOrderListByCheckIn(this.hotel_id,new Date());
             console.log("today checkin ",res.data);
            // this.todayCheckInOrderList = res.data;
-           this.dataList[0].list = res.data;
+           this.dataList[0].list=res.data;
+           this.dataList[0].numCount=res.data.length;
           } catch (error) {
             
           }
-          await OrderService.getOrderListByCheckIn(this.hotel_id,new Date());
+        },
+        //今日住客
+        async getOrderListToday(){
+          try {
+            const res = await OrderService.getOrderListToday(this.hotel_id);
+            console.log("---today orderList ",res.data,res.data.length);
+           // this.todayCheckInOrderList = res.data;
+           if(res.data.length<1){
+            console.warn("rrrrrrrrrrrrrrrr")
+            return ;
+           }
+           let numCount =0;
+           res.data.map(item=>{
+            let num =0;
+             item.roomTypeArray.map(it=>{
+              num+=it.count;
+             });
+             numCount+=num;
+           })
+           this.dataList[1].list=res.data;
+           this.dataList[1].numCount=numCount;
+          } catch (error) {
+            console.error(error)
+          }
         },
           //获取今日定餐
           async getOrderDishesToday(){

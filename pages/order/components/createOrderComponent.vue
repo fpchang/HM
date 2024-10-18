@@ -12,7 +12,7 @@
       <uni-forms-item label="日期时间">
         <uni-datetime-picker
           v-model="orderForm.dateRangeArray"
-          :start="new Date().getTime()"
+          :start="startDate"
           type="daterange"
           @change="initValidRoomTypeData"
           :clear-icon="false"
@@ -149,6 +149,7 @@ export default {
           value: 0,
         },
       ],
+      startDate:new Date().getTime() - 1000*60*60*24,
       roomTypeList: [
         {
           value: "t1",

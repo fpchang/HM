@@ -4,68 +4,27 @@
       <view class="title">欢迎使用 [民宿管理系统]</view>
       <view class="subtitle">手机号快捷登录/注册</view>
       <view style="height: 80px"></view>
-      <u-form
-        labelPosition="left"
-        :model="userForm"
-        :rules="rules"
-        errorType="none"
-        ref="uForm"
-      >
+      <u-form labelPosition="left" :model="userForm" :rules="rules" errorType="none" ref="uForm">
         <u-form-item label="" prop="phone" ref="item1">
-          <u-input
-            maxlength="11"
-            type="number"
-            placeholder="请输入手机号"
-            border="surround"
-            v-model="userForm.phone"
-            clearable
-            shape="circle"
-            class="inputStyle"
-          >
-            <u-text
-              text="+86"
-              slot="prefix"
-              margin="0 6px 0 0"
-              type="tips"
-            ></u-text>
+          <u-input maxlength="11" type="number" placeholder="请输入手机号" border="surround" v-model="userForm.phone"
+            clearable shape="circle" class="inputStyle">
+            <u-text text="+86" slot="prefix" margin="0 6px 0 0" type="tips"></u-text>
           </u-input>
         </u-form-item>
 
         <u-form-item label="" prop="smsCode" ref="item2">
-          <u-input
-            maxlength="4"
-            type="number"
-            placeholder="请输入验证码"
-            shape="circle"
-            border="bottom"
-            class="inputStyle"
-            v-model="userForm.smsCode"
-          >
+          <u-input maxlength="4" type="number" placeholder="请输入验证码" shape="circle" border="bottom" class="inputStyle"
+            v-model="userForm.smsCode">
             <template slot="suffix">
-              <u-code
-                ref="uCode"
-                :keepRunning="true"
-                seconds="20"
-                changeText="XS"
-              ></u-code>
-              <text
-                :class="['smstext', sendSmsDisabled ? 'smstext-disable' : '']"
-                style=""
-                @click="getCode"
-                >{{ tips }}</text
-              >
+              <u-code ref="uCode" :keepRunning="true" seconds="30" changeText="XS" @change="codeChange"></u-code>
+              <text :class="['smstext', sendSmsDisabled? 'smstext-disable':'']" style="" @click="getCode">{{tips
+                }}</text>
             </template>
           </u-input>
         </u-form-item>
         <u-form-item label="" ref="item1">
-          <u-button
-            type="primary"
-            shape="circle"
-            :disabled="submitDisabled"
-            @click="submit"
-            :loading="submitLoading"
-            >登录</u-button
-          >
+          <u-button type="primary" shape="circle" :disabled="submitDisabled" @click="submit"
+            :loading="submitLoading">登录</u-button>
         </u-form-item>
       </u-form>
       <view style="height: 80px"></view>
@@ -83,8 +42,8 @@ export default {
       value: "",
       phone: "",
       userForm: {
-        tk: "",
-        smsCode: "1234",
+        tk: uni.getStorageSync("tk")||'',
+        smsCode: "",
         phone: "18516285834",
       },
       rules: {
@@ -124,52 +83,52 @@ export default {
     codeChange(text) {
       this.tips = text;
     },
-    getCode1() {
-      const uniIdCo = uniCloud.importObject("uni-id-co", {
-        customUI: true,
-      });
-      console.log("sendSmsCode", {
-        phone: this.phone,
-        scene: "login-by-sms",
-        captcha: "",
-      });
-      uniIdCo
-        .sendSmsCode({
-          phone: "18516285834",
-          scene: "login-by-sms",
-          captcha: "",
-        })
-        .then((result) => {
-          uni.showToast({
-            title: "短信验证码发送成功",
-            icon: "none",
-            duration: 3000,
-          });
-          this.reverseNumber = Number(this.count);
-          console.log(result);
-          //this.getCode();
-        })
-        .catch((e) => {
-          console.log(e);
-          if (e.code == "uni-id-invalid-sms-template-id") {
-            this.modelValue = "123456";
-            uni.showToast({
-              title: "已启动测试模式,详情【控制台信息】",
-              icon: "none",
-              duration: 3000,
-            });
-            console.warn(e.message);
-          } else {
-            //this.getImageCaptcha()
-            this.captcha = "";
-            uni.showToast({
-              title: e.message,
-              icon: "none",
-              duration: 3000,
-            });
-          }
-        });
-    },
+    // getCode1() {
+    //   const uniIdCo = uniCloud.importObject("uni-id-co", {
+    //     customUI: true,
+    //   });
+    //   console.log("sendSmsCode", {
+    //     phone: this.phone,
+    //     scene: "login-by-sms",
+    //     captcha: "",
+    //   });
+    //   uniIdCo
+    //     .sendSmsCode({
+    //       phone: "18516285834",
+    //       scene: "login-by-sms",
+    //       captcha: "",
+    //     })
+    //     .then((result) => {
+    //       uni.showToast({
+    //         title: "短信验证码发送成功",
+    //         icon: "none",
+    //         duration: 3000,
+    //       });
+    //       this.reverseNumber = Number(this.count);
+    //       console.log(result);
+    //       //this.getCode();
+    //     })
+    //     .catch((e) => {
+    //       console.log(e);
+    //       if (e.code == "uni-id-invalid-sms-template-id") {
+    //         this.modelValue = "123456";
+    //         uni.showToast({
+    //           title: "已启动测试模式,详情【控制台信息】",
+    //           icon: "none",
+    //           duration: 3000,
+    //         });
+    //         console.warn(e.message);
+    //       } else {
+    //         //this.getImageCaptcha()
+    //         this.captcha = "";
+    //         uni.showToast({
+    //           title: e.message,
+    //           icon: "none",
+    //           duration: 3000,
+    //         });
+    //       }
+    //     });
+    // },
     getCode() {
       this.$refs.uForm.validateField("phone", (err) => {
         if (err && err.length) {
@@ -200,13 +159,16 @@ export default {
             .then((res) => {
               console.log("sendsms value", res);
               this.userForm.tk = res.result.tk;
+              uni.setStorageSync("tk",res.result.tk);
+              uni.hideLoading();
+              this.reverseNumber = Number(this.count);
+              this.$refs.uCode.start();
             });
         } else {
           uni.$u.toast("倒计时结束后再发送");
         }
       });
     },
-    submit1() {},
     submit() {
       this.$refs.uForm
         .validate()

@@ -1,8 +1,7 @@
 const jwt = require('jsonwebtoken');
 module.exports = {
-	getToken(value,secret,expirationDate){
-		let expirationDateTime = new Date(expirationDate).getTime();
-		return jwt.sign({value},secret,{expiresIn:expirationDateTime})
+	getToken(value,secret,expiresIn){	
+		return jwt.sign({value},secret,{expiresIn})
 	},
 	verifyToken(token,secret){
 		try {

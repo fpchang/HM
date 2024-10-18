@@ -195,14 +195,16 @@
 			
 				console.log("APP index  onload 参数信息",e)
 				let user = uni.getStorageSync("user");
-			if(!user){
+				let hm_token = uni.getStorageSync("hm_token");
+			if(!hm_token){
 				uni.reLaunch({
 				url:'/pages/login/login'
 			});
+			return ;
 			}
 			
-			getApp().globalData.user=user;
-				this.$store.commit("setUser",user);
+
+			this.$store.commit("setUser",user);
 			this.initData();
 	
 		},
@@ -215,9 +217,9 @@
 			uni.stopPullDownRefresh()
 		},
 		computed: {
-			isPcshow(){
-				return this.$store.isPcshow;
-			},
+			isPcShow() {
+      return this.$store.state.isPcShow;
+    },
 			hotel_id() {
 				return this.$store.state.hotel_id;
 			},
@@ -297,8 +299,8 @@
 				
 			},
 			addNewHotel() {
-				console.log("1111")
-				if (!this.isPcshow) {
+				console.log("1111",this.isPcshow)
+				if (!this.isPcShow) {
 					console.log("222222")
 					uni.navigateTo({
 						url: '/pages/hotelManage/createHotel/createHotel'

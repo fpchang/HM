@@ -2,7 +2,7 @@
   <view>
     <view class="header-style">
       <view class="tit-style"
-        ><text style="">{{ targetObj.title }}</text>【<text :style="{'color':targetObj.list.length?'#ff0000':''}">{{targetObj.list.length}}</text>】</view
+        ><text style="">{{ targetObj.title }}</text>【<text :style="{'color':numCount?'#ff0000':''}">{{numCount}}</text>】</view
       >
       <view
         style="flex: 1; display: flex; justify-content: flex-end; gap: 15px"
@@ -58,6 +58,7 @@ export default {
   name: "gatherCardComponent",
   props: {
     targetObj: Object,
+    numCount:Number
   },
   components: {
    

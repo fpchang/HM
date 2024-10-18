@@ -23,6 +23,7 @@ exports.main = async (event, context) => {
 		});
 		//检验短信正确性
 		const verifT = tokenEvent.verifyToken(tk,secret);
+		console.log("解析的结果是》》》",verifT)
 		if(!verifT||verifT.value.smsCode!=smsCode){
 			//短信验证码校验通过
 			 throw new Error("短信验证码不正确");

@@ -10,11 +10,21 @@ class OrderService{
         return this.DB.callFunction("hm_addOrder",{orderObj});
     }
 	/**
-	 *  办理入住日期订单
+	 *  今天办理入住订单
 	 */
 	getOrderListByCheckIn(hotel_id,st) {
 	    let startTime = new Date(new Date(st).Format("yyyy/MM/dd 14:00:00")).getTime();
 	    let jql = `hotel_id=='${hotel_id}'&&orderStatus!=10&&checkInStartDateTimeStamp==${startTime}`;
+	    return this.DB.getCollection("hm-order", jql);
+	}
+    /**
+	 *  今天住客订单
+	 */
+	getOrderListToday(hotel_id) {
+	    let startTime = new Date(new Date().Format("yyyy/MM/dd 14:00:00")).getTime();
+        const s0 =  `hotel_id=='${hotel_id}'&&orderStatus!=10`
+        const s1 = `${startTime}>=checkInStartDateTimeStamp&&${startTime}<checkInEndDateTimeStamp`;
+	    let jql = `${s0}&&${s1}`;
 	    return this.DB.getCollection("hm-order", jql);
 	}
     /**
