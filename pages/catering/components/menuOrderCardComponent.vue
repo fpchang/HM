@@ -205,7 +205,7 @@ export default {
       try {
         const res = await MenuService.removeMenuDetail(item._id);
         console.log("删除成功");
-        this.$menuStore.commit("getMenuList", this.hotel_id);
+        this.$store.menuStorecommit("getMenuList", this.hotel_id);
       } catch (error) {
         console.log("删除失败", error);
       }
@@ -213,18 +213,6 @@ export default {
     editMenuType() {
       this.$emit("editMenuType", this.orderDishesItem);
     },
-
-    // editMenuTypeDetail(){
-    //   this.type=1;
-    //   if(this.$store.state.isPcShow){
-    // 			this.$refs.popupMenuTypeDetail.open();
-    // 			return;
-    // 		}
-    //     uni.navigateTo({
-    // 			url:`/pages/orderDishesItem/addMenuDetail/addMenuDetail?type=${
-    //       this.type}&&targetObj=${JSON.stringify(this.orderDishesItem)}`
-    // 		})
-    // },
     async deleteOrderDishes() {
       if (!this.order_id) {
         return;
@@ -275,7 +263,6 @@ export default {
     },
     //手机则拨打电话，其它设备复制
     makePhoneCallEvent(phone) {
-      
 
       let deviceType = uni.getSystemInfoSync().deviceType;
       if (deviceType == "phone") {
@@ -283,7 +270,7 @@ export default {
           phoneNumber: phone, //仅为示例
           success: (success) => {
             console.log("调用成功", success);
-          },
+          }
         });
         return;
       }
@@ -339,7 +326,7 @@ export default {
     align-items: center;
     font-size: $uni-font-size-base;
     .tit {
-      width: 60px;
+      min-width: 60px;
       font-weight: bold;
       padding-right: 12px;
     }

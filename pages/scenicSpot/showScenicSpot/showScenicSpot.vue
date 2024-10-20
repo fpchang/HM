@@ -68,7 +68,7 @@
 		async created() {
 			// http://localhost:8080/#/pages/scenicSpot/showScenicSpot/showScenicSpot?hotel_id=66f4d677e4ec9dbeca1f8ff9
 			this.getHotel();
-			await this.$scenicSpotStore.dispatch("getScenicSpotList",this.hotel_id);
+			await this.$store.dispatch("getScenicSpotList",this.hotel_id);
 		},
 		methods: {
 			async getHotel(){

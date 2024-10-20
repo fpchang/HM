@@ -223,7 +223,7 @@ export default {
       try {
         const res = await MenuService.removeMenuDetail(item._id);
         console.log("删除成功");
-        this.$menuStore.commit("getMenuList", this.hotel_id);
+        this.$store.menuStorecommit("getMenuList", this.hotel_id);
       } catch (error) {
         console.log("删除失败", error);
       }
@@ -262,7 +262,7 @@ export default {
           this.menuType_id
         );
         console.log("删除成功");
-        this.$menuStore.commit("getMenuList", this.hotel_id);
+        this.$store.menuStorecommit("getMenuList", this.hotel_id);
       } catch (error) {
         console.log("删除失败", error);
       }

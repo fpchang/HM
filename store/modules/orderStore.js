@@ -1,12 +1,8 @@
-// 页面路径：store/index.js 
-import Vue from 'vue';
-import Vuex from 'vuex';
-import DB from '../api/DB'
-import OrderService from '../services/OrderService';
-Vue.use(Vuex); //vue的插件机制
 
-//Vuex.Store 构造器选项
-const store = new Vuex.Store({
+import DB from '../../api/DB'
+import OrderService from '../../services/OrderService';
+
+export default{
 	state: { //存放状态
         orderListTodayAfter:[]
 	},
@@ -24,5 +20,4 @@ const store = new Vuex.Store({
 			})
 		}
     }
-});
-export default store;
+}

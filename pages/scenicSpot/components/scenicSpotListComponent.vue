@@ -70,7 +70,7 @@ export default({
 				return this.$store.state.hotel_id;
 			},
       scenicSpotList(){
-        return this.$scenicSpotStore.state.scenicSpotList
+        return this.$store.state.scenicSpotStore.scenicSpotList
       },
       viewWidth(){
         let viewWidth=uni.getSystemInfoSync().windowWidth||uni.getSystemInfoSync().screenWidth
@@ -95,7 +95,7 @@ export default({
 			}
   },
   async created(){
-    await this.$scenicSpotStore.dispatch("getScenicSpotList",this.hotel_id);
+    await this.$store.dispatch("getScenicSpotList",this.hotel_id);
   },
   methods: {
 	  shareWx(){},
@@ -134,7 +134,7 @@ export default({
   },
   watch: {
 	  async hotel_id(){
-		  await this.$scenicSpotStore.dispatch("getScenicSpotList",this.hotel_id);
+		  await this.$store.dispatch("getScenicSpotList",this.hotel_id);
 	  }
   },
 

@@ -102,7 +102,7 @@ beforeDestroy() {},
           .then((res) => {
             console.log("添加成功");
             this.$emit("closePopup");
-            this.$menuStore.commit("getMenuList");
+            this.$store.menuStorecommit("getMenuList");
           })
           .catch((er) => {
             console.log("添加失败", er);
@@ -118,7 +118,7 @@ beforeDestroy() {},
       MenuService.editMenuType(this.targetObj._id._value,this.menuTypeForm)
           .then((res) => {
             console.log("修改成功");
-            this.$menuStore.commit("getMenuList",this.hotel_id);
+            this.$store.menuStorecommit("getMenuList",this.hotel_id);
             this.$emit("closePopup");
           })
           .catch((er) => {

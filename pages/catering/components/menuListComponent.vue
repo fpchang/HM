@@ -75,17 +75,17 @@
 		},
 		computed: {
 			hotel_id() {
-				return this.$store.state.hotel_id;
+				return this.$store.state.menuStore.hotel_id;
 			},
 			hotelList() {
-				return this.$store.state.hotelList;
+				return this.$store.state.menuStore.hotelList;
 			},
 			hotelName() {
 				let tar = this.hotelList.find(item => item._id == this.hotel_id);
 				return tar.hotelName
 			},
 			menuList() {
-				return this.$menuStore.state.menuList;
+				return this.$store.state.menuStore.menuList;
 			},
 			viewWidth() {
 				let viewWidth =
@@ -108,24 +108,24 @@
 				return this.cardWidth * count;
 			},
 			isPcShow() {
-				return this.$store.state.isPcShow;
+				return this.$store.state.menuStore.isPcShow;
 			},
 		},
 		watch: {
 			hotel_id() {
-				this.$menuStore.commit("getMenuList", this.hotel_id);
+				this.$store.menuStorecommit("getMenuList", this.hotel_id);
 			},
 			tabRadioVal(nval) {
 				if (nval == 1) {
-					this.$menuStore.commit("getMenuList", this.hotel_id);
+					console.log("aaaa",this.$store)
+					this.$store.dispatch("getMenuList", this.hotel_id);
 					return;
 				}
 				this.getOrderDishesList();
 			}
 		},
 		created() {
-			//this.$menuStore.commit("getMenuList", this.hotel_id);
-      this.getOrderDishesList();
+      		this.getOrderDishesList();
 		},
 		methods: {
 			addOrderDishes(){
@@ -149,7 +149,7 @@
 			},
 			addMenuType(item = {}) {
 				this.type = 0;
-				if (this.$store.state.isPcShow) {
+				if (this.$store.state.menuStore.isPcShow) {
 					this.$refs.popupMenuType.open();
 					return;
 				}
@@ -163,7 +163,7 @@
 			editMenuType(item = {}) {
 				this.type = 1;
 				this.targetObj = item;
-				if (this.$store.state.isPcShow) {
+				if (this.$store.state.menuStore.isPcShow) {
 					this.$refs.popupMenuType.open();
 					return;
 				}
@@ -174,7 +174,7 @@
 				});
 			},
 			closePopup() {
-				if (this.$store.state.isPcShow) {
+				if (this.$store.state.menuStore.isPcShow) {
 					this.$refs.popupMenuType.close();
 					return;
 				}

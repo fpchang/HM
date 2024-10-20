@@ -9,7 +9,7 @@
 			let {hotel_id} = ob.query;
 			if(hotel_id){
 				console.log("cccc",hotel_id)
-				this.$store.commit("checkHotel",hotel_id);
+				this.$store.dispatch("checkHotel",hotel_id);
 			}
 			this.initData();
 			

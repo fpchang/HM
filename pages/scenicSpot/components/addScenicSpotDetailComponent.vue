@@ -160,7 +160,7 @@ beforeDestroy() {},
       ScenicSpotService.addScenicSpotDetail(this.scenicSpotDetailFormParse)
           .then(async (res) => {
             console.log("添加成功");
-           await this.$scenicSpotStore.dispatch("getScenicSpotList",this.hotel_id);
+           await this.$store.dispatch("getScenicSpotList",this.hotel_id);
             this.$emit("closePopup");
             this.submitLoading = false;
             uni.hideLoading();
@@ -182,7 +182,7 @@ beforeDestroy() {},
       })
           .then(async (res) => {
             console.log("修改成功");
-           await this.$scenicSpotStore.dispatch("getScenicSpotList",this.hotel_id);
+           await this.$store.dispatch("getScenicSpotList",this.hotel_id);
             this.$emit("closePopup");
             this.submitLoading = false;
             uni.hideLoading();

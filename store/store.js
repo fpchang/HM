@@ -2,12 +2,17 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import DB from '../api/DB'
+import menuStore from "./modules/menuStore";
+import orderStore from "./modules/orderStore";
+import permissionStore from "./modules/permissionStore";
+import scenicSpotStore from "./modules/scenicSpotStore";
 import hotelService from '../services/HotelService';
 Vue.use(Vuex); //vue的插件机制
 
-//Vuex.Store 构造器选项
 const store = new Vuex.Store({
-	namespace:true,
+	modules:{
+		menuStore,orderStore,permissionStore,scenicSpotStore
+	},
 	state: { //存放状态
 		"isPcShow": false,
 		"user": {},
@@ -36,13 +41,7 @@ const store = new Vuex.Store({
 		updateRoomType(state, obj) {
 			state.roomType = obj;
 		},
-		checkHotel(state, hotel_id) {
-			state.hotel_id = hotel_id;
-			uni.setStorageSync("hotel_id", hotel_id);
-			console.log("33333333",state.user.phone)
-			//this.$permissionStore.commit("getPermissionList",hotel_id,this.user.phone);
-			store.dispatch('permissionSore/getPermissionList', {hotel_id:hotel_id,phone:state.user.phone}, {root: true})
-		},
+	
 		updateScenicSpot(state, list) {
 			state.scenicSpotList = list;
 		},
@@ -62,13 +61,19 @@ const store = new Vuex.Store({
 				console.warn("与旧hotel_id相同，无需重置");
 				return;
 			}
-			store.commit('checkHotel', n_hotel_id);
+			store.dispatch('checkHotel', n_hotel_id);
 			store.dispatch("getRoomType");
 			
 		}
 	},
 	actions:{
-		 getHotelList(context){
+		checkHotel(context, hotel_id) {
+			context.state.hotel_id = hotel_id;
+			uni.setStorageSync("hotel_id", hotel_id);	
+			console.log("value---",context.getters)		
+			context.dispatch('getPermissionList',{hotel_id,"phone":context.state.user.phone})
+		},
+		 getHotelList(context){			
 			return hotelService.getHotelList(context.state.user.phone).then(res=>{
 				context.commit('updateHotelList', res.data);
 			})
@@ -81,6 +86,11 @@ const store = new Vuex.Store({
 					context.commit("updateRoomType",obj);
 				})
 			 	
+		}
+	},
+	getters: {
+		hotelObj: state => {
+			return state.hotelList.find(item=>item._id == state.hotel_id);
 		}
 	}
 })

@@ -151,7 +151,7 @@ beforeDestroy() {},
       MenuService.addMenuDetail(this.menuDetailFormParse)
           .then((res) => {
             console.log("添加成功");
-            this.$menuStore.commit("getMenuList",this.hotel_id);
+            this.$store.menuStorecommit("getMenuList",this.hotel_id);
             this.$emit("closePopup");
           })
           .catch((er) => {
@@ -171,7 +171,7 @@ beforeDestroy() {},
       )
           .then((res) => {
             console.log("修改成功");
-            this.$menuStore.commit("getMenuList",this.hotel_id);
+            this.$store.menuStorecommit("getMenuList",this.hotel_id);
             this.$emit("closePopup");
           })
           .catch((er) => {

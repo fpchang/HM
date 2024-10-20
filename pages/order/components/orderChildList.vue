@@ -94,7 +94,7 @@
 				return this.$store.state.hotel_id;
 			},
 			checkInOrderList(){
-				return this.$orderStore.state.orderListTodayAfter ||[];
+				return this.$store.state.orderStore.orderListTodayAfter ||[];
 			}
 		},
 		filters: {
@@ -109,7 +109,7 @@
 			async getOrderList() {
 				uni.showLoading();
 				try {
-					await  this.$orderStore.dispatch("getOrderListTodayAfter",this.hotel_id);
+					await  this.$store.dispatch("getOrderListTodayAfter",this.hotel_id);
 				} catch (error) {
 					
 				}

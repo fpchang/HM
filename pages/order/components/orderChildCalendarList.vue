@@ -70,7 +70,7 @@ import OrderService from '../../../services/OrderService';
 				return this.$store.state.roomType ||{};
 			},
 			checkInOrderList(){
-				return this.$orderStore.state.orderListTodayAfter ||[];
+				return this.$store.state.orderStore.orderListTodayAfter ||[];
 			},
 			dateTabList() {
 				let curDateTimeStamp = new Date().getTime();
@@ -144,7 +144,7 @@ import OrderService from '../../../services/OrderService';
 		},
 		watch:{
 			hotel_id(newval,oldval){
-				this.$orderStore.dispatch("getOrderListTodayAfter",this.hotel_id);
+				this.$store.dispatch("getOrderListTodayAfter",this.hotel_id);
 			}
 		},
 		methods: {
@@ -157,7 +157,7 @@ import OrderService from '../../../services/OrderService';
 					//const res  =await OrderService.getOrderListTodayAfter(this.hotel_id);	
                		//this.$orderStore.commit("updateOrderListTodayAfter", res.data);
 
-					await  this.$orderStore.dispatch("getOrderListTodayAfter",this.hotel_id);
+					await  this.$store.dispatch("getOrderListTodayAfter",this.hotel_id);
 				} catch (error) {
 					
 				}

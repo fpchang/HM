@@ -123,7 +123,7 @@
 				try {
 					const res = await ScenicSpotService.removeScenicSpotDetail(item._id);
 					console.log("删除成功");
-					await this.$scenicSpotStore.dispatch("getScenicSpotList",this.hotel_id);
+					await this.$store.dispatch("getScenicSpotList",this.hotel_id);
 					this.submitLoading = false;
 					uni.hideLoading();
 				} catch (error) {
@@ -154,7 +154,7 @@
 						this.scenicSpot_id
 					);
 					console.log("删除成功");
-					await this.$scenicSpotStore.dispatch("getScenicSpotList",this.hotel_id);
+					await this.$store.dispatch("getScenicSpotList",this.hotel_id);
 					this.submitLoading = false;
 					uni.hideLoading();
 				} catch (error) {
@@ -179,7 +179,7 @@
 				});
 			},
 			//手机则拨打电话，其它设备复制
-			makePhoneCallEvent(phone) 
+			makePhoneCallEvent(phone){
 				let deviceType = uni.getSystemInfoSync().deviceType;
 				if (deviceType == "phone") {
 					uni.makePhoneCall({

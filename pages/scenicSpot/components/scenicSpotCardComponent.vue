@@ -237,7 +237,7 @@ export default {
       try {
         const res = await ScenicSpotService.removeScenicSpotDetail(item._id);
         console.log("删除成功");
-        await this.$scenicSpotStore.dispatch("getScenicSpotList",this.hotel_id);
+        await this.$store.dispatch("getScenicSpotList",this.hotel_id);
         this.submitLoading = false;
             uni.hideLoading();
       } catch (error) {
@@ -268,7 +268,7 @@ export default {
           this.scenicSpot_id
         );
         console.log("删除成功");
-        await this.$scenicSpotStore.dispatch("getScenicSpotList",this.hotel_id);
+        await this.$store.dispatch("getScenicSpotList",this.hotel_id);
         this.submitLoading = false;
             uni.hideLoading();
       } catch (error) {

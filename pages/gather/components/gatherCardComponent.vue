@@ -136,7 +136,7 @@ export default {
           console.log("success");
         },
       });
-    },
+    }
   },
   // 组件周期函数--监听组件挂载完毕
   mounted() {

@@ -302,7 +302,7 @@ export default {
       };
       try {
         await OrderService.addOrder(obj);
-        await this.$orderStore.dispatch("getOrderListTodayAfter",this.hotel_id);
+        await this.$store.dispatch("getOrderListTodayAfter",this.hotel_id);
       } catch (error) {
         console.error("添加失败",error)
       }

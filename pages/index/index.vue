@@ -142,6 +142,12 @@
 				currentTab_index: 0,
 				showDrawer: false,
 				clickTime:0,
+				tabList:[{
+					index: 3,
+					name: '订餐',
+					time:0,
+					ComponentName: "menuListComponent"
+				}],
 				tabList: [{
 					index: 0,
 					name: '关注',
@@ -266,8 +272,7 @@
 				if (hotel_id == this.hotel_id) {
 					return;
 				}
-				this.$store.commit("checkHotel", hotel_id);
-				this.$permissionStore.commit("getPermissionList",hotel_id,this.user.phone);
+				this.$store.dispatch("checkHotel", hotel_id);
 			},
 			showDrawerEvent() {
 				this.showDrawer = true
