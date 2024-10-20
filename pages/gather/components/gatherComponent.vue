@@ -133,6 +133,13 @@ import MenuService from '../../../services/MenuService';
     },
     
 		},
+    watch:{
+      hotel_id(){
+        this.getOrderListByCheckInToday();
+        this.getOrderListToday();
+        this.getOrderDishesToday();
+      }
+    },
     filters:{
       dayNum(val, params) {
         console.log("+++++++++params",val,params)

@@ -3,6 +3,7 @@ import store from './store/store';
 import scenicSpotStore from './store/scenicSpotStore';
 import menuStore from './store/menuStore';
 import orderStore from './store/orderStore';
+import permissionStore from './store/permissionStore';
 import './routeIntercept.js'
 
 // #ifndef VUE3
@@ -17,6 +18,7 @@ Vue.prototype.$store = store;
 Vue.prototype.$orderStore= orderStore;
 Vue.prototype.$scenicSpotStore = scenicSpotStore;
 Vue.prototype.$menuStore = menuStore;
+Vue.prototype.$permissionStore= permissionStore;
 Vue.config.productionTip = false
 App.mpType = 'app'
 const app = new Vue({

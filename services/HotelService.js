@@ -3,6 +3,10 @@ class HotelService{
 	constructor(){
         this.DB=DB;
     }
+    /** 创建酒店*/
+    createHotel(hotelObj){
+      return   DB.callFunction("hm_createHotel",{hotelObj});
+    }
     /** 
      * 获取当前用户酒店列表
     */

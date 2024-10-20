@@ -21,7 +21,8 @@
 </template>
 
 <script>
-	import DB from "../../../api/DB";
+	//import DB from "../../../api/DB";
+	import HotelService from "../../../services/HotelService";
 	export default {
 		data() {
 			return {
@@ -84,7 +85,7 @@
 					let obj = {}
 					console.log(this.hotelForm);
 					this.hotelForm.belong=this.user.phone;
-					DB.insertData("hm-hotel", this.hotelForm).then(res => {
+					HotelService.createHotel(this.hotelForm).then(res => {
 						console.log("添加成功");
 						uni.hideLoading();
 						uni.reLaunch({
@@ -92,13 +93,29 @@
 						})
 					}).catch(er => {
 						console.log("添加失败",er);
-						this.submitLoading = true;
+						
 						uni.hideLoading();
 						uni.showModal({
 							content:"系统异常，请稍候再试！",
 							confirmText:"确认"
 						});
+						this.submitLoading = false;
 					})
+					// DB.insertData("hm-hotel", this.hotelForm).then(res => {
+					// 	console.log("添加成功");
+					// 	uni.hideLoading();
+					// 	uni.reLaunch({
+					// 		url:"/pages/index/index"
+					// 	})
+					// }).catch(er => {
+					// 	console.log("添加失败",er);
+					// 	this.submitLoading = true;
+					// 	uni.hideLoading();
+					// 	uni.showModal({
+					// 		content:"系统异常，请稍候再试！",
+					// 		confirmText:"确认"
+					// 	});
+					// })
 				});
 
 
