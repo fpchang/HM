@@ -22,14 +22,13 @@
 	import ScenicSpotService from '../../../services/ScenicSpotService';
 	import HotelService from '../../../services/HotelService';
 	export default ({
-		name: "scenicSpotList",
+		name: "showscenicSpotList",
 		components: {
 			scenicSpotShowCardComponent
 		},
 		props: {},
 		data() {
 			return {
-				scenicSpotList: [],
 				widthTemp: 0,
 				type: 0,
 				targetObj: {},
@@ -40,6 +39,9 @@
 		computed: {
 			hotel_id() {
 				return this.$store.state.hotel_id;
+			},
+			scenicSpotList(){
+				return this.$scenicSpotStore.scenicSpotList;
 			},
 			viewWidth() {
 				let viewWidth = uni.getSystemInfoSync().windowWidth || uni.getSystemInfoSync().screenWidth
@@ -63,10 +65,10 @@
 				return this.$store.state.isPcShow;
 			}
 		},
-		created() {
+		async created() {
 			// http://localhost:8080/#/pages/scenicSpot/showScenicSpot/showScenicSpot?hotel_id=66f4d677e4ec9dbeca1f8ff9
 			this.getHotel();
-			this.getscenicSpotList();
+			await this.$scenicSpotStore.dispatch("getScenicSpotList",this.hotel_id);
 		},
 		methods: {
 			async getHotel(){
@@ -77,15 +79,6 @@
 					console.log(error)
 				}
 			
-			},
-			async getscenicSpotList() {
-				try {
-					const res = await ScenicSpotService.getScenicSpotList(this.hotel_id);
-					console.log("res", res);
-					this.scenicSpotList = res.result.data;
-				} catch (error) {
-					console.log(error)
-				}
 			}
 
 		},
@@ -98,7 +91,7 @@
 			if (window) {
 				window.onresize = () => {
 					this.widthTemp = Math.random(10);
-					console.log(this.widthTemp)
+					
 				}
 			}
 

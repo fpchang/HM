@@ -84,7 +84,7 @@ export default({
 
   watch: {},
   created(){
-	  console.log("111111",this.targetObj)
+
   },
 // 组件周期函数--监听组件挂载完毕
 mounted() {},
@@ -101,7 +101,6 @@ beforeDestroy() {},
   methods: {
     submitForm(){
       this.$refs.scenicSpotRef.validate().then((res) => {
-        console.log(this.scenicSpotForm);
         uni.showLoading();
         this.submitLoading = true;
         this.scenicSpotForm.hotel_id = this.hotel_id;
@@ -116,10 +115,12 @@ beforeDestroy() {},
       DB.callFunction("hm_addScenicSpot", {
         scenicSpotObj: this.scenicSpotForm,
         })
-          .then((res) => {
+          .then(async (res) => {
             console.log("添加成功");
             this.$emit("closePopup");
-            this.$scenicSpotStore.commit("getScenicSpotList");
+            await this.$scenicSpotStore.dispatch("getScenicSpotList",this.hotel_id);
+            this.submitLoading = false;
+            uni.hideLoading();
           })
           .catch((er) => {
             console.log("添加失败", er);
@@ -136,9 +137,11 @@ beforeDestroy() {},
           _id:this.targetObj._id._value,
           scenicSpotObj: this.scenicSpotForm
         })
-          .then((res) => {
+          .then(async (res) => {
             console.log("修改成功");
-            this.$scenicSpotStore.commit("getScenicSpotList",this.hotel_id);
+            await this.$scenicSpotStore.dispatch("getScenicSpotList",this.hotel_id);
+            this.submitLoading = false;
+            uni.hideLoading();
             this.$emit("closePopup");
           })
           .catch((er) => {

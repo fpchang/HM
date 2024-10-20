@@ -22,13 +22,7 @@ export default {
       	targetObj:{}
 	};
   },
-//   provide(){
-//     return{
-//       getSS:()=>{
-//        this.getScenicSpotList()
-//     }
-//     }
-//   },
+
   onLoad(obj) {
     console.log("参数传递", obj);
     try {
@@ -44,25 +38,8 @@ export default {
   methods: {
     closePopup() {
 		uni.navigateBack();
-	},
-	async getScenicSpotList(){
-      console.log("刷新getScenicSpotList列表");
-      try {
-        const res = await   HotelService.getScenicSpotList(this.hotel_id);
-        console.log("景点列表",res)
-        this.scenicSpotList=res.result.data;
-        uni.hideLoading();
-       // this.$emit("closePopup");
-      } catch (error) {
-        console.error(error);
-        uni.hideLoading();
-          uni.showModal({
-            content: "系统异常，请稍候再试！",
-            confirmText: "确认",
-          });
-      }
-    }
-  },
+	}
+  }
 };
 </script>
 

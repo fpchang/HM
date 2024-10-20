@@ -209,7 +209,6 @@
 	
 		},
 		mounted() {
-			console.log("dddd",this.hotel_id)	
 		},
 		onPullDownRefresh() {
 			console.log("index veu refrush");
@@ -222,6 +221,9 @@
     },
 			hotel_id() {
 				return this.$store.state.hotel_id;
+			},
+			user(){
+				return this.$store.state.user;
 			},
 			hotelList() {
 				return this.$store.state.hotelList;
@@ -253,10 +255,8 @@
 		},
 		methods: {
 			async initData(){
-				uni.showLoading({
-				
-				});
-				 this.$store.commit("getHotelList");
+				uni.showLoading();
+				await this.$store.dispatch("getHotelList");			
 				uni.hideLoading();
 			},
 			showCheckHotel() {
@@ -267,6 +267,7 @@
 					return;
 				}
 				this.$store.commit("checkHotel", hotel_id);
+				this.$permissionStore.commit("getPermissionList",hotel_id,this.user.phone);
 			},
 			showDrawerEvent() {
 				this.showDrawer = true
@@ -299,15 +300,13 @@
 				
 			},
 			addNewHotel() {
-				console.log("1111",this.isPcshow)
+			
 				if (!this.isPcShow) {
-					console.log("222222")
 					uni.navigateTo({
 						url: '/pages/hotelManage/createHotel/createHotel'
 					})
 					return;
 				}
-				console.log(3333)
 				this.$refs.popupHotelCreate.open();
 
 			},

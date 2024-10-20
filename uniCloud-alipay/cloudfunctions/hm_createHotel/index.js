@@ -13,7 +13,6 @@ exports.main = async (event, context) => {
 	//const transaction = await dbJQL.startTransaction()
 	try{
 		const result = await  dbJQL.collection('hm-hotel').add(hotelObj);
-		console.log("1111",result)
 		const employeeForm={
 			    "employee_name": "店主",
 			    "hotel_id": result.id,

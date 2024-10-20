@@ -104,6 +104,10 @@ import MenuService from '../../../services/MenuService';
         hotel_id(){
           return this.$store.state.hotel_id;
         },
+        hotelList() {
+				console.error("333333333333333",this.$store.state.hotelList);
+				return this.$store.state.hotelList;
+			},
 			user(){
 				return this.$store.state.user;
 			},

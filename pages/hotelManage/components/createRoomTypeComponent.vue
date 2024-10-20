@@ -113,9 +113,9 @@ export default {
 							{
                                 roomTypeObj:this.roomTypeForm
 							}
-						).then(res=>{
+						).then(async res=>{
                             console.log("添加成功");
-                        this.$store.commit("getRoomType");
+                        await this.$store.dispatch("getRoomType");
                         this.$emit('closePopup');
 						uni.hideLoading();
 							
@@ -136,9 +136,9 @@ export default {
 								_id:this.rt._id,
                                 roomTypeObj:this.roomTypeForm
 							}
-						).then(res=>{
+						).then(async res=>{
                             console.log("修改成功");
-                        this.$store.commit("getRoomType");
+							await this.$store.dispatch("getRoomType");
                         this.$emit('closePopup');
 						uni.hideLoading();
 							

@@ -39,7 +39,7 @@
         <uni-tr v-for="item of employeeList">
           <uni-td>{{ item.phone }}</uni-td>
           <uni-td>{{ item.employee_name }}</uni-td>
-          <uni-td>{{ item.role == "manager" ? "管理员" : "员工" }}</uni-td>
+          <uni-td>{{ item.role | roleFormat }}</uni-td>
           <uni-td align="center">
             <view class="uni-group">
               <button
@@ -142,6 +142,7 @@
 <script>
 import addEmployeeComponent from "./addEmployeeComponent";
 import DB from "../../../api/DB";
+import HotelService from "../../../services/HotelService";
 export default {
   components: {
     addEmployeeComponent,
@@ -170,6 +171,16 @@ export default {
       return this.$store.state.employeeList;
     },
   },
+  filters:{
+    roleFormat(key){
+      const m={
+        "administrator":"超级管理员",
+        "manager":"管理员",
+        "normal":"员工"
+      }
+     return  m[key]
+    }
+  },
   created() {
     console.log("employeeComponent>>>>>");
 
@@ -184,9 +195,7 @@ export default {
     sortRoomList(list) {},
     getEmployeeList() {
       uni.showLoading();
-      DB.getCollection("hm-employee", {
-        hotel_id: this.hotel_id,
-      })
+      HotelService.getEmployeeList(this.hotel_id)
         .then((res) => {
           this.$store.commit("updateEmployeeList", res.data);
           uni.hideLoading();
@@ -239,7 +248,7 @@ export default {
       })
         .then((res) => {
           console.log("删除成功");
-          this.$store.commit("getHotelList");
+          this.$store.dispatch("getHotelList");
           this.submitLoading = false;
           this.getEmployeeList();
           

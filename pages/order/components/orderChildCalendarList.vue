@@ -144,7 +144,7 @@ import OrderService from '../../../services/OrderService';
 		},
 		watch:{
 			hotel_id(newval,oldval){
-				this.$orderStore.commit("getOrderListTodayAfter",this.hotel_id);
+				this.$orderStore.dispatch("getOrderListTodayAfter",this.hotel_id);
 			}
 		},
 		methods: {
@@ -154,8 +154,10 @@ import OrderService from '../../../services/OrderService';
 			async getOrderList() {
 				uni.showLoading();
 				try {
-					const res  =await OrderService.getOrderListTodayAfter(this.hotel_id);	
-                this.$orderStore.commit("updateOrderListTodayAfter", res.data);
+					//const res  =await OrderService.getOrderListTodayAfter(this.hotel_id);	
+               		//this.$orderStore.commit("updateOrderListTodayAfter", res.data);
+
+					await  this.$orderStore.dispatch("getOrderListTodayAfter",this.hotel_id);
 				} catch (error) {
 					
 				}

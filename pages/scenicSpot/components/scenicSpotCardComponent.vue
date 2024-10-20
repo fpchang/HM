@@ -237,9 +237,13 @@ export default {
       try {
         const res = await ScenicSpotService.removeScenicSpotDetail(item._id);
         console.log("删除成功");
-        this.$scenicSpotStore.commit("getScenicSpotList", this.hotel_id);
+        await this.$scenicSpotStore.dispatch("getScenicSpotList",this.hotel_id);
+        this.submitLoading = false;
+            uni.hideLoading();
       } catch (error) {
         console.log("删除失败", error);
+        this.submitLoading = false;
+            uni.hideLoading();
       }
     },
     editScenicSpot() {
@@ -264,9 +268,13 @@ export default {
           this.scenicSpot_id
         );
         console.log("删除成功");
-        this.$scenicSpotStore.commit("getScenicSpotList", this.hotel_id);
+        await this.$scenicSpotStore.dispatch("getScenicSpotList",this.hotel_id);
+        this.submitLoading = false;
+            uni.hideLoading();
       } catch (error) {
         console.log("删除失败", error);
+        this.submitLoading = false;
+            uni.hideLoading();
       }
     },
     closePopup() {

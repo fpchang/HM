@@ -111,7 +111,7 @@ export default({
 
   watch: {},
   created(){
-    //this.getScenicSpotList();
+   
   },
 // 组件周期函数--监听组件挂载完毕
 mounted() {},
@@ -131,14 +131,12 @@ beforeDestroy() {},
         hotel_id: this.hotel_id,
       })
         .then((res) => {
-          console.log("ree>>>>", res);
           this.scenicSpotList= res.data;
           uni.hideLoading();
          // this.$emit("closePopup");
          
         })
         .catch((err) => {
-          console.error(err);
           uni.hideLoading();
           uni.showModal({
             content: "系统异常，请稍候再试！",
@@ -148,12 +146,9 @@ beforeDestroy() {},
     },
     submitForm(){
       this.$refs.scenicSpotDetailRef.validate().then((res) => {
-        console.log(this.scenicSpotDetailForm);
         uni.showLoading();
         this.submitLoading = true;
         this.scenicSpotDetailForm.scenicSpot_id = this.targetObj._id;
-        
-       console.log("222",this.scenicSpotDetailFormParse,this.targetObj)
         if(this.type==1){
           this.editScenicSpotDetail();
           return;
@@ -163,10 +158,12 @@ beforeDestroy() {},
     },
     addScenicSpotDetail(){
       ScenicSpotService.addScenicSpotDetail(this.scenicSpotDetailFormParse)
-          .then((res) => {
+          .then(async (res) => {
             console.log("添加成功");
-            this.$scenicSpotStore.commit("getScenicSpotList",this.hotel_id);
+           await this.$scenicSpotStore.dispatch("getScenicSpotList",this.hotel_id);
             this.$emit("closePopup");
+            this.submitLoading = false;
+            uni.hideLoading();
           })
           .catch((er) => {
             console.log("添加失败", er);
@@ -183,10 +180,12 @@ beforeDestroy() {},
         _id:this.targetObj._id,
         scenicSpotPriceDetail:this.scenicSpotDetailFormParse
       })
-          .then((res) => {
+          .then(async (res) => {
             console.log("修改成功");
-            this.$scenicSpotStore.commit("getScenicSpotList",this.hotel_id);
+           await this.$scenicSpotStore.dispatch("getScenicSpotList",this.hotel_id);
             this.$emit("closePopup");
+            this.submitLoading = false;
+            uni.hideLoading();
           })
           .catch((er) => {
             console.log("修改失败", er);

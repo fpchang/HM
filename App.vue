@@ -1,6 +1,4 @@
-<script>
-	import uniIdPageInit from '@/uni_modules/uni-id-pages/init.js';
- 
+<script> 
 	export default {
 		onLoad(e) {
 			console.log("APP onload 参数信息",e)

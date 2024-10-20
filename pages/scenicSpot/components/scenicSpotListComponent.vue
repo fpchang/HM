@@ -94,8 +94,8 @@ export default({
 				return this.$store.state.isPcShow;
 			}
   },
-  created(){
-    this.$scenicSpotStore.commit("getScenicSpotList",this.hotel_id);
+  async created(){
+    await this.$scenicSpotStore.dispatch("getScenicSpotList",this.hotel_id);
   },
   methods: {
 	  shareWx(){},
@@ -133,8 +133,8 @@ export default({
     }
   },
   watch: {
-	  hotel_id(){
-		  this.$scenicSpotStore.commit("getScenicSpotList",this.hotel_id);
+	  async hotel_id(){
+		  await this.$scenicSpotStore.dispatch("getScenicSpotList",this.hotel_id);
 	  }
   },
 
@@ -143,7 +143,7 @@ export default({
     if(window){
       window.onresize=()=>{
       this.widthTemp=Math.random(10);
-	  console.log(this.widthTemp)
+	  
     }
     }
    

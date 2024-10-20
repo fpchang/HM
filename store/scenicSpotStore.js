@@ -21,25 +21,16 @@ const store = new Vuex.Store({
 		//调用 this.$store.commit('updateHotelList',[])
 		updateScenicSpotList(state, list) {
 			state.scenicSpotList = list;
-		},
-        async getScenicSpotList(state,hotel_id){
-            console.log("刷新getScenicSpotList列表");
-            
-            try {
-                uni.showLoading();
-              const res = await   ScenicSpotService.getScenicSpotList(hotel_id);
-              console.log("景点列表",res)
-              store.commit('updateScenicSpotList', res.result.data);
-              uni.hideLoading();
-            } catch (error) {
-              console.error(error);
-              uni.hideLoading();
-                uni.showModal({
-                  content: "系统异常，请稍候再试！",
-                  confirmText: "确认",
-                });
-            }
-          }
-	}
+		}
+        
+	},
+  actions:{
+     getScenicSpotList(context,hotel_id){
+      ScenicSpotService.getScenicSpotList(hotel_id).then(res=>{
+        console.log("景点列表",res)
+        context.commit('updateScenicSpotList', res.result.data);
+      })
+    }
+  }
 })
 export default store;

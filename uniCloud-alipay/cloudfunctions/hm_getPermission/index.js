@@ -12,7 +12,6 @@ exports.main = async (event, context) => {
 	 //获取角色
 	 try{
 	 	const roleObj = await dbJQL.collection("hm-employee").where({hotel_id,phone}).get();
-		console.log("1111",roleObj)
 	 	const role_name = roleObj.data[0]['role']
 		if(role_name=="administrator"){
 			const resper = await dbJQL.collection("hm-permission").field("permission_name").get();

@@ -18,10 +18,8 @@ class DB{
       if(!dbName){
        reject("dbName is invalid")
       }
-      console.log(dbName);
      
       this.db.collection(dbName).where(w).limit(100).get().then(res=>{
-        console.log(res.result);
         resolve(res.result)
       }).catch(err=>{
 		    reject(err)
@@ -36,7 +34,6 @@ class DB{
       }
      
       this.db.collection(dbName).where(w).orderBy(groupBy).get().then(res=>{
-        console.log(res.result);
         resolve(res.result)
       }).catch(err=>{
       })

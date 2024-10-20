@@ -302,8 +302,7 @@ export default {
       };
       try {
         await OrderService.addOrder(obj);
-       const res =  await OrderService.getOrderListTodayAfter(this.hotel_id);
-       this.$orderStore.commit("updateOrderListTodayAfter", res.data);
+        await this.$orderStore.dispatch("getOrderListTodayAfter",this.hotel_id);
       } catch (error) {
         console.error("添加失败",error)
       }

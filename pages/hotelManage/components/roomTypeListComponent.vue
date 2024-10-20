@@ -135,14 +135,14 @@ import DB from '../../../api/DB';
 				return this.$store.state.roomType;
 			}
 		},
-		created() {
-		
-			this.$store.commit("getRoomType");
+		async created() {
+		console.error("roomTypeList com")
+			await  this.$store.dispatch("getRoomType");
 			
 		},
 		watch:{
 			hotel_id(){
-				this.$store.commit("getRoomType");
+				 this.$store.dispatch("getRoomType");
 			}
 		},
 		methods:{
@@ -193,9 +193,9 @@ import DB from '../../../api/DB';
 					{
 						_id:rt._id
 					}
-				).then(res=>{
+				).then(async res=>{
                             console.log("删除成功");
-                        this.$store.commit("getRoomType");
+							await this.$store.dispatch("getRoomType");
 						this.submitLoading = false;
 						uni.hideLoading();
 							

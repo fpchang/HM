@@ -107,7 +107,6 @@
 				});
 			},
 			async deleteScenicSportPrice(item) {
-				console.log(item);
 				if (!this.scenicSpot_id) {
 					return;
 				}
@@ -124,9 +123,13 @@
 				try {
 					const res = await ScenicSpotService.removeScenicSpotDetail(item._id);
 					console.log("删除成功");
-					this.$scenicSpotStore.commit("getScenicSpotList", this.hotel_id);
+					await this.$scenicSpotStore.dispatch("getScenicSpotList",this.hotel_id);
+					this.submitLoading = false;
+					uni.hideLoading();
 				} catch (error) {
 					console.log("删除失败", error);
+					this.submitLoading = false;
+           			 uni.hideLoading();
 				}
 			},
 			editScenicSpot() {
@@ -151,9 +154,13 @@
 						this.scenicSpot_id
 					);
 					console.log("删除成功");
-					this.$scenicSpotStore.commit("getScenicSpotList", this.hotel_id);
+					await this.$scenicSpotStore.dispatch("getScenicSpotList",this.hotel_id);
+					this.submitLoading = false;
+					uni.hideLoading();
 				} catch (error) {
 					console.log("删除失败", error);
+					this.submitLoading = false;
+            uni.hideLoading();
 				}
 			},
 			closePopup() {
@@ -172,9 +179,7 @@
 				});
 			},
 			//手机则拨打电话，其它设备复制
-			makePhoneCallEvent(phone) {
-				console.log(phone, uni.getSystemInfoSync());
-
+			makePhoneCallEvent(phone) 
 				let deviceType = uni.getSystemInfoSync().deviceType;
 				if (deviceType == "phone") {
 					uni.makePhoneCall({

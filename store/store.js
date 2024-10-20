@@ -7,14 +7,14 @@ Vue.use(Vuex); //vue的插件机制
 
 //Vuex.Store 构造器选项
 const store = new Vuex.Store({
+	namespace:true,
 	state: { //存放状态
 		"isPcShow": false,
 		"user": {},
 		"hotelList": [],
 		"employeeList":[],
 		"hotel_id": "",
-		"roomType":{},
-		"orderListTodayAfter": [], //今天至未来订单
+		"roomType":{}
 	},
 
 	mutations: {
@@ -29,12 +29,6 @@ const store = new Vuex.Store({
 			state.hotelList = list;
 			store.commit("setDefaultHotel");
 		},
-		async getHotelList(state){
-			console.log("store get hotel list===",state);
-			const res = await hotelService.getHotelList( store.state.user.phone);
-			store.commit('updateHotelList', res.data);
-
-		},
 		updateEmployeeList(state, list) {
 			console.warn("store updateEmployeeList",list)
 			state.employeeList = list;			
@@ -42,23 +36,12 @@ const store = new Vuex.Store({
 		updateRoomType(state, obj) {
 			state.roomType = obj;
 		},
-		async getRoomType(state){
-			const res  = await hotelService.getRoomType(state.hotel_id);
-			 	let obj = res.result.data.length?res.result.data:[];
-			 	store.commit("updateRoomType",obj);
-		},
-		updateOrderListTodayAfter(state, list) {
-			state.orderListTodayAfter = list;
-		},
-		//获取当天开始的订单
-		async getOrderListTodayAfter(state) {
-			const res  =await hotelService.getOrderListTodayAfter(state.hotel_id);	
-			console.log("store-getOrderListTodayAfter",res.data)	
-			store.commit("updateOrderListTodayAfter", res.data);
-		},
 		checkHotel(state, hotel_id) {
 			state.hotel_id = hotel_id;
 			uni.setStorageSync("hotel_id", hotel_id);
+			console.log("33333333",state.user.phone)
+			//this.$permissionStore.commit("getPermissionList",hotel_id,this.user.phone);
+			store.dispatch('permissionSore/getPermissionList', {hotel_id:hotel_id,phone:state.user.phone}, {root: true})
 		},
 		updateScenicSpot(state, list) {
 			state.scenicSpotList = list;
@@ -80,8 +63,24 @@ const store = new Vuex.Store({
 				return;
 			}
 			store.commit('checkHotel', n_hotel_id);
-			store.commit("getRoomType");
+			store.dispatch("getRoomType");
 			
+		}
+	},
+	actions:{
+		 getHotelList(context){
+			return hotelService.getHotelList(context.state.user.phone).then(res=>{
+				context.commit('updateHotelList', res.data);
+			})
+			
+
+		},
+		 getRoomType(context){
+				return  hotelService.getRoomType(context.state.hotel_id).then(res=>{
+					let obj = res.result.data.length?res.result.data:[];
+					context.commit("updateRoomType",obj);
+				})
+			 	
 		}
 	}
 })

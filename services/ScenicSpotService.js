@@ -7,7 +7,6 @@ class scenicSpotService{
     *获取景点列表
     */
     getScenicSpotList(hotel_id){
-        console.log("hotelService,getScenicSpotList",hotel_id);
         const db = uniCloud.database();
         const ss=   db.collection("hm-scenicSpot").where({hotel_id}).getTemp();
         const ssd =  db.collection("hm-scenicSpotPriceDetail").getTemp();

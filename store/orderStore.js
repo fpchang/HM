@@ -12,14 +12,17 @@ const store = new Vuex.Store({
 	},
 
 	mutations: {
-        updateOrderListTodayAfter(state, list) {
+        updateOrderListTodayAfter(state,list) {
 			state.orderListTodayAfter = list;
-		},
-			//获取当天开始的订单
-            async getOrderListTodayAfter(state,hotel_id) {
-                const res  =await OrderService.getOrderListTodayAfter(hotel_id);	
-                store.commit("updateOrderListTodayAfter", res.data);
-            },
+		}
+    },
+    actions:{
+        	//获取当天开始的订单
+		 getOrderListTodayAfter(context,hotel_id) {
+			return OrderService.getOrderListTodayAfter(hotel_id).then(res=>{
+				context.commit("updateOrderListTodayAfter", res.data);
+			})
+		}
     }
 });
 export default store;
