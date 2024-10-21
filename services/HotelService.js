@@ -10,25 +10,23 @@ class HotelService{
     /** 
      * 获取当前用户酒店列表
     */
-      getHotelList(phone){
-        if(!phone){
-            console.log("error,phone is not valid");
-            return new Promise((resolve,reject)=>{reject({
-                code:"1002",
-                text:"手机号无效"
-            })});
-        }
-            const dbCmd = uniCloud.database().command;
-              return DB.getCollection("hm-hotel",dbCmd.or([
-                {
-                    belong:phone
-                 },
-                 {
-                    employee: dbCmd.elemMatch({
-                        "phone":phone
-                    })
-                 }
-              ]));
+      getHotelList(){
+          //  const dbCmd = uniCloud.database().command;
+           // const db =uniCloud.database();
+              // return DB.getCollection("hm-hotel",dbCmd.or([
+              //   {
+              //       belong:phone
+              //    },
+              //    {
+              //       employee: dbCmd.elemMatch({
+              //           "phone":phone
+              //       })
+              //    }
+              // ]));
+            //  const aa = db.collection("hm-employee").where({phone}).getTemp();
+            //  const bb = db.collection("hm-hotel").getTemp();
+            //  return db.collection(aa,bb).get();
+            return DB.callFunction("hm_getHotelList");
          
     }
     /**

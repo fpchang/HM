@@ -28,21 +28,21 @@ class PermissionService{
 	/*
     *根据角色的权限列表
     */
-    getRolePermissionList(role_name="normal"){  
-        return new Promise(async (resolve,reject)=>{
-            try {
-                const db = uniCloud.database();
-            const permission_select = db.collection("hm-permission").getTemp();
-            const role_permission_select = db.collection("hm-role-permission").where({role_name}).getTemp();
-            const res = await db.collection(role_permission_select,permission_select).get(); 
-            console.log("result",res); 
-            resolve(this.formatPermissionToArray(res.result.data))
-            } catch (error) {
-                reject(error)
-            }
+    getRolePermissionList(hotel_id){  
+        // return new Promise(async (resolve,reject)=>{
+        //     try {
+        //         const db = uniCloud.database();
+        //     const permission_select = db.collection("hm-permission").getTemp();
+        //     const role_permission_select = db.collection("hm-role-permission").where({role_name}).getTemp();
+        //     const res = await db.collection(role_permission_select,permission_select).get(); 
+        //     console.log("result",res); 
+        //     resolve(this.formatPermissionToArray(res.result.data))
+        //     } catch (error) {
+        //         reject(error)
+        //     }
             
-        })
-                    
+        // })
+         return DB.callFunction("hm_getPermission",{hotel_id})           
   
     }
     /*

@@ -13,7 +13,8 @@
 		},
 		"hotel_id": {
 			"description": "关联酒店id",
-			"bsonType": "string"
+			"bsonType": "string",
+			"foreignKey": "hm-hotel._id"
 		},
 		"phone": {
 			"description": "员工手机号",

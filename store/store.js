@@ -71,11 +71,12 @@ const store = new Vuex.Store({
 			context.state.hotel_id = hotel_id;
 			uni.setStorageSync("hotel_id", hotel_id);	
 			console.log("value---",context.getters)		
-			context.dispatch('getPermissionList',{hotel_id,"phone":context.state.user.phone})
+			context.dispatch('getPermissionList',hotel_id,)
 		},
 		 getHotelList(context){			
-			return hotelService.getHotelList(context.state.user.phone).then(res=>{
-				context.commit('updateHotelList', res.data);
+			return hotelService.getHotelList().then(res=>{
+				console.log("当前用户酒店列表",res);
+				context.commit('updateHotelList', res.result);
 			})
 			
 

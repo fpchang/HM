@@ -1,5 +1,5 @@
 {
-  "name": "hm_getPermission",
+  "name": "hm_getHotelList",
   "dependencies": {
     "tokenEvent": "file:../common/tokenEvent"
   },

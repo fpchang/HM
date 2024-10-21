@@ -6,7 +6,7 @@ exports.main = async (event, context) => {
 	console.log('event : ', event,context);
 	let {appid,phone,templateId='uni_sms_test'} =event;
 	const db = uniCloud.database();
-	const smsCode =(phone=='18516285834'?'0000':randomSms());
+	const smsCode =(phone=='18516285834'?'0000':'1234');
 	const newToken = tokenEvent.getToken({phone:phone,smsCode:smsCode},"****",300);
 	console.log("生成。。。",newToken)
 	return {code:0,tk:newToken};

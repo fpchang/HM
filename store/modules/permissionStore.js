@@ -15,11 +15,10 @@ export default{
  	 }
 	},
 	actions:{
-		getPermissionList(context,params){
+		getPermissionList(context,hotel_id){
 			console.log(33445,arguments)
-			const {phone,hotel_id} = params;
-			return  PermissionService.getPermissionList(hotel_id,phone).then(res=>{
-				console.log("权限列表为==",res.data)
+			return  PermissionService.getPermissionList(hotel_id).then(res=>{
+				console.log("权限列表为==",res)
 				context.commit('setPermissionList', res.data)
 			})
 		}

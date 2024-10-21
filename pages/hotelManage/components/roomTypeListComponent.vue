@@ -136,7 +136,6 @@ import DB from '../../../api/DB';
 			}
 		},
 		async created() {
-		console.error("roomTypeList com")
 			await  this.$store.dispatch("getRoomType");
 			
 		},
@@ -151,7 +150,6 @@ import DB from '../../../api/DB';
 				return newList.sort();
 			},
 			editRoomType(rt){
-				console.log("editRoomType",rt);
 				this.type=1;
 				this.rt =rt;
 				if(this.$store.state.isPcShow){
@@ -188,7 +186,6 @@ import DB from '../../../api/DB';
 				}
 				this.submitLoading = true;
 				uni.showLoading();
-				console.log("deleteRoomType",rt);
 				DB.callFunction("hm_deleteRoomType",
 					{
 						_id:rt._id

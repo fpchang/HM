@@ -3,13 +3,13 @@ class DB{
   constructor(){
 	  this.db=uniCloud.database();
   }
-  callFunction(name,data){
+  callFunction(name,data={}){
 	return  uniCloud.callFunction({
 	  	name:name,
 	  	data:Object.assign(data,{
-        hm_user:uni.getStorageSync('user'),
-        hm_token:uni.getStorageSync('hm_token'),
-        hm_secret:getApp().globalData.secret
+        $user:uni.getStorageSync('user'),
+        $token:uni.getStorageSync('hm_token'),
+        $secret:getApp().globalData.secret
       })
 	  })
   }
