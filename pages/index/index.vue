@@ -2,9 +2,9 @@
 	<view>
 		<view class="top-container">
 			<view class="scroll-content">
-				<view :style="{height:styleObj.navTopHeight}"></view>
-				<view :class="['top-area',isSticky?'sticky-style':'']">
-					<view class="title-area" :style="{opacity:opacityVal}">
+				<view :style="{height: styleObj.navTopHeight}"></view>
+				<view :class="['top-area', isSticky? 'sticky-style':'']">
+					<view class="title-area" :style="{opacity: opacityVal}">
 						<!-- 	<view class="check-area" @click="showCheckHotel">
 							<text class="$uni-font-size-lg"
 								style="white-space: nowrap;text-overflow: ellipsis; overflow: hidden;">见山舍民宿</text>
@@ -30,16 +30,16 @@
 					</view>
 					<view class="navbar">
 						<view class="nav-content">
-							<u-tabs @click="clickTab"  :list="tabList" lineWidth="0"
-								lineColor="#f56c6c" :current="currentTab_index" :activeStyle="{
-								    color: '#303133',
-								    fontWeight: 'bold',
-									fontSize:'18px',
-								    transform: 'scale(1.15)'
+							<u-tabs @click="clickTab" :list="tabList" lineWidth="0" lineColor="#f56c6c"
+								:current="currentTab_index" :activeStyle="{
+									color: '#303133',
+									fontWeight: 'bold',
+									fontSize: '18px',
+									transform: 'scale(1.15)'
 								}" :inactiveStyle="{
-								    color: '#606266',
-									fontSize:'18px',
-								    transform: 'scale(1)'
+									color: '#606266',
+									fontSize: '18px',
+									transform: 'scale(1)'
 								}" itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;">
 							</u-tabs>
 						</view>
@@ -50,9 +50,10 @@
 			</view>
 		</view>
 
-		<swiper :style="{height:scrollHeight}" :current="currentTab_index" :disable-touch="true" @change="swiperContentEvent">
+		<swiper :style="{height: scrollHeight}" :current="currentTab_index" :disable-touch="true"
+			@change="swiperContentEvent">
 			<swiper-item v-for="item in tabList">
-				<scroll-view :scroll-y="true" show-scrollbar="false" :scroll-top="0" :style="{height:scrollHeight}">
+				<scroll-view :scroll-y="true" show-scrollbar="false" :scroll-top="0" :style="{height: scrollHeight}">
 					<view v-if="dataHasRead">
 						<!-- 	<keep-alive :id="new Date().getTime()"> -->
 						<share_app_to_weechat v-if="item.ComponentName=='share_app_to_weechat'"></share_app_to_weechat>
@@ -69,10 +70,13 @@
 						<roomTypeListComponent :key="item.time" :createTime="item.time"
 							v-if="item.ComponentName=='roomTypeListComponent'">
 						</roomTypeListComponent>
-						<employeeConmponent :key="item.time" :createTime="item.time" v-if="item.ComponentName=='employeeConmponent'"></employeeConmponent>
-						<menuListComponent :key="item.time"  :createTime="item.time" v-if="item.ComponentName=='menuListComponent'"></menuListComponent>	
-					<scenicSpotListComponent :key="item.time" :createTime="item.time"  v-if="item.ComponentName=='scenicSpotListComponent'"></scenicSpotListComponent>
-					<!-- </keep-alive> -->
+						<employeeConmponent :key="item.time" :createTime="item.time"
+							v-if="item.ComponentName=='employeeConmponent'"></employeeConmponent>
+						<menuListComponent :key="item.time" :createTime="item.time"
+							v-if="item.ComponentName=='menuListComponent'"></menuListComponent>
+						<scenicSpotListComponent :key="item.time" :createTime="item.time"
+							v-if="item.ComponentName=='scenicSpotListComponent'"></scenicSpotListComponent>
+						<!-- </keep-alive> -->
 
 					</view>
 				</scroll-view>
@@ -141,49 +145,8 @@
 				opacityVal: 1,
 				currentTab_index: 0,
 				showDrawer: false,
-				clickTime:0,
-				tabList:[{
-					index: 3,
-					name: '订餐',
-					time:0,
-					ComponentName: "menuListComponent"
-				}],
-				tabList: [{
-					index: 0,
-					name: '关注',
-					time:0,
-					ComponentName: "gatherComponent"
-				}, {
-					index: 1,
-					name: '订房管理',
-					time:0,
-					ComponentName: "orderComponent"
-				}, {
-					index: 2,
-					name: '合作景点',
-					time:0,
-					ComponentName: "scenicSpotListComponent"
-				}, {
-					index: 3,
-					name: '订餐',
-					time:0,
-					ComponentName: "menuListComponent"
-				}, {
-					index: 4,
-					name: '发票',
-					time:0,
-					ComponentName: ""
-				}, {
-					index: 5,
-					name: '房型管理',
-					time:0,
-					ComponentName: "roomTypeListComponent"
-				}, {
-					index: 6,
-					name: '人员管理',
-					time:0,
-					ComponentName: "employeeConmponent"
-				}],
+				clickTime: 0,
+				tabList: [],
 				slelectHotelvalue: "",
 				activeHotle: {
 					_id: "002",
@@ -198,24 +161,26 @@
 			}
 		},
 		onLoad(e) {
-			
-				console.log("APP index  onload 参数信息",e)
-				let user = uni.getStorageSync("user");
-				let hm_token = uni.getStorageSync("hm_token");
-			if(!hm_token){
-				uni.reLaunch({
-				url:'/pages/login/login'
-			});
-			return ;
-			}
-			
 
-			this.$store.commit("setUser",user);
+			// console.log("APP index  onload 参数信息", e)
+			// let user = uni.getStorageSync("user");
+			// let hm_token = uni.getStorageSync("hm_token");
+			// if (!hm_token) {
+			// 	uni.reLaunch({
+			// 		url: '/pages/login/login'
+			// 	});
+			// 	return;
+			// }
+
+
+			// this.$store.commit("setUser", user);
+
+
+		},
+		created() {
 			this.initData();
-	
 		},
-		mounted() {
-		},
+		mounted() {},
 		onPullDownRefresh() {
 			console.log("index veu refrush");
 			this.initData();
@@ -223,16 +188,20 @@
 		},
 		computed: {
 			isPcShow() {
-      return this.$store.state.isPcShow;
-    },
+				return this.$store.state.isPcShow;
+			},
 			hotel_id() {
 				return this.$store.state.hotel_id;
 			},
-			user(){
+			user() {
 				return this.$store.state.user;
 			},
 			hotelList() {
 				return this.$store.state.hotelList;
+			},
+			permissionList() {
+				return this.$store.state.permissionStore.permissionList;
+
 			},
 			dataHasRead() {
 				return this.hotelList.length && this.hotel_id;
@@ -254,21 +223,81 @@
 				return `calc(100vh - ${this.disHeightVal})`;
 			}
 		},
-		watch:{
-			hotelList(narr,oarr){
+		watch: {
+			hotelList(narr, oarr) {
 				//this.setDefaultHotel()
+			},
+			permissionList() {
+				this.initTabMenu();
 			}
 		},
 		methods: {
-			async initData(){
+			async initData() {
 				uni.showLoading();
-				await this.$store.dispatch("getHotelList");			
+				await this.$store.dispatch("getHotelList");
+				//await this.$store.dispatch("getPermissionList");
+				this.initTabMenu();
 				uni.hideLoading();
+			},
+			initTabMenu() {
+				if (this.permissionList.length < 1) {
+					console.error("没有权限列表")
+					return;
+				}
+				let arr = [{
+					index: 0,
+					name: '关注',
+					time: 0,
+					permission: "MENU_GATHER",
+					ComponentName: "gatherComponent"
+				}, {
+					index: 1,
+					name: '订房管理',
+					time: 0,
+					permission: "MENU_ORDER",
+					ComponentName: "orderComponent"
+				}, {
+					index: 2,
+					name: '合作景点',
+					time: 0,
+					permission: "MENU_SCENICSPOT",
+					ComponentName: "scenicSpotListComponent"
+				}, {
+					index: 3,
+					name: '订餐',
+					time: 0,
+					permission: "MENU_CATERING",
+					ComponentName: "menuListComponent"
+				}, {
+					index: 4,
+					name: '发票',
+					time: 0,
+					permission: "MENU_TICKET",
+					ComponentName: ""
+				}, {
+					index: 5,
+					name: '房型管理',
+					time: 0,
+					permission: "MENU_ROOMTYPE",
+					ComponentName: "roomTypeListComponent"
+				}, {
+					index: 6,
+					name: '人员管理',
+					time: 0,
+					permission: "MENU_EMPLOYEE",
+					ComponentName: "employeeConmponent"
+				}]
+				//console.log(1111111111,this.$store.state.permissionStore.permissionList)
+				this.tabList= arr.filter(item => {
+					console.log(item.permission)
+					return this.permissionList.includes(item.permission);
+				});
+				
 			},
 			showCheckHotel() {
 				this.showDrawerEvent();
 			},
-			 checkHotel(hotel_id) {
+			checkHotel(hotel_id) {
 				if (hotel_id == this.hotel_id) {
 					return;
 				}
@@ -281,9 +310,9 @@
 				this.showDrawer = false
 			},
 			clickTab(e) {
-				if(this.currentTab_index == e.index){
+				if (this.currentTab_index == e.index) {
 					//只触发刷新
-					this.tabList[e.index].time= new Date().getTime();
+					this.tabList[e.index].time = new Date().getTime();
 					return;
 				}
 				this.currentTab_index = e.index;
@@ -299,13 +328,13 @@
 				//	this.isSticky = (scrollTop >= 60 ? true : false);
 			},
 			swiperContentEvent(e) {
-				if(e.detail['current']){
+				if (e.detail['current']) {
 					this.currentTab_index = e.detail.current;
 				}
-				
+
 			},
 			addNewHotel() {
-			
+
 				if (!this.isPcShow) {
 					uni.navigateTo({
 						url: '/pages/hotelManage/createHotel/createHotel'
@@ -335,7 +364,7 @@
 			// 		console.log("33322dd", this.hotelList)
 			// 	})
 			// },
-		
+
 		}
 	}
 </script>

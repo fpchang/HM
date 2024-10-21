@@ -47,7 +47,7 @@ class DB{
 
   }
   add(dbName,r={}){
-    const db = uniCloud.Vs.database();
+    const db = uniCloud.database();
       return db.collection(dbName).add(r)  
   }
   update(dbName,_id="",data={}){

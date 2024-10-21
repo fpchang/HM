@@ -20,6 +20,7 @@ const store = new Vuex.Store({
 		"employeeList":[],
 		"hotel_id": "",
 		"roomType":{}
+		
 	},
 
 	mutations: {
@@ -28,6 +29,9 @@ const store = new Vuex.Store({
 		},
 		setUser(state, user) {
 			state.user = user;
+		},
+		setHotelId(state,hotel_id){
+			state.hotel_id = hotel_id;
 		},
 		//调用 this.$store.commit('updateHotelList',[])
 		updateHotelList(state, list) {
@@ -67,11 +71,11 @@ const store = new Vuex.Store({
 		}
 	},
 	actions:{
-		checkHotel(context, hotel_id) {
-			context.state.hotel_id = hotel_id;
-			uni.setStorageSync("hotel_id", hotel_id);	
-			console.log("value---",context.getters)		
-			context.dispatch('getPermissionList',hotel_id,)
+		  async checkHotel(context, hotel_id) {
+			uni.setStorageSync("hotel_id", hotel_id);		
+			await context.dispatch('getPermissionList',hotel_id);
+			context.commit("setHotelId",hotel_id);
+
 		},
 		 getHotelList(context){			
 			return hotelService.getHotelList().then(res=>{

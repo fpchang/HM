@@ -1,6 +1,7 @@
 <template>
 	<view>
-		
+		<button @click="deletePermission">删除</button>
+		<button @click="setPermissionRole">添加权限administraoor</button>
 	</view>
 </template>
 
@@ -25,11 +26,37 @@ import PermissionService from "../../../services/PermissionService";
 			}
 		},
 		created(){
-			//this.getRolePermissionList();
-			this.getPermissionList();
+
 		},
 		methods: {
-			getRoleList(){},
+			async deletePermission(){
+				const db = uniCloud.database();
+				await db.collection("hm-role-permission").remove();
+				console.log("删除成功");
+			},
+			async setPermissionRole(){
+				try {
+					const db = uniCloud.database();
+					const permissionRes=await db.collection("hm-permission").get();
+					console.log("permissionRes",permissionRes);
+					let arr=[];
+					permissionRes.result.data.map(item=>{
+				
+						arr.push({
+							role_name:"administrator",
+							permission_id:item._id,
+							description:""
+						})
+					})
+					db.collection("hm-role-permission").add(arr).then(item=>{
+						console.log("添加成功")
+					})
+				} catch (error) {
+					throw new Error(error);
+				}
+				
+
+			},
 			async getPermissionList(){
 				try {
 					const res = await PermissionService.getPermissionList(this.hotel_id,this.phone);
