@@ -204,7 +204,7 @@ export default {
         .collection("hm-user")
         .where(`phone=='${this.userForm.phone}'`)
         .get();
-      console.log("更新userInfo", userRes.result.data[0]);
+      console.log("更新userInfo",userRes, userRes.result.data[0]);
       uni.setStorageSync("user", userRes.result.data[0]);
       this.$store.commit("setUser", userRes.result.data[0]);
       uni.reLaunch({

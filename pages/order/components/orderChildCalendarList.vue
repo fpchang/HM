@@ -178,7 +178,7 @@ import OrderService from '../../../services/OrderService';
 <style lang="scss">
 	/* pages/management/checkIn/checkIn.wxss */
 	.checkIntable-content-scroll{
-		width: calc(100vw - 120px);
+		width: calc(100vw - 100px);
 		height: 100%;
 	}
 	.checkIntable-content {
@@ -187,7 +187,7 @@ import OrderService from '../../../services/OrderService';
 	}
 
 	.left-table-style {
-		width: 120px;
+		width: 100px;
 		display: flex;
 		flex-direction: column;
 		box-sizing: border-box;

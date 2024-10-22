@@ -90,28 +90,8 @@ $font-color-control-hover:rgb(1, 85, 169);
 	display: flex;
 	flex-direction: column;
 }
-/* 修改滚动条的宽度 */
-::-webkit-scrollbar {
-    width: 12px; /* 纵向滚动条的宽度 */
-    height: 12px; /* 横向滚动条的高度 */
-}
 
-/* 滚动条轨道部分 */
-::-webkit-scrollbar-track {
-    background-color: #f0f0f0;
-    border-radius: 10px;
-}
 
-/* 滚动条滑块部分 */
-::-webkit-scrollbar-thumb {
-    background-color: #888;
-    border-radius: 10px;
-}
-
-/* 鼠标悬停在滑块上时 */
-::-webkit-scrollbar-thumb:hover {
-    background-color: #555;
-}
 
 //pc 端弹出窗口
 .popup-content{
@@ -159,5 +139,10 @@ $font-color-control-hover:rgb(1, 85, 169);
 	  border-radius: 8px;
 	  gap: 20px;
 	}
+  }
+  //字体btn
+  .edit-text-btn-style{
+	color: $font-color-control;
+	font-size: 12px;
   }
 

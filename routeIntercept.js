@@ -12,14 +12,15 @@ uni.addInterceptor("request", {
   invoke(args) { // 调用前拦截
    // console.log(this.$store.state)
     //获取用户的token
-    //console.log(args)
+  //  console.log("args",args)
     const needLoginFunctionArray=['hm_getHotelList']
     const token = uni.getStorageSync("hm_token");
     const  urlArray= args.url.split("cloudfunctions/");
    // console.log("拦截token",token,urlArray);
     if(!token && needLoginFunctionArray.includes(urlArray[1])){
+		
       uni.reLaunch({
-         		url: '/pages/login/login'
+         	url: '/pages/login/login'
        	});
         return false;
     }
@@ -27,6 +28,7 @@ uni.addInterceptor("request", {
     return true;
   },
   fail(err) { // 失败回调拦截
-    console.log(err);
+    console.log("失败拦截",err);
+	uni.hideLoading();
   },
 })

@@ -103,7 +103,7 @@
         </uni-col>
         <uni-col :span="4" class="col-pa">
           <view class="icon-area">
-            <u-icon
+            <!-- <u-icon
             v-if="isEdit"
               name="edit-pen-fill"
               color="#000"
@@ -120,7 +120,9 @@
               labelPos="bottom"
               labelSize="12px"
               @click="deleteScenicSportPrice(item)"
-            ></u-icon>
+            ></u-icon> -->
+            <text class="edit-text-btn-style" @click="editScenicSportPrice(item)">修改</text>
+            <text class="edit-text-btn-style" @click="deleteScenicSportPrice(item)">删除</text>
           </view>
         </uni-col>
       </uni-row>
@@ -389,7 +391,8 @@ export default {
 .icon-area {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
+
 }
 .pr-item {
   font-size: 12px;
