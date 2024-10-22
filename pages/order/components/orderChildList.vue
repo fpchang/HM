@@ -116,6 +116,10 @@
 				uni.hideLoading();
 			},
 			async deleteOrder(item) {
+				if(!this.$store.state.permissionStore.permissionList.includes('ORDER_DELETE')){
+					this.$alert.alertNoPermisson();
+					return;
+				}
 				let _id = item._id;
 				const conf = await uni.showModal({
 					title: '确认取消订单',

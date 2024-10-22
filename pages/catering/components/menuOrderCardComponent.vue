@@ -47,7 +47,7 @@
           <text class="itx-p">￥{{item.price *item.checkCount}} </text>
    
           <view class="icon-area">
-            <u-icon
+            <!-- <u-icon
             v-if="isEdit"
               name="edit-pen-fill"
               color="#000"
@@ -64,7 +64,9 @@
               labelPos="bottom"
               labelSize="12px"
               @click="deleteMenuDetail(item)"
-            ></u-icon>
+            ></u-icon> -->
+            <!-- <text class="edit-style" @click="editMenuDetail(item)">修改</text> -->
+            <!-- <text class="edit-style" @click="deleteMenuDetail(item)">删除</text> -->
           </view>
         </view>
         
@@ -379,6 +381,11 @@ export default {
     font-size: 14px;
     font-weight: 500;
     box-sizing: border-box;
+    border-bottom: 1px dotted #bbbbbb47;
+    .edit-style{
+      color: $font-color-control;
+      font-size: 12px;
+    }
     /**&:nth-child(odd){
       
         padding-right: 20px;

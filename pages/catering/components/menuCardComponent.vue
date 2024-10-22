@@ -86,11 +86,11 @@
           <text class="itx-p">{{item.price}}</text>
           <text>元</text>
           <view class="icon-area">
-            <u-icon
+            <!-- <u-icon
             v-if="isEdit"
               name="edit-pen-fill"
               color="#000"
-              size="22"
+              size="24"
               labelPos="bottom"
               labelSize="12px"
               @click="editMenuDetail(item)"
@@ -99,11 +99,13 @@
             v-if="isEdit"
               name="trash-fill"
               color="#000"
-              size="22"
+              size="24"
               labelPos="bottom"
               labelSize="12px"
               @click="deleteMenuDetail(item)"
-            ></u-icon>
+            ></u-icon> -->
+            <text class="edit-style" @click="editMenuDetail(item)">修改</text>
+            <text class="edit-style" @click="deleteMenuDetail(item)">删除</text>
           </view>
         </view>
         
@@ -180,6 +182,10 @@ export default {
       this.isEdit = !this.isEdit
     },
     addMenuDetail() {
+      if(!this.$store.state.permissionStore.permissionList.includes('MENU_UPDATE')){
+					 this.$alert.alertNoPermisson();
+					return;
+				}
       this.type = 0;
       this.targetObj = this.menuItem;
       if (this.$store.state.isPcShow) {
@@ -193,6 +199,10 @@ export default {
       });
     },
     editMenuDetail(item) {
+      if(!this.$store.state.permissionStore.permissionList.includes('MENU_UPDATE')){
+					 this.$alert.alertNoPermisson();
+					return;
+				}
       this.type = 1;
       this.targetObj = item;
       if (this.$store.state.isPcShow) {
@@ -206,7 +216,10 @@ export default {
       });
     },
     async deleteMenuDetail(item) {
-      console.log(item);
+      if(!this.$store.state.permissionStore.permissionList.includes('MENU_DELETE')){
+					 this.$alert.alertNoPermisson();
+					return;
+				}
       if (!this.menuType_id) {
         return;
       }
@@ -244,6 +257,10 @@ export default {
     // 		})
     // },
     async deleteMenuType() {
+      if (!this.$store.state.permissionStore.permissionList.includes('MENU_DELETE')) {
+					this.$alert.alertNoPermisson();
+					return;
+				}
       if (!this.menuType_id) {
         return;
       }
@@ -284,8 +301,6 @@ export default {
     },
     //手机则拨打电话，其它设备复制
     makePhoneCallEvent(phone) {
-      console.log(phone, uni.getSystemInfoSync());
-
       let deviceType = uni.getSystemInfoSync().deviceType;
       if (deviceType == "phone") {
         uni.makePhoneCall({
@@ -306,7 +321,7 @@ export default {
   },
   // 组件周期函数--监听组件挂载完毕
   mounted() {
-    console.warn("2222",this.menuItem)
+
   },
   // 组件周期函数--监听组件数据更新之前
   beforeUpdate() {},
@@ -367,7 +382,7 @@ export default {
   align-items: center;
   justify-content: flex-end;
   padding-left: 12px;
-  gap:10px;
+  gap:12px;
 }
 .pr-item {
   font-size: 12px;
@@ -391,6 +406,11 @@ export default {
     font-size: 14px;
     font-weight: 500;
     box-sizing: border-box;
+    border-bottom: 1px dotted #bbbbbb47;
+    .edit-style{
+      color: $font-color-control;
+      font-size: 12px;
+    }
     /**&:nth-child(odd){
       
         padding-right: 20px;

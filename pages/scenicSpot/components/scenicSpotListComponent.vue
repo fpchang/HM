@@ -100,7 +100,11 @@ export default({
   methods: {
 	  shareWx(){},
     addScenicSpot(item={}){
-      this.type=0;
+      if(!this.$store.state.permissionStore.permissionList.includes('SCENICSPOT_CREATE')){
+					 this.$alert.alertNoPermisson();
+					return;
+				}
+        this.type=0;
 				if(this.$store.state.isPcShow){
 					this.$refs.popupScenicSpot.open();
 					return;
@@ -113,6 +117,10 @@ export default({
 				})
     },
 	editScenicSpot(item={}){
+    if(!this.$store.state.permissionStore.permissionList.includes('SCENICSPOT_UPDATE')){
+					 this.$alert.alertNoPermisson();
+					return;
+				}
 	  this.type=1;
     this.targetObj =item;
 				if(this.$store.state.isPcShow){

@@ -145,6 +145,10 @@ import orderChildCalendarList from './orderChildCalendarList';
 				}
 			},
 			createOrderEvent() {
+				if(!this.$store.state.permissionStore.permissionList.includes('ORDER_CREATE')){
+					 this.$alert.alertNoPermisson();
+					return;
+				}
 				if (!this.$store.state.isPcShow) {
 					uni.navigateTo({
 						url: '/pages/order/createOrder/createOrder'

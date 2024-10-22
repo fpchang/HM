@@ -43,9 +43,13 @@
 						
 					</uni-td>
 					<uni-td align="center">
-						<view class="uni-group">
-							<button class="uni-button" size="mini" type="primary" @click="editRoomType(item)">修改</button>
-							<button class="uni-button" size="mini" type="warn" @click="deleteRoomType(item)" :loading="submitLoading">删除</button>
+						<view class="uni-group" style="justify-content:space-around">
+							<!-- <button class="uni-button" size="mini" type="primary" @click="editRoomType(item)">修改</button> -->
+							<!-- <button class="uni-button" size="mini" type="warn" @click="deleteRoomType(item)" :loading="submitLoading">删除</button> -->
+							<u-icon name="trash-fill" color="#06c" labelColor="#06c" size="22" label="修改"
+									labelPos="bottom" labelSize="12px" @click="editRoomType(item)"></u-icon>
+							<u-icon name="trash-fill" color="#e64340" labelColor="#e64340" size="22" label="删除"
+							labelPos="bottom" labelSize="12px" @click="deleteRoomType(item)"></u-icon>
 						</view>
 					</uni-td>
 				</uni-tr>
@@ -79,11 +83,15 @@
 							</view>
 							<view class="list-item" style="justify-content: flex-end;">
 
-								<view class="list-item-c" style="width: 130px;">
-									<button class="uni-button" size="mini" type="primary"
-										@click="editRoomType(item)">修改</button>
-									<button class="uni-button" size="mini" type="warn"
-										@click="deleteRoomType(item)" :loading="submitLoading">删除</button>
+								<view class="list-item-c" style="width: 80px;">
+									<!-- <button class="uni-button" size="mini" type="primary"
+										@click="editRoomType(item)">修改1</button> -->
+									<!-- <button class="uni-button" size="mini" type="warn"
+										@click="deleteRoomType(item)" :loading="submitLoading">删除</button> -->
+										<u-icon name="trash-fill" color="#06c" labelColor="#06c" size="22" label="修改"
+									labelPos="bottom" labelSize="12px" @click="editRoomType(item)"></u-icon>
+							<u-icon name="trash-fill" color="#e64340" labelColor="#e64340" size="22" label="删除"
+							labelPos="bottom" labelSize="12px" @click="deleteRoomType(item)"></u-icon>
 								</view>
 							</view>
 						</view>
@@ -150,6 +158,10 @@ import DB from '../../../api/DB';
 				return newList.sort();
 			},
 			editRoomType(rt){
+				if(!this.$store.state.permissionStore.permissionList.includes('ROOMTYPE_UPDATE')){
+					 this.$alert.alertNoPermisson();
+					return;
+				}
 				this.type=1;
 				this.rt =rt;
 				if(this.$store.state.isPcShow){
@@ -175,6 +187,10 @@ import DB from '../../../api/DB';
 				})
 			},
 			async deleteRoomType(rt){
+				if(!this.$store.state.permissionStore.permissionList.includes('ROOMTYPE_DELETE')){
+					 this.$alert.alertNoPermisson();
+					return;
+				}
 				const conf = await uni.showModal({
 					title: '确认删除房型',
 					content: '删除后将无法恢复,确认删除吗?',

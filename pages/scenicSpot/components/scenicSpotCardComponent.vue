@@ -194,6 +194,10 @@ export default {
       this.isEdit = !this.isEdit
     },
     addScenicSpotDetail() {
+      if(!this.$store.state.permissionStore.permissionList.includes('SCENICSPOT_PRICE__UPDATE')){
+					 this.$alert.alertNoPermisson();
+					return;
+				}
       this.type = 0;
       this.targetObj = this.scenicSpot;
       if (this.$store.state.isPcShow) {
@@ -207,6 +211,10 @@ export default {
       });
     },
     editScenicSportPrice(item) {
+      if(!this.$store.state.permissionStore.permissionList.includes('SCENICSPOT_PRICE__UPDATE')){
+					 this.$alert.alertNoPermisson();
+					return;
+				}
       this.type = 1;
       this.targetObj = item;
       if (this.$store.state.isPcShow) {
@@ -220,6 +228,10 @@ export default {
       });
     },
     async deleteScenicSportPrice(item) {
+      if(!this.$store.state.permissionStore.permissionList.includes('SCENICSPOT_PRICE__UPDATE')){
+					 this.$alert.alertNoPermisson();
+					return;
+				}
       console.log(item);
       if (!this.scenicSpot_id) {
         return;
@@ -247,9 +259,13 @@ export default {
       }
     },
     editScenicSpot() {
-      this.$emit("editScenicSpot", this.scenicSpot);
+         this.$emit("editScenicSpot", this.scenicSpot);
     },
     async deleteScenicSpot() {
+      if(!this.$store.state.permissionStore.permissionList.includes('SCENICSPOT_DELETE')){
+					 this.$alert.alertNoPermisson();
+					return;
+				}
       if (!this.scenicSpot_id) {
         return;
       }

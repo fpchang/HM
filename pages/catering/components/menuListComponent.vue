@@ -16,14 +16,15 @@
 			</view>
 		</view>
 		<view style="display: flex; justify-content: center">
-			<view class="card-container" :style="{ width: `${cardContainerWidth}px` }">
+			<view class="card-container" :style="{width: `${cardContainerWidth}px`}">
 				<view v-if="tabRadioVal===0" class="card" v-for="item of orderDishesList"
-					:style="{ width: `${cardWidth}px` }">
+					:style="{width: `${cardWidth}px`}">
 					<view class="card-item">
-						<menuOrderCardComponent :orderDishesItem="item" @getOrderDishesList="getOrderDishesList"></menuOrderCardComponent>
+						<menuOrderCardComponent :orderDishesItem="item" @getOrderDishesList="getOrderDishesList">
+						</menuOrderCardComponent>
 					</view>
 				</view>
-				<view v-if="tabRadioVal===1" class="card" v-for="item of menuList" :style="{ width: `${cardWidth}px` }">
+				<view v-if="tabRadioVal===1" class="card" v-for="item of menuList" :style="{width: `${cardWidth}px`}">
 					<view class="card-item">
 						<menuCardComponent :menuItem="item" @editMenuType="editMenuType"></menuCardComponent>
 					</view>
@@ -33,8 +34,8 @@
 		<uni-popup ref="popupMenuType" background-color="transprant">
 			<view class="popup-content">
 				<view class="create-order-title-style">{{
-          type == 1 ? "修改菜单分类" : "新增菜单分类"
-        }}</view>
+					type==1? "修改菜单分类":"新增菜单分类"
+				}}</view>
 				<view class="comContent">
 					<addMenuTypeComponent @closePopup="closePopup" :type="type" :targetObj="targetObj">
 					</addMenuTypeComponent>
@@ -108,7 +109,7 @@
 				return this.cardWidth * count;
 			},
 			isPcShow() {
-				return this.$store.state.menuStore.isPcShow;
+				return this.$store.state.isPcShow;
 			},
 		},
 		watch: {
@@ -117,7 +118,7 @@
 			},
 			tabRadioVal(nval) {
 				if (nval == 1) {
-					console.log("aaaa",this.$store)
+					console.log("aaaa", this.$store)
 					this.$store.dispatch("getMenuList", this.hotel_id);
 					return;
 				}
@@ -125,45 +126,52 @@
 			}
 		},
 		created() {
-      		this.getOrderDishesList();
+			this.getOrderDishesList();
 		},
 		methods: {
-			addOrderDishes(){
+			addOrderDishes() {
 				try {
-					if(this.isPcShow){
+					if (this.isPcShow) {
+						alert(1)
 						let href = `#/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`;
-							window.open(href, '_blank');
-							return;
+						window.open(href, '_blank');
+						return;
 					}
-					
+
 					uni.navigateTo({
-					url:`/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`
-				})
+						url: `/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`
+					})
 				} catch (error) {
 					console.error(error);
 					uni.navigateTo({
-					url:`/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`
-				})
+						url: `/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`
+					})
 				}
-				
+
 			},
 			addMenuType(item = {}) {
+				if (!this.$store.state.permissionStore.permissionList.includes('MENU_CREATE')) {
+					this.$alert.alertNoPermisson();
+					return;
+				}
 				this.type = 0;
-				if (this.$store.state.menuStore.isPcShow) {
+				if (this.$store.state.isPcShow) {
 					this.$refs.popupMenuType.open();
 					return;
 				}
 
 				uni.navigateTo({
-					url: `/pages/catering/addMenuType/addMenuType?type=${
-          this.type
-        }&&targetObj=${JSON.stringify(item)}`,
+					url: `/pages/catering/addMenuType/addMenuType?type=${this.type}&&targetObj=${JSON.stringify(item)}`,
 				});
 			},
 			editMenuType(item = {}) {
+				if (!this.$store.state.permissionStore.permissionList.includes('MENU_UPDATE')) {
+					this.$alert.alertNoPermisson();
+					return;
+				}
 				this.type = 1;
 				this.targetObj = item;
-				if (this.$store.state.menuStore.isPcShow) {
+				if (this.$store.state.isPcShow) {
 					this.$refs.popupMenuType.open();
 					return;
 				}
@@ -174,7 +182,7 @@
 				});
 			},
 			closePopup() {
-				if (this.$store.state.menuStore.isPcShow) {
+				if (this.$store.state.isPcShow) {
 					this.$refs.popupMenuType.close();
 					return;
 				}
@@ -202,13 +210,13 @@
 			},
 			async getOrderDishesList() {
 				try {
-          uni.showLoading();
+					uni.showLoading();
 					const res = await MenuService.getOrderDishesList(this.hotel_id);
 					this.orderDishesList = res.data;
-          uni.hideLoading();
+					uni.hideLoading();
 				} catch (error) {
 					console.log(error)
-          uni.hideLoading();
+					uni.hideLoading();
 				}
 
 			}

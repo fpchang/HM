@@ -63,7 +63,9 @@
 
 					<view class="uni-group" v-if="item.checkInEndDateTimeStamp > new Date().getTime()">
 						<!-- <button class="uni-button" size="mini" type="primary">修改</button> -->
-						<button class="uni-button" size="mini" type="warn" @click="deleteOrder(item)">撤销</button>
+						<!-- <button  class="uni-button" size="mini" type="warn" @click="deleteOrder(item)">撤销</button> -->
+						<u-icon name="trash-fill" color="#e64340" labelColor="#e64340" size="22" label="撤销"
+						labelPos="bottom" labelSize="12px" @click="deleteOrder(item)"></u-icon>
 					</view>
 				</uni-td>
 			</uni-tr>
@@ -95,7 +97,9 @@
 			roomTypeList(){
 				return this.$store.state.roomTypeList;
 			},
-			
+			permissionList(){
+				return this.$store.state.permissionStore.permissionList;
+			},
 			fitlerUserNameOrderList() {
 				return this.checkInOrderList.filter(item => {
 					return item.userName.includes(this.selectCondition.userName)
@@ -147,6 +151,10 @@
 				uni.hideLoading();
 			},
 			async deleteOrder(item) {
+				if(!this.permissionList.includes('ORDER_DELETE')){
+					 this.$alert.alertNoPermisson();
+					return;
+				}			
 				let order_id = item._id;
 				const conf = await uni.showModal({
 					title: '确认取消订单',
@@ -182,6 +190,7 @@
 	.uni-group {
 		display: flex;
 		align-items: center;
+		justify-content: space-around;
 	}
 
 	.uni-button {

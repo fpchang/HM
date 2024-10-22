@@ -215,6 +215,10 @@ import OrderService from '../../../services/OrderService';
 		font-size: $uni-font-size-base;
 		position: relative;
 		font-size: 12px;
+		box-sizing: border-box;
+		border:1px solid #b3b3b338;
+		border-left-width: 0;
+		border-top-width: 0;
 	}
 
 	.isContinueCheckIn {

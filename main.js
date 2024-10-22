@@ -7,10 +7,12 @@ import Vue from 'vue'
 import './uni.promisify.adaptor';
 import uView from '@/uni_modules/uview-ui';
 import {CF} from './static/utils/CF';
-import uiEcharts from '@/uni_modules/ui-echarts'
+import uiEcharts from '@/uni_modules/ui-echarts';
+import alert from "./alert";
 Vue.use(uiEcharts);
 Vue.use(uView);
 Vue.prototype.$store = store;
+Vue.prototype.$alert = alert;
 Vue.config.productionTip = false
 App.mpType = 'app'
 const app = new Vue({
