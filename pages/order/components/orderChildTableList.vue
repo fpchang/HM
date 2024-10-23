@@ -140,7 +140,7 @@
 				return (new Date().getTime() - timeStamp) < 1000 * 60 * 60 * 2
 			},
 			async getOrderListByCondition() {
-				 uni.showLoading();
+				 //uni.showLoading();
 				 let date = this.selectCondition.dateRangeArray;
 				try {
 					const res = await OrderService.getOrderListByCondition(this.hotel_id,date[0],date[1]);
@@ -165,7 +165,7 @@
 				if (conf['cancel']) {
 					return;
 				}
-				uni.showLoading();
+				//uni.showLoading();
 				try {
 				const res = await OrderService.deleteOrder(order_id);					
 				this.getOrderListByCondition();

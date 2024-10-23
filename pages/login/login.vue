@@ -1,6 +1,7 @@
 <template>
   <view class="container">
     <view class="panel">
+      {{ user }}
       <view class="title">欢迎使用 [民宿管理系统]</view>
       <view class="subtitle">手机号快捷登录/注册</view>
       <view style="height: 80px"></view>
@@ -77,6 +78,9 @@ export default {
         this.userForm.phone.length != 11 || this.userForm.smsCode.length != 4
       );
     },
+    user(){
+      return this.$store.state.user;
+    }
   },
   onload() {},
   methods: {
@@ -138,9 +142,9 @@ export default {
         if (this.$refs.uCode.canGetCode) {
           // 模拟向后端请求验证码
 
-          uni.showLoading({
-            title: "正在获取验证码",
-          });
+          // //uni.showLoading({
+          //   title: "正在获取验证码",
+          // });
           // setTimeout(() => {
           // 	uni.hideLoading();
           // 	// 这里此提示会被this.start()方法中的提示覆盖

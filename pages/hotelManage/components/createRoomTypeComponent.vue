@@ -96,7 +96,7 @@ export default {
 			submitForm() {
 				this.roomTypeForm.hotel_id=this.hotel_id;
 				this.$refs.roomTypeRef.validate().then(res => {
-					uni.showLoading();
+					//uni.showLoading();
 					this.submitLoading = true;
             
 					if(this.type==1){

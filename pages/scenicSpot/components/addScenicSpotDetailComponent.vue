@@ -146,7 +146,7 @@ beforeDestroy() {},
     },
     submitForm(){
       this.$refs.scenicSpotDetailRef.validate().then((res) => {
-        uni.showLoading();
+        //uni.showLoading();
         this.submitLoading = true;
         this.scenicSpotDetailForm.scenicSpot_id = this.targetObj._id;
         if(this.type==1){

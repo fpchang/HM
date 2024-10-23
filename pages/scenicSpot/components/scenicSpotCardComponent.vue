@@ -247,7 +247,7 @@ export default {
       if (conf["cancel"]) {
         return;
       }
-      uni.showLoading();
+      //uni.showLoading();
       try {
         const res = await ScenicSpotService.removeScenicSpotDetail(item._id);
         console.log("删除成功");
@@ -280,7 +280,7 @@ export default {
       if (conf["cancel"]) {
         return;
       }
-      uni.showLoading();
+      //uni.showLoading();
       try {
         const res = await ScenicSpotService.removeScenicSpot(
           this.scenicSpot_id

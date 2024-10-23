@@ -3,7 +3,15 @@ class HotelService{
 	constructor(){
         this.DB=DB;
     }
-    /** 创建酒店*/
+
+    
+    /**
+     *
+     *
+     * @param {*} hotelObj
+     * @return {*} 
+     * @memberof HotelService
+     */
     createHotel(hotelObj){
       return   DB.callFunction("hm_createHotel",{hotelObj});
     }
@@ -11,21 +19,6 @@ class HotelService{
      * 获取当前用户酒店列表
     */
       getHotelList(){
-          //  const dbCmd = uniCloud.database().command;
-           // const db =uniCloud.database();
-              // return DB.getCollection("hm-hotel",dbCmd.or([
-              //   {
-              //       belong:phone
-              //    },
-              //    {
-              //       employee: dbCmd.elemMatch({
-              //           "phone":phone
-              //       })
-              //    }
-              // ]));
-            //  const aa = db.collection("hm-employee").where({phone}).getTemp();
-            //  const bb = db.collection("hm-hotel").getTemp();
-            //  return db.collection(aa,bb).get();
             return DB.callFunction("hm_getHotelList");
          
     }

@@ -134,7 +134,7 @@ beforeDestroy() {},
     },
     submitForm(){
       this.$refs.menuDetailRef.validate().then((res) => {
-        uni.showLoading();
+        //uni.showLoading();
         this.submitLoading = true;
         this.menuDetailForm.menuType_id = this.targetObj._id;
         

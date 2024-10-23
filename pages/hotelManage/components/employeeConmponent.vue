@@ -194,7 +194,7 @@ export default {
   methods: {
     sortRoomList(list) {},
     getEmployeeList() {
-      uni.showLoading();
+      //uni.showLoading();
       HotelService.getEmployeeList(this.hotel_id)
         .then((res) => {
           this.$store.commit("updateEmployeeList", res.data);
@@ -241,7 +241,7 @@ export default {
         return;
       }
       this.submitLoading = true;
-      uni.showLoading();
+      //uni.showLoading();
       DB.callFunction("hm_deleteEmployee", {
         _id: em._id,
         employee: em,

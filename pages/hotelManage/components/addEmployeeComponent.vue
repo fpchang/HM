@@ -164,7 +164,7 @@ export default {
     submitForm() {
       this.$refs.employeeRef.validate().then((res) => {
         console.log(this.employeeForm);
-        uni.showLoading();
+        //uni.showLoading();
         this.submitLoading = true;
         this.employeeForm.hotel_id = this.hotel_id;
         if(this.type==1){

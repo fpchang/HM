@@ -87,7 +87,7 @@ beforeDestroy() {},
     submitForm(){
       this.$refs.scenicSpotRef.validate().then((res) => {
         console.log(this.menuTypeForm);
-        uni.showLoading();
+        //uni.showLoading();
         this.submitLoading = true;
         this.menuTypeForm.hotel_id = this.hotel_id;
         if(this.type==1){

@@ -34,6 +34,7 @@
 					});
 					this.globalData.isPcShow=true;
 					this.$store.commit("setPcShow",true);
+					this.$store.commit("updateUser");
 				}
 			}
 		},

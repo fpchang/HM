@@ -25,7 +25,7 @@
 		methods: {
 			async beforeGetphonenumber() {
 				return await new Promise((resolve,reject)=>{
-					uni.showLoading({ mask: true })
+					//uni.showLoading({ mask: true })
 					wx.checkSession({
 						success() {
 							// console.log('session_key 未过期');

@@ -21,21 +21,6 @@ export default{
       return  MenuService.getMenuList(hotel_id).then(res=>{
         context.commit('updateMenuList', res.result.data);
       })
-      
-      // try {
-      //     uni.showLoading();
-      //   const res = await   MenuService.getMenuList(hotel_id);
-      //   console.log("菜单列表",res)
-      //   store.commit('updateMenuList', res.result.data);
-      //   uni.hideLoading();
-      // } catch (error) {
-      //   console.error(error);
-      //   uni.hideLoading();
-      //     uni.showModal({
-      //       content: "系统异常，请稍候再试！",
-      //       confirmText: "确认",
-      //     });
-      // }
     }
   }
 }

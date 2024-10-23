@@ -210,7 +210,7 @@
 			},
 			async getOrderDishesList() {
 				try {
-					uni.showLoading();
+					//uni.showLoading();
 					const res = await MenuService.getOrderDishesList(this.hotel_id);
 					this.orderDishesList = res.data;
 					uni.hideLoading();

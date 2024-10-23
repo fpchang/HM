@@ -10,6 +10,9 @@ module.exports = {
 			
 		}
 	},
+	getSecret(){
+		return "****";
+	},
 	checkToken(token,secret){
 		let vt = this.verifyToken(token,secret);
 		if(new Date().getTime()>verifT.exp){

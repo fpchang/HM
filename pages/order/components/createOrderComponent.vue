@@ -242,7 +242,7 @@ export default {
   methods: {
     //初始化可用的房型
     initValidRoomTypeData() {
-      uni.showLoading();
+      //uni.showLoading();
       let startTime = this.dateRangeArrayFormat[0],
         endTime = this.dateRangeArrayFormat[1];
       let hotel_id = this.hotel_id;
@@ -276,7 +276,7 @@ export default {
 
     getValidOrder() {},
     async submitForm() {
-      uni.showLoading();
+      //uni.showLoading();
       this.submitLoading = true;
       let dateRange = this.dateRangeArrayFormat;
       let sourceObj = this.source.find(

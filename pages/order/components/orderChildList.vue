@@ -107,7 +107,7 @@
 		},
 		methods: {
 			async getOrderList() {
-				uni.showLoading();
+				//uni.showLoading();
 				try {
 					await  this.$store.dispatch("getOrderListTodayAfter",this.hotel_id);
 				} catch (error) {
@@ -130,7 +130,7 @@
 				if (conf['cancel']) {
 					return;
 				}
-				uni.showLoading();
+				//uni.showLoading();
 				const res = await uniCloud.callFunction({
 					name: 'hm-deleteOrder',
 					data: {

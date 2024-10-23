@@ -3,13 +3,17 @@ const tokenEvent = require('tokenEvent');
 exports.main = async (event, context) => {
 	//event为客户端上传的参数
 	console.log('event : ', event);
+	const {$token} = event;
+	if(!$token){
+		throw new Error("token不能为空")
+	}
 	const db =uniCloud.database();
 	const dbJQL = uniCloud.databaseForJQL({
 		event,
 		context
 	})
 	try{
-		const {$token} = event;
+		
 		const verifyTokenObj =tokenEvent.verifyToken($token,"****");
 		 
 		 const {phone} = verifyTokenObj.value;

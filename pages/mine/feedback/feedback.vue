@@ -80,7 +80,7 @@
 
 	  submitForm(){
 		this.$refs.feedbackRef.validate().then(async (res) => {
-		  uni.showLoading();
+		  //uni.showLoading();
 		  this.submitLoading = true;
 		  let obj = Object.assign(this.feedbackForm,{phone:this.user.phone});
 		  try {

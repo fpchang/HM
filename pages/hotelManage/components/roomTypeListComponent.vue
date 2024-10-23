@@ -203,7 +203,7 @@ import DB from '../../../api/DB';
 					return;
 				}
 				this.submitLoading = true;
-				uni.showLoading();
+				//uni.showLoading();
 				DB.callFunction("hm_deleteRoomType",
 					{
 						_id:rt._id

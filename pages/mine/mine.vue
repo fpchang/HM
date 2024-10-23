@@ -4,8 +4,7 @@
 			<view class="card" style="padding: 15px">
 				<view style="display:flex;"> 
 					<view class="flex-center">
-						<image style="width: 50px; height: 50px; background-color: #eeeeee;"  :src="avatar"
-							@error="imageError"></image>
+						<image style="width: 50px; height: 50px; background-color: #eeeeee;"  :src="avatar"></image>
 					</view>
 					<view class="flx-column name-style"> 
 						<text style="padding:4px 8px">{{user.userName}}</text>
@@ -98,10 +97,7 @@
 				if (conf["cancel"]) {
        			 return;
      			 }
-				  uni.clearStorageSync();
-				  uni.reLaunch({
-        url: "/pages/index/index",
-      });
+				 this.$store.dispatch("loginOut");
 			}
 		}
 	}

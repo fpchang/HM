@@ -152,7 +152,7 @@ import OrderService from '../../../services/OrderService';
 			
 			},
 			async getOrderList() {
-				uni.showLoading();
+				//uni.showLoading();
 				try {
 					//const res  =await OrderService.getOrderListTodayAfter(this.hotel_id);	
                		//this.$orderStore.commit("updateOrderListTodayAfter", res.data);

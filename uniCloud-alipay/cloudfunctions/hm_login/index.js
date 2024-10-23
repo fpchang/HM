@@ -12,7 +12,7 @@ exports.main = async (event, context) => {
 	} = event;
 	let {smsCode,phone,tk}=userForm;
 	
-	const secret = "****";
+	const secret = tokenEvent.getSecret();
 	
 	//const verifT = tokenEvent.verifyToken(newToken,secret);
 	//console.log("token----",verifT.exp);

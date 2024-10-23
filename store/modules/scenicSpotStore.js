@@ -7,12 +7,6 @@ export default{
 	},
 
 	mutations: {
-		setPcShow(state, flag) {
-			state.isPcShow = flag;
-		},
-		setUser(state, user) {
-			state.user = user;
-		},
 		//调用 this.$store.commit('updateHotelList',[])
 		updateScenicSpotList(state, list) {
 			state.scenicSpotList = list;

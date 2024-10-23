@@ -284,7 +284,7 @@
 			},
 			async getData() {
 				try {
-					uni.showLoading();
+					//uni.showLoading();
 					const hotelRes = await HotelService.getHotelInfoById(this.hotel_id);
 					const res = await MenuService.getMenuList(this.hotel_id);
 					console.log("酒店信息", hotelRes)
@@ -363,7 +363,7 @@
 				}
 				this.$refs.orderDishesRef.validate().then(async (res) => {
 					this.isLoading=true;
-					uni.showLoading();
+					//uni.showLoading();
 					let orderDishesObj =Object.assign(this.orderDishesForm,{hotel_id:this.hotel_id, checkMenuList:this.checkMenuList})
 					console.log(orderDishesObj);
 					orderDishesObj.mealDateTimestamp=new Date(orderDishesObj.mealDate).getTime();;

@@ -80,7 +80,7 @@
 			submitForm() {
 				
 				this.$refs.hotelFormRef.validate().then(res => {
-					uni.showLoading();
+					//uni.showLoading();
 					this.submitLoading = true;
 					let obj = {}
 					console.log(this.hotelForm);

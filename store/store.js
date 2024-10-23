@@ -68,6 +68,12 @@ const store = new Vuex.Store({
 			store.dispatch('checkHotel', n_hotel_id);
 			store.dispatch("getRoomType");
 			
+		},
+		updateUser(state){
+			const user = uni.getStorageSync("user");
+			if(user){
+				store.commit("setUser",user);
+			}
 		}
 	},
 	actions:{
@@ -91,6 +97,27 @@ const store = new Vuex.Store({
 					context.commit("updateRoomType",obj);
 				})
 			 	
+		},
+		errorEvent(context,error){
+			try {
+				const {code,msg}=error;
+				if(code==9999){
+					context.dispatch("loginOut");
+				}
+			} catch (error) {
+				
+			}
+			
+		},
+		loginOut(context){
+			uni.clearStorageSync();
+			context.commit("setUser",{});
+			context.commit("setHotelId","");
+			uni.reLaunch({
+				url: "/pages/login/login",
+			  });
+			
+			
 		}
 	},
 	getters: {

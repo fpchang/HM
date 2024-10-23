@@ -7,7 +7,7 @@ exports.main = async (event, context) => {
 	let {appid,phone,templateId='uni_sms_test'} =event;
 	const db = uniCloud.database();
 	const smsCode =(phone=='18516285834'?'0000':'1234');
-	const newToken = tokenEvent.getToken({phone:phone,smsCode:smsCode},"****",300);
+	const newToken = tokenEvent.getToken({phone:phone,smsCode:smsCode},tokenEvent.getSecret(),300);
 	console.log("生成。。。",newToken)
 	return {code:0,tk:newToken};
 	const {appId} =context;
@@ -23,7 +23,7 @@ exports.main = async (event, context) => {
 	        expMinute: '3',
 	      }
 	    });
-		const newToken = tokenEvent.getToken({phone:phone,smsCode:smsCode},"****",300);
+		const newToken = tokenEvent.getToken({phone:phone,smsCode:smsCode},tokenEvent.getSecret(),300);
 		console.log("生成。。。",newToken)
 		return {code:0,tk:newToken};
 	  } catch(err) {
