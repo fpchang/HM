@@ -1,31 +1,72 @@
 <template>
   <view class="container">
     <view class="panel">
-      {{ user }}
       <view class="title">欢迎使用 [民宿管理系统]</view>
       <view class="subtitle">手机号快捷登录/注册</view>
       <view style="height: 80px"></view>
-      <u-form labelPosition="left" :model="userForm" :rules="rules" errorType="none" ref="uForm">
+      <u-form
+        labelPosition="left"
+        :model="userForm"
+        :rules="rules"
+        errorType="none"
+        ref="uForm"
+      >
         <u-form-item label="" prop="phone" ref="item1">
-          <u-input maxlength="11" type="number" placeholder="请输入手机号" border="surround" v-model="userForm.phone"
-            clearable shape="circle" class="inputStyle">
-            <u-text text="+86" slot="prefix" margin="0 6px 0 0" type="tips"></u-text>
+          <u-input
+            maxlength="11"
+            type="number"
+            placeholder="请输入手机号"
+            border="surround"
+            v-model="userForm.phone"
+            clearable
+            shape="circle"
+            class="inputStyle"
+          >
+            <u-text
+              text="+86"
+              slot="prefix"
+              margin="0 6px 0 0"
+              type="tips"
+            ></u-text>
           </u-input>
         </u-form-item>
 
         <u-form-item label="" prop="smsCode" ref="item2">
-          <u-input maxlength="4" type="number" placeholder="请输入验证码" shape="circle" border="bottom" class="inputStyle"
-            v-model="userForm.smsCode">
+          <u-input
+            maxlength="4"
+            type="number"
+            placeholder="请输入验证码"
+            shape="circle"
+            border="bottom"
+            class="inputStyle"
+            v-model="userForm.smsCode"
+          >
             <template slot="suffix">
-              <u-code ref="uCode" :keepRunning="true" seconds="30" changeText="XS" @change="codeChange"></u-code>
-              <text :class="['smstext', sendSmsDisabled? 'smstext-disable':'']" style="" @click="getCode">{{tips
-                }}</text>
+              <u-code
+                ref="uCode"
+                :keepRunning="true"
+                seconds="30"
+                changeText="XS"
+                @change="codeChange"
+              ></u-code>
+              <text
+                :class="['smstext', sendSmsDisabled ? 'smstext-disable' : '']"
+                style=""
+                @click="getCode"
+                >{{ tips }}</text
+              >
             </template>
           </u-input>
         </u-form-item>
         <u-form-item label="" ref="item1">
-          <u-button type="primary" shape="circle" :disabled="submitDisabled" @click="submit"
-            :loading="submitLoading">登录</u-button>
+          <u-button
+            type="primary"
+            shape="circle"
+            :disabled="submitDisabled"
+            @click="submit"
+            :loading="submitLoading"
+            >登录</u-button
+          >
         </u-form-item>
       </u-form>
       <view style="height: 80px"></view>
@@ -35,6 +76,7 @@
 
 <script>
 import DB from "../../api/DB";
+import AccountService from "../../services/AccountService";
 export default {
   data() {
     return {
@@ -43,7 +85,7 @@ export default {
       value: "",
       phone: "",
       userForm: {
-        tk: uni.getStorageSync("tk")||'',
+        tk: uni.getStorageSync("tk") || "",
         smsCode: "",
         phone: "18516285834",
       },
@@ -78,9 +120,9 @@ export default {
         this.userForm.phone.length != 11 || this.userForm.smsCode.length != 4
       );
     },
-    user(){
+    user() {
       return this.$store.state.user;
-    }
+    },
   },
   onload() {},
   methods: {
@@ -163,7 +205,7 @@ export default {
             .then((res) => {
               console.log("sendsms value", res);
               this.userForm.tk = res.result.tk;
-              uni.setStorageSync("tk",res.result.tk);
+              uni.setStorageSync("tk", res.result.tk);
               uni.hideLoading();
               this.reverseNumber = Number(this.count);
               this.$refs.uCode.start();
@@ -178,27 +220,52 @@ export default {
         .validate()
         .then(async (res) => {
           this.submitLoading = true;
-          DB.callFunction("hm_login", { userForm: this.userForm })
-            .then((res) => {
-              console.log("login result----", res);        
-                uni.setStorageSync("hm_token", res.result);
-                this.getUserInfo();
-                return;             
-              
-            })
-            .catch((e) => {
-              console.log("登录注册失败");
-              this.submitLoading = false;
-			  uni.hideLoading();
-              uni.showToast({
-                title: e.errMsg,
+          // DB.callFunction("hm_login", { userForm: this.userForm })
+          //   .then((res) => {
+          //     console.log("login result----", res);
+          //     uni.setStorageSync("hm_token", res.result);
+          //     this.getUserInfo();
+          //     return;
+          //   })
+          //   .catch((e) => {
+          //     console.log("登录注册失败", e);
+          //     this.submitLoading = false;
+          //     uni.hideLoading();
+          //     uni.showToast({
+          //       title: e.errMsg,
+          //       duration: 2000,
+          //       icon: "error",
+          //     });
+          //   });
+          try {
+          const res =  await AccountService.login(this.userForm);
+          console.log("ressss",res)
+          
+          if(res.result.code){
+                uni.showToast({
+                title:res.result.msg,
                 duration: 2000,
                 icon: "error",
               });
-            });
+              this.submitLoading=false;
+            return;
+          }
+          const {token} = res.result.data;
+          uni.setStorageSync("hm_token", token);
+               this.getUserInfo();
+          this.submitLoading=false;
+          } catch (error) {
+            console.log("登录失败",error);
+            this.submitLoading=false;
+          }
+          
         })
         .catch((errors) => {
-          uni.$u.toast("校验失败", errors);
+          uni.showToast({
+                title:"登录失败，请联系管理员",
+                duration: 2000,
+                icon: "error",
+              });
         });
     },
     async getUserInfo() {
@@ -208,7 +275,7 @@ export default {
         .collection("hm-user")
         .where(`phone=='${this.userForm.phone}'`)
         .get();
-      console.log("更新userInfo",userRes, userRes.result.data[0]);
+      console.log("更新userInfo", userRes, userRes.result.data[0]);
       uni.setStorageSync("user", userRes.result.data[0]);
       this.$store.commit("setUser", userRes.result.data[0]);
       uni.reLaunch({

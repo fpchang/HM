@@ -10,10 +10,8 @@ exports.main = async (event, context) => {
 		userForm,
 		hm_token
 	} = event;
-	let {smsCode,phone,tk}=userForm;
-	
-	const secret = tokenEvent.getSecret();
-	
+	let {smsCode,phone,tk}=userForm;	
+	const secret = tokenEvent.getSecret();	
 	//const verifT = tokenEvent.verifyToken(newToken,secret);
 	//console.log("token----",verifT.exp);
 		const db = uniCloud.database();
@@ -23,11 +21,9 @@ exports.main = async (event, context) => {
 		});
 		//检验短信正确性
 		const verifT = tokenEvent.verifyToken(tk,secret);
-		console.log("解析的结果是》》》",verifT)
 		if(!verifT||verifT.value.smsCode!=smsCode){
 			//短信验证码校验通过
-			 throw new Error("短信验证码不正确");
-			return ;
+			 return {code:4001,msg:"短信验证码不正确"};			
 		}
 		
 		try{
@@ -38,7 +34,7 @@ exports.main = async (event, context) => {
 				const newToken = tokenEvent.getToken({phone:phone},secret,(new Date().getTime()+1000*60*60*24*30));
 			    const upuserRes= await dbJQL.collection('hm-user').doc(user._id).update({'hm_token':newToken});
 				user.hm_token =newToken;
-				return newToken;
+				return {code:0,msg:"",data:{token:newToken}};
 			}
 				//注册
 				const newToken = tokenEvent.getToken({phone:phone},secret,(new Date().getTime()+1000*60*60*24*30));
@@ -49,10 +45,10 @@ exports.main = async (event, context) => {
 				name:'hm-addUser',
 				data:{userInfo:getUser(phone,newToken)}
 			})
-			return newToken;
+			return {code:0,msg:"",data:{token:newToken}};
 		}catch(e){
-			console.error("login error",e)
-			return {code:"1000",msg:e}
+			console.error(e);
+			return {code:40002,msg:"登录失败"}
 		}
 	
 	

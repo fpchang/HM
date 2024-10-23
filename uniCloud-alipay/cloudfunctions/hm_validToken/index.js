@@ -10,21 +10,24 @@ exports.main = async (event, context) => {
 	try{
 		const {$token} = event;
 		if(!$token){
-			throw errorEvent.getTokenError();
+			throw new Error("参数token无效")
 		}
 		
 		const verifT = tokenEvent.verifyToken($token,tokenEvent.getSecret());
 		if(!verifT){
-			throw errorEvent.getTokenError("token已过有效期");
+			//throw errorEvent.getTokenError("token已过有效期");
+			return {code:9990,msg:"token已过有效期"}
 		}
 		const {phone} = verifT.value;
 		const userRes = await dbJQL.collection("hm-user").where({phone}).get();
 		if(userRes.data[0]['hm_token']!=$token){
-				throw errorEvent.getTokenError();		
+				//throw errorEvent.getTokenError();	
+			return {code:9991,msg:"账号已在别外登录"}
 		}
 		return {code:0,msg:""};
 	}catch(e){
-			throw errorEvent.getTokenError();
+			// throw errorEvent.getTokenError();
+			throw new Error("数据异常")
 	}
 	//返回数据给客户端
 	//return event

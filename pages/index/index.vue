@@ -218,11 +218,20 @@ export default {
   methods: {
     async vaildToken(callback) {
 	  try {
-      await AccountService.validToken();
+     const res= await AccountService.validToken();
+	 if(res.result.code){
+		 uni.showToast({
+		       title:res.result.msg,
+		       duration: 2000,
+		       icon: "error",
+		     });
+		 return;
+	 }
+   console.log("token验证通过")
       callback&&callback();
 	  } catch (error) {
       console.error(error)
-      this.$store.dispatch("errorEvent",error);
+     // this.$store.dispatch("errorEvent",error);
 		 
 	  }
     },
