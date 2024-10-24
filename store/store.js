@@ -14,6 +14,8 @@ const store = new Vuex.Store({
 		menuStore,orderStore,permissionStore,scenicSpotStore
 	},
 	state: { //存放状态
+		"topHeight":110,
+		"tabHeight":44,
 		"isPcShow": false,
 		"user": {},
 		"hotelList": [],
@@ -39,7 +41,6 @@ const store = new Vuex.Store({
 			store.commit("setDefaultHotel");
 		},
 		updateEmployeeList(state, list) {
-			console.warn("store updateEmployeeList",list)
 			state.employeeList = list;			
 		},
 		updateRoomType(state, obj) {

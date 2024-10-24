@@ -5,23 +5,22 @@
         <view :style="{height: styleObj.navTopHeight}"></view>
         <view :class="['top-area', isSticky? 'sticky-style':'']">
           <view class="title-area" :style="{opacity: opacityVal}">
-            <!-- 	<view class="check-area" @click="showCheckHotel">
+           
+             <view class="check-area" @click="showCheckHotel">
 							<text class="$uni-font-size-lg"
 								style="white-space: nowrap;text-overflow: ellipsis; overflow: hidden;">见山舍民宿</text>
 							<u-icon name="arrow-down-fill" color="#000" size="20px" top="2"></u-icon>
-							<view class="check-panal">
+							<!-- <view class="check-panal">
 								<view>11111111</view>
-							</view>
-						</view> -->
+							</view>  -->
+						</view> 
 
-            <view style="display: flex; align-items: center">
+            <!-- <view style="display: flex; align-items: center">
               <view style="width: 200px">
                 <uni-data-select :value="hotel_id" :localdata="hotelListFormat" @change="checkHotel"
                   :clear="false"></uni-data-select>
               </view>
-
-              <!-- <u-icon name="arrow-down-fill" color="#000" size="20px" top="2"></u-icon> -->
-            </view>
+            </view> -->
 
             <view class="add-area">
               <u-icon name="plus-circle" color="#007aff" label-color="#007aff" size="20px" label="新增店面" top="2"
@@ -80,7 +79,7 @@
       </swiper-item>
     </swiper>
 
-    <u-popup :show="showDrawer" mode="left" @close="closeDrawerEvent" @open="showDrawerEvent"
+    <!-- <u-popup :show="showDrawer" mode="left" @close="closeDrawerEvent" @open="showDrawerEvent"
       :closeOnClickOverlay="true">
       <u-list style="margin-top: 60px; width: 40vw">
         <u-list-item v-for="(item, index) in hotelList" :key="index">
@@ -90,7 +89,27 @@
           </u-cell>
         </u-list-item>
       </u-list>
-    </u-popup>
+    </u-popup> -->
+    <uni-drawer ref="showLeft" mode="left" :width="320">
+      <view style="background:#eee;height:100%">
+
+        <uni-section title="酒店列表"></uni-section>
+        <view> 
+          <view v-for="item of hotelList">{{item.hotelName}}</view>
+        </view>
+        <view style="padding:10px;"> 
+          <view style="height:300px;box-shadow:0 0 #000 4px 4px"></view>
+        </view>  <uni-section title="酒店列表"></uni-section>
+        <view> 
+          <view v-for="item of hotelList">{{item.hotelName}}</view>
+        </view>
+        <view style="padding:10px;"> 
+          <view style="height:300px;box-shadow:0 0 #000 4px 4px"></view>
+        </view>
+      </view>
+    
+        
+    </uni-drawer>
     <uni-popup ref="popupHotelCreate" background-color="transprant">
       <view class="popup-content">
         <view class="create-order-title-style">创建酒店</view>
@@ -115,6 +134,7 @@ import menuListComponent from "../catering/components/menuListComponent.vue";
 import scenicSpotListComponent from "../scenicSpot/components/scenicSpotListComponent";
 import AccountService from "../../services/AccountService";
 import DB from "../../api/DB";
+import UniSection from '../../uni_modules/uni-section/components/uni-section/uni-section.vue';
 export default {
   components: {
     gatherComponent,
@@ -125,6 +145,7 @@ export default {
     employeeConmponent,
     menuListComponent,
     scenicSpotListComponent,
+    UniSection,
   },
 
   data() {
@@ -218,6 +239,10 @@ export default {
   methods: {
     async vaildToken(callback) {
 	  try {
+      if(!uni.getStorageSync('hm_token')){
+       // this.$store.dispatch("loginOut");
+       // return;
+      }
      const res= await AccountService.validToken();
 	 if(res.result.code){
 		 uni.showToast({
@@ -225,13 +250,12 @@ export default {
 		       duration: 2000,
 		       icon: "error",
 		     });
+         this.$store.dispatch("loginOut");
 		 return;
 	 }
    console.log("token验证通过")
       callback&&callback();
 	  } catch (error) {
-      console.error(error)
-     // this.$store.dispatch("errorEvent",error);
 		 
 	  }
     },
@@ -239,7 +263,7 @@ export default {
       //检验token合法有效性性
 
       try {
-        const res = "";
+        uni.showLoading();
         await this.$store.dispatch("getHotelList");
         this.initTabMenu();
         uni.hideLoading();
@@ -250,7 +274,6 @@ export default {
     },
     initTabMenu() {
       if (this.permissionList.length < 1) {
-        console.error("没有权限列表");
         return;
       }
       let arr = [
@@ -319,9 +342,11 @@ export default {
     },
     showDrawerEvent() {
       this.showDrawer = true;
+      this.$refs.showLeft.open()
     },
     closeDrawerEvent() {
       this.showDrawer = false;
+      this.$refs.showLeft.close()
     },
     clickTab(e) {
       if (this.currentTab_index == e.index) {

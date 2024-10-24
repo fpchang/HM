@@ -4,14 +4,14 @@
 
 			<view style="display: flex;" class="cond-item-style">
 				<!-- <uni-section class="mb-10" title="日期选择:"> -->
-				<view>日期选择：</view>
+				<view>日期：</view>
 				<view style="width: 240px;padding:0 10px;"><uni-datetime-picker v-model="selectCondition.dateRangeArray"
 						type="daterange" @change="getOrderListByCondition()" /></view>
 
 				<!-- </uni-section> -->
 			</view>
 
-			<view style="display: flex;" class="cond-item-style">
+			<view style="display: flex;" class="cond-item-style" v-if="0">
 				<!-- <uni-section class="mb-10" title="用户名:"> -->
 				<view>用户名：</view>
 				<view style="width: 130px;padding:0 10px;">

@@ -10,7 +10,7 @@ exports.main = async (event, context) => {
 	try{
 		const {$token} = event;
 		if(!$token){
-			throw new Error("参数token无效")
+			return {code:9992,msg:"token无效"}
 		}
 		
 		const verifT = tokenEvent.verifyToken($token,tokenEvent.getSecret());
@@ -23,11 +23,13 @@ exports.main = async (event, context) => {
 		if(userRes.data[0]['hm_token']!=$token){
 				//throw errorEvent.getTokenError();	
 			return {code:9991,msg:"账号已在别外登录"}
+		}else{
+			return {code:0,msg:""};
 		}
-		return {code:0,msg:""};
+		
 	}catch(e){
-			// throw errorEvent.getTokenError();
-			throw new Error("数据异常")
+		console.log(e)
+			//throw new Error("数据异常",e)
 	}
 	//返回数据给客户端
 	//return event

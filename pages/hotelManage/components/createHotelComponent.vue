@@ -92,30 +92,14 @@
 							url:"/pages/index/index"
 						})
 					}).catch(er => {
-						console.log("添加失败",er);
-						
+						console.log("添加失败",er);						
 						uni.hideLoading();
-						uni.showModal({
-							content:"系统异常，请稍候再试！",
-							confirmText:"确认"
-						});
+						uni.showToast({
+							title: '数据异常，请稍候再试',
+							icon: 'error'
+						})
 						this.submitLoading = false;
 					})
-					// DB.insertData("hm-hotel", this.hotelForm).then(res => {
-					// 	console.log("添加成功");
-					// 	uni.hideLoading();
-					// 	uni.reLaunch({
-					// 		url:"/pages/index/index"
-					// 	})
-					// }).catch(er => {
-					// 	console.log("添加失败",er);
-					// 	this.submitLoading = true;
-					// 	uni.hideLoading();
-					// 	uni.showModal({
-					// 		content:"系统异常，请稍候再试！",
-					// 		confirmText:"确认"
-					// 	});
-					// })
 				});
 
 

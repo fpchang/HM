@@ -301,29 +301,24 @@ export default {
         totalAmount:Number(this.orderForm.totalAmount),
       };
       try {
+        throw new Error("11111");
         await OrderService.addOrder(obj);
         await this.$store.dispatch("getOrderListTodayAfter",this.hotel_id);
+        this.submitLoading = false;
+        uni.hideLoading();
+        this.$emit("closePopup");
       } catch (error) {
-        console.error("添加失败",error)
+        console.error("添加失败",error);
+        this.submitLoading = false;
+        uni.hideLoading();
+        uni.showToast({
+          title: '添加失败，请稍候再试',
+          duration: 2000,
+          icon:"error"
+        });
       }
-      this.submitLoading = false;
-      uni.hideLoading();
-      this.$emit("closePopup");
-      // DB.insertData("hm-order", obj)
-      //   .then((res) => {
-      //     uni.hideLoading();
-      //     this.submitLoading = false;
-      //     this.$emit("closePopup");
-      //   })
-      //   .catch((err) => {
-      //     uni.hideLoading();
-      //     uni.showModal({
-      //       confirmText: "确认",
-      //       content: "系统异常，请稍候再试",
-      //       showCancel: false,
-      //     });
-      //     this.submitLoading = false;
-      //   });
+     
+      
     },
   },
 };
