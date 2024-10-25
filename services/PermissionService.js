@@ -22,8 +22,8 @@ class PermissionService{
      /*
     *获取权限列表
     */
-    getPermissionList(hotel_id,phone){
-        return DB.callFunction("hm_getPermission",{hotel_id,phone});
+    getPermissionList(hotel_id){
+        return DB.callFunction("hm_getPermission",{hotel_id});
     }
 	/*
     *根据角色的权限列表

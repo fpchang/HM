@@ -9,6 +9,9 @@ exports.main = async (event, context) => {
 	 		event,
 	 		context
 	 	})
+		if(!$token){
+			return {code:"302",msg:"没有token，无法确定权限",data:[]}
+		}
 	 //获取角色
 	 try{
 		const verifyTokenObj =tokenEvent.verifyToken($token,"****");

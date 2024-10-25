@@ -20,6 +20,8 @@ export default{
 			return  PermissionService.getPermissionList(hotel_id).then(res=>{
 				console.log("权限列表为==",res)
 				context.commit('setPermissionList', res.result)
+			}).catch(e=>{
+				console.error(e)
 			})
 		}
 	}

@@ -91,8 +91,9 @@
       </u-list>
     </u-popup> -->
     <uni-drawer ref="showLeft" mode="left" :width="320">
-      <view style="background:#efefef4d;height:100%">
-        <view style="min-height:330px;height: calc(100vh - 300px);">
+      <view class="left-container">
+        <view style="flex:1;min-height:330px">
+          <view style="height:60px" v-if="!isPcShow"></view>
           <uni-section title="酒店列表" type="line"></uni-section>
           <view class="card-panal"> 
             <view class="card">
@@ -118,10 +119,11 @@
           </view> -->
         </view>
         
-        <view style="height:300px;box-sizing:border-box"> 
+        <view style="box-sizing:border-box"> 
           <uni-section title="操作" type="line"></uni-section>
           <view class="card-panal"> 
             <view class="card">
+
               <view class="list-panal"> 
                 <view class="list-panal-item">
                   <uni-icons type="plusempty" size="22" color="#06c"></uni-icons>
@@ -283,7 +285,7 @@ export default {
       }
      const res= await AccountService.validToken();
 	 if(res.result.code){
-		 uni.showToast({
+    res.result.msg&&uni.showToast({
 		       title:res.result.msg,
 		       duration: 2000,
 		       icon: "error",
@@ -301,7 +303,7 @@ export default {
       //检验token合法有效性性
 
       try {
-        uni.showLoading();
+        //uni.showLoading();
         await this.$store.dispatch("getHotelList");
         this.initTabMenu();
         uni.hideLoading();
@@ -525,6 +527,11 @@ export default {
 .activeHotelItemSelect {
   background-color: #ddd !important;
   /*border:2rpx solid blue;*/
+}
+.left-container{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 .list-panal{
 

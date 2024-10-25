@@ -78,13 +78,16 @@ const store = new Vuex.Store({
 		}
 	},
 	actions:{
-		   checkHotel(context, hotel_id) {
-			return new Promise(async (reslove,reject)=>{
-				uni.setStorageSync("hotel_id", hotel_id);		
-				await context.dispatch('getPermissionList',hotel_id);
+		    checkHotel(context, hotel_id) {
+				console.log("checkhotel>>>>>")
+				uni.setStorageSync("hotel_id", hotel_id);
+				(async function(){
+					await context.dispatch('getPermissionList',hotel_id);
+				})();	
+				  
+				
+		
 				context.commit("setHotelId",hotel_id);
-				reslove();
-			})
 			
 
 		},

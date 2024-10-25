@@ -41,7 +41,7 @@
 				return this.$store.state.hotel_id;
 			},
 			scenicSpotList(){
-				return this.$scenicSpotStore.scenicSpotList;
+				return this.$store.state.scenicSpotStore.scenicSpotList;
 			},
 			viewWidth() {
 				let viewWidth = uni.getSystemInfoSync().windowWidth || uni.getSystemInfoSync().screenWidth
@@ -65,26 +65,33 @@
 				return this.$store.state.isPcShow;
 			}
 		},
+		watch: {
+			hotel_id(){
+				console.error("vvvvv")
+				this.initData();
+			}
+			},
 		async created() {
+			console.log("ffff",this.$store.state);
 			// http://localhost:8080/#/pages/scenicSpot/showScenicSpot/showScenicSpot?hotel_id=66f4d677e4ec9dbeca1f8ff9
-			this.getHotel();
-			await this.$store.dispatch("getScenicSpotList",this.hotel_id);
+			this.initData();
+
 		},
 		methods: {
-			async getHotel(){
-				try {
-					const hotelRes = await HotelService.getHotelInfoById(this.hotel_id);
-					this.hotel = hotelRes.data[0];
-				} catch (error) {
-					console.log(error)
+			async initData(){
+				if(!this.hotel_id){
+					console.log("没有hotel_id");
+					return;
 				}
+				console.log(1233);
+				const hotelRes = await HotelService.getHotelInfoById(this.hotel_id);
+				this.hotel = hotelRes.data[0];
+				await this.$store.dispatch("getScenicSpotList",this.hotel_id);
 			
-			}
+		
 
 		},
-		watch: {
-
-		},
+	},
 
 		// 组件周期函数--监听组件挂载完毕
 		mounted() {

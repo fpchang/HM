@@ -10,7 +10,7 @@ exports.main = async (event, context) => {
 	try{
 		const {$token} = event;
 		if(!$token){
-			return {code:9992,msg:"token无效"}
+			return {code:9992,msg:""}
 		}
 		
 		const verifT = tokenEvent.verifyToken($token,tokenEvent.getSecret());

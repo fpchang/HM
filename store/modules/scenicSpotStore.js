@@ -15,7 +15,7 @@ export default{
 	},
   actions:{
      getScenicSpotList(context,hotel_id){
-      ScenicSpotService.getScenicSpotList(hotel_id).then(res=>{
+      return ScenicSpotService.getScenicSpotList(hotel_id).then(res=>{
         console.log("景点列表",res)
         context.commit('updateScenicSpotList', res.result.data);
       })
