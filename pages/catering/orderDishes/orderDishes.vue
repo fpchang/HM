@@ -1,6 +1,7 @@
 <template>
 	<view class="orderDishes-container">
-		<view class="header-title" style=""><text>【{{hotel.hotelName }}】用餐预定</text></view>
+		
+		<view class="header-title" style=""><text>{{ hotle_id }}【{{hotel.hotelName }}】用餐预定</text></view>
 		<!-- <uni-card :is-shadow="false">
 			<text class="uni-body">这是一个基础卡片示例，内容较少，此示例展示了一个没有任何属性不带阴影的卡片。</text>
 		</uni-card> -->
@@ -151,6 +152,7 @@
 		},
 		created(params) {
 			console.log("created", params,uni.getSystemInfoSync());
+			console.log("222222",this.$store.state)
 			try {
 				if(this.isPcshow){
 					document.getElementsByTagName('uni-page-head')[0].style.display = 'none';	
@@ -269,6 +271,9 @@
 					this.goodsListPanalHeight = 0
 				}
 
+			},
+			hotel_id(){
+				this.getData();
 			}
 
 		},
@@ -283,8 +288,12 @@
 				//console.log(e)
 			},
 			async getData() {
+				if(!this.hotel_id){
+					return;
+				}
 				try {
 					//uni.showLoading();
+					
 					const hotelRes = await HotelService.getHotelInfoById(this.hotel_id);
 					const res = await MenuService.getMenuList(this.hotel_id);
 					console.log("酒店信息", hotelRes)
@@ -371,8 +380,9 @@
 					const res =	await MenuService.addOrderDishes(orderDishesObj);
 					this.isLoading=false;
 					uni.hideLoading();
+					this.$store.dispatch("getOrderDishesToday",this.hotel_id);
 					uni.reLaunch({
-					url:`/pages/common/success?hotel=${JSON.stringify(this.hotel)}`,
+						url:`/pages/common/success?hotel=${JSON.stringify(this.hotel)}`,
 					});
 			
 					} catch (error) {

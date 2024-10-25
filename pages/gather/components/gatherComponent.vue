@@ -45,11 +45,11 @@
       </view>
     </view>
     <!-- <uni-section class="mb-10" title="统计" type="line"></uni-section> -->
-    <view>
+    <!-- <view>
       <ui-echarts ref="chart" :option="option" exportBase64></ui-echarts>
       <image v-if="image" :src="image"></image>
       <button type="primary" size="mini" @click="toImage">导出图片</button>
-    </view>
+    </view> -->
   </view>
 </template>
 
@@ -67,23 +67,23 @@ import MenuService from '../../../services/MenuService';
 		  data(){
 			  return {
           todayCheckInOrderList:[],
-				dataList:[
-					{
-					title:"今日办理入住",
-          numCount:0,
-					list:[]
+				// dataList:[
+				// 	{
+				// 	title:"今日办理入住",
+        //   numCount:0,
+				// 	list:[]
 
-					},{
-						title:"今日入住房间数",
-            numCount:0,
-						list:[]
-					}
-          ,{
-						title:"今日餐饮订单",
-            numCount:0,
-						list:[]
-					}
-					],
+				// 	},{
+				// 		title:"今日入住房间数",
+        //     numCount:0,
+				// 		list:[]
+				// 	}
+        //   ,{
+				// 		title:"今日餐饮订单",
+        //     numCount:0,
+				// 		list:[]
+				// 	}
+				// 	],
           chartList:[
             {
 						title:"一个月内入住率",
@@ -105,13 +105,55 @@ import MenuService from '../../../services/MenuService';
           return this.$store.state.hotel_id;
         },
         hotelList() {
-				console.error("333333333333333",this.$store.state.hotelList);
 				return this.$store.state.hotelList;
 			},
 			user(){
 				return this.$store.state.user;
 			},
-    
+      //今日办理入住的订单
+      orderListByCheckInToday(){
+        return this.$store.state.orderStore.orderListByCheckInToday;
+      },
+      orderListByCheckInToday_format(){
+        return {
+            title:"今日办理入住",
+            list:this.orderListByCheckInToday,
+            numCount:this.orderListByCheckInToday.length
+          }
+      },
+      //今日住客订单
+      orderListToday(){
+        return this.$store.state.orderStore.orderListToday;
+      },
+      orderListToday_format(){
+        let numCount=0;
+        this.orderListToday.map(item=>{
+            let num =0;
+             item.roomTypeArray.map(it=>{
+              num+=it.count;
+             });
+             numCount+=num;
+           })
+          return {
+            title:"今日入住房间数",
+            list:this.orderListToday,
+            numCount:numCount
+          }
+      },
+      //今日餐饮订单
+      orderDishesToday(){
+        return this.$store.state.menuStore.orderDishesToday;
+      },
+      orderDishesToday_format(){
+        return {
+          title:"今日餐饮订单",
+          list:this.orderDishesToday,
+          numCount:this.orderDishesToday.length,
+        }
+      },
+      dataList(){
+        return [this.orderListByCheckInToday_format,this.orderListToday_format,this.orderDishesToday_format]
+      },
 			viewWidth() {
       let viewWidth =
         uni.getSystemInfoSync().windowWidth ||
@@ -139,9 +181,10 @@ import MenuService from '../../../services/MenuService';
 		},
     watch:{
       hotel_id(){
-        this.getOrderListByCheckInToday();
-        this.getOrderListToday();
-        this.getOrderDishesToday();
+        // this.getOrderListByCheckInToday();
+        // this.getOrderListToday();
+        // this.getOrderDishesToday();
+        this.initData();
       }
     },
     filters:{
@@ -181,32 +224,37 @@ import MenuService from '../../../services/MenuService';
 		  onLoad: function() {
 		  	console.log('gatherComponent Show')
 		  },
-      created(){
-        this.getOrderListByCheckInToday();
-        this.getOrderListToday();
-        this.getOrderDishesToday();
+      async created(){
+       // this.getOrderListByCheckInToday();
+       // this.getOrderListToday();
+        //this.getOrderDishesToday();
+        this.initData();
       },
 		  methods:{
+        async initData(){
+          await this.$store.dispatch("getOrderListByCheckInToday",this.hotel_id);
+          await this.$store.dispatch("getOrderListToday",this.hotel_id);
+          await this.$store.dispatch("getOrderDishesToday",this.hotel_id);
+          
+          
+        },
         //获取今日入住
         async getOrderListByCheckInToday(){
-          try {
-            const res = await OrderService.getOrderListByCheckIn(this.hotel_id,new Date());
-            console.log("today checkin ",res.data);
-           // this.todayCheckInOrderList = res.data;
-           this.dataList[0].list=res.data;
-           this.dataList[0].numCount=res.data.length;
-          } catch (error) {
+          // try {
+          //   const res = await OrderService.getOrderListByCheckIn(this.hotel_id,new Date());
+          //   console.log("today checkin ",res.data);
+          //  this.dataList[0].list=res.data;
+          //  this.dataList[0].numCount=res.data.length;
+          // } catch (error) {
             
-          }
+          // }
         },
         //今日住客
         async getOrderListToday(){
           try {
             const res = await OrderService.getOrderListToday(this.hotel_id);
-            console.log("---today orderList ",res.data,res.data.length);
            // this.todayCheckInOrderList = res.data;
            if(res.data.length<1){
-            console.warn("rrrrrrrrrrrrrrrr")
             return ;
            }
            let numCount =0;

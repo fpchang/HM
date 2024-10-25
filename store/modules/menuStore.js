@@ -6,21 +6,36 @@ import MenuService from '../../services/MenuService';
 //Vuex.Store 构造器选项
 export default{
 	state: { //存放状态
-		menuList:[]
+		menuList:[],
+		orderDishesToday:[] //今日预定的餐饮订单
 	},
 
 	mutations: {
 		//调用 this.$store.commit('updateHotelList',[])
-		updateMenuList(state, list) {
+		updateMenuList(state, list=[]) {
 			state.menuList = list;
+		},
+		updateOrderDishesToday(state,list=[]){
+			state.orderDishesToday = list;
 		}
 	},
   actions:{
      getMenuList(context,hotel_id){
-      console.log("刷新getMenuList列表");
       return  MenuService.getMenuList(hotel_id).then(res=>{
+		console.log("菜单列表",res.result.data)
         context.commit('updateMenuList', res.result.data);
       })
-    }
+    },
+	 getOrderDishesToday(context,hotel_id){
+		
+		  let w ={
+			hotel_id:hotel_id,
+			mealDate: new Date().Format("yyyy-MM-dd")
+		  }
+		  return MenuService.getOrderDishesListByCondition(w).then(res=>{
+			context.commit("updateOrderDishesToday",res.data)
+		  })
+		}
+
   }
 }

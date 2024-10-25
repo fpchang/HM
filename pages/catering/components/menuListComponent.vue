@@ -76,10 +76,10 @@
 		},
 		computed: {
 			hotel_id() {
-				return this.$store.state.menuStore.hotel_id;
+				return this.$store.state.hotel_id;
 			},
 			hotelList() {
-				return this.$store.state.menuStore.hotelList;
+				return this.$store.state.hotelList;
 			},
 			hotelName() {
 				let tar = this.hotelList.find(item => item._id == this.hotel_id);
@@ -113,8 +113,9 @@
 			},
 		},
 		watch: {
-			hotel_id() {
-				this.$store.menuStorecommit("getMenuList", this.hotel_id);
+			 hotel_id() {
+				 this.$store.dispatch("getMenuList", this.hotel_id);
+				 this.getOrderDishesList();
 			},
 			tabRadioVal(nval) {
 				if (nval == 1) {
@@ -132,7 +133,6 @@
 			addOrderDishes() {
 				try {
 					if (this.isPcShow) {
-						alert(1)
 						let href = `#/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`;
 						window.open(href, '_blank');
 						return;

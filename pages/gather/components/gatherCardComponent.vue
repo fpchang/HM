@@ -18,7 +18,7 @@
           labelSize="12px"
           @click="shareWx"
         ></u-icon> -->
-        <u-icon
+        <!-- <u-icon
           name="grid-fill"
           :color="isEdit?'#06c':'#000'"
           size="22"
@@ -27,7 +27,7 @@
           labelPos="bottom"
           labelSize="12px"
           @click="moreControl"
-        ></u-icon>
+        ></u-icon> -->
       </view>
     </view>
     <slot name="content"></slot>

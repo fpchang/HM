@@ -301,7 +301,6 @@ export default {
         totalAmount:Number(this.orderForm.totalAmount),
       };
       try {
-        throw new Error("11111");
         await OrderService.addOrder(obj);
         await this.$store.dispatch("getOrderListTodayAfter",this.hotel_id);
         this.submitLoading = false;

@@ -8,7 +8,7 @@
            
              <view class="check-area" @click="showCheckHotel">
 							<text class="$uni-font-size-lg"
-								style="white-space: nowrap;text-overflow: ellipsis; overflow: hidden;">见山舍民宿</text>
+								style="white-space: nowrap;text-overflow: ellipsis; overflow: hidden;">{{hotel.hotelName}}</text>
 							<u-icon name="arrow-down-fill" color="#000" size="20px" top="2"></u-icon>
 							<!-- <view class="check-panal">
 								<view>11111111</view>
@@ -22,9 +22,9 @@
               </view>
             </view> -->
 
-            <view class="add-area">
-              <u-icon name="plus-circle" color="#007aff" label-color="#007aff" size="20px" label="新增店面" top="2"
-                class="add-icon-style" @click="addNewHotel"></u-icon>
+             <view class="add-area" style="cursor:pointer">
+              <uni-icons  type="bars" size="30"></uni-icons>
+              
             </view>
           </view>
           <view class="navbar">
@@ -91,21 +91,56 @@
       </u-list>
     </u-popup> -->
     <uni-drawer ref="showLeft" mode="left" :width="320">
-      <view style="background:#eee;height:100%">
+      <view style="background:#efefef4d;height:100%">
+        <view style="min-height:330px;height: calc(100vh - 300px);">
+          <uni-section title="酒店列表" type="line"></uni-section>
+          <view class="card-panal"> 
+            <view class="card">
+              <view class="list-panal"> 
+                <view class="list-panal-item" v-for="item of hotelList" @click="checkHotel(item._id)">
+                  <uni-icons  :type="item._id == hotel_id?'checkbox':'circle'" size="22" color="#06c"></uni-icons>
+                  <view class="i-area" >
+                    <text>{{item.hotelName}}</text>
+                    <uni-icons  type="forward" size="22" color="#3333335c"></uni-icons>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view> 
+          <!-- <view class="list-panal"> 
+            <view class="list-panal-item" v-for="item of hotelList" @click="checkHotel(item._id)">
+              <uni-icons  :type="item._id == hotel_id?'checkbox':'circle'" size="22" color="#06c"></uni-icons>
+              <view class="i-area" >
+                <text>{{item.hotelName}}</text>
+                <uni-icons  type="forward" size="22" color="#3333335c"></uni-icons>
+              </view>
+            </view>
+          </view> -->
+        </view>
+        
+        <view style="height:300px;box-sizing:border-box"> 
+          <uni-section title="操作" type="line"></uni-section>
+          <view class="card-panal"> 
+            <view class="card">
+              <view class="list-panal"> 
+                <view class="list-panal-item">
+                  <uni-icons type="plusempty" size="22" color="#06c"></uni-icons>
+                  <view class="i-area" ><text>创建新酒店</text></view>
+                </view>
 
-        <uni-section title="酒店列表"></uni-section>
-        <view> 
-          <view v-for="item of hotelList">{{item.hotelName}}</view>
+                <view class="list-panal-item">
+                  <uni-icons type="compose" size="22" color="#06c"></uni-icons>
+                  <view class="i-area" ><text>修改酒店信息</text></view>
+                </view>
+                <view class="list-panal-item">
+                  <uni-icons type="info" size="22" color="#06c"></uni-icons>
+                  <view class="i-area" ><text>酒店详情</text></view>
+                </view>
+              </view>
+            </view>
+          </view> 
         </view>
-        <view style="padding:10px;"> 
-          <view style="height:300px;box-shadow:0 0 #000 4px 4px"></view>
-        </view>  <uni-section title="酒店列表"></uni-section>
-        <view> 
-          <view v-for="item of hotelList">{{item.hotelName}}</view>
-        </view>
-        <view style="padding:10px;"> 
-          <view style="height:300px;box-shadow:0 0 #000 4px 4px"></view>
-        </view>
+        
       </view>
     
         
@@ -206,6 +241,9 @@ export default {
     hotelList() {
       return this.$store.state.hotelList;
     },
+    hotel(){
+      return this.hotelList.find(item=>item._id == this.hotel_id)||{};
+    },
     permissionList() {
       return this.$store.state.permissionStore.permissionList;
     },
@@ -305,13 +343,7 @@ export default {
           permission: "MENU_CATERING",
           ComponentName: "menuListComponent",
         },
-        {
-          index: 4,
-          name: "发票",
-          time: 0,
-          permission: "MENU_TICKET",
-          ComponentName: "",
-        },
+       
         {
           index: 5,
           name: "房型管理",
@@ -335,10 +367,13 @@ export default {
       this.showDrawerEvent();
     },
     checkHotel(hotel_id) {
+      console.warn(hotel_id);
       if (hotel_id == this.hotel_id) {
         return;
       }
       this.$store.dispatch("checkHotel", hotel_id);
+      this.$refs.showLeft.close()
+
     },
     showDrawerEvent() {
       this.showDrawer = true;
@@ -355,9 +390,6 @@ export default {
         return;
       }
       this.currentTab_index = e.index;
-    },
-    checkTab(e) {
-      //console.log("checkTab", e)
     },
     scrollEvent(e) {
       let { scrollTop } = e.detail;
@@ -434,6 +466,7 @@ export default {
     padding: 0 20px;
 
     .check-area {
+      cursor: pointer;
       max-width: 200px;
 
       height: 24px;
@@ -492,5 +525,35 @@ export default {
 .activeHotelItemSelect {
   background-color: #ddd !important;
   /*border:2rpx solid blue;*/
+}
+.list-panal{
+
+  .list-panal-item{
+    display: flex;
+    padding:0 12px;
+    height: 40px;
+    box-sizing: border-box;
+    align-items: center;
+    font-size: 13px;
+    .i-area{
+      border-bottom: 1px solid #eaeaea;
+      box-sizing:border-box;
+      display: flex;
+      flex: 1;
+      height: 100%;
+      align-items: center;
+      justify-content: space-between;
+      padding-left: 8px;
+    }
+  }
+}
+.card-panal{
+  padding:10px;
+  box-sizing: border-box;
+  .card{
+    border:1px solid #e4e4e4;
+    border-radius: 4px;
+    background: #fff;
+  }
 }
 </style>
