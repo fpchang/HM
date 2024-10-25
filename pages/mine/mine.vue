@@ -34,15 +34,24 @@
 			</view>
 		</view>
 		</view>
-			<!-- <uni-card :title="user.userName" :is-shadow="false" :border="false" :sub-title="user.phone" extra="" :thumbnail="avatar" @click="onClick">	
-			</uni-card> xtst2023@outlook.com-->
 			
-
+		<uni-popup ref="popupFeedback" background-color="transprant">
+			<view class="popup-content">
+			  <view class="create-order-title-style">意见与反馈</view>
+			  <view class="comContent">
+				<feedback></feedback>
+			  </view>
+			</view>
+		  </uni-popup>
 	</view>
 </template>
 
 <script>
+import feedback from "./feedback/feedback";
 	export default {
+		components:{
+			feedback
+		},
 		data() {
 			return {
 				avatar: 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png',
@@ -58,11 +67,23 @@
 						iconVal:"help-filled",
 						title:"退出登录",
 						showArrow:true
+					},
+					{
+						key:"feedback",
+						iconVal:"help-filled",
+						title:"意见反馈",
+						showArrow:true
 					}
 				]
 			}
 		},
 		computed:{
+			isPcShow(){
+				return this.$store.state.isPcShow;
+			},
+			hotel_id(){
+				return this.$store.state.hotel_id;
+			},
 			user(){
 				return uni.getStorageSync("user");
 			}
@@ -72,7 +93,6 @@
 		},
 		methods: {
 			login(){
-				console.log("111");
 				uni.navigateTo({
 					url:"/uni_modules/uni-id-pages/pages/login/login-smscode?phoneNumber=18516285834"
 					
@@ -83,6 +103,16 @@
 					case "loginOut":
 						this.loginOut();
 					break;
+					case "feedback":
+						if(this.isPcShow){
+							this.$refs.popupFeedback.open()
+						break;
+						}
+						uni.navigateTo({
+							url:"/pages/mine/feedback/feedback"
+						});						
+						break;
+						
 				}
 			},
 			async loginOut(){
@@ -126,7 +156,7 @@
 	}
 .menu-list{
 	.menu-list-item{
-		min-height: 40px;
+		min-height: 44px;
 		display: flex;
 		justify-content: space-between;
 		.icon-area{
@@ -138,7 +168,7 @@
 			flex: 1;
 			align-items: center;
 			justify-content: space-between;
-			border-bottom: 1px solid #bbb;
+			border-bottom: 1px solid #d5d4d4;
 			box-sizing: border-box;
 			font-size: 14px;
 

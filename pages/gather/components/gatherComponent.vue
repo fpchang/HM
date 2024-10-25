@@ -189,7 +189,6 @@ import MenuService from '../../../services/MenuService';
     },
     filters:{
       dayNum(val, params) {
-        console.log("+++++++++params",val,params)
 				return Math.ceil((params[1] - params[0]) / (1000 * 60 * 60 * 24))
 			},
       //今日客房数量

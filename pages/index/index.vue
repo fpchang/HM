@@ -7,9 +7,9 @@
           <view class="title-area" :style="{opacity: opacityVal}">
            
              <view class="check-area" @click="showCheckHotel">
-							<text class="$uni-font-size-lg"
-								style="white-space: nowrap;text-overflow: ellipsis; overflow: hidden;">{{hotel.hotelName}}</text>
-							<u-icon name="arrow-down-fill" color="#000" size="20px" top="2"></u-icon>
+							<text class="$uni-font-size-lg h-n-style"
+								>{{hotel.hotelName}}</text>
+							<u-icon name="arrow-down-fill" color="#606266" size="14px" top="2" ></u-icon>
 							<!-- <view class="check-panal">
 								<view>11111111</view>
 							</view>  -->
@@ -213,6 +213,7 @@ export default {
   },
   onLoad(e) {},
   created() {
+    console.log("index create....>>>",this.hotel_id)
     this.vaildToken(()=>{
       this.initData();
     });
@@ -269,6 +270,10 @@ export default {
     },
   },
   watch: {
+    async hotel_id(){
+      console.log("index watch hotel_id");
+      await this.$store.dispatch("getPermissionList")
+    },
     hotelList(narr, oarr) {
       //this.setDefaultHotel()
     },
@@ -373,7 +378,7 @@ export default {
       if (hotel_id == this.hotel_id) {
         return;
       }
-      this.$store.dispatch("checkHotel", hotel_id);
+      this.$store.commit("checkHotel", hotel_id);
       this.$refs.showLeft.close()
 
     },
@@ -475,7 +480,13 @@ export default {
       display: flex;
       flex-direction: row;
       text-align: center;
-
+      .h-n-style{
+        white-space: nowrap;
+        text-overflow: ellipsis; 
+        overflow: hidden;
+        color:#606266;
+        padding-right: 14px;
+      }
       .check-panal {
         width: 120px;
         max-width: 200px;

@@ -35,6 +35,11 @@ const store = new Vuex.Store({
 		setHotelId(state,hotel_id){
 			state.hotel_id = hotel_id;
 		},
+		checkHotel(state, hotel_id) {
+			console.log("checkhotel>>>>>")
+			uni.setStorageSync("hotel_id", hotel_id);
+			store.commit("setHotelId",hotel_id);												
+		},
 		//调用 this.$store.commit('updateHotelList',[])
 		updateHotelList(state, list) {
 			state.hotelList = list;
@@ -66,7 +71,7 @@ const store = new Vuex.Store({
 				console.warn("与旧hotel_id相同，无需重置");
 				return;
 			}
-			store.dispatch('checkHotel', n_hotel_id);
+			store.commit('checkHotel', n_hotel_id);
 			store.dispatch("getRoomType");
 			
 		},
@@ -78,20 +83,7 @@ const store = new Vuex.Store({
 		}
 	},
 	actions:{
-		    checkHotel(context, hotel_id) {
-				console.log("checkhotel>>>>>")
-				uni.setStorageSync("hotel_id", hotel_id);
-				(async function(){
-					console.log("11111111111111111")
-					await context.dispatch('getPermissionList',hotel_id);
-					
-				})();	
-				console.log("22222222222")
-				context.commit("setHotelId",hotel_id);					
-				
-			
-
-		},
+		    
 		 getHotelList(context){			
 			return hotelService.getHotelList().then(res=>{
 				console.log("当前用户酒店列表",res);
