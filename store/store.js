@@ -83,11 +83,10 @@ const store = new Vuex.Store({
 				uni.setStorageSync("hotel_id", hotel_id);
 				(async function(){
 					await context.dispatch('getPermissionList',hotel_id);
+					
 				})();	
-				  
+				context.commit("setHotelId",hotel_id);					
 				
-		
-				context.commit("setHotelId",hotel_id);
 			
 
 		},
