@@ -1,4 +1,5 @@
 'use strict';
+const { setTimeout } = require('timers');
 const tokenEvent = require('tokenEvent');
 exports.main = async (event, context) => {
 	//event为客户端上传的参数
