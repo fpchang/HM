@@ -1,5 +1,6 @@
 <template>
 	<view class="feedback">
+		{{ targetObj }}
 	  <uni-forms ref="feedbackRef" :modelValue="feedbackForm" :rules="feedbackRules" label-width="120px">
   
 		<uni-forms-item label="标题"   required name="title" >
@@ -71,10 +72,13 @@
 		submitDisabled(){}
 	 
 	},
-  
+	onLoad(params){
+		console.log("params",params)
+	},
 	watch: {},
-	created(){
+	created(e){
 	  //this.getMenuTypeList();
+	  console.log("eee",e);
 	},
 	methods: {
 

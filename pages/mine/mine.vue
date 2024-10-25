@@ -108,8 +108,9 @@ import feedback from "./feedback/feedback";
 							this.$refs.popupFeedback.open()
 						break;
 						}
+						const a={name:111}
 						uni.navigateTo({
-							url:"/pages/mine/feedback/feedback"
+							url:`/pages/mine/feedback/feedback`
 						});						
 						break;
 						
