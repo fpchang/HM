@@ -50,7 +50,7 @@
     <swiper :style="{height: scrollHeight}" :current="currentTab_index" :disable-touch="true"
       @change="swiperContentEvent">
       <swiper-item v-for="item in tabList">
-        <scroll-view :scroll-y="true" scroll-x="false" show-scrollbar="false" :scroll-top="0" :style="{height: scrollHeight}">
+        <scroll-view :scroll-y="true" :scroll-x="false" show-scrollbar="false" :scroll-top="0" :style="{height: scrollHeight}">
           <view v-if="dataHasRead">
             <!-- 	<keep-alive :id="new Date().getTime()"> -->
             <share_app_to_weechat v-if="item.ComponentName=='share_app_to_weechat'"></share_app_to_weechat>
@@ -361,14 +361,14 @@ export default {
         },
        
         {
-          index: 5,
+          index: 4,
           name: "房型管理",
           time: 0,
           permission: "MENU_ROOMTYPE",
           ComponentName: "roomTypeListComponent",
         },
         {
-          index: 6,
+          index: 5,
           name: "人员管理",
           time: 0,
           permission: "MENU_EMPLOYEE",

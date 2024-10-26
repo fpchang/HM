@@ -29,7 +29,7 @@
 					<uni-td align="center">
 						<view class="uni-group" style="justify-content:space-around">
 						  <text class="edit-text-btn-style" @click="editHotel(item)">修改</text>
-            			  <text class="edit-text-btn-style" @click="deleteRoomType(item)">删除</text>
+            			  <text class="edit-text-btn-style" @click="deleteHotel(item)">删除</text>
 						</view>
 					</uni-td>
 				</uni-tr>
@@ -83,6 +83,7 @@
 
 <script>
 import createHotelComponent from '../components/createHotelComponent';
+import HotelService from "../../../services/HotelService";
 import DB from '../../../api/DB';
 	export default {
 		components:{
@@ -118,10 +119,6 @@ import DB from '../../../api/DB';
 			}
 		},
 		methods:{
-			sortRoomList(list){
-				let newList = list.filter(item=>{return item})
-				return newList.sort();
-			},
 			editHotel(rt){
 				if(!this.$store.state.permissionStore.permissionList.includes('HOTEL_UPDATE')){
 					 this.$alert.alertNoPermisson();
@@ -153,13 +150,13 @@ import DB from '../../../api/DB';
 					url:'/pages/hotelManage/createHotel/createHotel'
 				})
 			},
-			async deleteRoomType(rt){
+			async deleteHotel(rt){
 				if(!this.$store.state.permissionStore.permissionList.includes('HOTEL_DELETE')){
 					 this.$alert.alertNoPermisson();
 					return;
 				}
 				const conf = await uni.showModal({
-					title: '确认删除房型',
+					title: '确认删除此酒店',
 					content: '删除后将无法恢复,确认删除吗?',
 					cancelText: '取消',
 					confirmText: '确认'
@@ -169,13 +166,14 @@ import DB from '../../../api/DB';
 				}
 				this.submitLoading = true;
 				//uni.showLoading();
-				DB.callFunction("hm_deleteRoomType",
-					{
-						_id:rt._id
-					}
-				).then(async res=>{
+				// DB.callFunction("hm_deleteHotel",
+				// 	{
+				// 		_id:rt._id
+				// 	}
+				// )
+				HotelService.deleteHotel(rt._id).then(async res=>{
                             console.log("删除成功");
-							await this.$store.dispatch("getRoomType");
+						await this.$store.dispatch("getHotelList");
 						this.submitLoading = false;
 						uni.hideLoading();
 							

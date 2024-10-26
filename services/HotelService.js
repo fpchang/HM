@@ -18,6 +18,9 @@ class HotelService{
     updateHotel(hotel_id,hotelObj){
       return   DB.callFunction("hm_updateHotel",{hotel_id,hotelObj});
     }
+    deleteHotel(hotel_id){
+      return   DB.callFunction("hm_deleteHotel",{hotel_id});
+    }
     /** 
      * 获取当前用户酒店列表
     */
