@@ -203,6 +203,13 @@
 			{
 				"navigationBarTitleText" : "建议与反馈"
 			}
+		},
+		{
+			"path" : "pages/hotelManage/hotelList/hotelList",
+			"style" : 
+			{
+				"navigationBarTitleText" : "酒店管理"
+			}
 		}
 		
 	],

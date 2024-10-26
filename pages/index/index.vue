@@ -50,7 +50,7 @@
     <swiper :style="{height: scrollHeight}" :current="currentTab_index" :disable-touch="true"
       @change="swiperContentEvent">
       <swiper-item v-for="item in tabList">
-        <scroll-view :scroll-y="true" show-scrollbar="false" :scroll-top="0" :style="{height: scrollHeight}">
+        <scroll-view :scroll-y="true" scroll-x="false" show-scrollbar="false" :scroll-top="0" :style="{height: scrollHeight}">
           <view v-if="dataHasRead">
             <!-- 	<keep-alive :id="new Date().getTime()"> -->
             <share_app_to_weechat v-if="item.ComponentName=='share_app_to_weechat'"></share_app_to_weechat>
@@ -67,12 +67,15 @@
             <roomTypeListComponent :key="item.time" :createTime="item.time"
               v-if="item.ComponentName=='roomTypeListComponent'">
             </roomTypeListComponent>
-            <employeeConmponent :key="item.time" :createTime="item.time"
-              v-if="item.ComponentName=='employeeConmponent'"></employeeConmponent>
+            <employeeComponent :key="item.time" :createTime="item.time"
+              v-if="item.ComponentName=='employeeComponent'"></employeeComponent>
             <menuListComponent :key="item.time" :createTime="item.time"
               v-if="item.ComponentName=='menuListComponent'"></menuListComponent>
             <scenicSpotListComponent :key="item.time" :createTime="item.time"
               v-if="item.ComponentName=='scenicSpotListComponent'"></scenicSpotListComponent>
+              <hotelList :key="item.time" :createTime="item.time"
+              v-if="item.ComponentName=='hotelList'"></hotelList>
+              
             <!-- </keep-alive> -->
           </view>
         </scroll-view>
@@ -126,8 +129,12 @@
 
               <view class="list-panal"> 
                 <view class="list-panal-item">
+                  <uni-icons type="gear-filled" size="22" color="#06c"></uni-icons>
+                  <view class="i-area" @click="hotelManage"><text>酒店管理</text></view>
+                </view>
+                <!-- <view class="list-panal-item">
                   <uni-icons type="plusempty" size="22" color="#06c"></uni-icons>
-                  <view class="i-area" ><text>创建新酒店</text></view>
+                  <view class="i-area" ><text @click="addNewHotel">创建新酒店</text></view>
                 </view>
 
                 <view class="list-panal-item">
@@ -137,7 +144,7 @@
                 <view class="list-panal-item">
                   <uni-icons type="info" size="22" color="#06c"></uni-icons>
                   <view class="i-area" ><text>酒店详情</text></view>
-                </view>
+                </view> -->
               </view>
             </view>
           </view> 
@@ -166,12 +173,14 @@ import orderComponent from "../order/components/orderComponent";
 import hotelSetComponent from "./components/hotelSetComponent";
 import createHotelComponent from "../hotelManage/components/createHotelComponent";
 import roomTypeListComponent from "../hotelManage/components/roomTypeListComponent.vue";
-import employeeConmponent from "../hotelManage/components/employeeConmponent.vue";
+import employeeComponent from "../hotelManage/components/employeeComponent.vue";
 import menuListComponent from "../catering/components/menuListComponent.vue";
 import scenicSpotListComponent from "../scenicSpot/components/scenicSpotListComponent";
 import AccountService from "../../services/AccountService";
+import hotelList from "../hotelManage/hotelList/hotelList"
 import DB from "../../api/DB";
-import UniSection from '../../uni_modules/uni-section/components/uni-section/uni-section.vue';
+
+hotelList
 export default {
   components: {
     gatherComponent,
@@ -179,10 +188,10 @@ export default {
     hotelSetComponent,
     createHotelComponent,
     roomTypeListComponent,
-    employeeConmponent,
+    employeeComponent,
     menuListComponent,
     scenicSpotListComponent,
-    UniSection,
+    hotelList
   },
 
   data() {
@@ -285,8 +294,8 @@ export default {
     async vaildToken(callback) {
 	  try {
       if(!uni.getStorageSync('hm_token')){
-       // this.$store.dispatch("loginOut");
-       // return;
+        this.$store.dispatch("loginOut");
+        return;
       }
      const res= await AccountService.validToken();
 	 if(res.result.code){
@@ -363,8 +372,14 @@ export default {
           name: "人员管理",
           time: 0,
           permission: "MENU_EMPLOYEE",
-          ComponentName: "employeeConmponent",
-        },
+          ComponentName: "employeeComponent",
+        },{
+          index: 7,
+          name: "酒店管理",
+          time: 0,
+          permission: "MENU_HOTELMANAGE",
+          ComponentName: "hotelList",
+        }
       ];
       this.tabList = arr.filter((item) => {
         return this.permissionList.includes(item.permission);
@@ -407,6 +422,11 @@ export default {
       if (e.detail["current"]) {
         this.currentTab_index = e.detail.current;
       }
+    },
+    hotelManage(){
+      uni.navigateTo({
+          url: "/pages/hotelManage/hotelList/hotelList",
+        });
     },
     addNewHotel() {
       if (!this.isPcShow) {

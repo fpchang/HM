@@ -84,7 +84,7 @@
         <text class="itx-n">{{item.name}}</text>
         <view style="display: flex;"> 
           <text class="itx-p">{{item.price}}</text>
-          <text>元</text>
+          <text>￥</text>
           <view class="icon-area">
             <!-- <u-icon
             v-if="isEdit"
@@ -104,8 +104,8 @@
               labelSize="12px"
               @click="deleteMenuDetail(item)"
             ></u-icon> -->
-            <text class="edit-style" @click="editMenuDetail(item)">修改</text>
-            <text class="edit-style" @click="deleteMenuDetail(item)">删除</text>
+            <text v-if="isEdit" class="edit-style" @click="editMenuDetail(item)">修改</text>
+            <text v-if="isEdit" class="edit-style" @click="deleteMenuDetail(item)">删除</text>
           </view>
         </view>
         

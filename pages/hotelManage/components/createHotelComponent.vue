@@ -24,16 +24,26 @@
 	//import DB from "../../../api/DB";
 	import HotelService from "../../../services/HotelService";
 	export default {
+		props:{
+			type:0,
+			rt:{}
+		},
 		data() {
 			return {
 				submitLoading: false,
 				//hotelList:getApp().globalData.hotelList,
-				hotelForm: {
+				hotelForm: this.type==1?{
+					belong: this.rt.belong,
+					hotelName: this.rt.hotelName,
+					hotelAdress: this.rt.hotelAdress,
+					hotelCoordinate: this.rt.hotelCoordinate,
+					hotelIntroduction: this.rt.hotelIntroduction
+				}: {
 					belong: "",
 					hotelName: "",
 					hotelAdress: "",
 					hotelCoordinate: [],
-					hotelIntroduction: "简介"
+					hotelIntroduction: ""
 				},
 				hotelFormRules: {
 					// 对name字段进行必填验证
@@ -45,7 +55,7 @@
 							{
 								validateFunction: (rule, value,data,callback)=> {									
 									let obj = this.hotelList.find(item=>{ return item.hotelName==value});
-									if(obj){
+									if(obj&&this.type==0){
 										callback('已存在酒店名')
 									}
 									return true;
@@ -84,13 +94,28 @@
 					this.submitLoading = true;
 					let obj = {}
 					console.log(this.hotelForm);
-					this.hotelForm.belong=this.user.phone;
-					HotelService.createHotel(this.hotelForm).then(res => {
+					if(this.type==1){
+						this.updateHotel();
+						return ;
+					}
+					this.addHotel();
+
+				
+				});
+
+
+			},
+			addHotel(){
+				this.hotelForm.belong=this.user.phone;
+					HotelService.createHotel(this.hotelForm).then(async res => {
 						console.log("添加成功");
 						uni.hideLoading();
-						uni.reLaunch({
-							url:"/pages/index/index"
-						})
+						this.submitLoading = false;
+						// uni.reLaunch({
+						// 	url:"/pages/index/index"
+						// })
+						await this.$store.dispatch("getHotelList");
+						this.$emit('closePopup');
 					}).catch(er => {
 						console.log("添加失败",er);						
 						uni.hideLoading();
@@ -100,9 +125,21 @@
 						})
 						this.submitLoading = false;
 					})
-				});
-
-
+			},
+			async updateHotel(){
+				try {
+					await HotelService.updateHotel(this.hotel_id,this.hotelForm);
+					await this.$store.dispatch("getHotelList");
+					this.$emit('closePopup');
+				} catch (error) {
+					uni.hideLoading();
+						uni.showToast({
+							title: '更新失败，请稍候再试',
+							icon: 'error'
+						})
+						this.submitLoading = false;
+				}
+				
 			}
 		},
 	};

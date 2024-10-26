@@ -19,6 +19,16 @@
 				
 			}
 		},
+		onLoad(obj){
+			console.log("参数传递",obj);
+    try {
+      this.type= obj.type;
+      this.em = JSON.parse(obj.em);
+      uni.setNavigationBarTitle({title:obj.type=="1"?"修改酒店信息":"新增酒店",})
+    } catch (error) {
+      this.type=0;
+    }
+		},
 		methods: {
 			
 		}

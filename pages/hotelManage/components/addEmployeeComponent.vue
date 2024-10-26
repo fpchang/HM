@@ -6,13 +6,13 @@
       :rules="employeeFormRules"
       label-width="130px"
     >
-      <uni-forms-item label="用户名" required name="employee_name">
+      <uni-forms-item label="用户名"  name="employee_name">
         <uni-easyinput
           v-model="employeeForm.employee_name"
           placeholder="请输入员工名"
         />
       </uni-forms-item>
-      <uni-forms-item label="手机号(登录账号)" name="phone">
+      <uni-forms-item required label="手机号(登录账号)" name="phone">
         <u-input
           maxlength="11"
           type="number"
@@ -20,11 +20,12 @@
           border="surround"
           v-model="employeeForm.phone"
           clearable
+          :disabled="isAdministrator"
           class="inputStyle"
         >
         </u-input>
       </uni-forms-item>
-      <uni-forms-item label="角色">
+      <uni-forms-item label="角色" v-if="!isAdministrator">
         <uni-data-checkbox
           v-model="employeeForm.role"
           :localdata="roleItems"
@@ -95,18 +96,18 @@ export default {
                 let obj= this.employeeList.find((item) => {
                   return item.phone == value;
                 });
-                if(this.type==1){
-                  obj = this.employeeList.find((item) => {
-                  return item.phone == value&&item._id !=this.em._id;
-                });
-                }
+                // if(this.type==1){
+                //   obj = this.employeeList.find((item) => {
+                //   return item.phone == value&&item._id !=this.em._id;
+                // });
+                // }
 
-                if (obj) {
+                if (obj&&this.type==0) {
                   callback("已存在相同手机号");
                 }
-                if (value == this.hotel.belong) {
-                  callback("此用户为超级管理员");
-                }
+                // if (value == this.hotel.belong) {
+                //   callback("此用户为超级管理员");
+                // }
                 return true;
               },
             },
@@ -133,6 +134,9 @@ export default {
       return this.$store.state.hotelList.find(
         (item) => item._id == this.hotel_id
       );
+    },
+    isAdministrator(){
+      return this.employeeForm.role=="administrator"&&this.type==1;
     },
     employeeList() {
       return this.$store.state.employeeList;

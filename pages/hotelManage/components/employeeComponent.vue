@@ -31,7 +31,7 @@
         <!-- 表头行 -->
         <uni-tr>
           <uni-th align="center">用户手机</uni-th>
-          <uni-th align="center">用户名</uni-th>
+          <uni-th align="center">员工名称</uni-th>
           <uni-th align="center">角色</uni-th>
           <uni-th align="center" width="200px">操作</uni-th>
         </uni-tr>
@@ -41,8 +41,10 @@
           <uni-td>{{ item.employee_name }}</uni-td>
           <uni-td>{{ item.role | roleFormat }}</uni-td>
           <uni-td align="center">
-            <view class="uni-group">
-              <button
+            <view class="uni-group" style="justify-content:space-around">
+              <text  class="edit-text-btn-style" @click="editEmployee(item)">修改</text>
+            	<text v-if="item.role!='administrator'" class="edit-text-btn-style" @click="deleteEmployee(item)">删除</text>
+              <!-- <button
                 class="uni-button"
                 @click="editEmployee(item)"
                 size="mini"
@@ -58,7 +60,7 @@
                 :loading="submitLoading"
               >
                 删除
-              </button>
+              </button> -->
             </view>
           </uni-td>
         </uni-tr>
