@@ -191,17 +191,6 @@ import DB from '../../../api/DB';
 			closePopup(){
 				this.$refs.popupaddHotel.close();
 			}
-			// getRoomTypeList(){
-			// 	return uniCloud.callFunction({
-			// 		name:"hm_getRoomType",
-			// 		data:{hotel_id:this.hotel_id}
-			// 	}).then(res=>{
-					
-			// 		if(res.result.data.length){
-			// 			this.$store.commit("updateRoomTypeList",res.result.data[0].roomTypeList);
-			// 		}
-			// 	})
-			// }
 		}
 	}
 </script>
