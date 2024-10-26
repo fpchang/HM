@@ -4,11 +4,11 @@
 			<view class="left-panal">
 				<uni-data-checkbox v-model="tabRadioVal" :localdata="tabitems"></uni-data-checkbox>
 			</view>
-			<view class="control-panal" v-show="tabRadioVal==0">
+			<view class="control-panal" v-if="tabRadioVal==0">
 				<u-icon name="plus-circle-fill" color="#000" size="22" label="点菜" labelPos="bottom" labelSize="12px"
 					@click="addOrderDishes"></u-icon>
 			</view>
-			<view class="control-panal" v-show="tabRadioVal==1">
+			<view class="control-panal" v-if="tabRadioVal==1">
 				<u-icon name="plus-circle-fill" color="#000" size="22" label="添加菜单" labelPos="bottom" labelSize="12px"
 					@click="addMenuType"></u-icon>
 				<u-icon name="share-fill" color="#000" size="22" label="分享至微信" labelPos="bottom" labelSize="12px"
@@ -96,7 +96,7 @@
 			},
 
 			cardWidth() {
-				let windowWidth = this.viewWidth - 20; //-20 为pc端滚动条宽度
+				let windowWidth = this.viewWidth; //-20 为pc端滚动条宽度
 				let count = Math.floor(windowWidth / 375);
 				if (count == 0) {
 					return windowWidth;

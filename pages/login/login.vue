@@ -11,7 +11,7 @@
         errorType="none"
         ref="uForm"
       >
-        <u-form-item label="" prop="phone" ref="item1">
+        <u-form-item  prop="phone" ref="item1">
           <u-input
             maxlength="11"
             type="number"
@@ -31,7 +31,7 @@
           </u-input>
         </u-form-item>
 
-        <u-form-item label="" prop="smsCode" ref="item2">
+        <u-form-item  prop="smsCode" ref="item2">
           <u-input
             maxlength="4"
             type="number"
@@ -58,7 +58,7 @@
             </template>
           </u-input>
         </u-form-item>
-        <u-form-item label="" ref="item1">
+        <u-form-item  ref="item1">
           <u-button
             type="primary"
             shape="circle"

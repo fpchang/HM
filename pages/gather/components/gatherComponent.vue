@@ -4,7 +4,7 @@
 
     <view style="display: flex; justify-content: center">
       <view class="card-container" :style="{width: `${cardContainerWidth}px`}">
-        <view class="card" v-for="(item,index) of dataList" :style="{width: `${cardWidth}px`}">
+        <view class="card" v-for="(item,index) of dataList" :style="{width:`${cardWidth}px`}">
           <view class="card-item">
             <gatherCardComponent :targetObj="item" :numCount="item.numCount">
               <template v-slot:content>
@@ -66,6 +66,7 @@ import MenuService from '../../../services/MenuService';
 		  },
 		  data(){
 			  return {
+          widthTemp:0,
           todayCheckInOrderList:[],
 				// dataList:[
 				// 	{
@@ -154,29 +155,27 @@ import MenuService from '../../../services/MenuService';
       dataList(){
         return [this.orderListByCheckInToday_format,this.orderListToday_format,this.orderDishesToday_format]
       },
-			viewWidth() {
-      let viewWidth =
-        uni.getSystemInfoSync().windowWidth ||
-        uni.getSystemInfoSync().screenWidth;
-      return viewWidth + this.widthTemp - this.widthTemp;
+      viewWidth(){
+        let viewWidth=uni.getSystemInfoSync().windowWidth||uni.getSystemInfoSync().screenWidth
+        return  viewWidth +this.widthTemp-this.widthTemp
     },
-
-    cardWidth() {
-      let windowWidth = this.viewWidth - 20; //-20 为pc端滚动条宽度
-      let count = Math.floor(windowWidth / 375);
-      if (count == 0) {
+   
+    cardWidth(){
+      let windowWidth = this.viewWidth;//-20 为pc端滚动条宽度
+      let count = Math.floor(windowWidth/375);
+      if(count==0){
         return windowWidth;
       }
-      let ys = windowWidth % 375;
-      return Math.min(375 + ys / count, 450);
+      let ys= windowWidth % 375
+      return  Math.min(375+ (ys/count),450)
     },
-    cardContainerWidth() {
-      let count = Math.max(Math.floor(this.viewWidth / this.cardWidth), 1);
-      return this.cardWidth * count;
+    cardContainerWidth(){
+      let count =Math.max(Math.floor(this.viewWidth/this.cardWidth),1) ;
+      return this.cardWidth * count
     },
-    isPcShow() {
-      return this.$store.state.isPcShow;
-    },
+    isPcShow(){
+				return this.$store.state.isPcShow;
+			}
     
 		},
     watch:{
@@ -303,7 +302,7 @@ import MenuService from '../../../services/MenuService';
 
 <style lang="scss">
 .gather {
-  padding: 0 20px;
+  
 }
 
 .card-container {

@@ -78,7 +78,7 @@ export default({
     },
    
     cardWidth(){
-      let windowWidth = this.viewWidth - 20;//-20 为pc端滚动条宽度
+      let windowWidth = this.viewWidth;//-20 为pc端滚动条宽度
       let count = Math.floor(windowWidth/375);
       if(count==0){
         return windowWidth;
