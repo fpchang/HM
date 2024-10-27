@@ -7,6 +7,7 @@ import orderStore from "./modules/orderStore";
 import permissionStore from "./modules/permissionStore";
 import scenicSpotStore from "./modules/scenicSpotStore";
 import hotelService from '../services/HotelService';
+import AccountService from '../services/AccountService';
 Vue.use(Vuex); //vue的插件机制
 
 const store = new Vuex.Store({
@@ -14,10 +15,11 @@ const store = new Vuex.Store({
 		menuStore,orderStore,permissionStore,scenicSpotStore
 	},
 	state: { //存放状态
+		"baseDatahasLoad":false,//基本数据准备完毕
 		"topHeight":110,
 		"tabHeight":44,
 		"isPcShow": false,
-		"user": {},
+		"user": "",
 		"hotelList": [],
 		"employeeList":[],
 		"hotel_id": "",
@@ -26,6 +28,9 @@ const store = new Vuex.Store({
 	},
 
 	mutations: {
+		setBaseDatahasLoad(state, flag) {
+			state.baseDatahasLoad = flag;
+		},
 		setPcShow(state, flag) {
 			state.isPcShow = flag;
 		},
@@ -83,11 +88,26 @@ const store = new Vuex.Store({
 		}
 	},
 	actions:{
-		    
+		getUser(context){
+			return new Promise( (resolve,reject)=>{
+				 AccountService.getuserByToken().then(res=>{					
+					if(res.result.data[0]){
+						uni.setStorageSync("user",res.result.data[0]);
+						context.commit("setUser",res.result.data[0]);
+						
+					}
+					resolve()
+				}).catch(e=>{
+					reject(e)
+				})
+			})
+			
+		},
 		 getHotelList(context){			
 			return hotelService.getHotelList().then(res=>{
 				console.log("当前用户酒店列表",res);
 				context.commit('updateHotelList', res.result);
+
 			})
 			
 

@@ -131,7 +131,7 @@ beforeDestroy() {},
         hotel_id: this.hotel_id,
       })
         .then((res) => {
-          this.scenicSpotList= res.data;
+          this.scenicSpotList= res.result.data;
           uni.hideLoading();
          // this.$emit("closePopup");
          

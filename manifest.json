@@ -111,5 +111,6 @@
         "router" : {
             "mode" : "hash"
         }
-    }
+    },
+    "fallbackLocale" : "zh-Hans"
 }

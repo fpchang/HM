@@ -21,6 +21,7 @@ exports.main = async (event, context) => {
 		const emTemp = dbJQL.collection("hm-employee").where({phone}).getTemp();
 		const hoTemp = dbJQL.collection("hm-hotel").where("dataStatus!=10").getTemp();
 		const res = await dbJQL.collection(emTemp,hoTemp).get();
+		console.log("aaaaaaaa",res)
 		console.log("11111111",formatHotelToArray(res.data))
 		return formatHotelToArray(res.data)
 	}catch(e){

@@ -152,7 +152,7 @@ export default {
       })
         .then((res) => {
           console.log("ree>>>>", res);
-          this.$store.commit("updateEmployeeList", res.data);
+          this.$store.commit("updateEmployeeList", res.result.data);
           uni.hideLoading();
           this.$emit("closePopup");
         })

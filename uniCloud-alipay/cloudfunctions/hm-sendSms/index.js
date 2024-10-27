@@ -23,17 +23,19 @@ exports.main = async (event, context) => {
 	        expMinute: '3',
 	      }
 	    });
+		console.log("发送短信验证结果=====",res);
 		const newToken = tokenEvent.getToken({phone:phone,smsCode:smsCode},tokenEvent.getSecret(),300);
 		console.log("生成。。。",newToken)
 		return {code:0,tk:newToken};
 	  } catch(err) {
 	    // 调用失败
-	    console.log(err)
-	    console.log(err)
-	    return {
-	      code: err.errCode,
-	      msg: err.errMsg
-	    }
+	    // console.log(err)
+	    // console.log(err)
+	    // return {
+	    //   code: err.errCode,
+	    //   msg: err.errMsg
+	    // }
+		throw new Error(err);
 	  }
 	
 };

@@ -1,5 +1,13 @@
 <template>
   <view>
+ <block v-if="noData">
+  <no-data  text_content="您还没有酒店"
+  :showControl="true"
+  text_control_add="创建一个"
+  @Event_one="addNewHotel"
+  ></no-data>
+ </block>
+ <block v-if="!noData">
     <view class="top-container">
       <view class="scroll-content">
         <view :style="{height: styleObj.navTopHeight}"></view>
@@ -9,7 +17,7 @@
              <view class="check-area" @click="showCheckHotel">
 							<text class="$uni-font-size-lg h-n-style"
 								>{{hotel.hotelName}}</text>
-							<u-icon name="arrow-down-fill" color="#606266" size="14px" top="2" ></u-icon>
+							<u-icon v-if="hotel.hotelName" name="arrow-down-fill" color="#606266" size="14px" top="2" ></u-icon>
 							<!-- <view class="check-panal">
 								<view>11111111</view>
 							</view>  -->
@@ -46,10 +54,10 @@
         </view>
       </view>
     </view>
-
     <swiper :style="{height: scrollHeight}" :current="currentTab_index" :disable-touch="true"
       @change="swiperContentEvent">
       <swiper-item v-for="item in tabList">
+     
         <scroll-view :scroll-y="true" :scroll-x="false" show-scrollbar="false" :scroll-top="0" :style="{height: scrollHeight}">
           <view v-if="dataHasRead">
             <!-- 	<keep-alive :id="new Date().getTime()"> -->
@@ -81,89 +89,79 @@
         </scroll-view>
       </swiper-item>
     </swiper>
-
-    <!-- <u-popup :show="showDrawer" mode="left" @close="closeDrawerEvent" @open="showDrawerEvent"
-      :closeOnClickOverlay="true">
-      <u-list style="margin-top: 60px; width: 40vw">
-        <u-list-item v-for="(item, index) in hotelList" :key="index">
-          <u-cell :title="`${item.subName}`">
-            <u-avatar slot="icon" shape="square" size="35" :src="item.logoSrc"
-              customStyle="margin: -3px 5px -3px 0"></u-avatar>
-          </u-cell>
-        </u-list-item>
-      </u-list>
-    </u-popup> -->
-    <uni-drawer ref="showLeft" mode="left" :width="320">
-      <view class="left-container">
-        <view style="flex:1;min-height:330px">
-          <view style="height:60px" v-if="!isPcShow"></view>
-          <uni-section title="酒店列表" type="line"></uni-section>
-          <view class="card-panal"> 
-            <view class="card">
-              <view class="list-panal"> 
-                <view class="list-panal-item" v-for="item of hotelList" @click="checkHotel(item._id)">
-                  <uni-icons  :type="item._id == hotel_id?'checkbox':'circle'" size="22" color="#06c"></uni-icons>
-                  <view class="i-area" >
-                    <text>{{item.hotelName}}</text>
-                    <uni-icons  type="forward" size="22" color="#3333335c"></uni-icons>
-                  </view>
-                </view>
-              </view>
-            </view>
-          </view> 
-          <!-- <view class="list-panal"> 
-            <view class="list-panal-item" v-for="item of hotelList" @click="checkHotel(item._id)">
-              <uni-icons  :type="item._id == hotel_id?'checkbox':'circle'" size="22" color="#06c"></uni-icons>
-              <view class="i-area" >
-                <text>{{item.hotelName}}</text>
-                <uni-icons  type="forward" size="22" color="#3333335c"></uni-icons>
-              </view>
-            </view>
-          </view> -->
-        </view>
-        
-        <view style="box-sizing:border-box"> 
-          <uni-section title="操作" type="line"></uni-section>
-          <view class="card-panal"> 
-            <view class="card">
-
-              <view class="list-panal"> 
-                <view class="list-panal-item">
-                  <uni-icons type="gear-filled" size="22" color="#06c"></uni-icons>
-                  <view class="i-area" @click="hotelManage"><text>酒店管理</text></view>
-                </view>
-                <!-- <view class="list-panal-item">
-                  <uni-icons type="plusempty" size="22" color="#06c"></uni-icons>
-                  <view class="i-area" ><text @click="addNewHotel">创建新酒店</text></view>
-                </view>
-
-                <view class="list-panal-item">
-                  <uni-icons type="compose" size="22" color="#06c"></uni-icons>
-                  <view class="i-area" ><text>修改酒店信息</text></view>
-                </view>
-                <view class="list-panal-item">
-                  <uni-icons type="info" size="22" color="#06c"></uni-icons>
-                  <view class="i-area" ><text>酒店详情</text></view>
-                </view> -->
-              </view>
-            </view>
-          </view> 
-        </view>
-        
-      </view>
     
-        
-    </uni-drawer>
-    <uni-popup ref="popupHotelCreate" background-color="transprant">
-      <view class="popup-content">
-        <view class="create-order-title-style">创建酒店</view>
-        <view class="comContent">
-          <!-- <keep-alive> -->
-          <createHotelComponent @closePopup="closePopup"></createHotelComponent>
-          <!-- </keep-alive> -->
-        </view>
+  </block> 
+  <uni-drawer ref="showLeft" mode="left" :width="320">
+    <view class="left-container">
+      <view style="flex:1;min-height:330px">
+        <view style="height:60px" v-if="!isPcShow"></view>
+        <uni-section title="酒店列表" type="line"></uni-section>
+        <view class="card-panal"> 
+          <view class="card">
+            <view class="list-panal"> 
+              <view class="list-panal-item" v-for="item of hotelList" @click="checkHotel(item._id)">
+                <uni-icons  :type="item._id == hotel_id?'checkbox':'circle'" size="22" color="#06c"></uni-icons>
+                <view class="i-area" >
+                  <text>{{item.hotelName}}</text>
+                  <uni-icons  type="forward" size="22" color="#3333335c"></uni-icons>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view> 
+        <!-- <view class="list-panal"> 
+          <view class="list-panal-item" v-for="item of hotelList" @click="checkHotel(item._id)">
+            <uni-icons  :type="item._id == hotel_id?'checkbox':'circle'" size="22" color="#06c"></uni-icons>
+            <view class="i-area" >
+              <text>{{item.hotelName}}</text>
+              <uni-icons  type="forward" size="22" color="#3333335c"></uni-icons>
+            </view>
+          </view>
+        </view> -->
       </view>
-    </uni-popup>
+      
+      <view style="box-sizing:border-box"> 
+        <uni-section title="操作" type="line"></uni-section>
+        <view class="card-panal"> 
+          <view class="card">
+
+            <view class="list-panal"> 
+              <view class="list-panal-item">
+                <uni-icons type="gear-filled" size="22" color="#06c"></uni-icons>
+                <view class="i-area" @click="hotelManage"><text>酒店管理</text></view>
+              </view>
+              <!-- <view class="list-panal-item">
+                <uni-icons type="plusempty" size="22" color="#06c"></uni-icons>
+                <view class="i-area" ><text @click="addNewHotel">创建新酒店</text></view>
+              </view>
+
+              <view class="list-panal-item">
+                <uni-icons type="compose" size="22" color="#06c"></uni-icons>
+                <view class="i-area" ><text>修改酒店信息</text></view>
+              </view>
+              <view class="list-panal-item">
+                <uni-icons type="info" size="22" color="#06c"></uni-icons>
+                <view class="i-area" ><text>酒店详情</text></view>
+              </view> -->
+            </view>
+          </view>
+        </view> 
+      </view>
+      
+    </view>
+  
+      
+  </uni-drawer>
+  <uni-popup ref="popupHotelCreate" background-color="transprant">
+    <view class="popup-content">
+      <view class="create-order-title-style">创建酒店</view>
+      <view class="comContent">
+        <!-- <keep-alive> -->
+        <createHotelComponent @closePopup="closePopup"></createHotelComponent>
+        <!-- </keep-alive> -->
+      </view>
+    </view>
+  </uni-popup>   
   </view>
 </template>
 
@@ -179,8 +177,7 @@ import scenicSpotListComponent from "../scenicSpot/components/scenicSpotListComp
 import AccountService from "../../services/AccountService";
 import hotelList from "../hotelManage/hotelList/hotelList"
 import DB from "../../api/DB";
-
-hotelList
+import NoData from '../../components/noData.vue';
 export default {
   components: {
     gatherComponent,
@@ -191,7 +188,8 @@ export default {
     employeeComponent,
     menuListComponent,
     scenicSpotListComponent,
-    hotelList
+    hotelList,
+    NoData
   },
 
   data() {
@@ -222,7 +220,7 @@ export default {
   },
   onLoad(e) {},
   created() {
-    console.log("index create....>>>",this.hotel_id)
+    console.log("index create....>>>",uni.getSystemInfoSync());
     this.vaildToken(()=>{
       this.initData();
     });
@@ -244,6 +242,7 @@ export default {
     isPcShow() {
       return this.$store.state.isPcShow;
     },
+   
     hotel_id() {
       return this.$store.state.hotel_id;
     },
@@ -252,6 +251,9 @@ export default {
     },
     hotelList() {
       return this.$store.state.hotelList;
+    },
+    noData(){
+      return this.$store.state.baseDatahasLoad && this.hotelList.length<1;
     },
     hotel(){
       return this.hotelList.find(item=>item._id == this.hotel_id)||{};
@@ -314,11 +316,11 @@ export default {
 	  }
     },
     async initData() {
-      //检验token合法有效性性
-
       try {
         //uni.showLoading();
+        this.$store.commit("setUser",uni.getStorageSync("user"));
         await this.$store.dispatch("getHotelList");
+        this.$store.commit("setBaseDatahasLoad",true);
         this.initTabMenu();
         uni.hideLoading();
       } catch (error) {

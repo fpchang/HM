@@ -13,5 +13,11 @@ class AccountService{
   login(userForm){    
     return DB.callFunction("hm_login", { userForm})
   }
+  getuserByToken(){
+    return DB.getCollection("hm-user",{hm_token:uni.getStorageSync("hm_token")});
+  }
+  updateUserName(_id,userName){
+    return DB.update("hm-user",_id,{userName});
+  }
 }
 module.exports =new AccountService();

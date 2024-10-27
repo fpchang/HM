@@ -1,5 +1,5 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [
 	
 
 	{
@@ -212,7 +212,28 @@
 			}
 		}
 		
-	],
+	,{
+    "path": "uni_modules/uni-pay/pages/success/success",
+    "style": {
+        "backgroundColor": "#F8F8F8",
+        "navigationBarTitleText": "支付成功"
+    }
+}
+,{
+    "path": "uni_modules/uni-pay/pages/ad-interactive-webview/ad-interactive-webview",
+    "style": {
+        "backgroundColor": "#F8F8F8",
+        "navigationBarTitleText": "ad"
+    }
+}
+,{
+    "path": "uni_modules/uni-pay/pages/pay-desk/pay-desk",
+    "style": {
+        "backgroundColor": "#F8F8F8",
+        "navigationBarTitleText": "收银台"
+    }
+}
+],
 	"tabBar": {
 		"color": "#1d1d1f",
 		"selectedColor": "#0071e3",

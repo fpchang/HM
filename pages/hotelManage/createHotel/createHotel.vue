@@ -2,7 +2,7 @@
 	<view>
 		
 		<scroll-view :scroll-y="true" :scroll-x="false" class="scroll-view" style="">
-				<createHotelComponent></createHotelComponent>
+				<createHotelComponent @closePopup="closePopup"></createHotelComponent>
 			</scroll-view>
 		
 	</view>
@@ -30,7 +30,9 @@
     }
 		},
 		methods: {
-			
+			closePopup(){
+				uni.navigateBack();
+			}
 		}
 	}
 </script>
