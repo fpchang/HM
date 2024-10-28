@@ -37,6 +37,7 @@ exports.main = async (event, context) => {
 	 	const permission_select  = dbJQL.collection("hm-permission").getTemp();
 	 	const role_permission_select = dbJQL.collection("hm-role-permission").where( {role_name}).getTemp();
 	 	const res = await dbJQL.collection(role_permission_select,permission_select).get(); 
+		console.warn("222222>>",res)
 	 	return  formatPermissionToArray(res.data);
 	 }catch(e){
 	 	throw new Error(e)
@@ -47,7 +48,7 @@ exports.main = async (event, context) => {
   function formatPermissionToArray(list=[]){
         let arr =[];
         list.map(item=>{
-          arr.push(item.permission_id[0].permission_name);  
+          item.permission_id[0]&&arr.push(item.permission_id[0].permission_name);  
         })
         return arr;
     }

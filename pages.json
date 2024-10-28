@@ -1,6 +1,6 @@
 {
 	"pages": [
-	
+
 
 	{
 			"path": "pages/index/index",
@@ -23,7 +23,8 @@
 		},
 		{
 			"path": "pages/catering/orderDishes/orderDishes",
-			"style": {				
+			"style": {		
+				"navigationStyle": "custom",		
 				"navigationBarTitleText": "定餐服务"
 			}
 		},	
@@ -231,6 +232,30 @@
     "style": {
         "backgroundColor": "#F8F8F8",
         "navigationBarTitleText": "收银台"
+    }
+}
+,{
+    "path": "pages/hm-role-permission/add",
+    "style": {
+        "navigationBarTitleText": "新增"
+    }
+}
+,{
+    "path": "pages/hm-role-permission/edit",
+    "style": {
+        "navigationBarTitleText": "编辑"
+    }
+}
+,{
+    "path": "pages/hm-role-permission/list",
+    "style": {
+        "navigationBarTitleText": "列表"
+    }
+}
+,{
+    "path": "pages/hm-role-permission/detail",
+    "style": {
+        "navigationBarTitleText": "详情"
     }
 }
 ],

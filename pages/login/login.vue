@@ -12,7 +12,8 @@
         ref="uForm"
       >
         <u-form-item  prop="phone" ref="item1">
-          <u-input
+          <view class="input-area"> 
+            <u-input
             maxlength="11"
             type="number"
             placeholder="请输入手机号"
@@ -20,7 +21,6 @@
             v-model="userForm.phone"
             clearable
             shape="circle"
-            class="inputStyle"
           >
             <u-text
               text="+86"
@@ -29,16 +29,18 @@
               type="tips"
             ></u-text>
           </u-input>
+          </view>
+         
         </u-form-item>
 
         <u-form-item  prop="smsCode" ref="item2">
-          <u-input
+          <view class="input-area"> 
+            <u-input
             maxlength="4"
             type="number"
             placeholder="请输入验证码"
             shape="circle"
-            border="bottom"
-            class="inputStyle"
+            border="surround"
             v-model="userForm.smsCode"
           >
             <template slot="suffix">
@@ -57,6 +59,8 @@
               >
             </template>
           </u-input>
+          </view>
+        
         </u-form-item>
         <u-form-item  ref="item1">
           <u-button
@@ -125,6 +129,9 @@ export default {
     },
   },
   onload() {},
+  created(){
+    console.log("login created>>>>");
+  },
   methods: {
     codeChange(text) {
       this.tips = text;
@@ -282,12 +289,22 @@ export default {
         url: "/pages/index/index",
       });
     },
-  },
+  }
 };
 </script>
 
 <style lang="scss">
-.inputStyle {
+.input-area{
+  width: 298px;
+  background-color: #eee;
+  height: 45px;
+  padding-left: 18px;
+  border-radius: 22.5px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+.input-style {
   background-color: #eee;
   height: 34px;
   padding-left: 18px !important;

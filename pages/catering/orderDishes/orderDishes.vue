@@ -147,7 +147,7 @@
 			console.log("params", params);
 		},
 		onload(params) {
-			console.log("onload", params)
+			console.log("onload1111111111", params)
 
 		},
 		created(params) {
@@ -298,7 +298,7 @@
 					const res = await MenuService.getMenuList(this.hotel_id);
 					console.log("酒店信息", hotelRes)
 					console.log("菜单列表", res)
-					this.hotel = hotelRes.data[0];
+					this.hotel = hotelRes.result.data[0];
 					this.menuList = this.getMenuListFormat(res.result.data);
 					uni.hideLoading();
 				} catch (error) {

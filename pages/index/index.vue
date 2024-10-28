@@ -228,8 +228,22 @@ export default {
   },
   onShow() {
     console.log("index onshow");
-    this.vaildToken();
+   // this.vaildToken();
   },
+  onShareAppMessage(res) {
+					if (res.from === 'button') { // 来自页面内分享按钮
+						console.log("3333333333",res.target)
+            
+					}
+          if(this.currentTab_index==3){//点菜分享
+            return  {
+						title: '民宿舍点菜',
+						path:`/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`
+					}
+          }
+         
+				
+				},
   mounted() {},
   onPullDownRefresh() {
     console.log("index veu refrush");
@@ -281,9 +295,9 @@ export default {
     },
   },
   watch: {
-    async hotel_id(){
-      console.log("index watch hotel_id");
-      await this.$store.dispatch("getPermissionList")
+    async hotel_id(val){
+      console.log("index watch hotel_id",val);
+      await this.$store.dispatch("getPermissionList",val)
     },
     hotelList(narr, oarr) {
       //this.setDefaultHotel()
@@ -294,6 +308,7 @@ export default {
   },
   methods: {
     async vaildToken(callback) {
+      console.error("开始验证token")
 	  try {
       if(!uni.getStorageSync('hm_token')){
         this.$store.dispatch("loginOut");

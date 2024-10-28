@@ -1,6 +1,6 @@
 //import {KJUR} from "./ecdh_all";
 Date.prototype.Format = function (fmt) {
-  var o = {
+  let o = {
     "M+": this.getMonth() + 1,
     "d+": this.getDate(),
     "H+": this.getHours(),
@@ -8,7 +8,7 @@ Date.prototype.Format = function (fmt) {
     "s+": this.getSeconds(),
     S: this.getMilliseconds()
   };
-  for (var k in /(y+)/.test(fmt) && (fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length))), o) new RegExp("(" + k + ")").test(fmt) && (fmt = fmt.replace(RegExp.$1, 1 == RegExp.$1.length ? o[k] : ("00" + o[k]).substr(("" + o[k]).length)));
+  for (let k in /(y+)/.test(fmt) && (fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length))), o) new RegExp("(" + k + ")").test(fmt) && (fmt = fmt.replace(RegExp.$1, 1 == RegExp.$1.length ? o[k] : ("00" + o[k]).substr(("" + o[k]).length)));
   return fmt
 };
 

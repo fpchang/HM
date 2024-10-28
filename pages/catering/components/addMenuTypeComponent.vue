@@ -2,7 +2,7 @@
   <view>
     <uni-forms ref="scenicSpotRef" :modelValue="menuTypeForm" :rules="scenicSpotRules" label-width="120px">
       <uni-forms-item label="分类名称" required name="name">
-        <uni-easyinput v-model="menuTypeForm.name" placeholder="景点名称" />
+        <uni-easyinput v-model="menuTypeForm.name" placeholder="菜单名称" />
       </uni-forms-item>
      
       <uni-forms-item label="备注" name="mark">

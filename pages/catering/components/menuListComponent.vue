@@ -4,27 +4,33 @@
 			<view class="left-panal">
 				<uni-data-checkbox v-model="tabRadioVal" :localdata="tabitems"></uni-data-checkbox>
 			</view>
-			<view class="control-panal" v-if="tabRadioVal==0">
+			<view class="control-panal" v-if="tabRadioVal == 0">
 				<u-icon name="plus-circle-fill" color="#000" size="22" label="点菜" labelPos="bottom" labelSize="12px"
 					@click="addOrderDishes"></u-icon>
 			</view>
-			<view class="control-panal" v-if="tabRadioVal==1">
+			<view class="control-panal" v-if="tabRadioVal == 1">
 				<u-icon name="plus-circle-fill" color="#000" size="22" label="添加菜单" labelPos="bottom" labelSize="12px"
-					@click="addMenuType"></u-icon>
-				<u-icon name="share-fill" color="#000" size="22" label="分享至微信" labelPos="bottom" labelSize="12px"
-					@click="shareWx"></u-icon>
+					@click="addMenuType"></u-icon>				
+					<button class="clearBtn" :plain="true" open-type="share"> 
+						<u-icon name="share-fill" color="#000" size="22" label="分享至微信" labelPos="bottom" labelSize="12px"
+						@click="shareWx"></u-icon>
+					</button>
+				
+				
+				
 			</view>
 		</view>
 		<view style="display: flex; justify-content: center">
-			<view class="card-container" :style="{width: `${cardContainerWidth}px`}">
-				<view v-if="tabRadioVal===0" class="card" v-for="item of orderDishesList"
-					:style="{width: `${cardWidth}px`}">
+			<view class="card-container" :style="{ width: `${cardContainerWidth}px` }">
+				<view v-if="tabRadioVal === 0" class="card" v-for="item of orderDishesList"
+					:style="{ width: `${cardWidth}px` }">
 					<view class="card-item">
 						<menuOrderCardComponent :orderDishesItem="item" @getOrderDishesList="getOrderDishesList">
 						</menuOrderCardComponent>
 					</view>
 				</view>
-				<view v-if="tabRadioVal===1" class="card" v-for="item of menuList" :style="{width: `${cardWidth}px`}">
+				<view v-if="tabRadioVal === 1" class="card" v-for="item of menuList"
+					:style="{ width: `${cardWidth}px` }">
 					<view class="card-item">
 						<menuCardComponent :menuItem="item" @editMenuType="editMenuType"></menuCardComponent>
 					</view>
@@ -34,8 +40,8 @@
 		<uni-popup ref="popupMenuType" background-color="transprant">
 			<view class="popup-content">
 				<view class="create-order-title-style">{{
-					type==1? "修改菜单分类":"新增菜单分类"
-				}}</view>
+          type == 1 ? "修改菜单分类" : "新增菜单分类"
+        }}</view>
 				<view class="comContent">
 					<addMenuTypeComponent @closePopup="closePopup" :type="type" :targetObj="targetObj">
 					</addMenuTypeComponent>
@@ -113,9 +119,9 @@
 			},
 		},
 		watch: {
-			 hotel_id() {
-				 this.$store.dispatch("getMenuList", this.hotel_id);
-				 this.getOrderDishesList();
+			hotel_id() {
+				this.$store.dispatch("getMenuList", this.hotel_id);
+				this.getOrderDishesList();
 			},
 			tabRadioVal(nval) {
 				if (nval == 1) {
@@ -129,6 +135,7 @@
 		created() {
 			this.getOrderDishesList();
 		},
+
 		methods: {
 			addOrderDishes() {
 				try {
@@ -177,8 +184,8 @@
 				}
 				uni.navigateTo({
 					url: `/pages/cateromg/addMenuType/addMenuType?type=${
-          this.type
-        }&&targetObj=${JSON.stringify(item)}`,
+         this.type
+       }&&targetObj=${JSON.stringify(item)}`,
 				});
 			},
 			closePopup() {

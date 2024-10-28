@@ -21,8 +21,8 @@ exports.main = async (event, context) => {
 		const emTemp = dbJQL.collection("hm-employee").where({phone}).getTemp();
 		const hoTemp = dbJQL.collection("hm-hotel").where("dataStatus!=10").getTemp();
 		const res = await dbJQL.collection(emTemp,hoTemp).get();
-		console.log("aaaaaaaa",res)
-		console.log("11111111",formatHotelToArray(res.data))
+		// console.log("aaaaaaaa",res)
+		// console.log("11111111",formatHotelToArray(res.data))
 		return formatHotelToArray(res.data)
 	}catch(e){
 		throw new Error(e)
@@ -32,7 +32,11 @@ exports.main = async (event, context) => {
   function formatHotelToArray(list=[]){
         let arr =[];
         list.map(item=>{
-          item.hotel_id.length&&arr.push(item.hotel_id[0]);  
+			if(item.hotel_id[0]){
+				item.hotel_id[0].curRole=item.role;
+				arr.push(item.hotel_id[0]); 
+			}
+           
         })
         return arr;
     }

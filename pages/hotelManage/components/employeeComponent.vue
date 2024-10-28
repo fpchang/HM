@@ -208,6 +208,10 @@ export default {
         });
     },
     editEmployee(em) {
+      if(!this.$store.state.permissionStore.permissionList.includes('EMPLOYEE_UPDATE')){
+					 this.$alert.alertNoPermisson();
+					return;
+				}
       this.emObj = em;
       this.type = 1;
       if (this.$store.state.isPcShow) {
@@ -222,6 +226,10 @@ export default {
       });
     },
     addEmployee() {
+      if(!this.$store.state.permissionStore.permissionList.includes('EMPLOYEE_CREATE')){
+					 this.$alert.alertNoPermisson();
+					return;
+				}
       this.type = 0;
       if (this.$store.state.isPcShow) {
         this.$refs.popupCreateRoomType.open();
@@ -233,6 +241,10 @@ export default {
       });
     },
     async deleteEmployee(em) {
+      if(!this.$store.state.permissionStore.permissionList.includes('EMPLOYEE_DELETE')){
+					 this.$alert.alertNoPermisson();
+					return;
+				}
       const conf = await uni.showModal({
         title: "确认删除房型",
         content: "删除后将无法恢复,确认删除吗?",

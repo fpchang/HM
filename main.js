@@ -7,9 +7,9 @@ import Vue from 'vue'
 import './uni.promisify.adaptor';
 import uView from '@/uni_modules/uview-ui';
 import {CF} from './static/utils/CF';
-import uiEcharts from '@/uni_modules/ui-echarts';
+//import uiEcharts from '@/uni_modules/ui-echarts';
 import alert from "./alert";
-Vue.use(uiEcharts);
+//Vue.use(uiEcharts);
 Vue.use(uView);
 Vue.prototype.$store = store;
 Vue.prototype.$alert = alert;
@@ -20,6 +20,10 @@ const app = new Vue({
 })
 app.$mount()
 // #endif
+Vue.prototype.staticDir = 'https://www.xxxxxxxx.com.cn/wx/static/'; 
+Vue.prototype.getStaticFilePath = function (url) {
+    return Vue.prototype.staticDir + url;  
+}
 
 // #ifdef VUE3
 import { createSSRApp } from 'vue'

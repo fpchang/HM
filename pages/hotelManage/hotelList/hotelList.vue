@@ -20,12 +20,16 @@
 				<uni-tr>
 					<uni-th align="center" width="120px">酒店名称</uni-th>
 					<uni-th align="center" >地址</uni-th>
+					<uni-th align="center" width="120px">店主</uni-th>
+					<uni-th align="center" width="120px">角色</uni-th>
 					<uni-th align="center" width="180px">操作</uni-th>
 				</uni-tr>
 				<!-- 表格数据行 -->
 				<uni-tr v-for="item of hotelList">
 					<uni-td>{{item.hotelName}}</uni-td>
 					<uni-td>{{item.hotelAdress}}</uni-td>
+					<uni-td>{{item.belong}}</uni-td>
+					<uni-td>{{item.curRole | roleFormat}}</uni-td>
 					<uni-td align="center">
 						<view class="uni-group" style="justify-content:space-around">
 						  <text class="edit-text-btn-style" @click="editHotel(item)">修改</text>
@@ -118,6 +122,16 @@ import DB from '../../../api/DB';
 				// this.$store.dispatch("getRoomType");
 			}
 		},
+		filters:{
+			roleFormat(val){
+				const p= {
+					administrator:"超级管理员",
+					manager:"管理员",
+					normal:"员工"
+				}
+				return p[val]
+			}
+		},
 		methods:{
 			editHotel(rt){
 				if(!this.$store.state.permissionStore.permissionList.includes('HOTEL_UPDATE')){
@@ -137,10 +151,10 @@ import DB from '../../../api/DB';
 				})
 			},
 			addHotel(){
-				if(!this.$store.state.permissionStore.permissionList.includes('HOTEL_CREATE')){
-					 this.$alert.alertNoPermisson();
-					return;
-				}
+				// if(!this.$store.state.permissionStore.permissionList.includes('HOTEL_CREATE')){
+				// 	 this.$alert.alertNoPermisson();
+				// 	return;
+				// }
 				this.type=0;
 				if(this.$store.state.isPcShow){
 					this.$refs.popupaddHotel.open();

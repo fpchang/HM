@@ -15,6 +15,7 @@ const store = new Vuex.Store({
 		menuStore,orderStore,permissionStore,scenicSpotStore
 	},
 	state: { //存放状态
+		"shareObj":{},
 		"baseDatahasLoad":false,//基本数据准备完毕
 		"topHeight":110,
 		"tabHeight":44,
@@ -28,6 +29,9 @@ const store = new Vuex.Store({
 	},
 
 	mutations: {
+		setShareObj(state,obj){
+			state.shareObj = obj;
+		},
 		setBaseDatahasLoad(state, flag) {
 			state.baseDatahasLoad = flag;
 		},

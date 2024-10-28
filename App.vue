@@ -11,6 +11,7 @@
 				console.log("cccc",hotel_id)
 				this.$store.commit("checkHotel",hotel_id);
 			}
+			this.getEnv();
 			this.initData();
 			
 		},
@@ -36,11 +37,20 @@
 					this.$store.commit("setPcShow",true);
 					this.$store.commit("updateUser");
 				}
+			},
+			getEnv(){
+				if (process.env.NODE_ENV === 'development') {
+				this.globalData.env="development"
+				} else {
+					console.log('生产环境');
+					this.globalData.env="product"
+					}
 			}
 		},
 		globalData:{
 			systemInfo:uni.getSystemInfoSync(),
 			appId:"",
+			env:"development",
 			secret:"****"
 		}
 	}

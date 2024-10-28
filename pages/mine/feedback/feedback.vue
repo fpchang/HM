@@ -1,6 +1,5 @@
 <template>
 	<view class="feedback">
-		{{ targetObj }}
 	  <uni-forms ref="feedbackRef" :modelValue="feedbackForm" :rules="feedbackRules" label-width="120px">
   
 		<uni-forms-item label="标题"   required name="title" >

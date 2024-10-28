@@ -6,10 +6,13 @@ exports.main = async (event, context) => {
 	console.log('event : ', event,context);
 	let {appid,phone,templateId='uni_sms_test'} =event;
 	const db = uniCloud.database();
-	const smsCode =(phone=='18516285834'?'0000':'1234');
-	const newToken = tokenEvent.getToken({phone:phone,smsCode:smsCode},tokenEvent.getSecret(),300);
-	console.log("生成。。。",newToken)
-	return {code:0,tk:newToken};
+	const smsCode =randomSms();
+	if(context.SPACEINFO.spaceId=="env-00jxh1m2dpmq"){//开发环境0000
+		const newToken = tokenEvent.getToken({phone:phone,smsCode:'0000'},tokenEvent.getSecret(),300);
+		//console.log("生成。。。",newToken)
+		return {code:0,tk:newToken};
+	}
+	
 	const {appId} =context;
 	  try {
 		 
@@ -20,7 +23,7 @@ exports.main = async (event, context) => {
 	      data: {
 	        name: 'DCloud',
 	        code: smsCode,
-	        expMinute: '3',
+	        expMinute: '5',
 	      }
 	    });
 		console.log("发送短信验证结果=====",res);

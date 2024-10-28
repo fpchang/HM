@@ -101,6 +101,7 @@
 				return this.$store.state.permissionStore.permissionList;
 			},
 			fitlerUserNameOrderList() {
+				
 				return this.checkInOrderList.filter(item => {
 					return item.userName.includes(this.selectCondition.userName)
 				})
@@ -144,7 +145,7 @@
 				 let date = this.selectCondition.dateRangeArray;
 				try {
 					const res = await OrderService.getOrderListByCondition(this.hotel_id,date[0],date[1]);
-					this.checkInOrderList = res.data;			
+					this.checkInOrderList = res.data||[];			
 				} catch (error) {
 					console.error("获取订单列表失败",error);
 				}
