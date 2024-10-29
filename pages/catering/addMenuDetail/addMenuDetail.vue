@@ -49,6 +49,6 @@ import addMenuDetailComponent from '../components/addMenuDetailComponent.vue'
 .scroll-view {
 	padding: 20px 15px;
 	box-sizing: border-box;
-	height: calc(100vh - 44px)
+	height:100vh;
 }
 </style>

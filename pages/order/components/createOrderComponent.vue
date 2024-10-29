@@ -2,23 +2,40 @@
   <view>
     <uni-forms ref="baseForm" :modelValue="orderForm">
       <uni-forms-item label="来源">
+        <view class="form-item-content-container">
         <uni-data-checkbox
           v-model="orderForm.orderSource"
           mode="default"
           :multiple="false"
           :localdata="sourceFormat"
         />
+      </view>
       </uni-forms-item>
       <uni-forms-item label="日期时间">
-         <uni-datetime-picker
+        <view class="form-item-content-container" v-if="!isIOS"> 
+           <uni-datetime-picker
           v-model="orderForm.dateRangeArray"
+          rangeSeparator="/"
           :start="startDate"
+          end="2025/12/22"
           type="daterange"
+          return-type="timestamp"
           @change="initValidRoomTypeData"
           :clear-icon="false"
-        />
-        <!-- <button @click="selectDateEvent">选择日期</button>
-        <u-calendar :show="dateSelectShow" mode="range" @confirm="dateConfim"></u-calendar> -->
+          style="z-index: 9999;"
+        /> 
+        </view>
+       
+         <view class="form-item-content-container" v-if="isIOS">
+          <view class="calendar-container" @click="showDateSelect">
+             <uni-icons type="calendar" size="22" color="#60626680"></uni-icons>
+             <text style="flex:1;text-align:center">{{orderForm.dateRangeArray[0] || "开始日期"}}</text> 
+             <text style="padding:0 10px">至</text>
+             <text style="flex:1;text-align:center">{{orderForm.dateRangeArray[1]|| "截止日期"}}</text> 
+            </view>
+          
+        </view>
+       
       </uni-forms-item>
       <uni-forms-item label="房型" required>
         <!-- <uni-data-checkbox v-model="orderForm.roomTypeArray" mode="list"  multiple :localdata="roomTypeListFormat">1111</uni-data-checkbox> -->
@@ -101,12 +118,15 @@
         ></u-button>
       </uni-forms-item>
     </uni-forms>
+    <u-calendar :show="dateSelectShow" mode="range" @close="dateClose" @confirm="dateConfim" style="z-index:9999"></u-calendar>
   </view>
 </template>
 
 <script>
 import OrderService from "../../../services/OrderService";
+import uniIcons from '../../../uni_modules/uni-icons/components/uni-icons/uni-icons.vue';
 export default {
+  components: { uniIcons },
   data() {
     return {
       submitLoading: false,
@@ -196,6 +216,9 @@ export default {
   },
   created() {},
   computed: {
+    isIOS(){
+      return  uni.getSystemInfoSync().osName=='ios'|| uni.getDeviceInfo().platform=='ios';
+    },
     hotel_id() {
       return this.$store.state.hotel_id;
     },
@@ -243,14 +266,21 @@ export default {
     },
   },
   methods: {
-    selectDateEvent(){
+    showDateSelect(){
       this.dateSelectShow=true;
     },
-    dateConfim(e){
-      console.log(e)
+    dateClose(){
+      this.dateSelectShow=false;
+    },
+    dateConfim(timeRange){
+      const startDate = timeRange[0].replaceAll("-","/");
+      const endDate = timeRange[1].replaceAll("-","/");
+      this.orderForm.dateRangeArray=[startDate,endDate];
+      this.dateSelectShow=false;
+      this.initValidRoomTypeData();
     },
     //初始化可用的房型
-    initValidRoomTypeData() {
+    initValidRoomTypeData(e) {
       uni.showLoading();
       let startTime = this.dateRangeArrayFormat[0],
         endTime = this.dateRangeArrayFormat[1];
@@ -334,6 +364,23 @@ export default {
 </script>
 
 <style lang="scss">
+.form-item-content-container{
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.calendar-container{
+  flex:1;
+  border:1px solid #dcdfe6;
+  color:#606266;
+  border-radius: 4px;
+  padding:0 12px;
+  height: 35px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .uni-list-cell {
   justify-content: flex-start;
 }
