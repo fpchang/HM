@@ -16,7 +16,7 @@
         <uni-easyinput type="digit" v-model="scenicSpotDetailForm.offering_price" placeholder="销售价格" />
       </uni-forms-item>
       <uni-forms-item label="备注" name="mark">
-        <uni-easyinput  v-model="scenicSpotDetailForm.mark" type="textarea" placeholder="" />
+        <uni-easyinput  v-model="scenicSpotDetailForm.mark" type="textarea"  />
       </uni-forms-item>
 
 

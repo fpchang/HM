@@ -6,7 +6,7 @@
       </uni-forms-item>
      
       <uni-forms-item label="备注" name="mark">
-        <uni-easyinput v-model="menuTypeForm.mark" type="textarea" placeholder="" />
+        <uni-easyinput v-model="menuTypeForm.mark" type="textarea"  />
       </uni-forms-item>
 
 
@@ -102,7 +102,7 @@ beforeDestroy() {},
           .then((res) => {
             console.log("添加成功");
             this.$emit("closePopup");
-            this.$store.menuStorecommit("getMenuList");
+            this.$store.commit("getMenuList");
           })
           .catch((er) => {
             console.log("添加失败", er);

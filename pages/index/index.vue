@@ -10,7 +10,7 @@
  <block v-if="!noData">
     <view class="top-container">
       <view class="scroll-content">
-        <view :style="{height: styleObj.navTopHeight}"></view>
+        <view :style="{height:navTopHeight}"></view>
         <view :class="['top-area', isSticky? 'sticky-style':'']">
           <view class="title-area" :style="{opacity: opacityVal}">
            
@@ -30,8 +30,8 @@
               </view>
             </view> -->
 
-             <view class="add-area" style="cursor:pointer">
-              <uni-icons  type="bars" size="30"></uni-icons>
+             <view class="more-menu-area" style="cursor:pointer" v-if="isPcShow">
+              <uni-icons  type="bars" size="30" @click="openRightPanal"></uni-icons>
               
             </view>
           </view>
@@ -94,7 +94,7 @@
   <uni-drawer ref="showLeft" mode="left" :width="320">
     <view class="left-container">
       <view style="flex:1;min-height:330px">
-        <view style="height:60px" v-if="!isPcShow"></view>
+        <view style="height:70px" v-if="!isPc"></view>
         <uni-section title="酒店列表" type="line"></uni-section>
         <view class="card-panal"> 
           <view class="card">
@@ -120,7 +120,7 @@
         </view> -->
       </view>
       
-      <view style="box-sizing:border-box"> 
+      <!-- <view style="box-sizing:border-box"> 
         <uni-section title="操作" type="line"></uni-section>
         <view class="card-panal"> 
           <view class="card">
@@ -130,22 +130,50 @@
                 <uni-icons type="gear-filled" size="22" color="#06c"></uni-icons>
                 <view class="i-area" @click="hotelManage"><text>酒店管理</text></view>
               </view>
-              <!-- <view class="list-panal-item">
+            </view>
+          </view>
+        </view> 
+      </view> -->
+      
+    </view>
+  
+      
+  </uni-drawer>
+
+  <uni-drawer ref="showRight" mode="right" :width="475">
+    <view class="right-container">
+      <view style="box-sizing:border-box"> 
+        <view style="height:70px" v-if="!isPc"></view>
+        <!-- <uni-section title="操作" type="line"></uni-section> -->
+        <mine></mine>
+        <!-- <view class="card-panal"> 
+          <view class="card">
+
+            <view class="list-panal"> 
+              <view class="list-panal-item">
+                <uni-icons type="gear-filled" size="22" color="#06c"></uni-icons>
+                <view class="i-area" @click="hotelManage"><text>酒店管理</text></view>
+              </view>
+               <view class="list-panal-item">
                 <uni-icons type="plusempty" size="22" color="#06c"></uni-icons>
-                <view class="i-area" ><text @click="addNewHotel">创建新酒店</text></view>
+                <view class="i-area" ><text @click="addNewHotel">使用说明</text></view>
               </view>
 
               <view class="list-panal-item">
                 <uni-icons type="compose" size="22" color="#06c"></uni-icons>
-                <view class="i-area" ><text>修改酒店信息</text></view>
+                <view class="i-area" ><text>意见反馈</text></view>
+              </view>
+              <view class="list-panal-item">
+                <uni-icons type="compose" size="22" color="#06c"></uni-icons>
+                <view class="i-area" ><text>联系我们</text></view>
               </view>
               <view class="list-panal-item">
                 <uni-icons type="info" size="22" color="#06c"></uni-icons>
-                <view class="i-area" ><text>酒店详情</text></view>
-              </view> -->
+                <view class="i-area" ><text>退出登录</text></view>
+              </view> 
             </view>
           </view>
-        </view> 
+        </view>  -->
       </view>
       
     </view>
@@ -174,6 +202,7 @@ import roomTypeListComponent from "../hotelManage/components/roomTypeListCompone
 import employeeComponent from "../hotelManage/components/employeeComponent.vue";
 import menuListComponent from "../catering/components/menuListComponent.vue";
 import scenicSpotListComponent from "../scenicSpot/components/scenicSpotListComponent";
+import mine from "../mine/mine";
 import AccountService from "../../services/AccountService";
 import hotelList from "../hotelManage/hotelList/hotelList"
 import DB from "../../api/DB";
@@ -189,17 +218,13 @@ export default {
     menuListComponent,
     scenicSpotListComponent,
     hotelList,
+    mine,
     NoData
   },
 
   data() {
     return {
       title: "Hello",
-      styleObj: {
-        navTopHeight:
-          getApp().globalData.systemInfo.deviceType == "pc" ? 0 : "60px",
-      },
-
       isSticky: false,
       opacityVal: 1,
       currentTab_index: 0,
@@ -228,7 +253,7 @@ export default {
   },
   onShow() {
     console.log("index onshow");
-   // this.vaildToken();
+    this.vaildToken();
   },
   onShareAppMessage(res) {
 					if (res.from === 'button') { // 来自页面内分享按钮
@@ -262,7 +287,9 @@ export default {
     isPcShow() {
       return this.$store.state.isPcShow;
     },
-   
+   isPc(){
+    return uni.getDeviceInfo().deviceType=='pc';
+   },
     hotel_id() {
       return this.$store.state.hotel_id;
     },
@@ -292,9 +319,13 @@ export default {
         };
       });
     },
+    navTopHeight(){
+      
+      return uni.getDeviceInfo().deviceType=='pc' ? "0px" : "70px"
+    },
+         
     disHeightVal() {
-      let deviceType = getApp().globalData.systemInfo.deviceType;
-      return this.isPcshow ? "110px" : "170px";
+      return uni.getDeviceInfo().deviceType=='pc' ? "110px" : "180px";
     },
     scrollHeight() {
       return `calc(100vh - ${this.disHeightVal})`;
@@ -314,7 +345,6 @@ export default {
   },
   methods: {
     async vaildToken(callback) {
-      console.error("开始验证token")
 	  try {
       if(!uni.getStorageSync('hm_token')){
         this.$store.dispatch("loginOut");
@@ -422,7 +452,10 @@ export default {
     },
     showDrawerEvent() {
       this.showDrawer = true;
-      this.$refs.showLeft.open()
+      this.$refs.showLeft.open();
+    },
+    openRightPanal(){
+      this.$refs.showRight.open();
     },
     closeDrawerEvent() {
       this.showDrawer = false;
@@ -470,15 +503,26 @@ export default {
         //TODO handle the exception
       }
     },
-    // getHotelList() {
-    // 	return DB.getCollection("hm-hotel", {
-    // 		blongUserId: this.$store.state.user.phone
-    // 	}).then(res => {
-    // 		this.hotelList = res.data;
-    // 		this.$store.commit('updateHotelList', res.data);
-    // 		console.log("33322dd", this.hotelList)
-    // 	})
-    // },
+    menuEvent(key) {
+				switch (key) {
+					case "loginOut":
+						this.loginOut();
+						break;
+					case "feedback":
+						if (this.isPcShow) {
+							this.$refs.popupFeedback.open()
+							break;
+						}
+						const a = {
+							name: 111
+						}
+						uni.navigateTo({
+							url: `/pages/mine/feedback/feedback`
+						});
+						break;
+
+				}
+			}
   },
 };
 </script>
@@ -489,7 +533,12 @@ export default {
   flex-direction: column;
   font-size: $uni-font-size-lgs;
 }
+.more-menu-area{
 
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
 .add-icon-style {
   cursor: pointer;
 }
@@ -572,17 +621,16 @@ export default {
   left: 0;
 }
 
-.content-area {
-  min-height: calc(100vh - 110px);
-  height: 120vh;
-  background-color: #eee;
-}
-
 .activeHotelItemSelect {
   background-color: #ddd !important;
   /*border:2rpx solid blue;*/
 }
 .left-container{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.right-container{
   height: 100vh;
   display: flex;
   flex-direction: column;

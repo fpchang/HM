@@ -20,7 +20,7 @@
         
       </uni-forms-item>
       <uni-forms-item label="备注" name="mark">
-        <uni-easyinput  v-model="menuDetailForm.mark" type="textarea" placeholder="" />
+        <uni-easyinput  v-model="menuDetailForm.mark" type="textarea"  />
       </uni-forms-item>
 
 

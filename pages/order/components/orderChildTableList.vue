@@ -16,7 +16,7 @@
 				<view>用户名：</view>
 				<view style="width: 130px;padding:0 10px;">
 					<uni-easyinput class="uni-mt-5" suffixIcon="search" v-model="selectCondition.userName"
-						placeholder="" @iconClick="getOrderListByCondition()"></uni-easyinput>
+						 @iconClick="getOrderListByCondition()"></uni-easyinput>
 				</view>
 
 				<!-- </uni-section> -->
