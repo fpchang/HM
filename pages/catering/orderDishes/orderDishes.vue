@@ -1,7 +1,7 @@
 <template>
 	<view class="orderDishes-container">
 		
-		<view class="header-title" style=""><text>{{ hotle_id }}【{{hotel.hotelName }}】用餐预定</text></view>
+		<view class="header-title" style=""><text>【{{hotel.hotelName }}】用餐预定</text></view>
 		<!-- <uni-card :is-shadow="false">
 			<text class="uni-body">这是一个基础卡片示例，内容较少，此示例展示了一个没有任何属性不带阴影的卡片。</text>
 		</uni-card> -->

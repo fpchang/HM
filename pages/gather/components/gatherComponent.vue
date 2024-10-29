@@ -156,18 +156,18 @@ import MenuService from '../../../services/MenuService';
         return [this.orderListByCheckInToday_format,this.orderListToday_format,this.orderDishesToday_format]
       },
       viewWidth(){
-        let viewWidth=uni.getSystemInfoSync().windowWidth||uni.getSystemInfoSync().screenWidth
+        let viewWidth=uni.getWindowInfo().windowWidth||uni.getWindowInfo().screenWidth
         return  viewWidth +this.widthTemp-this.widthTemp
     },
    
     cardWidth(){
       let windowWidth = this.viewWidth;//-20 为pc端滚动条宽度
-      let count = Math.floor(windowWidth/375);
+      let count = Math.floor(windowWidth/370);
       if(count==0){
         return windowWidth;
       }
-      let ys= windowWidth % 375
-      return  Math.min(375+ (ys/count),450)
+      let ys= windowWidth % 370
+      return  Math.min(370+ (ys/count),450)
     },
     cardContainerWidth(){
       let count =Math.max(Math.floor(this.viewWidth/this.cardWidth),1) ;
@@ -308,10 +308,10 @@ import MenuService from '../../../services/MenuService';
 .card-container {
   display: flex;
   flex-wrap: wrap;
-  min-width: 375px;
+  min-width: 370px;
 
   .card {
-    min-width: 375px;
+    min-width: 370px;
     max-width: 450px;
     padding: 10px;
     box-sizing: border-box;

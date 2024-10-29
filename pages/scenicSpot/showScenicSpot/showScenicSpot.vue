@@ -85,7 +85,7 @@
 				}
 				console.log(1233);
 				const hotelRes = await HotelService.getHotelInfoById(this.hotel_id);
-				this.hotel = hotelRes.data[0];
+				this.hotel = hotelRes.result.data[0];
 				await this.$store.dispatch("getScenicSpotList",this.hotel_id);
 			
 		

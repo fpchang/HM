@@ -1,5 +1,5 @@
 {
-    "name" : "莫干管家",
+    "name" : "民宿管家",
     "appid" : "__UNI__8B7B05D",
     "description" : "",
     "versionName" : "1.0.0",
@@ -91,7 +91,8 @@
         "appid" : "wx1e656e3fd064719a",
         "setting" : {
             "urlCheck" : false,
-            "minified" : true
+            "minified" : true,
+            "es6" : true
         },
         "usingComponents" : true
     },

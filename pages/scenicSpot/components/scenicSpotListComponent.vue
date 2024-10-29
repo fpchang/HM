@@ -11,7 +11,8 @@
         labelSize="12px"
         @click="addScenicSpot"
       ></u-icon>
-      <u-icon
+      <button class="clearBtn" :plain="true" open-type="share" v-if="scenicSpotList.length"> 
+        <u-icon
         name="share-fill"
         color="#000"
         size="22"
@@ -20,6 +21,8 @@
         labelSize="12px"
         @click="shareWx"
       ></u-icon>
+      </button>
+    
     </view>
     </view>
     <view style="display: flex;justify-content:center">
@@ -73,18 +76,18 @@ export default({
         return this.$store.state.scenicSpotStore.scenicSpotList
       },
       viewWidth(){
-        let viewWidth=uni.getSystemInfoSync().windowWidth||uni.getSystemInfoSync().screenWidth
+        let viewWidth=uni.getWindowInfo().windowWidth||uni.getWindowInfo().screenWidth
         return  viewWidth +this.widthTemp-this.widthTemp
     },
    
     cardWidth(){
       let windowWidth = this.viewWidth;//-20 为pc端滚动条宽度
-      let count = Math.floor(windowWidth/375);
+      let count = Math.floor(windowWidth/370);
       if(count==0){
         return windowWidth;
       }
-      let ys= windowWidth % 375
-      return  Math.min(375+ (ys/count),450)
+      let ys= windowWidth % 370
+      return  Math.min(370+ (ys/count),450)
     },
     cardContainerWidth(){
       let count =Math.max(Math.floor(this.viewWidth/this.cardWidth),1) ;
@@ -193,9 +196,9 @@ export default({
 .card-container{
   display:flex;
   flex-wrap:wrap;
-  min-width:375px ;
+  min-width:370px ;
   .card{
-    min-width:375px ;
+    min-width:370px ;
     max-width: 450px;
     padding:10px;
     box-sizing:border-box;

@@ -17,14 +17,12 @@
 		},	{
 			"path": "pages/scenicSpot/showScenicSpot/showScenicSpot",
 			"style": {
-				"navigationStyle": "custom",
 				"navigationBarTitleText": "景点价格"
 			}
 		},
 		{
 			"path": "pages/catering/orderDishes/orderDishes",
-			"style": {		
-				"navigationStyle": "custom",		
+			"style": {				
 				"navigationBarTitleText": "定餐服务"
 			}
 		},	

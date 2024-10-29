@@ -27,7 +27,7 @@
 		},
 		methods:{
 			initData(){
-				if(this.globalData.systemInfo.deviceType=='pc' ||this.globalData.systemInfo.windowWidth>750){
+				if(this.globalData.systemInfo.deviceType=='pc' ||this.globalData.systemInfo.windowWidth>740){
 					uni.hideTabBar({
 						success:()=>{
 							console.log("隐藏成功")

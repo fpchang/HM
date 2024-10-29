@@ -19,7 +19,7 @@ exports.main = async (event, context) => {
 	    const res = await uniCloud.sendSms({
 	      appid:appId,
 	      phone: phone,
-	      templateId: 'uni_sms_test', // 请替换为自己申请的模板id
+	      templateId: '34246',// 'uni_sms_test', // 请替换为自己申请的模板id
 	      data: {
 	        name: 'DCloud',
 	        code: smsCode,

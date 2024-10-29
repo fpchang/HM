@@ -235,6 +235,12 @@ export default {
 						console.log("3333333333",res.target)
             
 					}
+          if(this.currentTab_index==2){//点菜分享
+            return  {
+						title: '景点价格',
+						path:`/pages/scenicSpot/showScenicSpot/showScenicSpot?hotel_id=${this.hotel_id}`
+					}
+          }
           if(this.currentTab_index==3){//点菜分享
             return  {
 						title: '民宿舍点菜',

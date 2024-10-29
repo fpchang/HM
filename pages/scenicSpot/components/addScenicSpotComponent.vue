@@ -14,7 +14,7 @@
         <uni-easyinput  maxlength="11" type="number" v-model="scenicSpotForm.scenicSport_phone" placeholder="景点联系电话" />
       </uni-forms-item>
       <uni-forms-item label="备注" name="scenicSport_mark">
-        <uni-easyinput v-model="scenicSpotForm.scenicSport_mark" type="textarea" placeholder="" />
+        <uni-easyinput v-model="scenicSpotForm.scenicSport_mark" type="textarea"  />
       </uni-forms-item>
 
 

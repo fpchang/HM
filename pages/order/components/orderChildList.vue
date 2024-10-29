@@ -1,5 +1,5 @@
 <template>
-	<view class="mobile-show-style" style="max-width: 450px;">
+	<view class="mobile-show-style" style="max-width: 850px;">
 		<uni-collapse v-model="accordionVal" >
 
 			<uni-collapse-item v-for="item of checkInOrderList">

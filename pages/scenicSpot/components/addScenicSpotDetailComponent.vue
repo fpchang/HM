@@ -97,7 +97,9 @@ export default({
 			},
       scenicSpotDetailFormParse(){
         let {package_name,scenicSpot_price,settlement_price,offering_price,mark}= this.scenicSpotDetailForm;
-       return {
+     
+        try {
+          return {
         scenicSpot_id:this.targetObj._id._value,
         package_name:package_name,
         scenicSpot_price:Number(scenicSpot_price),
@@ -105,6 +107,10 @@ export default({
         offering_price:Number(offering_price),
         mark:mark
        }
+        } catch (error) {
+          
+        }
+       
       }
    
   },
