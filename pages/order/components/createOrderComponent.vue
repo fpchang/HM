@@ -10,13 +10,15 @@
         />
       </uni-forms-item>
       <uni-forms-item label="日期时间">
-        <uni-datetime-picker
+         <uni-datetime-picker
           v-model="orderForm.dateRangeArray"
           :start="startDate"
           type="daterange"
           @change="initValidRoomTypeData"
           :clear-icon="false"
         />
+        <!-- <button @click="selectDateEvent">选择日期</button>
+        <u-calendar :show="dateSelectShow" mode="range" @confirm="dateConfim"></u-calendar> -->
       </uni-forms-item>
       <uni-forms-item label="房型" required>
         <!-- <uni-data-checkbox v-model="orderForm.roomTypeArray" mode="list"  multiple :localdata="roomTypeListFormat">1111</uni-data-checkbox> -->
@@ -108,6 +110,7 @@ export default {
   data() {
     return {
       submitLoading: false,
+      dateSelectShow:false,
       modeSource:
         getApp().globalData.systemInfo.deviceType == "phone"
           ? "list"
@@ -149,7 +152,7 @@ export default {
           value: 0,
         },
       ],
-      startDate:new Date().getTime() - 1000*60*60*24,
+      startDate:new Date().getTime(),
       roomTypeList: [
         {
           value: "t1",
@@ -240,11 +243,18 @@ export default {
     },
   },
   methods: {
+    selectDateEvent(){
+      this.dateSelectShow=true;
+    },
+    dateConfim(e){
+      console.log(e)
+    },
     //初始化可用的房型
     initValidRoomTypeData() {
-      //uni.showLoading();
+      uni.showLoading();
       let startTime = this.dateRangeArrayFormat[0],
         endTime = this.dateRangeArrayFormat[1];
+        console.log("日期值改变",this.orderForm, startTime,endTime);
       let hotel_id = this.hotel_id;
       uniCloud
         .callFunction({

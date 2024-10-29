@@ -65,8 +65,8 @@
 			</view>
 		</uni-popup>
 		<uni-popup ref="nameDialog" type="dialog">
-			<uni-popup-dialog ref="inputClose" before-close  mode="input" title="输入名称" value=""
-				placeholder="请输入内容" @close="closeNameUpdate" @confirm="submitNameUpdate"></uni-popup-dialog>
+			<uni-popup-dialog ref="inputClose" before-close  mode="input" title="更改名称" value=""
+				placeholder="请输入名称" @close="closeNameUpdate" @confirm="submitNameUpdate"></uni-popup-dialog>
 		</uni-popup>
 		<!-- <uni-popup ref="popupfeedbackCreate" background-color="transprant">
 			<view class="popup-content">

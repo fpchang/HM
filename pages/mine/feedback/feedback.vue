@@ -6,10 +6,8 @@
 		  <uni-easyinput  v-model="feedbackForm.title"  placeholder="请输入标题" />
 		</uni-forms-item>
 		<uni-forms-item label="内容" name="content" required>
-		  <uni-easyinput  v-model="feedbackForm.content" type="textarea" placeholder="请输入具体内容" />
-		</uni-forms-item>
-  
-  
+		  <uni-easyinput  v-model="feedbackForm.content" type="textarea" placeholder="请输入反馈内容" />
+		</uni-forms-item> 
 	  </uni-forms>
 	  <u-button type="success" text="保存" color="#007aff" @click="submitForm()" :disabled="submitDisabled"
 		:loading="submitLoading"></u-button>
