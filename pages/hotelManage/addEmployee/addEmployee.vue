@@ -1,7 +1,7 @@
 <template>
   <view>
     <scroll-view :scroll-y="true" :scroll-x="false" class="scroll-view" style="">
-			<addEmployeeComponent @closePopup="closePopup" :type="type" :em="em" ></addEmployeeComponent>
+			<addEmployeeComponent @closePopup="closePopup" :type="type" :em="em" v-if="em"></addEmployeeComponent>
 		</scroll-view>
   </view>
 </template>
@@ -14,7 +14,7 @@ export default({
   },
   data() {
     return {
-      em:{},
+      em:null,
       type:0
     }
   },

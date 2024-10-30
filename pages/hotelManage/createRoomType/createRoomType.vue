@@ -10,6 +10,7 @@
         @closePopup="closePopup"
         :type="type"
         :rt="rt"
+        v-if="rt"
       ></createRoomTypeComponent>
     </scroll-view>
   </view>
@@ -24,7 +25,7 @@ export default {
   data() {
     return {
       type: 0,
-      rt: {},
+      rt: null,
     };
   },
   onLoad(obj) {

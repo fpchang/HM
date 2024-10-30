@@ -74,8 +74,6 @@
 	},
 	watch: {},
 	created(e){
-	  //this.getMenuTypeList();
-	  console.log("eee",e);
 	},
 	methods: {
 

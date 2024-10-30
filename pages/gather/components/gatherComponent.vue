@@ -162,12 +162,12 @@ import MenuService from '../../../services/MenuService';
    
     cardWidth(){
       let windowWidth = this.viewWidth;//-20 为pc端滚动条宽度
-      let count = Math.floor(windowWidth/370);
+      let count = Math.floor(windowWidth/320);
       if(count==0){
         return windowWidth;
       }
-      let ys= windowWidth % 370
-      return  Math.min(370+ (ys/count),450)
+      let ys= windowWidth % 320
+      return  Math.min(320+ (ys/count),450)
     },
     cardContainerWidth(){
       let count =Math.max(Math.floor(this.viewWidth/this.cardWidth),1) ;
@@ -230,9 +230,13 @@ import MenuService from '../../../services/MenuService';
       },
 		  methods:{
         async initData(){
+          if(!this.hotel_id){
+            return;
+          }
           await this.$store.dispatch("getOrderListByCheckInToday",this.hotel_id);
           await this.$store.dispatch("getOrderListToday",this.hotel_id);
           await this.$store.dispatch("getOrderDishesToday",this.hotel_id);
+          
           
           
         },
@@ -308,10 +312,10 @@ import MenuService from '../../../services/MenuService';
 .card-container {
   display: flex;
   flex-wrap: wrap;
-  min-width: 370px;
+  min-width: 320px;
 
   .card {
-    min-width: 370px;
+    min-width: 320px;
     max-width: 450px;
     padding: 10px;
     box-sizing: border-box;

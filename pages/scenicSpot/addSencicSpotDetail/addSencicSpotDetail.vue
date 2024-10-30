@@ -3,6 +3,7 @@
 		<scroll-view :scroll-y="true" :scroll-x="false" class="scroll-view" style="">
 
 			<addScenicSpotDetailComponent
+			v-if="targetObj"
 			@closePopup="closePopup"
 			:type="type"
 			:targetObj="targetObj"
@@ -17,7 +18,7 @@ import addScenicSpotDetailComponent from '../components/addScenicSpotDetailCompo
 		data() {
 			return {
 				type:0,
-      			targetObj:{}
+      			targetObj:null
 			}
 		},
 		components:{

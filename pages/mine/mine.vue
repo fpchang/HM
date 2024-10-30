@@ -4,13 +4,17 @@
 			<view class="card" style="padding: 15px">
 				<view style="display:flex;">
 					<view class="flex-center">
-						<uni-icons  fontFamily="iconfont" size="50">	
+						<uni-icons  fontFamily="iconfont" size="60">	
 							{{ '&#xe62c;'}}				
 						 </uni-icons>
 						
 					</view>
 					<view class="flx-column name-style" style="flex:1">
-						<text style="padding:4px 8px" @click="openNameUpdate">{{user.userName|| '--'}}</text>
+						<view class="flex-left"> 
+							<text style="padding:4px 8px;min-width:100px;cursor:pointer" @click="openNameUpdate">{{user.userName|| '--'}}</text>
+							<uni-icons type="forward"></uni-icons>
+						</view>
+						
 						<text style="padding:4px 8px">{{user.phone}}</text>
 
 					</view>
@@ -90,12 +94,13 @@
 		data() {
 			return {
 				avatar: 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png',
-				menuList: [{
-						key: "faq",
-						unicode: "\ue8cc",
-						title: "使用说明",
-						showArrow: true
-					},
+				menuList: [
+					// {
+					// 	key: "faq",
+					// 	unicode: "\ue8cc",
+					// 	title: "使用说明",
+					// 	showArrow: true
+					// },
 					
 					{
 						key: "feedback",

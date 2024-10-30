@@ -2,6 +2,7 @@
   <view>
 	<scroll-view :scroll-y="true" :scroll-x="false" class="scroll-view" style="">
     <addMenuTypeComponent
+      v-if="targetObj"
       @closePopup="closePopup"
       :type="type"
       :targetObj="targetObj"
@@ -19,7 +20,7 @@ export default {
   data() {
     return {
 		type:0,
-      	targetObj:{}
+      	targetObj:null
 	};
   },
 //   provide(){

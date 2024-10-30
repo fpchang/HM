@@ -371,7 +371,7 @@ export default {
         //uni.showLoading();
         this.$store.commit("setUser",uni.getStorageSync("user"));
         await this.$store.dispatch("getHotelList");
-        this.$store.commit("setBaseDatahasLoad",true);
+        this.$store.commit("setBaseDatahasLoad",true);      
         this.initTabMenu();
         uni.hideLoading();
       } catch (error) {
@@ -502,27 +502,7 @@ export default {
       } catch (e) {
         //TODO handle the exception
       }
-    },
-    menuEvent(key) {
-				switch (key) {
-					case "loginOut":
-						this.loginOut();
-						break;
-					case "feedback":
-						if (this.isPcShow) {
-							this.$refs.popupFeedback.open()
-							break;
-						}
-						const a = {
-							name: 111
-						}
-						uni.navigateTo({
-							url: `/pages/mine/feedback/feedback`
-						});
-						break;
-
-				}
-			}
+    }
   },
 };
 </script>

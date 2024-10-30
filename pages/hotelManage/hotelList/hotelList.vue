@@ -59,11 +59,29 @@
 							</view>
 							<view class="list-item" style="justify-content: flex-end;">
 
-								<view class="list-item-c" style="width: 80px;">
-										<u-icon name="edit-pen-fill" color="#06c" labelColor="#06c" size="22" label="修改"
+								<view class="list-item-c" style="width: 130px;">
+										<!-- <u-icon name="edit-pen-fill" color="#06c" labelColor="#06c" size="22" label="修改"
 									labelPos="bottom" labelSize="12px" @click="editHotel(item)"></u-icon>
 							<u-icon name="trash-fill" color="#e64340" labelColor="#e64340" size="22" label="删除"
-							labelPos="bottom" labelSize="12px" @click="deleteHotel(item)"></u-icon>
+							labelPos="bottom" labelSize="12px" @click="deleteHotel(item)"></u-icon> -->
+
+							<button
+                    class="uni-button"
+                    size="mini"
+                    type="primary"
+                    @click="editHotel(item)"
+                  >
+                    修改
+                  </button>
+                  <button
+                    class="uni-button"
+                    size="mini"
+                    type="warn"
+                    @click="deleteHotel(item)"
+                    :loading="submitLoading"
+                  >
+                    删除
+                  </button>
 								</view>
 							</view>
 						</view>

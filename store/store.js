@@ -107,14 +107,18 @@ const store = new Vuex.Store({
 			})
 			
 		},
-		 getHotelList(context){			
-			return hotelService.getHotelList().then(res=>{
-				console.log("当前用户酒店列表",res);
-				context.commit('updateHotelList', res.result);
-
-			})
+		 getHotelList(context){	
+			return new Promise((resolve,reject)=>{
+				 hotelService.getHotelList().then(res=>{
+					console.log("当前用户酒店列表",res);
+					context.commit('updateHotelList', res.result);
+					resolve(res);
+				}).catch(e=>{
+					reject(e)
+				})
+			})		
 			
-
+			
 		},
 		 getRoomType(context){
 				return  hotelService.getRoomType(context.state.hotel_id).then(res=>{
