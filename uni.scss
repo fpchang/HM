@@ -41,9 +41,9 @@ $uni-border-color:#c8c7cc;
 /* 尺寸变量 */
 
 /* 文字尺寸 */
-$uni-font-size-sm:12px;
-$uni-font-size-base:14px;
-$uni-font-size-lg:16px;
+$uni-font-size-sm:14px;
+$uni-font-size-base:16px;
+$uni-font-size-lg:18px;
 $uni-font-size-lgs:20px;
 
 /* 图片尺寸 */
@@ -168,6 +168,6 @@ $font-color-control-hover:rgb(1, 85, 169);
   //字体btn
   .edit-text-btn-style{
 	color: $font-color-control;
-	font-size: 12px;
+	font-size: $uni-font-size-base;
   }
 

@@ -288,7 +288,7 @@
 				background-color: #fff;
 				color: #303133;
 				font-size: 13px;
-				font-weight: 500;
+				font-weight: bold;
 				/* #ifdef H5 */
 				cursor: pointer;
 				outline: none;

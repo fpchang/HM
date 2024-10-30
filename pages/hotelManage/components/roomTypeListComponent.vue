@@ -74,7 +74,7 @@
 						<view class="list">
 							<view class="list-item">
 								<view class="list-item-c">
-									<view style="width:60px;"><text class="stitle">房间号：</text></view>
+									<view style="width:80px;"><text class="stitle">房间号：</text></view>
 									<view style="flex:1"><text v-for="i of sortRoomList(item.roomList)"">【{{i}}】</text></view>
 								
 								</view>
@@ -273,6 +273,7 @@ import DB from '../../../api/DB';
 					align-items: center;
 					.stitle{
 						font-weight: bold;
+						font-size: $uni-font-size-base;
 					}
 				}
 			}

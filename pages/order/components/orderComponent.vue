@@ -16,6 +16,15 @@
 				<uni-data-checkbox v-model="tabRadioVal" :localdata="tabitems"></uni-data-checkbox>				
 			</view>
 			<view class="control-panal">
+				<u-icon
+			   name="file-text-fill"
+			   color="#000"
+			   size="22"
+			   label="数据配置"
+			   labelPos="bottom"
+			   labelSize="12px"
+			   @click="dataConfigEvent"
+			 ></u-icon>
 			<u-icon
 			   name="plus-circle-fill"
 			   color="#000"
@@ -147,9 +156,8 @@ import orderChildCalendarList from './orderChildCalendarList';
 			
 		},
 		methods: {
-			getOrderList() {
+			dataConfigEvent(){
 				
-
 			},
 			onClickItem(e) {
 				if (this.current !== e.currentIndex) {

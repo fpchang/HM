@@ -83,8 +83,8 @@
       <view class="menu-detail-content-item" v-for="item of menuItem._id['hm-menuDetail']" >
         <text class="itx-n">{{item.name}}</text>
         <view style="display: flex;"> 
-          <text class="itx-p">{{item.price}}</text>
-          <text>￥</text>
+          <text class="itx-p"><text>￥</text>{{item.price}}</text>
+          
           <view class="icon-area">
             <!-- <u-icon
             v-if="isEdit"
@@ -389,7 +389,8 @@ created(){
   gap:12px;
 }
 .pr-item {
-  font-size: 12px;
+  font-size: $uni-font-size-base;
+  font-weight: bold;
   padding: 5px 0;
   &:nth-child(1) {
     color: #d1d0d0;
@@ -404,16 +405,21 @@ created(){
 .menu-detail-content{
   
   .menu-detail-content-item{
-    display:flex;justify-content:space-between;
+    display:flex;
+    justify-content:space-between;
     align-items: center;
     min-height: 35px;
-    font-size: 14px;
+    font-size: $uni-font-size-base;
     font-weight: 500;
+    color:#7e7f81;
     box-sizing: border-box;
     border-bottom: 1px dotted #bbbbbb47;
     .edit-style{
       color: $font-color-control;
-      font-size: 12px;
+      font-size: $uni-font-size-sm;
+    }
+    .itx-p{
+      color:#ff0000;
     }
     /**&:nth-child(odd){
       

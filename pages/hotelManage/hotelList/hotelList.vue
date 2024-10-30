@@ -32,8 +32,8 @@
 					<uni-td>{{item.curRole | roleFormat}}</uni-td>
 					<uni-td align="center">
 						<view class="uni-group" style="justify-content:space-around">
-						  <text class="edit-text-btn-style" @click="editHotel(item)">修改</text>
-            			  <text class="edit-text-btn-style" @click="deleteHotel(item)">删除</text>
+						  <text v-if="item.curRole=='administrator'" class="edit-text-btn-style" @click="editHotel(item)">修改</text>
+            			  <text v-if="item.curRole=='administrator'" class="edit-text-btn-style" @click="deleteHotel(item)">删除</text>
 						</view>
 					</uni-td>
 				</uni-tr>
@@ -66,6 +66,7 @@
 							labelPos="bottom" labelSize="12px" @click="deleteHotel(item)"></u-icon> -->
 
 							<button
+							v-if="item.curRole=='administrator'"
                     class="uni-button"
                     size="mini"
                     type="primary"
@@ -74,6 +75,7 @@
                     修改
                   </button>
                   <button
+				  v-if="item.curRole=='administrator'"
                     class="uni-button"
                     size="mini"
                     type="warn"
@@ -152,6 +154,10 @@ import DB from '../../../api/DB';
 		},
 		methods:{
 			editHotel(targetObj){
+				if(targetObj.curRole!="administrator"){
+					this.$alert.alertNoPermisson();
+					return;
+				}
 				if(!this.$store.state.permissionStore.permissionList.includes('HOTEL_UPDATE')){
 					 this.$alert.alertNoPermisson();
 					return;
@@ -183,6 +189,10 @@ import DB from '../../../api/DB';
 				})
 			},
 			async deleteHotel(targetObj){
+				if(targetObj.curRole!="administrator"){
+					this.$alert.alertNoPermisson();
+					return;
+				}
 				if(!this.$store.state.permissionStore.permissionList.includes('HOTEL_DELETE')){
 					 this.$alert.alertNoPermisson();
 					return;
@@ -244,13 +254,14 @@ import DB from '../../../api/DB';
 				flex-direction: row;
 				justify-content: space-between;
 				padding: 10px 0;
-
+				font-size:$uni-font-size-base ;
 				.list-item-c {
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
 					.stitle{
 						font-weight: bold;
+						
 					}
 				}
 			}

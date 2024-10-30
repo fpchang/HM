@@ -360,7 +360,7 @@ export default {
   gap:10px;
 }
 .pr-item {
-  font-size: 12px;
+  font-size: $uni-font-size-sm;
   padding: 5px 0;
   &:nth-child(1) {
     color: #d1d0d0;
@@ -376,15 +376,19 @@ export default {
   
   .menu-detail-content-item{
     display:flex;justify-content:space-between;
+    font-weight: 500;
+    color:#7e7f81;
     align-items: center;
     min-height: 35px;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: $uni-font-size-base;
     box-sizing: border-box;
     border-bottom: 1px dotted #bbbbbb47;
     .edit-style{
       color: $font-color-control;
-      font-size: 12px;
+      font-size: $uni-font-size-sm;
+    }
+    .itx-p{
+      color:#ff0000;
     }
     /**&:nth-child(odd){
       

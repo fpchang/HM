@@ -194,7 +194,7 @@
         position: relative;
         color: $lee-left-color;
         font-size: 30rpx;
-        font-weight: 500;
+        font-weight: bold;
         background: $lee-tab-item-active;
     }
 

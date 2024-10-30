@@ -80,7 +80,36 @@
     </view>
     <uni-section class="mb-10" title="价目表" type="line"></uni-section>
     <view v-for="item of scenicSpot._id['hm-scenicSpotPriceDetail']">
-      <uni-row class="uni-row">
+      <view class="flex-center" > 
+        <view style="width:90px"> 
+          
+            <text style="padding:0 10px">
+              {{ item.package_name }}
+            </text>
+          
+        </view>
+        <view class="flx-column" style="flex:1"> 
+          <view class="pr-item"
+          >官方价：<text style="text-decoration: line-through"
+            >{{ item.scenicSpot_price }}元</text
+          ></view
+        >
+        <view class="pr-item"
+          >结算价：<text>{{ item.settlement_price }}元</text></view
+        >
+        <view class="pr-item"
+          >出售价：<text>{{ item.offering_price }}元</text></view
+        >
+
+        </view>
+        <view style="width:80px"> 
+            <view class="icon-area" v-if="isEdit">
+                <text class="edit-text-btn-style" @click="editScenicSportPrice(item)">修改</text>
+                <text class="edit-text-btn-style" @click="deleteScenicSportPrice(item)">删除</text>
+        </view>
+      </view>
+      </view>
+      <!-- <uni-row class="uni-row">
         <uni-col :span="10" class="col-pa">
           <view>
             <text>
@@ -103,30 +132,12 @@
         </uni-col>
         <uni-col :span="4" class="col-pa">
           <view class="icon-area">
-            <!-- <u-icon
-            v-if="isEdit"
-              name="edit-pen-fill"
-              color="#000"
-              size="20"
-              labelPos="bottom"
-              labelSize="12px"
-              @click="editScenicSportPrice(item)"
-            ></u-icon>
-            <u-icon
-            v-if="isEdit"
-              name="trash-fill"
-              color="#000"
-              size="20"
-              labelPos="bottom"
-              labelSize="12px"
-              @click="deleteScenicSportPrice(item)"
-            ></u-icon> -->
             <text class="edit-text-btn-style" @click="editScenicSportPrice(item)">修改</text>
             <text class="edit-text-btn-style" @click="deleteScenicSportPrice(item)">删除</text>
           </view>
         </uni-col>
-      </uni-row>
-      <u-line></u-line>
+      </uni-row> -->
+      
     </view>
     <uni-popup ref="popupScenicSpotDetail" background-color="transprant">
       <view class="popup-content">
@@ -398,7 +409,8 @@ export default {
 
 }
 .pr-item {
-  font-size: 12px;
+  font-size: $uni-font-size-base;
+  font-weight: bold;
   padding: 5px 0;
   &:nth-child(1) {
     color: #d1d0d0;

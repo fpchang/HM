@@ -327,6 +327,7 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        font-size:$uni-font-size-base ;
       }
     }
   }

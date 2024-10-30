@@ -17,7 +17,6 @@ exports.main = async (event, context) => {
 		const verifyTokenObj =tokenEvent.verifyToken($token,"****");
 		 
 		 const {phone} = verifyTokenObj.value;
-		 console.log(">>>",phone);
 		const emTemp = dbJQL.collection("hm-employee").where({phone}).getTemp();
 		const hoTemp = dbJQL.collection("hm-hotel").where("dataStatus!=10").getTemp();
 		const res = await dbJQL.collection(emTemp,hoTemp).get();

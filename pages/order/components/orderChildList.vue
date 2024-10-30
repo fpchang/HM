@@ -26,7 +26,7 @@
 							<view class="list-item-c"><text>退房日期：</text><text>{{item.checkInEndDate}}</text></view>
 						</view>
 						<view class="list-item">
-							<view class="list-item-c"><text>创建人：</text><text>{{item.createrPhone}}【{{item.createrName}}】</text></view>
+							<view class="list-item-c"><text>创建人：</text><text>{{item.createrPhone}}【{{item.createrName || "--"}}】</text></view>
 							
 						</view>
 						<view  class="list-item">

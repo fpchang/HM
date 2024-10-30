@@ -233,7 +233,7 @@
 
 	.uni-dialog-title-text {
 		font-size: 16px;
-		font-weight: 500;
+		font-weight: bold;
 	}
 
 	.uni-dialog-content {

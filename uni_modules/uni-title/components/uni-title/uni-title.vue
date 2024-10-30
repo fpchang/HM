@@ -133,7 +133,7 @@
 	.uni-title__base {
 		font-size: 15px;
 		color: #333;
-		font-weight: 500;
+		font-weight: bold;
 	}
 
 	.uni-h1 {

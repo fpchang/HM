@@ -1,6 +1,8 @@
 {
   "name": "hm_deleteHotel",
-  "dependencies": {},
+  "dependencies": {
+    "tokenEvent": "file:../common/tokenEvent"
+  },
   "extensions": {
     "uni-cloud-jql": {}
   }

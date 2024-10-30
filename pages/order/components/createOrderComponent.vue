@@ -152,49 +152,28 @@ export default {
           value: 3,
         },
         {
-          name: "meituanminsu",
-          name_Zn: "途牛",
+          name: "ticktok",
+          name_Zn: "抖音",
           value: 4,
         },
         {
-          name: "meituanminsu",
+          name: "tujia",
           name_Zn: "途家",
           value: 5,
-        },
-        {
-          name: "meituanminsu",
-          name_Zn: "客栈",
-          value: 6,
         },
         {
           name: "downline",
           name_Zn: "线下",
           value: 0,
         },
+        {
+          name: "ohters",
+          name_Zn: "其它",
+          value: 6,
+        }
+        
       ],
       startDate:new Date().getTime(),
-      roomTypeList: [
-        {
-          value: "t1",
-          name: "大床房",
-          count: 5,
-        },
-        {
-          value: "t2",
-          name: "商务大床房",
-          count: 2,
-        },
-        {
-          value: "t3",
-          name: "标间",
-          count: 4,
-        },
-        {
-          value: "t4",
-          name: "商务标间",
-          count: 3,
-        },
-      ],
       remainRoomTypeList: [],
       orderForm: {
         orderSource: 0,

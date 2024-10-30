@@ -230,7 +230,7 @@ export default {
         position: absolute;
         right: 5px;
         bottom: 2px;
-        font-size: 12px;
+        font-size: $uni-font-size-sm;
         color: $u-tips-color;
         background-color: #ffffff;
         padding: 1px 4px;

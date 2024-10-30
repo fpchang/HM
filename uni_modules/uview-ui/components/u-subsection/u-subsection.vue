@@ -287,7 +287,7 @@ export default {
         }
 
         &__text {
-            font-size: 12px;
+            font-size: $uni-font-size-sm;
             line-height: 12px;
             @include flex;
             align-items: center;
