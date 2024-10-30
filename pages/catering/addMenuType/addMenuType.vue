@@ -19,7 +19,7 @@ export default {
   },
   data() {
     return {
-		type:0,
+		    type:0,
       	targetObj:null
 	};
   },
@@ -40,6 +40,7 @@ export default {
       });
     } catch (error) {
       this.type = 0;
+      this.targetObj={}
     }
   },
   methods: {

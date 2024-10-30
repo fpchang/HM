@@ -64,8 +64,9 @@
 					<view class="uni-group" v-if="item.checkInEndDateTimeStamp > new Date().getTime()">
 						<!-- <button class="uni-button" size="mini" type="primary">修改</button> -->
 						<!-- <button  class="uni-button" size="mini" type="warn" @click="deleteOrder(item)">撤销</button> -->
-						<u-icon name="trash-fill" color="#e64340" labelColor="#e64340" size="22" label="撤销"
-						labelPos="bottom" labelSize="12px" @click="deleteOrder(item)"></u-icon>
+						<!-- <u-icon name="trash-fill" color="#e64340" labelColor="#e64340" size="22" label="撤销"
+						labelPos="bottom" labelSize="12px" @click="deleteOrder(item)"></u-icon> -->
+						<text  class="edit-text-btn-style" @click="deleteOrder(item)">撤销</text>
 					</view>
 				</uni-td>
 			</uni-tr>
@@ -142,9 +143,14 @@
 			},
 			async getOrderListByCondition() {
 				 //uni.showLoading();
+				 if(!this.hotel_id){
+					return;
+				 }
+				 console.log(1111)
 				 let date = this.selectCondition.dateRangeArray;
 				try {
 					const res = await OrderService.getOrderListByCondition(this.hotel_id,date[0],date[1]);
+					console.log("res",res);
 					this.checkInOrderList = res.data||[];			
 				} catch (error) {
 					console.error("获取订单列表失败",error);

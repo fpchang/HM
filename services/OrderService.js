@@ -32,6 +32,7 @@ class OrderService{
      */
      
     getOrderListByCondition(hotel_id,st,et) {
+        console.log(arguments);
         let startTime = new Date(new Date(st).Format("yyyy/MM/dd 14:00:00")).getTime();
         let endTime = new Date(new Date(et).Format("yyyy/MM/dd 12:00:00")).getTime();
 		const s1=`checkInStartDateTimeStamp<${startTime}&&checkInEndDateTimeStamp>${startTime}`;
@@ -41,7 +42,7 @@ class OrderService{
 		
 		let jql =
             `hotel_id=='${hotel_id}'&&orderStatus!=10&&(${s1}||${s2}||${s3}||${s4})`;
-        return this.DB.getCollection("hm-order", jql);
+        return this.DB.getCollectionGroupBy("hm-order", jql,"checkInStartDateTimeStamp asc");
     }
       /** 
      * 获取当前酒店今天以后的订单信息

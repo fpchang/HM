@@ -99,10 +99,10 @@ beforeDestroy() {},
     },
     addMenuType(){
       MenuService.addMenuType(this.menuTypeForm)
-          .then((res) => {
+          .then(async (res) => {           
             console.log("添加成功");
             this.$emit("closePopup");
-            this.$store.commit("getMenuList");
+            await this.$store.dispatch("getMenuList",this.hotel_id);
           })
           .catch((er) => {
             console.log("添加失败", er);
@@ -118,7 +118,7 @@ beforeDestroy() {},
       MenuService.editMenuType(this.targetObj._id._value,this.menuTypeForm)
           .then((res) => {
             console.log("修改成功");
-            this.$store.menuStorecommit("getMenuList",this.hotel_id);
+            this.$store.dispatch("getMenuList",this.hotel_id);
             this.$emit("closePopup");
           })
           .catch((er) => {

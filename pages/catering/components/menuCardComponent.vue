@@ -153,8 +153,13 @@ export default {
     menuType_id() {
       return this.menuItem._id._value;
     },
+    hotel_id(){
+      return this.$store.state.hotel_id;
+    }
   },
-
+created(){
+  console.log("menucardcomponent created",this.menuItem,)
+},
   watch: {
     menuType_id() {},
   },
@@ -236,7 +241,7 @@ export default {
       try {
         const res = await MenuService.removeMenuDetail(item._id);
         console.log("删除成功");
-        this.$store.menuStorecommit("getMenuList", this.hotel_id);
+        this.$store.dispatch("getMenuList", this.hotel_id);
       } catch (error) {
         console.log("删除失败", error);
       }
@@ -261,11 +266,12 @@ export default {
 					this.$alert.alertNoPermisson();
 					return;
 				}
+        console.log(this.menuType_id,this.menuItem)
       if (!this.menuType_id) {
         return;
       }
       const conf = await uni.showModal({
-        title: "确认删除景点",
+        title: "确认删除菜单",
         content: "删除后将同步删除所有价格信息，并且无法恢复,确认删除吗?",
         cancelText: "取消",
         confirmText: "确认",
@@ -275,11 +281,9 @@ export default {
       }
       //uni.showLoading();
       try {
-        const res = await MenuService.removeMenuType(
-          this.menuType_id
-        );
+        const res = await MenuService.removeMenuType(this.menuType_id);
         console.log("删除成功");
-        this.$store.menuStorecommit("getMenuList", this.hotel_id);
+        this.$store.dispatch("getMenuList", this.hotel_id);
       } catch (error) {
         console.log("删除失败", error);
       }

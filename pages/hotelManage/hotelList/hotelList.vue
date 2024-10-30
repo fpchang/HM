@@ -95,7 +95,7 @@
 			<view class="popup-content">
 				<view class="create-order-title-style">{{type==1?"修改酒店信息":"创建酒店信息"}}</view>
 				<view class="comContent">
-					<createHotelComponent @closePopup="closePopup" :type="type" :rt="rt"></createHotelComponent>
+					<createHotelComponent @closePopup="closePopup" :type="type" :targetObj="targetObj"></createHotelComponent>
 				</view>
 
 			</view>
@@ -114,7 +114,7 @@ import DB from '../../../api/DB';
 		data() {
 			return {
 				type:0,
-				rt:{},
+				targetObj:{},
 				submitLoading: false,
 				accordionVal: '0',
 				
@@ -151,13 +151,13 @@ import DB from '../../../api/DB';
 			}
 		},
 		methods:{
-			editHotel(rt){
+			editHotel(targetObj){
 				if(!this.$store.state.permissionStore.permissionList.includes('HOTEL_UPDATE')){
 					 this.$alert.alertNoPermisson();
 					return;
 				}
 				this.type=1;
-				this.rt =rt;
+				this.targetObj =targetObj;
 				if(this.$store.state.isPcShow){
 					this.$refs.popupaddHotel.open();
 					return;
@@ -165,7 +165,7 @@ import DB from '../../../api/DB';
 					
 				
 				uni.navigateTo({
-					url:`/pages/hotelManage/createHotel/createHotel?type=${this.type}&&rt=${JSON.stringify(this.rt)}`
+					url:`/pages/hotelManage/createHotel/createHotel?type=${this.type}&&targetObj=${JSON.stringify(this.targetObj)}`
 				})
 			},
 			addHotel(){
@@ -182,7 +182,7 @@ import DB from '../../../api/DB';
 					url:'/pages/hotelManage/createHotel/createHotel'
 				})
 			},
-			async deleteHotel(rt){
+			async deleteHotel(targetObj){
 				if(!this.$store.state.permissionStore.permissionList.includes('HOTEL_DELETE')){
 					 this.$alert.alertNoPermisson();
 					return;
@@ -197,13 +197,7 @@ import DB from '../../../api/DB';
 					return;
 				}
 				this.submitLoading = true;
-				//uni.showLoading();
-				// DB.callFunction("hm_deleteHotel",
-				// 	{
-				// 		_id:rt._id
-				// 	}
-				// )
-				HotelService.deleteHotel(rt._id).then(async res=>{
+				HotelService.deleteHotel(targetObj._id).then(async res=>{
                             console.log("删除成功");
 						await this.$store.dispatch("getHotelList");
 						this.submitLoading = false;

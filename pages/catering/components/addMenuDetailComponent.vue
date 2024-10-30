@@ -98,7 +98,8 @@ export default({
 				return false
 			},
       menuDetailFormParse(){
-        let {name,price,isOffer,mark}= this.menuDetailForm;
+        try {
+          let {name,price,isOffer,mark}= this.menuDetailForm;
        return {
         menuType_id:this.targetObj._id._value,
         name:name,
@@ -106,6 +107,10 @@ export default({
         price:Number(price),
         mark:mark
        }
+        } catch (error) {
+          
+        }
+       
       }
    
   },
@@ -149,9 +154,9 @@ beforeDestroy() {},
     addMenuDetail(){
      
       MenuService.addMenuDetail(this.menuDetailFormParse)
-          .then((res) => {
+          .then(async (res) => {
             console.log("添加成功");
-            this.$store.menuStorecommit("getMenuList",this.hotel_id);
+            await this.$store.dispatch("getMenuList",this.hotel_id);
             this.$emit("closePopup");
           })
           .catch((er) => {
@@ -171,7 +176,7 @@ beforeDestroy() {},
       )
           .then((res) => {
             console.log("修改成功");
-            this.$store.menuStorecommit("getMenuList",this.hotel_id);
+            this.$store.dispatch("getMenuList",this.hotel_id);
             this.$emit("closePopup");
           })
           .catch((er) => {

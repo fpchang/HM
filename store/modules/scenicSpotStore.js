@@ -15,10 +15,16 @@ export default{
 	},
   actions:{
      getScenicSpotList(context,hotel_id){
-      return ScenicSpotService.getScenicSpotList(hotel_id).then(res=>{
-        console.log("景点列表",res)
-        context.commit('updateScenicSpotList', res.result.data);
-      })
+		return new Promise((resolve,reject)=>{
+			ScenicSpotService.getScenicSpotList(hotel_id).then(res=>{
+				console.log("景点列表",res)
+				context.commit('updateScenicSpotList', res.result.data);
+				resolve(res)
+			  }).catch(e=>{
+				reject(e)
+			  })
+		})
+     
     }
   }
 }

@@ -78,7 +78,7 @@
             >
               <template v-slot:right>
                 <text style="font-weight: bold">{{
-                  item.role == "manager" ? "管理员" : "员工"
+                  item.role | roleFormat
                 }}</text>
               </template>
             </uni-section>
@@ -94,7 +94,7 @@
                 <view class="list-item-c"
                   ><text>角色：</text
                   ><text style="font-weight: bold">{{
-                    item.role == "manager" ? "管理员" : "员工"
+                    item.role | roleFormat
                   }}</text></view
                 >
               </view>

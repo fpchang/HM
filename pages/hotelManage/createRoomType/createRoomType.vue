@@ -9,8 +9,8 @@
       <createRoomTypeComponent
         @closePopup="closePopup"
         :type="type"
-        :rt="rt"
-        v-if="rt"
+        :rt="targetObj"
+        v-if="targetObj"
       ></createRoomTypeComponent>
     </scroll-view>
   </view>
@@ -25,19 +25,20 @@ export default {
   data() {
     return {
       type: 0,
-      rt: null,
+      targetObj: null,
     };
   },
   onLoad(obj) {
     console.log("参数传递", obj);
     try {
       this.type = obj.type;
-      this.rt = JSON.parse(obj.rt);
+      this.targetObj = JSON.parse(obj.rt);
       uni.setNavigationBarTitle({
         title: obj.type == "1" ? "修改房型" : "创建房型",
       });
     } catch (error) {
       this.type = 0;
+      this.targetObj={}
     }
   },
   methods: {

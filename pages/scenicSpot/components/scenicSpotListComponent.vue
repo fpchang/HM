@@ -134,8 +134,7 @@ export default({
 					
 				
 				uni.navigateTo({
-					url:`/pages/scenicSpot/addScenicSpot/addScenicSpot?type=${
-          this.type}&&targetObj=${JSON.stringify(item)}`
+					url:`/pages/scenicSpot/addScenicSpot/addScenicSpot`
 				})
     },
 	editScenicSpot(item={}){

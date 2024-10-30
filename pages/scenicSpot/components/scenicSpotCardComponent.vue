@@ -62,7 +62,7 @@
       <view class="sc-item">
         <view class="tit"><text>地址:</text></view
         ><view style="flex: 1" class="text-overflow-ellipsis"
-          ><text class="add-text-style" @click="addressEvent(scenicSpot.scenicSport_name)">{{ scenicSpot.scenicSport_name }}</text></view
+          ><text class="add-text-style" @click="addressEvent(scenicSpot.scenicSport_address)">{{ scenicSpot.scenicSport_address }}</text></view
         ></view
       >
       <view class="sc-item">
@@ -167,6 +167,9 @@ export default {
     scenicSpot_id() {
       return this.scenicSpot._id._value;
     },
+    hotel_id(){
+      return this.$store.state.hotel_id;
+    }
   },
 
   watch: {
@@ -240,7 +243,7 @@ export default {
       }
       const conf = await uni.showModal({
         title: "确认删除价格信息",
-        content: "删除后将同步删除所有价格信息，并且无法恢复,确认删除吗?",
+        content: "删除后将无法恢复,确认删除吗?",
         cancelText: "取消",
         confirmText: "确认",
       });

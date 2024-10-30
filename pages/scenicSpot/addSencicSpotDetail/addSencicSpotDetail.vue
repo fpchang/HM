@@ -36,6 +36,7 @@ import addScenicSpotDetailComponent from '../components/addScenicSpotDetailCompo
     } catch (error) {
 		console.log(error)
       this.type = 0;
+	  this.targetObj={}
     }
   },
 		methods: {

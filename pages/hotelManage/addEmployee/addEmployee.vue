@@ -35,6 +35,7 @@ export default({
       uni.setNavigationBarTitle({title:obj.type=="1"?"修改员工信息":"新增员工",})
     } catch (error) {
       this.type=0;
+      this.em={}
     }
     
   },

@@ -26,18 +26,18 @@
 	export default {
 		props:{
 			type:0,
-			rt:{}
+			targetObj:{}
 		},
 		data() {
 			return {
 				submitLoading: false,
 				//hotelList:getApp().globalData.hotelList,
 				hotelForm: this.type==1?{
-					belong: this.rt.belong,
-					hotelName: this.rt.hotelName,
-					hotelAdress: this.rt.hotelAdress,
-					hotelCoordinate: this.rt.hotelCoordinate,
-					hotelIntroduction: this.rt.hotelIntroduction
+					belong: this.targetObj.belong,
+					hotelName: this.targetObj.hotelName,
+					hotelAdress: this.targetObj.hotelAdress,
+					hotelCoordinate: this.targetObj.hotelCoordinate,
+					hotelIntroduction: this.targetObj.hotelIntroduction
 				}: {
 					belong: "",
 					hotelName: "",
@@ -69,7 +69,7 @@
 			};
 		},
 		created() {
-			console.log("user", getApp().globalData.user)
+			console.log("target",this.targetObj)
 		},
 		computed: {
 			user(){

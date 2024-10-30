@@ -207,7 +207,7 @@ export default {
       try {
         const res = await MenuService.removeMenuDetail(item._id);
         console.log("删除成功");
-        this.$store.menuStorecommit("getMenuList", this.hotel_id);
+        await this.$store.dispatch("getMenuList", this.hotel_id);
       } catch (error) {
         console.log("删除失败", error);
       }

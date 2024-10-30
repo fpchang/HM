@@ -36,6 +36,7 @@ import addMenuDetailComponent from '../components/addMenuDetailComponent.vue'
     } catch (error) {
 		console.log(error)
       this.type = 0;
+	  this.targetObj={}
     }
   },
 		methods: {

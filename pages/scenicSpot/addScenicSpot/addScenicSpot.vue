@@ -34,6 +34,7 @@ export default {
       });
     } catch (error) {
       this.type = 0;
+      this.targetObj={}
     }
   },
   methods: {

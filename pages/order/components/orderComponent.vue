@@ -87,17 +87,8 @@ import orderChildCalendarList from './orderChildCalendarList';
 			return {
 				ss: 15868865907,
 				current: 2,
-				tabRadioVal:this.$store.state.isPcShow?2:0,
-				tabitems: [{
-					value:0,
-					text:'日历'
-				}, {
-					value:1,
-					text:'列表'
-				},{
-					value:2,
-					text:'表格'
-				}],
+				tabRadioVal:0,
+				
 				selectCondition: {
 					dateRangeArray: [new Date().getTime(), new Date().getTime() + (1000 * 60 * 60 * 24 * 30)], //默认30天
 					userName: ''
@@ -114,12 +105,33 @@ import orderChildCalendarList from './orderChildCalendarList';
 			}
 		},
 		computed: {
+			isPcShow(){
+				return this.$store.state.isPcShow;
+			},
 			hotel_id(){
 				return this.$store.state.hotel_id;
 			},
 			roomTypeList() {
 				return this.$store.state.roomTypeList;
-			}
+			},
+			tabitems(){
+				if(this.isPcShow){
+					return [{
+					value:0,
+					text:'日历'
+				},{
+					value:2,
+					text:'表格'
+				}]
+				}
+				return [{
+					value:0,
+					text:'日历'
+				}, {
+					value:1,
+					text:'列表'
+				}]
+			} 
 		},
 		watch:{
 		

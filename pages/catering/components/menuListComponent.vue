@@ -22,14 +22,14 @@
 		</view>
 		<view style="display: flex; justify-content: center">
 			<view class="card-container" :style="{ width: `${cardContainerWidth}px` }">
-				<view v-if="tabRadioVal === 0" class="card" v-for="item of orderDishesList"
+				<view v-if="tabRadioVal == 0" class="card" v-for="item of orderDishesList"
 					:style="{ width: `${cardWidth}px` }">
 					<view class="card-item">
 						<menuOrderCardComponent :orderDishesItem="item" @getOrderDishesList="getOrderDishesList">
 						</menuOrderCardComponent>
 					</view>
 				</view>
-				<view v-if="tabRadioVal === 1" class="card" v-for="item of menuList"
+				<view v-if="tabRadioVal == 1" class="card" v-for="item of menuList"
 					:style="{ width: `${cardWidth}px` }">
 					<view class="card-item">
 						<menuCardComponent :menuItem="item" @editMenuType="editMenuType"></menuCardComponent>
@@ -168,7 +168,7 @@
 				}
 
 				uni.navigateTo({
-					url: `/pages/catering/addMenuType/addMenuType?type=${this.type}&&targetObj=${JSON.stringify(item)}`,
+					url: `/pages/catering/addMenuType/addMenuType?type=${this.type}`,
 				});
 			},
 			editMenuType(item = {}) {
@@ -183,9 +183,7 @@
 					return;
 				}
 				uni.navigateTo({
-					url: `/pages/cateromg/addMenuType/addMenuType?type=${
-         this.type
-       }&&targetObj=${JSON.stringify(item)}`,
+					url: `/pages/catering/addMenuType/addMenuType?type=${this.type}&&targetObj=${JSON.stringify(item)}`,
 				});
 			},
 			closePopup() {

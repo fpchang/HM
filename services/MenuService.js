@@ -7,6 +7,9 @@ class MenuService{
     *获取菜单列表
     */
     getMenuList(hotel_id){
+        if(!hotel_id){
+            throw new Error("未传hotel_id");
+        }
         const db = uniCloud.database();
         const mt=   db.collection("hm-menuType").where({hotel_id}).getTemp();
         const mtd =  db.collection("hm-menuDetail").getTemp();
@@ -22,7 +25,7 @@ class MenuService{
       /*
     *删除菜单分类
     */
-    removeMenuType(MenuType_id){
+    removeMenuType(menuType_id){
         return this.DB.callFunction("hm_deleteMenuType",{_id:menuType_id})
     }
 	/**

@@ -65,7 +65,7 @@
 					<template v-slot:title>
 						<uni-section class="mb-10" :title=" item.name " type="circle">
 							<template v-slot:right>
-								<text style="font-weight: bold;">{{item.count}}间-</text>
+								<text style="font-weight: bold;">{{item.count}}间</text>
 
 							</template>
 						</uni-section>
