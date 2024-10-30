@@ -17,6 +17,7 @@
 			</view>
 			<view class="control-panal">
 				<u-icon
+				v-if="false"
 			   name="file-text-fill"
 			   color="#000"
 			   size="22"
@@ -157,7 +158,7 @@ import orderChildCalendarList from './orderChildCalendarList';
 		},
 		methods: {
 			dataConfigEvent(){
-				
+
 			},
 			onClickItem(e) {
 				if (this.current !== e.currentIndex) {
