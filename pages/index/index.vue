@@ -481,9 +481,8 @@ export default {
       //	this.isSticky = (scrollTop >= 60 ? true : false);
     },
     swiperContentEvent(e) {
-      if (e.detail["current"]) {
         this.currentTab_index = e.detail.current;
-      }
+     
     },
     hotelManage(){
       uni.navigateTo({

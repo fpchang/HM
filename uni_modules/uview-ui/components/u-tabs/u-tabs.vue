@@ -302,6 +302,16 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
+/* #ifdef H5 || MP-WEIXIN */
+    // 通过样式穿透，隐藏H5下，scroll-view下的滚动条
+    scroll-view ::v-deep ::-webkit-scrollbar {
+        display: none;
+        width: 0 !important;
+        height: 0 !important;
+        -webkit-appearance: none;
+        background: transparent;
+    }
+    /* #endif */
 
 	.u-tabs {
 
