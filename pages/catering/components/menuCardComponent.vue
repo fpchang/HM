@@ -38,33 +38,6 @@
           labelSize="12px"
           @click="editMenuType"
         ></u-icon>
-        <!-- <u-icon
-        
-          name="checkmark-circle-fill"
-          color="#000"
-          v-if="isEdit"
-          size="22"
-          label="保存"
-          labelPos="bottom"
-          labelSize="12px"
-        ></u-icon> -->
-        <!-- <u-icon
-          name="eye-fill"
-          color="#000"
-          size="22"
-          label="预览"
-          labelPos="bottom"
-          labelSize="12px"
-        ></u-icon> -->
-        <!-- <u-icon
-          name="share-fill"
-          color="#000"
-          size="22"
-          label="分享"
-          labelPos="bottom"
-          labelSize="12px"
-          @click="shareWx"
-        ></u-icon> -->
         <u-icon
           name="grid-fill"
           :color="isEdit?'#06c':'#000'"
@@ -164,7 +137,9 @@ created(){
     menuType_id() {},
   },
   methods: {
+   
     shareWx() {
+     
       uni.share({
         provider: "weixin", //分享服务提供商（即weixin|qq|sinaweibo）
         type: 0, //图文

@@ -5,7 +5,9 @@ class AccountService{
         this.validTokenRequest=null;
     }
 
-    
+  getConfig(){
+    return DB.callFunction("hm_getConfig") ;
+  }  
   validToken(){
     const token = uni.getStorageSync('hm_token');
     return DB.callFunction("hm_validToken") ;

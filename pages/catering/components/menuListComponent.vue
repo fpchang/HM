@@ -10,14 +10,14 @@
 			</view>
 			<view class="control-panal" v-if="tabRadioVal == 1">
 				<u-icon name="plus-circle-fill" color="#000" size="22" label="添加菜单" labelPos="bottom" labelSize="12px"
-					@click="addMenuType"></u-icon>				
-					<button class="clearBtn" :plain="true" open-type="share"> 
-						<u-icon name="share-fill" color="#000" size="22" label="分享至微信" labelPos="bottom" labelSize="12px"
-						@click="shareWx"></u-icon>
-					</button>
-				
-				
-				
+					@click="addMenuType"></u-icon>
+				<button class="clearBtn" :plain="true" open-type="share" @click="shareWx">
+					<u-icon name="share-fill" color="#000" size="22" label="分享至微信" labelPos="bottom"
+						labelSize="12px"></u-icon>
+				</button>
+
+
+
 			</view>
 		</view>
 		<view style="display: flex; justify-content: center">
@@ -194,13 +194,31 @@
 				uni.navigateBack();
 			},
 			shareWx() {
+				let href =
+					`${this.$store.state.config.hostName}/index.html#/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`
+				// #ifdef H5
+				uni.setClipboardData({
+					data: href,
+					showToast: false,
+					success: function() {
+						console.log("success");
+						uni.showToast({
+							title: "相关链接已复制",
+							icon: "success"
+						})
+					},
+				});
+				return;
+				// #endif
+
+				// #ifdef APP-PLUS
 				uni.share({
 					provider: "weixin", //分享服务提供商（即weixin|qq|sinaweibo）
 					type: 0, //图文
 					scene: "WXSceneSession", //provider 为 weixin 时必选 WXSceneSession分享到聊天界面，WXSceneTimeline分享到朋友圈，WXSceneFavorite分享到微信收藏
 					title: "民宿点菜", //分享内容的标题
 					summary: "点菜内容", //分享内容的摘要
-					href: `https://env-00jxh1m2dpmq-static.normal.cloudstatic.cn/index.html#/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`, //跳转链接，type 为 0 时必选
+					href: href, //跳转链接，type 为 0 时必选
 					//href: `http://localhost:8080/index.html#/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`, //跳转链接，type 为 0 时必选
 					imageUrl: "", //图片地址，type 为 0、2、5 时必选
 					success(res) {
@@ -212,6 +230,8 @@
 						console.log(err);
 					},
 				});
+				// #endif
+
 			},
 			async getOrderDishesList() {
 				try {

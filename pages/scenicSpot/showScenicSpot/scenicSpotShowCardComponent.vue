@@ -272,7 +272,8 @@
 	}
 
 	.pr-item {
-		font-size: 12px;
+		font-size: $uni-font-size-base;
+		font-weight: bold;
 		padding: 5px 0;
 
 		&:nth-child(1) {

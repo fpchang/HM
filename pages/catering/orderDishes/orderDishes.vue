@@ -8,10 +8,10 @@
 		<view style="padding:0 10px;height:205px">
 			<uni-forms ref="orderDishesRef" :modelValue="orderDishesForm" :rules="orderDishesRules" label-width="130px">
 				<uni-forms-item   label="用户名" required name="userName" class="forms-item-style">
-					<uni-easyinput  v-model="orderDishesForm.userName" placeholder="请输入员工名" />
+					<uni-easyinput  v-model="orderDishesForm.userName" placeholder="请输入用户名" />
 				</uni-forms-item>
-				<uni-forms-item label="手机号" name="phone" required class="forms-item-style">
-					<uni-easyinput v-model="orderDishesForm.phone" type="number" maxlength="11" placeholder="请输入手机号" />
+				<uni-forms-item label="联系电话" name="phone" required class="forms-item-style">
+					<uni-easyinput v-model="orderDishesForm.phone" type="number" maxlength="11" placeholder="请输入联系电话" />
 				</uni-forms-item>
 				<uni-forms-item label="用餐日期" name="mealDate" required class="forms-item-style">
 					<uni-datetime-picker v-model="orderDishesForm.mealDate" type="data"  :start="new Date().getTime()" />
@@ -151,17 +151,17 @@
 
 		},
 		created(params) {
-			console.log("created", params,uni.getSystemInfoSync());
-			console.log("222222",this.$store.state)
+			this.getData();
+		},
+		onShow() {
 			try {
-				if(this.isPcshow){
+				if(this.isPcShow){
 					document.getElementsByTagName('uni-page-head')[0].style.display = 'none';	
 				}
 				
 			} catch (error) {
 				
 			}
-			this.getData();
 		},
 		data() {
 			return {
@@ -230,8 +230,8 @@
 			hotel_id() {
 				return this.$store.state.hotel_id;
 			},
-			isPcshow(){
-				return this.$store.state.isPcshow;
+			isPcShow(){
+				return this.$store.state.isPcShow;
 			},
 			checkMenuList() {
 				let resultArray = [];

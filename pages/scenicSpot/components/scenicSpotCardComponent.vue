@@ -47,15 +47,6 @@
         labelSize="12px"
         @click="moreControl"
       ></u-icon>
-        <!-- <u-icon
-          name="share-fill"
-          color="#000"
-          size="22"
-          label="分享"
-          labelPos="bottom"
-          labelSize="12px"
-          @click="shareWx"
-        ></u-icon> -->
       </view>
     </view>
     <view class="scenicSpot-content-style">

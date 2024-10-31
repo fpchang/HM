@@ -9,25 +9,7 @@
       >
       
       
-        <!-- <u-icon
-          name="share-fill"
-          color="#000"
-          size="22"
-          label="分享"
-          labelPos="bottom"
-          labelSize="12px"
-          @click="shareWx"
-        ></u-icon> -->
-        <!-- <u-icon
-          name="grid-fill"
-          :color="isEdit?'#06c':'#000'"
-          size="22"
-          label="编辑模式"
-          :labelColor="isEdit?'#06c':'#000'"
-          labelPos="bottom"
-          labelSize="12px"
-          @click="moreControl"
-        ></u-icon> -->
+        
       </view>
     </view>
     <slot name="content"></slot>

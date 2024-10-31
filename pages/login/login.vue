@@ -201,6 +201,8 @@ export default {
           // 	// 通知验证码组件内部开始倒计时
           // 	this.$refs.uCode.start();
           // }, 2000);
+          
+          this.$refs.uCode.start();
           uniCloud
             .callFunction({
               name: "hm-sendSms",
@@ -215,7 +217,7 @@ export default {
               uni.setStorageSync("tk", res.result.tk);
               uni.hideLoading();
               this.reverseNumber = Number(this.count);
-              this.$refs.uCode.start();
+              
             });
         } else {
           uni.$u.toast("倒计时结束后再发送");

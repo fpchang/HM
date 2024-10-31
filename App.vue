@@ -1,4 +1,5 @@
 <script> 
+import AccountService from "./services/AccountService";
 	export default {
 		onLoad(e) {
 			console.log("APP onload 参数信息",e)
@@ -6,13 +7,19 @@
 		onLaunch: async function(ob) {
 			console.log("参数信息",ob)
 			console.log('App Launch XXXXXXXXXX',uni.getSystemInfoSync());
-			let {hotel_id} = ob.query;
+			try {
+				let {hotel_id} = ob.query;
 			if(hotel_id){
 				console.log("cccc",hotel_id)
 				this.$store.commit("checkHotel",hotel_id);
 			}
+			} catch (error) {
+				
+			}
+		
 			this.getEnv();
 			this.initData();
+			this.setConfig();
 			
 		},
 		onShow: function() {
@@ -26,17 +33,31 @@
 			console.log("app veu refrush");
 		},
 		methods:{
-			initData(){
-				if(this.globalData.systemInfo.deviceType=='pc' ||this.globalData.systemInfo.windowWidth>740){
+			async setConfig(){
+				try {
+					const res = await AccountService.getConfig();
+					console.log("配置信息",res);
+					this.$store.commit("setConfig",res.result)
+				} catch (error) {
+					
+				}
+			},
+			 initData(){
+				console.log("init...",uni.getSystemInfoSync().deviceType=='pc')
+				if(uni.getSystemInfoSync().deviceType=='pc' ||uni.getWindowInfo().windowWidth>740){
 					uni.hideTabBar({
 						success:()=>{
 							console.log("隐藏成功")
 						}
 					});
+					console.log("ispcshow====")
 					this.globalData.isPcShow=true;
 					this.$store.commit("setPcShow",true);
 					this.$store.commit("updateUser");
 				}
+			
+				
+				
 			},
 			getEnv(){
 				if (process.env.NODE_ENV === 'development') {

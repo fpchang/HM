@@ -9,7 +9,7 @@
       labelPos="bottom"
       labelSize="24px"
       labelColor="green"
-      @click="shareWx"
+     
     ></u-icon>
     </view>
     <view class="content">

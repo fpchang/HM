@@ -77,6 +77,16 @@
 			this.initData();
 
 		},
+		onShow() {
+			try {
+				if(this.isPcShow){
+					document.getElementsByTagName('uni-page-head')[0].style.display = 'none';	
+				}
+				
+			} catch (error) {
+				
+			}
+		},
 		methods: {
 			async initData(){
 				if(!this.hotel_id){
