@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="mine">
 		<view class="card-list">
 			<view class="card" style="padding: 15px">
 				<view style="display:flex;">
@@ -59,7 +59,9 @@
 				</view>
 			</view>
 		</view>
-
+		<view class="flex-center"> 
+			<text style="padding:10px;color:#ececec">浙ICP备2024130639号</text>
+		</view>
 		<uni-popup ref="popupFeedback" background-color="transprant">
 			<view class="popup-content">
 				<view class="create-order-title-style">意见与反馈</view>
@@ -226,14 +228,19 @@
 </script>
 
 <style lang="scss">
+.mine{
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
 	.card-list {
+		flex: 1;
 		display: flex;
 		flex-direction: column;
 		padding: 15px;
 		box-sizing: border-box;
 
 		.card {
-			height: 100%;
 			box-sizing: border-box;
 			background: #fff;
 			padding: 0 15px;
