@@ -84,7 +84,7 @@ export default({
 
   watch: {},
   created(){
-    console.log("2222",this.targetObj)
+   
   },
 // 组件周期函数--监听组件挂载完毕
 mounted() {},

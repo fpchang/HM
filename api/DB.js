@@ -8,8 +8,7 @@ class DB{
 	  	name:name,
 	  	data:Object.assign(data,{
         $user:uni.getStorageSync('user'),
-        $token:uni.getStorageSync('hm_token'),
-        $secret:getApp().globalData.secret
+        $token:uni.getStorageSync('hm_token')
       })
 	  })
   }

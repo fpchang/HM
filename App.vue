@@ -10,7 +10,6 @@ import AccountService from "./services/AccountService";
 			try {
 				let {hotel_id} = ob.query;
 			if(hotel_id){
-				console.log("cccc",hotel_id)
 				this.$store.commit("checkHotel",hotel_id);
 			}
 			} catch (error) {
@@ -36,21 +35,18 @@ import AccountService from "./services/AccountService";
 			async setConfig(){
 				try {
 					const res = await AccountService.getConfig();
-					console.log("配置信息",res);
 					this.$store.commit("setConfig",res.result)
 				} catch (error) {
-					
+					console.error(error)
 				}
 			},
 			 initData(){
-				console.log("init...",uni.getSystemInfoSync().deviceType=='pc')
 				if(uni.getSystemInfoSync().deviceType=='pc' ||uni.getWindowInfo().windowWidth>740){
 					uni.hideTabBar({
 						success:()=>{
 							console.log("隐藏成功")
 						}
 					});
-					console.log("ispcshow====")
 					this.globalData.isPcShow=true;
 					this.$store.commit("setPcShow",true);
 					this.$store.commit("updateUser");

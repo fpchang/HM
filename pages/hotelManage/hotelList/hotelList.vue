@@ -134,7 +134,7 @@ import DB from '../../../api/DB';
 			}
 		},
 		async created() {
-			console.log("1111",this.hotelList)
+			
 			
 		},
 		watch:{

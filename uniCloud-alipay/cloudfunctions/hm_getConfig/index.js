@@ -13,12 +13,12 @@ exports.main = async (event, context) => {
 		//开发环境
 		"env-00jxh1m2dpmq":{
 			hostName:"http://hmdev.hotelsys.fun",
-			cloudUrl:"https://env-00jxh1m2dpmq.normal.cloudstatic.cn/"
+			cloudUrl:"https://env-00jxh1m2dpmq.normal.cloudstatic.cn"
 		},
 		//生产环境
 		"env-00jxhfhjd231":{
 			hostName:"http://hm.hotelsys.fun",
-			cloudUrl:"https://env-00jxhfhjd231.normal.cloudstatic.cn/"
+			cloudUrl:"https://env-00jxhfhjd231.normal.cloudstatic.cn"
 		}
 		
 }

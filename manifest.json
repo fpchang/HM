@@ -49,7 +49,12 @@
             },
             /* SDK配置 */
             "sdkConfigs" : {
-                "share" : {}
+                "share" : {
+                    "weixin" : {
+                        "appid" : "wx1e656e3fd064719a",
+                        "UniversalLinks" : ""
+                    }
+                }
             },
             "icons" : {
                 "android" : {

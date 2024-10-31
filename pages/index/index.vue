@@ -54,7 +54,7 @@
         </view>
       </view>
     </view>
-    <swiper :style="{height: scrollHeight}" :current="currentTab_index" :disable-touch="true"
+    <swiper :style="{height: scrollHeight}" :current="currentTab_index" 
       @change="swiperContentEvent">
       <swiper-item v-for="item in tabList">
      
@@ -256,19 +256,25 @@ export default {
     this.vaildToken();
   },
   onShareAppMessage(res) {
-					if (res.from === 'button') { // 来自页面内分享按钮
-						console.log("3333333333",res.target)
-            
-					}
-          if(this.currentTab_index==2){//点菜分享
+					if (res.from != 'button') { // 来自页面内分享按钮
             return  {
-						title: '景点价格',
+						title: '民宿管家',
+            imageUrl:`${this.$store.state.config.cloudUrl}/HM/images/hotel.jpg`,
+						path:`/pages/index/index`
+					}
+          }
+         
+          if(this.currentTab_index==2){//景区分享
+            return  {
+						title: `景点价格【${this.hotel.hotelName}】`,
+            imageUrl:`${this.$store.state.config.cloudUrl}/HM/images/sc.jpg`,
 						path:`/pages/scenicSpot/showScenicSpot/showScenicSpot?hotel_id=${this.hotel_id}`
 					}
           }
           if(this.currentTab_index==3){//点菜分享
             return  {
-						title: '民宿舍点菜',
+						title:  `【${this.hotel.hotelName}】订餐`,
+            imageUrl:`${this.$store.state.config.cloudUrl}/HM/images/food.jpg`,
 						path:`/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`
 					}
           }
