@@ -360,7 +360,7 @@
 
   .placeholder {
     color: grey;
-    font-size: $uni-font-size-sm;
+    font-size: 12px;
   }
 
   .input-split-line {

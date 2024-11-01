@@ -139,6 +139,6 @@
 		padding: 6px 12px;
 		line-height: 24px;
 		font-size: 16px;
-		font-weight: bold;
+		font-weight: 500;
 	}
 </style>

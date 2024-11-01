@@ -155,7 +155,7 @@
 		vertical-align: middle;
 		/* #endif */
 		color: #333;
-		font-weight: bold;
+		font-weight: 500;
 		border-bottom: 1px $border-color solid;
 		font-size: 14px;
 		// text-align: center;
