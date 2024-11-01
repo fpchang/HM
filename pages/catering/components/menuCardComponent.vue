@@ -54,9 +54,9 @@
      <view style="height:10px"></view>
     <view  class="menu-detail-content" >
       <view class="menu-detail-content-item" v-for="item of menuItem._id['hm-menuDetail']" >
-        <text class="itx-n" :style="{'text-decoration':item.isOffer? 'line-through':''}">{{item.name}}</text>
+        <text class="itx-n" :style="{'text-decoration':!item.isOffer? 'line-through':''}">{{item.name}}</text>
         <view style="display: flex;"> 
-          <text class="itx-p" :style="{'text-decoration':item.isOffer? 'line-through':''}"><text>￥</text>{{item.price}}</text>
+          <text class="itx-p" :style="{'text-decoration':!item.isOffer? 'line-through':''}"><text>￥</text>{{item.price}}</text>
           
           <view class="icon-area">
             <!-- <u-icon

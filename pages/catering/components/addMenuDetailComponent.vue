@@ -118,6 +118,7 @@ export default({
   watch: {},
   created(){
     //this.getMenuTypeList();
+   console.log(">>>",this.menuDetailForm) 
   },
 // 组件周期函数--监听组件挂载完毕
 mounted() {},
