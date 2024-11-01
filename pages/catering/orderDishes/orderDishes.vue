@@ -455,8 +455,8 @@
 		display: flex;
 
 		.leftMenu {
-			max-width: 200px;
-			min-width: 120px;
+			max-width: 120px;
+			min-width: 100px;
 			height: calc(100vh - 55px - 205px - 60px);
 
 			.menuType-item {

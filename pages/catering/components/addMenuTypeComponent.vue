@@ -2,9 +2,9 @@
   <view>
     <uni-forms ref="scenicSpotRef" :modelValue="menuTypeForm" :rules="scenicSpotRules" label-width="120px">
       <uni-forms-item label="分类名称" required name="name">
-        <uni-easyinput v-model="menuTypeForm.name" placeholder="菜单名称" />
+        <uni-easyinput v-model="menuTypeForm.name" placeholder="菜单分类，如 “特色菜”，“私房菜" />
       </uni-forms-item>
-     
+     <view class="tips-area">注意：”分类名称“ 为菜单分类名称，如【<text class="ct"> “特色菜”，“私房菜”</text>】等，详细菜名请在创建好菜单分类后点击【<text class="ct">编辑模式</text>】后再点击【<text class="ct">添加</text>】操作</view>
       <uni-forms-item label="备注" name="mark">
         <uni-easyinput v-model="menuTypeForm.mark" type="textarea"  />
       </uni-forms-item>

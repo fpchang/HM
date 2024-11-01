@@ -87,6 +87,13 @@ $uni-font-size-paragraph:15px;
 /*操作文字颜色-蓝色*/
 $font-color-control:#06c;
 $font-color-control-hover:rgb(1, 85, 169);
+.tips-area{
+	color: orange;
+	font-size:$uni-font-size-sm ;
+	.ct{
+		color:$font-color-control ;
+	}
+}
 .clearBtn{
 	margin:0;
 	padding:0;
