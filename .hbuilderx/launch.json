@@ -9,6 +9,12 @@
                 "launchtype" : "local"
             },
             "h5" : {
+                "launchtype" : "remote"
+            },
+            "mp-alipay" : {
+                "launchtype" : "remote"
+            },
+            "mp-toutiao" : {
                 "launchtype" : "local"
             },
             "mp-weixin" : {

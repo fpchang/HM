@@ -13,7 +13,6 @@
 		:loading="submitLoading"></u-button>
 	</view>
   </template>
-  </template>
   
   <script>
   import MineService from '../../../services/MineService';

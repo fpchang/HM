@@ -1,6 +1,7 @@
 import App from './App';
 import store from './store/store';
-import './routeIntercept.js'
+import './routeIntercept.js';
+import alert from "./alert";
 
 // #ifndef VUE3
 import Vue from 'vue'
@@ -8,7 +9,7 @@ import './uni.promisify.adaptor';
 import uView from '@/uni_modules/uview-ui';
 import {CF} from './static/utils/CF';
 //import uiEcharts from '@/uni_modules/ui-echarts';
-import alert from "./alert";
+
 //Vue.use(uiEcharts);
 Vue.use(uView);
 Vue.prototype.$store = store;

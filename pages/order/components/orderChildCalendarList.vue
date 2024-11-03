@@ -214,7 +214,6 @@ import OrderService from '../../../services/OrderService';
 		text-align: center;
 		font-size: $uni-font-size-base;
 		position: relative;
-		font-size: $uni-font-size-lg;
 		box-sizing: border-box;
 		border:1px solid #b3b3b338;
 		border-left-width: 0;
@@ -227,7 +226,7 @@ import OrderService from '../../../services/OrderService';
 	}
 
 	.left-table-style .td-style {
-		font-weight: bold;
+		font-weight: 500;
 
 	}
 

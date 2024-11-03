@@ -7,6 +7,8 @@ import AccountService from "./services/AccountService";
 		onLaunch: async function(ob) {
 			console.log("参数信息",ob)
 			console.log('App Launch XXXXXXXXXX',uni.getSystemInfoSync());
+			console.log("111",uni.getSystemInfoSync().deviceType)
+			console.log("222",uni.getDeviceInfo().deviceType)
 			try {
 				let {hotel_id} = ob.query;
 			if(hotel_id){

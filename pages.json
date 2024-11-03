@@ -6,6 +6,10 @@
 			"path": "pages/index/index",
 			"style": {
 				"navigationStyle": "custom",
+				"mp-alipay": {//支付宝小程序隐藏navbar
+					"transparentTitle": "always",
+					"titlePenetrate": "YES"
+				},
 				"enablePullDownRefresh": true
 			}
 		},{
@@ -16,7 +20,7 @@
 			}
 		},{
 			"path" : "pages/permission/setPermission/setPermission",
-			"style" : 
+			"style" :
 			{
 				"navigationBarTitleText" : ""
 			}

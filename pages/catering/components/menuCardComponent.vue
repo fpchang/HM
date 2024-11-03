@@ -13,7 +13,7 @@
           name="plus-circle-fill"
           color="#000"
           size="22"
-          label="添加"
+          label="增菜"
           labelPos="bottom"
           labelSize="12px"
           @click="addMenuDetail"
@@ -118,7 +118,7 @@ export default {
   data() {
     return {
       type: 0,
-      isEdit: false,
+      isEdit: true,
       targetObj: {},
     };
   },

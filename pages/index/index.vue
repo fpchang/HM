@@ -294,7 +294,12 @@ export default {
       return this.$store.state.isPcShow;
     },
    isPc(){
-    return uni.getDeviceInfo().deviceType=='pc';
+	   try{
+	   	return uni.getSystemInfoSync().deviceType=='pc'|| uni.getDeviceInfo().deviceType=='pc' ;
+	   }catch(e){
+	   	
+	   }
+    
    },
     hotel_id() {
       return this.$store.state.hotel_id;
@@ -327,7 +332,7 @@ export default {
     },
     navTopHeight(){
       
-      return uni.getDeviceInfo().deviceType=='pc' ? "0px" : "70px"
+      return this.isPc? "0px" : "70px"
     },
          
     disHeightVal() {
