@@ -17,6 +17,11 @@
 				</button>
 			</view>
 		</view>
+		<block v-if="noDataObj.val">
+			<noData :text_content="noDataObj.text" :showControl="noDataObj.showControl" text_control_add="创建"
+			@Event_one="addMenuType"></noData>
+		</block>
+		<block v-if="!noDataObj.val">
 		<view style="display: flex; justify-content: center">
 			<view class="card-container" :style="{width: `${cardContainerWidth}px`}">
 				<view v-if="tabRadioVal==0" class="card" v-for="item of orderDishesList"
@@ -33,6 +38,7 @@
 				</view>
 			</view>
 		</view>
+	</block>
 		<uni-popup ref="popupMenuType" background-color="transprant">
 			<view class="popup-content">
 				<view class="create-order-title-style">{{
@@ -91,6 +97,20 @@
 			},
 			menuList() {
 				return this.$store.state.menuStore.menuList;
+			},
+			noDataObj(){
+				if(this.tabRadioVal==0){
+					return {
+						text:"无订单数据",
+						val:this.orderDishesList.length<1,
+						showControl:false
+					}
+				}
+				return  {
+					text:"无菜单数据",
+					val:this.menuList.length<1,
+					showControl:true
+				};
 			},
 			isPc() {
 				try {

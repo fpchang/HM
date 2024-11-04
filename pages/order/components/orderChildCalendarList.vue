@@ -1,5 +1,9 @@
 <template>
 	<view style="display: flex;">
+		<block v-if="noData">
+			<noData text_content="当前无订单数据"></noData>
+		</block>
+		<block v-if="!noData">
 		<view class="left-table-style">
 			<view class="th-style"><text>房间号</text></view>
 			<view class="td-style" v-for="item in roomType">
@@ -40,6 +44,7 @@
 
 			</view>
 		</view>
+	</block>
 	</view>
 </template>
 
@@ -71,6 +76,9 @@ import OrderService from '../../../services/OrderService';
 			},
 			checkInOrderList(){
 				return this.$store.state.orderStore.orderListTodayAfter ||[];
+			},
+			noData(){
+				return this.checkInOrderList.length<1;
 			},
 			dateTabList() {
 				let curDateTimeStamp = new Date().getTime();

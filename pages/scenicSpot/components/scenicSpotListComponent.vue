@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view>		
 		<view class="add-content-style">
 			<view class="control-panal">
 				<u-icon name="plus-circle-fill" color="#000" size="22" label="添加景点" labelPos="bottom" labelSize="12px"
@@ -11,6 +11,10 @@
 
 			</view>
 		</view>
+		<block v-if="noData">
+			<noData text_content="当前无合作景点数据"></noData>
+		</block>
+		<block v-if="!noData">
 		<view style="display: flex;justify-content:center">
 
 			<view class="card-container" :style="{width:`${cardContainerWidth}px`}">
@@ -33,6 +37,7 @@
 
 			</view>
 		</uni-popup>
+	</block>
 	</view>
 </template>
 
@@ -61,7 +66,10 @@
 				return this.$store.state.hotel_id;
 			},
 			scenicSpotList() {
-				return this.$store.state.scenicSpotStore.scenicSpotList
+				return this.$store.state.scenicSpotStore.scenicSpotList ||[];
+			},
+			noData(){
+				return this.scenicSpotList.length<1;
 			},
 			isPc() {
 				try {

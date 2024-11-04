@@ -205,7 +205,6 @@
 	import AccountService from "../../services/AccountService";
 	import hotelList from "../hotelManage/hotelList/hotelList"
 	import DB from "../../api/DB";
-	import NoData from '../../components/noData.vue';
 	export default {
 		components: {
 			gatherComponent,
@@ -217,8 +216,7 @@
 			menuListComponent,
 			scenicSpotListComponent,
 			hotelList,
-			mine,
-			NoData
+			mine
 		},
 
 		data() {
