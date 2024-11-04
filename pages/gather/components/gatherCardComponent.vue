@@ -48,7 +48,7 @@ export default {
   data() {
     return {
       type: 0,
-      isEdit: false,
+      isEdit: true,
      
     };
   },

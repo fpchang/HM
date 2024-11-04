@@ -110,7 +110,7 @@ export default {
     return {
       submitLoading:false,
       type: 0,
-      isEdit: false,
+      isEdit: true,
       targetObj: {},
     };
   },
