@@ -4,33 +4,29 @@
 			<view class="left-panal">
 				<uni-data-checkbox v-model="tabRadioVal" :localdata="tabitems"></uni-data-checkbox>
 			</view>
-			<view class="control-panal" v-if="tabRadioVal == 0">
+			<view class="control-panal" v-if="tabRadioVal==0">
 				<u-icon name="plus-circle-fill" color="#000" size="22" label="点菜" labelPos="bottom" labelSize="12px"
 					@click="addOrderDishes"></u-icon>
 			</view>
-			<view class="control-panal" v-if="tabRadioVal == 1">
+			<view class="control-panal" v-if="tabRadioVal==1">
 				<u-icon name="plus-circle-fill" color="#000" size="22" label="添加菜单" labelPos="bottom" labelSize="12px"
 					@click="addMenuType"></u-icon>
 				<button class="clearBtn" :plain="true" open-type="share" @click="shareWx">
 					<u-icon name="share-fill" color="#000" size="22" label="分享至微信" labelPos="bottom"
 						labelSize="12px"></u-icon>
 				</button>
-
-
-
 			</view>
 		</view>
 		<view style="display: flex; justify-content: center">
-			<view class="card-container" :style="{ width: `${cardContainerWidth}px` }">
-				<view v-if="tabRadioVal == 0" class="card" v-for="item of orderDishesList"
-					:style="{ width: `${cardWidth}px` }">
+			<view class="card-container" :style="{width: `${cardContainerWidth}px`}">
+				<view v-if="tabRadioVal==0" class="card" v-for="item of orderDishesList"
+					:style="{width: `${cardWidth}px`}">
 					<view class="card-item">
 						<menuOrderCardComponent :orderDishesItem="item" @getOrderDishesList="getOrderDishesList">
 						</menuOrderCardComponent>
 					</view>
 				</view>
-				<view v-if="tabRadioVal == 1" class="card" v-for="item of menuList"
-					:style="{ width: `${cardWidth}px` }">
+				<view v-if="tabRadioVal==1" class="card" v-for="item of menuList" :style="{width: `${cardWidth}px`}">
 					<view class="card-item">
 						<menuCardComponent :menuItem="item" @editMenuType="editMenuType"></menuCardComponent>
 					</view>
@@ -40,8 +36,8 @@
 		<uni-popup ref="popupMenuType" background-color="transprant">
 			<view class="popup-content">
 				<view class="create-order-title-style">{{
-          type == 1 ? "修改菜单分类" : "新增菜单分类"
-        }}</view>
+					type==1? "修改菜单分类":"新增菜单分类"
+				}}</view>
 				<view class="comContent">
 					<addMenuTypeComponent @closePopup="closePopup" :type="type" :targetObj="targetObj">
 					</addMenuTypeComponent>
@@ -61,23 +57,25 @@
 		components: {
 			menuCardComponent,
 			addMenuTypeComponent,
-			menuOrderCardComponent
+			menuOrderCardComponent,
 		},
 		props: {},
 		data() {
 			return {
 				tabRadioVal: 0,
 				tabitems: [{
-					value: 0,
-					text: '订单管理'
-				}, {
-					value: 1,
-					text: '菜单管理'
-				}],
+						value: 0,
+						text: "订单管理",
+					},
+					{
+						value: 1,
+						text: "菜单管理",
+					},
+				],
 				widthTemp: 0,
 				type: 0,
 				targetObj: {},
-				orderDishesList: []
+				orderDishesList: [],
 			};
 		},
 		computed: {
@@ -88,17 +86,26 @@
 				return this.$store.state.hotelList;
 			},
 			hotelName() {
-				let tar = this.hotelList.find(item => item._id == this.hotel_id);
-				return tar.hotelName
+				let tar = this.hotelList.find((item) => item._id == this.hotel_id);
+				return tar.hotelName;
 			},
 			menuList() {
 				return this.$store.state.menuStore.menuList;
 			},
+			isPc() {
+				try {
+					return (
+						uni.getSystemInfoSync().deviceType == "pc" ||
+						uni.getDeviceInfo().deviceType == "pc"
+					);
+				} catch (e) {
+					return false;
+				}
+			},
 			viewWidth() {
-				let viewWidth =
-					uni.getWindowInfo().windowWidth ||
-					uni.getWindowInfo().screenWidth;
-				return viewWidth + this.widthTemp - this.widthTemp;
+				let viewWidth = uni.getWindowInfo().windowWidth || uni.getWindowInfo().screenWidth;
+				let scrollWidth = this.isPc ? 20 : 0;
+				return viewWidth + this.widthTemp - this.widthTemp - scrollWidth;
 			},
 
 			cardWidth() {
@@ -125,12 +132,12 @@
 			},
 			tabRadioVal(nval) {
 				if (nval == 1) {
-					console.log("aaaa", this.$store)
+					console.log("aaaa", this.$store);
 					this.$store.dispatch("getMenuList", this.hotel_id);
 					return;
 				}
 				this.getOrderDishesList();
-			}
+			},
 		},
 		created() {
 			this.getOrderDishesList();
@@ -141,23 +148,26 @@
 				try {
 					if (this.isPcShow) {
 						let href = `#/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`;
-						window.open(href, '_blank');
+						window.open(href, "_blank");
 						return;
 					}
 
 					uni.navigateTo({
-						url: `/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`
-					})
+						url: `/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`,
+					});
 				} catch (error) {
 					console.error(error);
 					uni.navigateTo({
-						url: `/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`
-					})
+						url: `/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`,
+					});
 				}
-
 			},
 			addMenuType(item = {}) {
-				if (!this.$store.state.permissionStore.permissionList.includes('MENU_CREATE')) {
+				if (
+					!this.$store.state.permissionStore.permissionList.includes(
+						"MENU_CREATE"
+					)
+				) {
 					this.$alert.alertNoPermisson();
 					return;
 				}
@@ -172,7 +182,11 @@
 				});
 			},
 			editMenuType(item = {}) {
-				if (!this.$store.state.permissionStore.permissionList.includes('MENU_UPDATE')) {
+				if (
+					!this.$store.state.permissionStore.permissionList.includes(
+						"MENU_UPDATE"
+					)
+				) {
 					this.$alert.alertNoPermisson();
 					return;
 				}
@@ -183,7 +197,9 @@
 					return;
 				}
 				uni.navigateTo({
-					url: `/pages/catering/addMenuType/addMenuType?type=${this.type}&&targetObj=${JSON.stringify(item)}`,
+					url: `/pages/catering/addMenuType/addMenuType?type=${
+          this.type
+        }&&targetObj=${JSON.stringify(item)}`,
 				});
 			},
 			closePopup() {
@@ -195,7 +211,7 @@
 			},
 			shareWx() {
 				let href =
-					`${this.$store.state.config.hostName}/index.html#/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`
+					`${this.$store.state.config.hostName}/index.html#/pages/catering/orderDishes/orderDishes?hotel_id=${this.hotel_id}`;
 				// #ifdef H5
 				uni.setClipboardData({
 					data: href,
@@ -204,8 +220,8 @@
 						console.log("success");
 						uni.showToast({
 							title: "相关链接已复制",
-							icon: "success"
-						})
+							icon: "success",
+						});
 					},
 				});
 				return;
@@ -231,7 +247,6 @@
 					},
 				});
 				// #endif
-
 			},
 			async getOrderDishesList() {
 				try {
@@ -240,13 +255,11 @@
 					this.orderDishesList = res.data;
 					uni.hideLoading();
 				} catch (error) {
-					console.log(error)
+					console.log(error);
 					uni.hideLoading();
 				}
-
-			}
+			},
 		},
-
 
 		// 组件周期函数--监听组件挂载完毕
 		mounted() {

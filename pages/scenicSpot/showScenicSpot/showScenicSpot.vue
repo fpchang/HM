@@ -43,10 +43,21 @@
 			scenicSpotList(){
 				return this.$store.state.scenicSpotStore.scenicSpotList;
 			},
-			viewWidth() {
-				let viewWidth = uni.getSystemInfoSync().windowWidth || uni.getSystemInfoSync().screenWidth
-				return viewWidth + this.widthTemp - this.widthTemp
-			},
+			isPc() {
+      try {
+        return (
+          uni.getSystemInfoSync().deviceType == "pc" ||
+          uni.getDeviceInfo().deviceType == "pc"
+        );
+      } catch (e) {
+        return false;
+      }
+    },
+    viewWidth() {
+      let viewWidth =uni.getWindowInfo().windowWidth || uni.getWindowInfo().screenWidth;
+	  let scrollWidth = this.isPc()?20:0;
+      return viewWidth + this.widthTemp - this.widthTemp - scrollWidth;
+    },
 
 			cardWidth() {
 				let windowWidth = this.viewWidth - 20; //-20 为pc端滚动条宽度
