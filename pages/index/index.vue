@@ -277,7 +277,12 @@
 
 
 		},
-		mounted() {},
+		beforeMounted(){
+			console.log("before mounted....>>>")
+		},
+		mounted() {
+			console.log("index mounted....>>>")
+		},
 		onPullDownRefresh() {
 			console.log("index veu refrush");
 			this.vaildToken(() => {
@@ -287,6 +292,7 @@
 		},
 		computed: {
 			isPcShow() {
+				console.log("index computed isPcshow....>>>")
 				return this.$store.state.isPcShow;
 			},
 			isPc() {

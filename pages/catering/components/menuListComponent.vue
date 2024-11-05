@@ -160,9 +160,9 @@
 			},
 		},
 		created() {
-			this.getOrderDishesList();
+			
 		},
-
+	
 		methods: {
 			addOrderDishes() {
 				try {
@@ -272,7 +272,6 @@
 				if(!this.hotel_id){
 					return;
 				}
-				console.log("333333333333333333333333")
 				try {
 					//uni.showLoading();
 					const res = await MenuService.getOrderDishesList(this.hotel_id);
@@ -288,6 +287,7 @@
 
 		// 组件周期函数--监听组件挂载完毕
 		mounted() {
+			this.getOrderDishesList();
 			if (window) {
 				window.onresize = () => {
 					this.widthTemp = Math.random(10);

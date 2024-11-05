@@ -151,6 +151,9 @@
 
 		},
 		created(params) {
+			
+		},
+		mounted(){
 			this.getData();
 		},
 		onShow() {

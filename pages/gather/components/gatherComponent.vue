@@ -192,9 +192,6 @@
 		},
 		watch: {
 			hotel_id() {
-				// this.getOrderListByCheckInToday();
-				// this.getOrderListToday();
-				// this.getOrderDishesToday();
 				this.initData();
 			}
 		},
@@ -213,7 +210,7 @@
 		},
 
 		mounted() {
-			console.log('gatherComponent create');
+			
 			this.option = {
 				grid: {
 					right: 20
@@ -230,16 +227,18 @@
 					type: 'line'
 				}]
 			}
+			this.initData();
 		},
 		onLoad: function() {
 			console.log('gatherComponent Show')
 		},
-		async created() {
+		 created() {
 			// this.getOrderListByCheckInToday();
 			// this.getOrderListToday();
 			//this.getOrderDishesToday();
-			this.initData();
+			
 		},
+	
 		methods: {
 			async initData() {
 				if (!this.hotel_id) {
