@@ -1,8 +1,8 @@
 <template>
 	<view>
 		<block v-if="noData">
-			<no-data text_content="您还没有酒店" :showControl="true" text_control_add="创建一个"
-				@Event_one="addNewHotel"></no-data>
+			<noData text_content="您还没有酒店" :showControl="true" text_control_add="创建一个"
+				@Event_one="addNewHotel"></noData>
 		</block>
 		<block v-if="!noData">
 			<view class="top-container">
@@ -303,6 +303,10 @@
 				}
 
 			},
+			isBrowser(){
+
+			},
+
 			hotel_id() {
 				return this.$store.state.hotel_id;
 			},
@@ -313,10 +317,15 @@
 				return this.$store.state.hotelList;
 			},
 			noData() {
-				return this.$store.state.baseDatahasLoad && this.hotelList.length < 1;
+				return  this.hotelList&&this.hotelList.length < 1;
 			},
 			hotel() {
-				return this.hotelList.find(item => item._id == this.hotel_id) || {};
+				try {
+					return this.hotelList.find(item => item._id == this.hotel_id);
+				} catch (error) {
+					return {}
+				}
+				
 			},
 			permissionList() {
 				return this.$store.state.permissionStore.permissionList;
@@ -333,7 +342,7 @@
 				});
 			},
 			navTopHeight() {
-
+				
 				return this.isPc ? "0px" : "70px"
 			},
 

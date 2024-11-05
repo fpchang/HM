@@ -22,7 +22,7 @@ const store = new Vuex.Store({
 		"tabHeight":44,
 		"isPcShow": false,
 		"user": "",
-		"hotelList": [],
+		"hotelList": null,
 		"employeeList":[],
 		"hotel_id": "",
 		"roomType":{}
