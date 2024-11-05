@@ -147,7 +147,7 @@
 			console.log("params", params);
 		},
 		onload(params) {
-			console.log("onload1111111111", params)
+			
 
 		},
 		created(params) {
@@ -169,7 +169,7 @@
 		data() {
 			return {
 				isLoading:false,
-				hotel: {},
+				hotel: {hotelName:""},
 				activeLeft: 0,
 				toMenuDetail_id: 'it0',
 				goodsListPanalHeight: 0,
