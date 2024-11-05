@@ -81,7 +81,7 @@
 				widthTemp: 0,
 				type: 0,
 				targetObj: {},
-				orderDishesList: [],
+				orderDishesList: null,
 			};
 		},
 		computed: {
@@ -102,13 +102,13 @@
 				if(this.tabRadioVal==0){
 					return {
 						text:"无订单数据",
-						val:this.orderDishesList.length<1,
+						val:this.orderDishesList&&this.orderDishesList.length<1,
 						showControl:false
 					}
 				}
 				return  {
 					text:"无菜单数据",
-					val:this.menuList.length<1,
+					val:this.menuList&&this.menuList.length<1,
 					showControl:true
 				};
 			},
@@ -269,9 +269,14 @@
 				// #endif
 			},
 			async getOrderDishesList() {
+				if(!this.hotel_id){
+					return;
+				}
+				console.log("333333333333333333333333")
 				try {
 					//uni.showLoading();
 					const res = await MenuService.getOrderDishesList(this.hotel_id);
+					console.log("orderdishes",res)
 					this.orderDishesList = res.data;
 					uni.hideLoading();
 				} catch (error) {

@@ -6,7 +6,7 @@ import MenuService from '../../services/MenuService';
 //Vuex.Store 构造器选项
 export default{
 	state: { //存放状态
-		menuList:[],
+		menuList:null,
 		orderDishesToday:[] //今日预定的餐饮订单
 	},
 
