@@ -20,17 +20,10 @@ export default{
 		}
 	},
   actions:{
-     getMenuList(context,hotel_id){
-		return new Promise((resolve,reject)=>{
-			MenuService.getMenuList(hotel_id).then(res=>{
-				console.log("菜单列表",res.result.data)
-				context.commit('updateMenuList', res.result.data);
-				resolve();
-			  }).catch(e=>{
-				reject(e)
-			  })
-		})
-     
+     async getMenuList(context,hotel_id){
+     const res = await MenuService.getMenuList(hotel_id);
+	 context.commit('updateMenuList', res.result.data);
+	 return res;
     },
 	 getOrderDishesToday(context,hotel_id){
 		

@@ -1,6 +1,7 @@
 import App from './App';
 import store from './store/store';
 import './routeIntercept.js';
+import './uniCloudIntercept.js';
 import alert from "./alert";
 
 // #ifndef VUE3

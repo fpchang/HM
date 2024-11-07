@@ -342,8 +342,10 @@
 				});
 			},
 			navTopHeight() {
-				
-				return this.isPc ? "0px" : "70px"
+				// #ifdef MP-WEIXIN
+				return "70px"
+				// #endif				
+				return this.isPcShow? "0px" : "70px"
 			},
 
 			disHeightVal() {
@@ -390,7 +392,6 @@
 			},
 			async initData() {
 				try {
-					//uni.showLoading();
 					this.$store.commit("setUser", uni.getStorageSync("user"));
 					await this.$store.dispatch("getHotelList");
 					this.$store.commit("setBaseDatahasLoad", true);
