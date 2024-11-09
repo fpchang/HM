@@ -25,7 +25,6 @@
       :loading="submitLoading"></u-button>
   </view>
 </template>
-</template>
 
 <script>
 import DB from "../../../api/DB.js";

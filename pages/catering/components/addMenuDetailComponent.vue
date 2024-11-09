@@ -29,7 +29,6 @@
       :loading="submitLoading"></u-button>
   </view>
 </template>
-</template>
 
 <script>
 import MenuService from '../../../services/MenuService';
